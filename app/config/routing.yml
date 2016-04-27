@@ -2,6 +2,3 @@ app:
     resource: "@AppBundle/Controller/"
     type:     annotation
     
-_welcome:
-    pattern:  /
-    defaults: { _controller: AcmeDemoBundle:Welcome:index }
