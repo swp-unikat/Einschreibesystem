@@ -24,7 +24,7 @@ echo "ServerName localhost" >> /etc/apache2/httpd.conf
 apt-get install -y apache2-mpm-worker 
 
 # php fpm config
-mv /var/www/apache.conf /etc/apache2/sites-available/000-default.conf
+cp /var/www/apache.conf /etc/apache2/sites-available/000-default.conf
 a2enmod proxy_fcgi
 a2enmod rewrite
 sed -i "s/listen = \/run\/php\/php7.0-fpm.sock/listen = 127.0.0.1:9000/" /etc/php/7.0/fpm/pool.d/www.conf
