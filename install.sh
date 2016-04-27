@@ -24,19 +24,13 @@ echo "ServerName localhost" >> /etc/apache2/httpd.conf
 apt-get install -y apache2-mpm-worker 
 
 # php fpm config
-mv /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/000-default.conf.2
-cat > /etc/apache2/sites-available/000-default.conf <<EOF
-DirectoryIndex index.php
-<LocationMatch "^(.*\.php)$">
-     ProxyPass fcgi://127.0.0.1:9000/var/www/
-</LocationMatch>
-EOF
-cat /etc/apache2/sites-available/000-default.conf.2  >> /etc/apache2/sites-available/000-default.conf
-rm /etc/apache2/sites-available/000-default.conf.2
-sed -i "s/listen = \/run\/php\/php7.0-fpm.sock/listen = 127.0.0.1:9000/" /etc/php/7.0/fpm/pool.d/www.conf
+mv /var/www/apache.conf /etc/apache2/sites-available/000-default.conf
 a2enmod proxy_fcgi
+a2enmod rewrite
+sed -i "s/listen = \/run\/php\/php7.0-fpm.sock/listen = 127.0.0.1:9000/" /etc/php/7.0/fpm/pool.d/www.conf
 
-# Mariadb
+
+# mysql
 sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password password root'
 sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password root'
 sudo apt-get -y install mysql-server
