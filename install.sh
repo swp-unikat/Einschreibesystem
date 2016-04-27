@@ -45,6 +45,11 @@ mv -f composer.phar /usr/local/bin/composer
 #Set locale
 sudo locale-gen de_DE.UTF-8
 
+# Composer install
+cd /var/www/
+rm -rf html
+composer install
+
 #restarts
 service apache2 restart
 service mysqld restart
