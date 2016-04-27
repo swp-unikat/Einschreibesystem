@@ -42,7 +42,6 @@ Vagrant.configure(2) do |config|
   config.vm.synced_folder ".", "/var/www", owner: "www-data", group: "www-data"
   config.vm.provider :virtualbox do |vb|
     vb.customize ["modifyvm", :id, "--memory", "2048"]
-    vb.customize ["modifyvm", :id, "--name"  , "basemachine"]
     vb.customize ["modifyvm", :id, "--cpus"  , 2]
     vb.customize ["modifyvm", :id, "--chipset", "ich9"]
   end
