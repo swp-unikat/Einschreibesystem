@@ -1,3 +1,28 @@
+core_cron:
+    resource: "@CoreCronBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+core_mail:
+    resource: "@CoreMailBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+core_api:
+    resource: "@CoreAPIBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+core_entity:
+    resource: "@CoreEntityBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+core_frontend:
+    resource: "@CoreFrontendBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation
