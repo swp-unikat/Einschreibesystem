@@ -64,3 +64,66 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+fos_user:
+    db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
+    firewall_name: main
+    user_class: Core\EntityBundle\Entity\User
+
+ # API Config
+nelmio_cors:
+    defaults:
+        allow_credentials: false
+        allow_origin: []
+        allow_headers: []
+        allow_methods: []
+        expose_headers: []
+        max_age: 0
+        hosts: []
+        origin_regex: false
+    paths:
+        '^/api/':
+            allow_origin: ['*']
+            allow_headers: ['*']
+            allow_methods: ['POST', 'PUT', 'GET', 'DELETE']
+            max_age: 3600
+        '^/':
+            origin_regex: true
+            allow_origin: ['^http://localhost:[0-9]+']
+            allow_headers: ['X-Custom-Auth']
+            allow_methods: ['POST', 'PUT', 'GET', 'DELETE']
+            max_age: 3600
+            hosts: ['^api\.']
+
+nelmio_api_doc:
+    cache:
+        enabled: false
+
+
+# REST API Config
+fos_rest:
+  param_fetcher_listener: true
+  body_listener: true
+  format_listener: true
+  routing_loader:
+    default_format: json
+    include_format: true
+  view:
+    formats:
+      rss: false
+      xml: true
+      json: true
+      html: false
+    templating_formats:
+      html: true
+    force_redirects:
+      html: true
+    failed_validation: HTTP_BAD_REQUEST
+    default_engine: twig
+    view_response_listener: true
+  exception:
+    codes:
+        'Symfony\Component\Routing\Exception\ResourceNotFoundException': 404
+        'Doctrine\ORM\OptimisticLockException': HTTP_CONFLICT
+    messages:
+        'Symfony\Component\Routing\Exception\ResourceNotFoundException': true

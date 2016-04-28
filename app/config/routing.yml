@@ -11,7 +11,7 @@ core_mail:
 core_api:
     resource: "@CoreAPIBundle/Controller/"
     type:     annotation
-    prefix:   /
+    prefix:   /api
 
 core_entity:
     resource: "@CoreEntityBundle/Controller/"
@@ -23,7 +23,9 @@ core_frontend:
     type:     annotation
     prefix:   /
 
-app:
-    resource: "@AppBundle/Controller/"
-    type:     annotation
-    
+NelmioApiDocBundle:
+  resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
+  prefix:   /api/doc
+
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"

@@ -66,3 +66,9 @@ Options FollowSymlinks
         # RedirectTemp cannot be used instead
     </IfModule>
 </IfModule>
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^(.*)$ app_dev.php [QSA,L]
+</IfModule>
