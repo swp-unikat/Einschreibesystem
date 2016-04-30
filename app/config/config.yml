@@ -107,11 +107,12 @@ fos_rest:
   format_listener: true
   routing_loader:
     default_format: json
-    include_format: true
+    include_format: false
+
   view:
     formats:
       rss: false
-      xml: true
+      xml: false
       json: true
       html: false
     templating_formats:

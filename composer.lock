@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "049077dd89a788fd112721f230b55fb2",
-    "content-hash": "ceeb475394f3954b22bfa58ec09b9dc3",
+    "hash": "d864a25cf7dda08be44c33822cbe8100",
+    "content-hash": "4b88012aa9d7bff578227a4e59bfbec4",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1018,12 +1018,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSUserBundle.git",
-                "reference": "16b04c49af05dd3fb381e4abe04f0e5e231ac76d"
+                "reference": "def27463609e24af410b2606f0062de46fab5662"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/16b04c49af05dd3fb381e4abe04f0e5e231ac76d",
-                "reference": "16b04c49af05dd3fb381e4abe04f0e5e231ac76d",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/def27463609e24af410b2606f0062de46fab5662",
+                "reference": "def27463609e24af410b2606f0062de46fab5662",
                 "shasum": ""
             },
             "require": {
@@ -1079,7 +1079,7 @@
             "keywords": [
                 "User management"
             ],
-            "time": "2016-03-08 11:05:28"
+            "time": "2016-04-28 10:51:07"
         },
         {
             "name": "guzzle/guzzle",

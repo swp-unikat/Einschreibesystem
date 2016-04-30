@@ -1,0 +1,5 @@
+service_workshop:
+    type: rest
+    prefix: /api
+    resource: "@CoreAPIBundle/Controller/WorkshopController.php"
+    name_prefix:  api_workshop_ # naming collision

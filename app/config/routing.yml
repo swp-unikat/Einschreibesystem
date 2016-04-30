@@ -27,5 +27,9 @@ NelmioApiDocBundle:
   resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
   prefix:   /api/doc
 
+restful_services:
+    resource: "@CoreAPIBundle/Resources/config/routing.yml"
+    type:     rest
+
 fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"
