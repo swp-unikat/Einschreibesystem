@@ -23,7 +23,11 @@ use FOS\RestBundle\Routing\ClassResourceInterface;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\Query;
-
+/**
+ * Class RestController.
+ *
+ * @Rest\RouteResource("Workshops")
+ */
 
 class WorkshopController extends FOSRestController implements ClassResourceInterface
 {
@@ -31,9 +35,10 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      * @ApiDoc(
      *  resource=true,
      *  description="Returns list of all Workshops that are active",
+     *  output = "Core\EntityBundle\Entity\Workshop",
      *  statusCodes = {
      *      200 = "Returned when successful",
-     *      405 = "Returned when the data is not found"
+     *      404 = "Returned when the data is not found"
      *  }
      * )
      * )
@@ -41,7 +46,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\View()
      */
-    public function cgetAction()
+    public function getAllAction()
     {
         $workshopRepo = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:Workshop');
         $entits = $workshopRepo->getAllActiveWorkshops();
@@ -53,9 +58,215 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
         return $this->handleView($view);
     }
 
-    public function getDetailAction($id)
+    /**
+     * @Security("has_role('ROLE_ADMIN')")
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Returns list of all Workshops ",
+     *  output = "Core\EntityBundle\Entity\Workshop",
+     *  statusCodes = {
+     *      200 = "Returned when successful",
+     *      404 = "Returned when the data is not found"
+     *  }
+     * )
+     * )
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Rest\View()
+     */
+    public function historyAction()
+    {
+		
+    }
+
+    /**
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Returns Details of a Workshop",
+     *  output = "Core\EntityBundle\Entity\Workshop",
+     *  statusCodes = {
+     *      200 = "Returned when successful",
+     *      404 = "Returned when the data is not found"
+     *  },requirements={
+     *      {
+     *          "name"="id",
+     *          "dataType"="integer",
+     *          "requirement"="\d+",
+     *          "description"="which workshop to display"
+     *      }
+     *  },
+     *  parameters={
+     *      {"name"="id", "dataType"="integer", "required"=true, "description"="Workshop Id"}
+     *  }
+     * )
+     * )
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Rest\View()
+     */
+    public function getAction($id)
     {
 
     }
+    /**
+    	 * @Security("has_role('ROLE_ADMIN')")
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Action to create a new Workshop",
+     *  output = "",
+     *  statusCodes = {
+     *      200 = "Returned when successful",
+     *      404 = "Returned when the data is not found"
+     *  }
+     * )
+     * )
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Rest\View()
+     */
+    public function putAction()
+    {
+		return $new;
+    }
+    
+	/**
+	 * @Security("has_role('ROLE_ADMIN')")
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Action to edit a Workshop",
+     *  output = "",
+     *  statusCodes = {
+     *      200 = "Returned when successful",
+     *      404 = "Returned when the data is not found"
+     *  }
+     * )
+     * )
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Rest\View()
+     */
+    public function patchAction($id)
+    {
 
+    }
+    	/**
+    	 * @Security("has_role('ROLE_ADMIN')")
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Action to delete a Workshop",
+     *  output = "",
+     *  statusCodes = {
+     *      200 = "Returned when successful",
+     *      404 = "Returned when the data is not found"
+     *  }
+     * )
+     * )
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Rest\View()
+     */
+    public function deleteAction($id)
+    {
+
+    }
+	/**	
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Action to enroll a Workshop",
+     *  output = "",
+     *  statusCodes = {
+     *      200 = "Returned when successful",
+     *      404 = "Returned when the data is not found"
+     *  }
+     * )
+     * )
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Rest\View()
+     */
+    public function postEnrollAction($id)
+    {
+		
+    }
+    
+    	/**	
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Action to confirm enrollment to a Workshop",
+     *  output = "",
+     *  statusCodes = {
+     *      200 = "Returned when successful",
+     *      404 = "Returned when the data is not found"
+     *  }
+     * )
+     * )
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Rest\View()
+     */
+    public function getEnrollConfirmAction($id,$token)
+    {
+		
+    }
+    
+    	/**
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Action to unsubscribe a Workshop",
+     *  output = "",
+     *  statusCodes = {
+     *      200 = "Returned when successful",
+     *      404 = "Returned when the data is not found"
+     *  }
+     * )
+     * )
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Rest\View()
+     */
+    public function getUnsubscribeAction($id,$token)
+    {
+		
+    }
+    
+    /**
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Returns the waitinglist of a workshop",
+     *  output = "",
+     *  statusCodes = {
+     *      200 = "Returned when successful",
+     *      404 = "Returned when the data is not found"
+     *  }
+     * )
+     * )
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Rest\View()
+     */
+    public function getWaitinglistAction($id)
+    {
+		
+    }
+	
+	/**
+	 * @Security("has_role('ROLE_ADMIN')")
+     * @ApiDoc(
+     *  resource=true,
+     *  description="overbook a woorkshop",
+     *  output = "",
+     *  statusCodes = {
+     *      200 = "Returned when successful",
+     *      404 = "Returned when the data is not found"
+     *  }
+     * )
+     * )
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Rest\View()
+     */
+    public function patchWaitinglistAction($id,$participantsId)
+    {
+		
+    }
 }

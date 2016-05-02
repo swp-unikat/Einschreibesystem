@@ -3,3 +3,27 @@ service_workshop:
     prefix: /api
     resource: "@CoreAPIBundle/Controller/WorkshopController.php"
     name_prefix:  api_workshop_ # naming collision
+
+service_participants:
+    type: rest
+    prefix: /api
+    resource: "@CoreAPIBundle/Controller/ParticipantsController.php"
+    name_prefix:  api_participants_ # naming collision    
+    
+service_workshop_template:
+    type: rest
+    prefix: /api/workshops
+    resource: "@CoreAPIBundle/Controller/WorkshopTemplateController.php"
+    name_prefix:  api_workshop_template_ # naming collision
+
+service_email_template:
+    type: rest
+    prefix: /api/email
+    resource: "@CoreAPIBundle/Controller/EmailTemplateController.php"
+    name_prefix:  api_email_template_ # naming collision
+    
+service_email:
+    type: rest
+    prefix: /api
+    resource: "@CoreAPIBundle/Controller/EmailController.php"
+    name_prefix:  api_email_ # naming collision            
