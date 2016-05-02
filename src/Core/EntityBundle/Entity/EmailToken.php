@@ -39,21 +39,21 @@ class EmailToken{
     public $token;
     /**
      * @var \DateTime
-     * @ORM\Column(name="created", type="DateTime", nullable=false)
+     * @ORM\Column(name="created", type="datetime", nullable=false)
      * @Serializer\Expose
      * @Serializer\SerializedName("email_subject")
      */
     public $created;
     /**
      * @var \DateTime
-     * @ORM\Column(name="valid_until", type="string", nullable=false)
+     * @ORM\Column(name="valid_until", type="datetime", nullable=false)
      * @Serializer\Expose
      * @Serializer\SerializedName("valid_until")
      */
     public $valid_until;
     /**
      * @var \DateTime
-     * @ORM\Column(name="used_at", type="string", nullable=false)
+     * @ORM\Column(name="used_at", type="datetime", nullable=false)
      * @Serializer\Expose
      * @Serializer\SerializedName("used_at")
      */
