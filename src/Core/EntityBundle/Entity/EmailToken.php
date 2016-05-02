@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\Table(name="email_token")
  */
-class WorkshopTemplate{
+class EmailToken{
     /**
      * @var int
      * @ORM\Id
