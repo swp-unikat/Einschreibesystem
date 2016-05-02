@@ -3,5 +3,5 @@
 vendor/
 bin/
 app/cache
-node_modules
-bower_components
+node_modules/
+bower_components/

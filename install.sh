@@ -50,6 +50,12 @@ cd /var/www/
 rm -rf html
 composer install
 
+#NPM Install
+sudo npm install --no-bin-links
+
+#Bower Install
+bower instaall
+
 #restarts
 service apache2 restart
 service mysqld restart
