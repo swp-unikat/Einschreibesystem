@@ -12,6 +12,7 @@ use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Request\ParamFetcher;
 use FOS\RestBundle\View\View;
 use JMS\Serializer\SerializationContext;
+use Proxies\__CG__\Core\EntityBundle\Entity\Workshop;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -54,7 +55,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
             throw $this->createNotFoundException("No Workshops found");
         }
 
-        $view = $this->view("{'Hallo'}", 200);
+        $view = $this->view($entits, 200);
         return $this->handleView($view);
     }
 
@@ -76,7 +77,14 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      */
     public function historyAction()
     {
-		
+        $workshopRepo = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:Workshop');
+        $entits = $workshopRepo->getAllWorkshops();
+        if (!$entits) {
+            throw $this->createNotFoundException("No Workshops found");
+        }
+
+        $view = $this->view($entits, 200);
+        return $this->handleView($view);
     }
 
     /**
@@ -100,16 +108,23 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      *  }
      * )
      * )
-     *
+     * @param \Symfony\Component\HttpFoundation\Request $request
+
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\View()
      */
-    public function getAction($id)
+    public function getAction(Request $request, $id)
     {
-
+        $workshop = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:Workshop')->find($id);
+        if (!$workshop) {
+            throw $this->createNotFoundException("This workshop was not found");
+        } else {
+            $view = $this->view($workshop, 200);
+            return $this->handleView($view);
+        }
     }
     /**
-    	 * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN')")
      * @ApiDoc(
      *  resource=true,
      *  description="Action to create a new Workshop",
@@ -126,7 +141,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      */
     public function putAction()
     {
-		return $new;
+
     }
     
 	/**
@@ -149,8 +164,9 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
     {
 
     }
-    	/**
-    	 * @Security("has_role('ROLE_ADMIN')")
+
+    /**
+     * @Security("has_role('ROLE_ADMIN')")
      * @ApiDoc(
      *  resource=true,
      *  description="Action to delete a Workshop",
@@ -165,9 +181,12 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\View()
      */
-    public function deleteAction($id)
+    public function deleteAction(Workshop $workshop)
     {
+        $this->getDoctrine()->getManager()->remove($workshop);
+        $this->manager->flush($workshop);
 
+        return View::create(null, Codes::HTTP_NO_CONTENT);
     }
 	/**	
      * @ApiDoc(
@@ -246,7 +265,13 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      */
     public function getWaitinglistAction($id)
     {
-		
+        $waitinglist = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:WorkshopParticipants')->findBy(['workshop' => $id]);
+        if (!$waitinglist) {
+            throw $this->createNotFoundException("No waitinglist");
+        }
+
+        $view = $this->view($waitinglist, 200);
+        return $this->handleView($view);
     }
 	
 	/**
