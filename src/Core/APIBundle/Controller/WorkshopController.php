@@ -11,8 +11,10 @@ use Doctrine\Common\Collections\Criteria;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Request\ParamFetcher;
 use FOS\RestBundle\View\View;
+use FOS\RestBundle\Util\Codes;
 use JMS\Serializer\SerializationContext;
-use Proxies\__CG__\Core\EntityBundle\Entity\Workshop;
+use Core\EntityBundle\Entity\Workshop;
+use Core\EntityBundle\Entity\WorkshopParticipants;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -102,9 +104,6 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      *          "requirement"="\d+",
      *          "description"="which workshop to display"
      *      }
-     *  },
-     *  parameters={
-     *      {"name"="id", "dataType"="integer", "required"=true, "description"="Workshop Id"}
      *  }
      * )
      * )
@@ -174,6 +173,13 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      *  statusCodes = {
      *      200 = "Returned when successful",
      *      404 = "Returned when the data is not found"
+     *  },requirements={
+     *      {
+     *          "name"="id",
+     *          "dataType"="integer",
+     *          "requirement"="\d+",
+     *          "description"="Workshop ID"
+     *      }
      *  }
      * )
      * )
@@ -181,10 +187,14 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\View()
      */
-    public function deleteAction(Workshop $workshop)
+    public function deleteAction($id)
     {
+        $workshop = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Workshop")->find($id);
+        if (!$workshop) {
+            throw $this->createNotFoundException("Workshop not found");
+        }
         $this->getDoctrine()->getManager()->remove($workshop);
-        $this->manager->flush($workshop);
+        $this->getDoctrine()->getManager()->flush($workshop);
 
         return View::create(null, Codes::HTTP_NO_CONTENT);
     }
@@ -252,10 +262,17 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      * @ApiDoc(
      *  resource=true,
      *  description="Returns the waitinglist of a workshop",
-     *  output = "",
+     *  output = "Core\EntityBundle\Entity\WorkshopParticipants",
      *  statusCodes = {
      *      200 = "Returned when successful",
      *      404 = "Returned when the data is not found"
+     *  },requirements={
+     *      {
+     *          "name"="id",
+     *          "dataType"="integer",
+     *          "requirement"="\d+",
+     *          "description"="Workshop ID"
+     *      }
      *  }
      * )
      * )
@@ -283,6 +300,18 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      *  statusCodes = {
      *      200 = "Returned when successful",
      *      404 = "Returned when the data is not found"
+     *  },requirements={
+     *      {
+     *          "name"="id",
+     *          "dataType"="integer",
+     *          "requirement"="\d+",
+     *          "description"="Workshop ID"
+     *      },{
+     *          "name"="participantsId",
+     *          "dataType"="integer",
+     *          "requirement"="\d+",
+     *          "description"="Participants ID"
+     *     }
      *  }
      * )
      * )
@@ -290,8 +319,17 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\View()
      */
-    public function patchWaitinglistAction($id,$participantsId)
+    public function patchWaitinglistAction($id, $participantId)
     {
-		
+        $workshopParticipant = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:WorkshopParticipants")->findById($id,
+            $participantId);
+        if (!$workshopParticipant) {
+            throw $this->createNotFoundException("No participant on waiting list found");
+        }
+        $workshopParticipant->setWaiting(0);
+        $this->getDoctrine()->getManager()->persist($workshopParticipant);
+        $this->getDoctrine()->getManager()->flush();
+
+        return View::create(null, Codes::HTTP_NO_CONTENT);
     }
 }
