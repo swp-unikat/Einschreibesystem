@@ -33,8 +33,8 @@ class WorkshopParticipants
      */
     protected $participant;
     /**
-     * @var \Core\EntityBundle\Entity\Workshps
-     * @ORM\OneToOne(targetEntity="\Core\EntityBundle\Entity\Workshops", cascade={"persist"})
+     * @var \Core\EntityBundle\Entity\Workshop
+     * @ORM\OneToOne(targetEntity="\Core\EntityBundle\Entity\Workshop", cascade={"persist"})
      * @ORM\JoinColumn(name="workshop", referencedColumnName="id", onDelete="CASCADE")
      * @Serializer\Expose
      * @Serializer\SerializedName("workshop")
