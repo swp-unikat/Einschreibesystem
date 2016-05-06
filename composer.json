@@ -8,7 +8,7 @@
         "classmap": [ "app/AppKernel.php", "app/AppCache.php" ]
     },
     "require": {
-		"php": ">=7.0.3",
+		"php": ">=7.0",
 		"symfony/symfony": "2.8.*",
 		"symfony/swiftmailer-bundle": "~2.3",
 		"symfony/monolog-bundle": "~2.4",
@@ -21,6 +21,7 @@
 		"sensio/framework-extra-bundle": "^3.0.2",
 		"incenteev/composer-parameter-handler": "~2.0",
 		"nelmio/api-doc-bundle": "^2.9",
+        "nelmio/cors-bundle": "^1.4",
 		"jms/serializer-bundle": "^1.1.0",
 		"knplabs/knp-time-bundle": "~1.3"
     },
