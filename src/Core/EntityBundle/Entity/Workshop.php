@@ -47,6 +47,13 @@ class Workshop
     protected $requirements;
     /**
      * @var string
+     * @ORM\Column(name="description", type="text", nullable=false)
+     * @Serializer\Expose
+     * @Serializer\SerializedName("description")
+     */
+    protected $description;
+    /**
+     * @var string
      * @ORM\Column(name="location", type="string", nullable=false)
      * @Serializer\Expose
      * @Serializer\SerializedName("location")
@@ -228,6 +235,22 @@ class Workshop
     public function setCreated($created)
     {
         $this->created = $created;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
     }
 
 }
