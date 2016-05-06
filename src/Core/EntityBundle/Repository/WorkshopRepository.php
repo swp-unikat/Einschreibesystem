@@ -7,6 +7,7 @@
  */
 namespace Core\EntityBundle\Repository;
 
+use Core\EntityBundle\Entity\Workshop;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\Query;
@@ -25,6 +26,24 @@ class WorkshopRepository extends EntityRepository
             ->where(
                 $qb->expr()->gt('workshop.start_at', ':now')
             )
+            ->orderBy('workshop.start_at', 'ASC');
+        $q->setParameter('now', $oDate);
+        $result = $q->getQuery()->getResult();
+        if (!$result) {
+            return false;
+        } else {
+            return $result;
+        }
+    }
+
+    public function getAllWorkshops()
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder();
+        $oDate = new \DateTime('now');
+
+        $q = $qb->select(array('workshop'))
+            ->from('CoreEntityBundle:Workshop', 'workshop')
             ->orderBy('workshop.start_at', 'ASC');
         $q->setParameter('now', $oDate);
         $result = $q->getQuery()->getResult();

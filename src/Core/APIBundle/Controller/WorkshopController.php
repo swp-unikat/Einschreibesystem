@@ -11,7 +11,10 @@ use Doctrine\Common\Collections\Criteria;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Request\ParamFetcher;
 use FOS\RestBundle\View\View;
+use FOS\RestBundle\Util\Codes;
 use JMS\Serializer\SerializationContext;
+use Core\EntityBundle\Entity\Workshop;
+use Core\EntityBundle\Entity\WorkshopParticipants;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -54,7 +57,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
             throw $this->createNotFoundException("No Workshops found");
         }
 
-        $view = $this->view("{'Hallo'}", 200);
+        $view = $this->view($entits, 200);
         return $this->handleView($view);
     }
 
@@ -76,7 +79,14 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      */
     public function historyAction()
     {
-		
+        $workshopRepo = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:Workshop');
+        $entits = $workshopRepo->getAllWorkshops();
+        if (!$entits) {
+            throw $this->createNotFoundException("No Workshops found");
+        }
+
+        $view = $this->view($entits, 200);
+        return $this->handleView($view);
     }
 
     /**
@@ -94,22 +104,26 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      *          "requirement"="\d+",
      *          "description"="which workshop to display"
      *      }
-     *  },
-     *  parameters={
-     *      {"name"="id", "dataType"="integer", "required"=true, "description"="Workshop Id"}
      *  }
      * )
      * )
-     *
+     * @param \Symfony\Component\HttpFoundation\Request $request
+
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\View()
      */
-    public function getAction($id)
+    public function getAction(Request $request, $id)
     {
-
+        $workshop = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:Workshop')->find($id);
+        if (!$workshop) {
+            throw $this->createNotFoundException("This workshop was not found");
+        } else {
+            $view = $this->view($workshop, 200);
+            return $this->handleView($view);
+        }
     }
     /**
-    	 * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_ADMIN')")
      * @ApiDoc(
      *  resource=true,
      *  description="Action to create a new Workshop",
@@ -126,7 +140,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      */
     public function putAction()
     {
-		return $new;
+
     }
     
 	/**
@@ -149,8 +163,9 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
     {
 
     }
-    	/**
-    	 * @Security("has_role('ROLE_ADMIN')")
+
+    /**
+     * @Security("has_role('ROLE_ADMIN')")
      * @ApiDoc(
      *  resource=true,
      *  description="Action to delete a Workshop",
@@ -158,6 +173,13 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      *  statusCodes = {
      *      200 = "Returned when successful",
      *      404 = "Returned when the data is not found"
+     *  },requirements={
+     *      {
+     *          "name"="id",
+     *          "dataType"="integer",
+     *          "requirement"="\d+",
+     *          "description"="Workshop ID"
+     *      }
      *  }
      * )
      * )
@@ -167,7 +189,14 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      */
     public function deleteAction($id)
     {
+        $workshop = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Workshop")->find($id);
+        if (!$workshop) {
+            throw $this->createNotFoundException("Workshop not found");
+        }
+        $this->getDoctrine()->getManager()->remove($workshop);
+        $this->getDoctrine()->getManager()->flush($workshop);
 
+        return View::create(null, Codes::HTTP_NO_CONTENT);
     }
 	/**	
      * @ApiDoc(
@@ -233,10 +262,17 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      * @ApiDoc(
      *  resource=true,
      *  description="Returns the waitinglist of a workshop",
-     *  output = "",
+     *  output = "Core\EntityBundle\Entity\WorkshopParticipants",
      *  statusCodes = {
      *      200 = "Returned when successful",
      *      404 = "Returned when the data is not found"
+     *  },requirements={
+     *      {
+     *          "name"="id",
+     *          "dataType"="integer",
+     *          "requirement"="\d+",
+     *          "description"="Workshop ID"
+     *      }
      *  }
      * )
      * )
@@ -246,7 +282,13 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      */
     public function getWaitinglistAction($id)
     {
-		
+        $waitinglist = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:WorkshopParticipants')->findBy(['workshop' => $id]);
+        if (!$waitinglist) {
+            throw $this->createNotFoundException("No waitinglist");
+        }
+
+        $view = $this->view($waitinglist, 200);
+        return $this->handleView($view);
     }
 	
 	/**
@@ -258,6 +300,18 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      *  statusCodes = {
      *      200 = "Returned when successful",
      *      404 = "Returned when the data is not found"
+     *  },requirements={
+     *      {
+     *          "name"="id",
+     *          "dataType"="integer",
+     *          "requirement"="\d+",
+     *          "description"="Workshop ID"
+     *      },{
+     *          "name"="participantsId",
+     *          "dataType"="integer",
+     *          "requirement"="\d+",
+     *          "description"="Participants ID"
+     *     }
      *  }
      * )
      * )
@@ -265,8 +319,17 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\View()
      */
-    public function patchWaitinglistAction($id,$participantsId)
+    public function patchWaitinglistAction($id, $participantId)
     {
-		
+        $workshopParticipant = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:WorkshopParticipants")->findById($id,
+            $participantId);
+        if (!$workshopParticipant) {
+            throw $this->createNotFoundException("No participant on waiting list found");
+        }
+        $workshopParticipant->setWaiting(0);
+        $this->getDoctrine()->getManager()->persist($workshopParticipant);
+        $this->getDoctrine()->getManager()->flush();
+
+        return View::create(null, Codes::HTTP_NO_CONTENT);
     }
 }
