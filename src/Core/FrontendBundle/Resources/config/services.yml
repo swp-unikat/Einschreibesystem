@@ -1,0 +1,4 @@
+services:
+#    core_frontend.example:
+#        class: Core\FrontendBundle\Example
+#        arguments: ["@service_id", "plain_value", %parameter%]
