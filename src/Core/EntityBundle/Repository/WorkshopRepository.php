@@ -1,7 +1,8 @@
 <?php
 /**
  * Created by IntelliJ IDEA.
- * User: admin
+ * User: Leon Bergmann
+ * Company: SkyLab UG(haftungsbeschränkt)
  * Date: 29.04.2016
  * Time: 16:55
  */
