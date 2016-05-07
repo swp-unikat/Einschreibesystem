@@ -25,42 +25,49 @@ class loadParticipantsData extends AbstractFixture implements OrderedFixtureInte
         $participant->setName("Max");
         $participant->setSurname("Maier");
         $participant->setEmail("max.maier@exampl.de");
+        $participant->setBlacklisted(false);
         $manager->persist($participant);
 
         $participant = new Participants();
         $participant->setName("Malte");
         $participant->setSurname("Mayer");
         $participant->setEmail("malte.mayer@exampl.de");
+        $participant->setBlacklisted(false);
         $manager->persist($participant);
 
         $participant = new Participants();
         $participant->setName("Max");
         $participant->setSurname("Mustermann");
         $participant->setEmail("max.mustermann@exampl.de");
+        $participant->setBlacklisted(false);
         $manager->persist($participant);
 
         $participant = new Participants();
         $participant->setName("Maximiliane");
         $participant->setSurname("Musterfrau");
         $participant->setEmail("Maximiliane.musterfrau@exampl.de");
+        $participant->setBlacklisted(false);
         $manager->persist($participant);
 
         $participant = new Participants();
         $participant->setName("Jane");
         $participant->setSurname("Dow");
         $participant->setEmail("jane.doe@exampl.de");
+        $participant->setBlacklisted(false);
         $manager->persist($participant);
 
         $participant = new Participants();
         $participant->setName("Maximiliane");
         $participant->setSurname("Musterfrau");
         $participant->setEmail("Maximiliane.musterfrau@exampl.de");
+        $participant->setBlacklisted(false);
         $manager->persist($participant);
 
         $participant = new Participants();
         $participant->setName("Erika");
         $participant->setSurname("Musterfrau");
         $participant->setEmail("erika.musterfrau@exampl.de");
+        $participant->setBlacklisted(false);
         $manager->persist($participant);
 
         $manager->flush();

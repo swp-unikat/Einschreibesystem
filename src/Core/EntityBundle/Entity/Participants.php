@@ -54,7 +54,7 @@ class Participants
     protected $blacklisted;
     /**
      * @var \DateTime
-     * @ORM\Column(name="blacklisted_at", type="datetime", nullable=false)
+     * @ORM\Column(name="blacklisted_at", type="datetime", nullable=true)
      * @Serializer\Expose
      * @Serializer\SerializedName("blacklisted_at")
      */
