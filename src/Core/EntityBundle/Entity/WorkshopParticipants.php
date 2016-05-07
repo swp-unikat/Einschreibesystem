@@ -27,7 +27,7 @@ class WorkshopParticipants
     protected $id;
     /**
      * @var \Core\EntityBundle\Entity\Participants
-     * @ORM\OneToOne(targetEntity="\Core\EntityBundle\Entity\Participants", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="\Core\EntityBundle\Entity\Participants", cascade={"persist"})
      * @ORM\JoinColumn(name="participant", referencedColumnName="id", onDelete="CASCADE")
      * @Serializer\Expose
      * @Serializer\SerializedName("participants")
@@ -35,7 +35,7 @@ class WorkshopParticipants
     protected $participant;
     /**
      * @var \Core\EntityBundle\Entity\Workshop
-     * @ORM\OneToOne(targetEntity="\Core\EntityBundle\Entity\Workshop, cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="\Core\EntityBundle\Entity\Workshop", cascade={"persist"})
      * @ORM\JoinColumn(name="workshop", referencedColumnName="id", onDelete="CASCADE")
      * @Serializer\Expose
      * @Serializer\SerializedName("workshop")
