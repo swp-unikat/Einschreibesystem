@@ -283,7 +283,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      */
     public function getWaitinglistAction($id)
     {
-        $waitinglist = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:WorkshopParticipants')->findBy(['workshop' => $id,'waiting' => 1],['enrollment']);
+        $waitinglist = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:WorkshopParticipants')->findBy(['workshop' => $id,'waiting' => 1],['enrollment' => "DESC"]);
         if (!$waitinglist) {
             throw $this->createNotFoundException("No waitinglist for workshop");
         }
