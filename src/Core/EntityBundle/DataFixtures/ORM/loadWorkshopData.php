@@ -16,6 +16,11 @@ use Core\EntityBundle\Entity\Workshop;
 
 class loadWorkshopData extends AbstractFixture implements OrderedFixtureInterface
 {
+    /**
+     * @var ObjectManager
+     */
+    protected $manager;
+    
     public function load(ObjectManager $manager){
         $workshop = new Workshop();
         $workshop->setTitle("Grundlagen Löten Level 0 - MitarbeiterSpecial ");

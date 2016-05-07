@@ -17,6 +17,12 @@ use Core\EntityBundle\Entity\WorkshopParticipants;
 
 class loadWorkshopParticipantsData extends AbstractFixture implements OrderedFixtureInterface
 {
+
+    /**
+     * @var ObjectManager
+     */
+    protected $manager;
+
     public function load(ObjectManager $manager){
         $this->loadDataForWorkshop1($manager);
         $this->loadDataForWorkshop2($manager);

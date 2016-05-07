@@ -28,7 +28,7 @@
     "require-dev": {
         "sensio/generator-bundle": "~3.0",
         "symfony/phpunit-bridge": "~2.7",
-        "doctrine/doctrine-fixtures-bundle": "2.2.*",
+        "doctrine/doctrine-fixtures-bundle": "^2.3",
 		"pugx/autocompleter-bundle": "1.1.*"
     },
     "scripts": {

@@ -15,6 +15,11 @@ use Core\EntityBundle\Entity\Participants;
 
 class loadParticipantsData extends AbstractFixture implements OrderedFixtureInterface
 {
+    /**
+     * @var ObjectManager
+     */
+    protected $manager;
+    
     public function load(ObjectManager $manager){
         $participant = new Participants();
         $participant->setName("Max");
