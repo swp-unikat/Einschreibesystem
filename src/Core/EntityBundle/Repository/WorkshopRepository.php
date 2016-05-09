@@ -10,7 +10,6 @@ namespace Core\EntityBundle\Repository;
 use Core\EntityBundle\Entity\Workshop;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
-use Doctrine\ORM\Query;
 
 class WorkshopRepository extends EntityRepository
 {
