@@ -7,7 +7,7 @@
         "psr-4": {
             "": "src/",
             "SymfonyStandard\\": "app/"
-        }
+        },
         "classmap": [ "app/AppKernel.php", "app/AppCache.php" ]
     },
     "require": {
