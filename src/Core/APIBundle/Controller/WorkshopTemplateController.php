@@ -15,7 +15,6 @@ use FOS\RestBundle\View\View;
 use JMS\Serializer\SerializationContext;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
