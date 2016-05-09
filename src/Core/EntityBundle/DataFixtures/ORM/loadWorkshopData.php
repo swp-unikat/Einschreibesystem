@@ -1,7 +1,8 @@
 <?php
 /**
  * Created by IntelliJ IDEA.
- * User: lepm
+ * User: Leon Bergmann
+ * Authors: Leon Bergmann, Marco Hanisch
  * Date: 05/05/16
  * Time: 12:22
  */
@@ -14,6 +15,11 @@ use Core\EntityBundle\Entity\Workshop;
 
 class loadWorkshopData implements FixtureInterface
 {
+    /**
+     * @var ObjectManager
+     */
+    protected $manager;
+    
     public function load(ObjectManager $manager){
         $workshop = new Workshop();
         $workshop->setTitle("Test Nr. 1");
