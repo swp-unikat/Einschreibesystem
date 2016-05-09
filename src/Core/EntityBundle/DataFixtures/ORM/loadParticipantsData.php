@@ -22,53 +22,46 @@ class loadParticipantsData extends AbstractFixture implements OrderedFixtureInte
     
     public function load(ObjectManager $manager){
         $participant = new Participants();
-        $participant->setName("Max");
-        $participant->setSurname("Maier");
-        $participant->setEmail("max.maier@exampl.de");
+        $participant->setName("Bergmann");
+        $participant->setSurname("Leon");
+        $participant->setEmail("leon.bergmann@tu-ilmenau.de");
         $participant->setBlacklisted(false);
         $manager->persist($participant);
 
-        $participant = new Participants();
-        $participant->setName("Malte");
-        $participant->setSurname("Mayer");
-        $participant->setEmail("malte.mayer@exampl.de");
-        $participant->setBlacklisted(false);
-        $manager->persist($participant);
+        $participant2 = new Participants();
+        $participant2->setName("Hanisch");
+        $participant2->setSurname("Marco");
+        $participant2->setEmail("marco.hanisch@tu-ilmenau.de");
+        $participant2->setBlacklisted(false);
+        $manager->persist($participant2);
 
-        $participant = new Participants();
-        $participant->setName("Max");
-        $participant->setSurname("Mustermann");
-        $participant->setEmail("max.mustermann@exampl.de");
-        $participant->setBlacklisted(false);
-        $manager->persist($participant);
+        $participant3 = new Participants();
+        $participant3->setName("Griebel");
+        $participant3->setSurname("Martin");
+        $participant3->setEmail("martin.griebel@tu-ilmenau.de");
+        $participant3->setBlacklisted(false);
+        $manager->persist($participant3);
 
-        $participant = new Participants();
-        $participant->setName("Maximiliane");
-        $participant->setSurname("Musterfrau");
-        $participant->setEmail("Maximiliane.musterfrau@exampl.de");
-        $participant->setBlacklisted(false);
-        $manager->persist($participant);
+        $participant4 = new Participants();
+        $participant4->setName("Durak");
+        $participant4->setSurname("Ahmet");
+        $participant4->setEmail("ahmet.durak@tu-ilmenau.de");
+        $participant4->setBlacklisted(false);
+        $manager->persist($participant4);
 
-        $participant = new Participants();
-        $participant->setName("Jane");
-        $participant->setSurname("Dow");
-        $participant->setEmail("jane.doe@exampl.de");
-        $participant->setBlacklisted(false);
-        $manager->persist($participant);
+        $participant5 = new Participants();
+        $participant5->setName("Heringklee");
+        $participant5->setSurname("Stefan");
+        $participant5->setEmail("stefan.heringklee@tu-ilmenau.de");
+        $participant5->setBlacklisted(false);
+        $manager->persist($participant5);
 
-        $participant = new Participants();
-        $participant->setName("Maximiliane");
-        $participant->setSurname("Musterfrau");
-        $participant->setEmail("Maximiliane.musterfrau@exampl.de");
-        $participant->setBlacklisted(false);
-        $manager->persist($participant);
-
-        $participant = new Participants();
-        $participant->setName("Erika");
-        $participant->setSurname("Musterfrau");
-        $participant->setEmail("erika.musterfrau@exampl.de");
-        $participant->setBlacklisted(false);
-        $manager->persist($participant);
+        $participant6 = new Participants();
+        $participant6->setName("Schaefer");
+        $participant6->setSurname("Valentin");
+        $participant6->setEmail("valentin.schaefer@tu-ilmenau.de");
+        $participant6->setBlacklisted(false);
+        $manager->persist($participant6);
 
         $manager->flush();
 
