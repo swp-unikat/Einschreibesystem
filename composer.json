@@ -5,7 +5,7 @@
     "description": "The \"Symfony Standard Edition\" distribution",
     "autoload": {
         "psr-4": {
-            "": "src/",
+            "Core\\": "src/",
             "SymfonyStandard\\": "app/"
         },
         "classmap": [ "app/AppKernel.php", "app/AppCache.php" ]
