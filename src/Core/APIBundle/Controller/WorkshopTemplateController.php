@@ -49,7 +49,14 @@ class WorkshopTemplateController extends FOSRestController implements ClassResou
      */
     public function getListAction()
     {
-	    
+	$workshoptemplateRepo = &this -> getDoctrine() -> getManager() -> getRepository('CoreEntityBundle:Workshoptemplate');
+	$entits = $workshoptemplateRepo ->getALLWorkshoptemplate();
+	if(!$entits){
+		throw $this->createNotFoundException("No WorkshopTemplate found");
+	}
+	
+	$view = $this->view($entits, 200);
+        return $this->handleView($view);
     }
     
     	/**
@@ -68,8 +75,15 @@ class WorkshopTemplateController extends FOSRestController implements ClassResou
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\View()
      */
-    public function getAction($id)
-    {
+    public function getAction(Request $request, $id)
+    {        
+    	$workshoptemplate = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:WorkshopTemplate')->find($id);
+        if (!$workshoptemplate) {
+            throw $this->createNotFoundException("This workshoptemplate was not found");
+        } else {
+            $view = $this->view($workshop, 200);
+            return $this->handleView($view);
+        }
 	    
     }
     
@@ -133,6 +147,12 @@ class WorkshopTemplateController extends FOSRestController implements ClassResou
      */
     public function deleteAction($id)
     {
-	    
+	$workshoptemplate = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:WorkshopTemplate")->find($id);
+        if (!$workshoptemplate) {
+            throw $this->createNotFoundException("Workshop not found");
+        }
+        $this->getDoctrine()->getManager()->remove($workshoptemplate);
+        $this->getDoctrine()->getManager()->flush($workshoptemplate);
+        return View::create(null, Codes::HTTP_NO_CONTENT);    
     }
 }
