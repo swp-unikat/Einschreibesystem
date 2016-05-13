@@ -23,7 +23,7 @@ apt-get install -y apache2
 echo "ServerName localhost" >> /etc/apache2/httpd.conf
 apt-get install -y apache2-mpm-worker 
 
-# php fpm config
+# php fpm & apache config
 cp /var/www/apache.conf /etc/apache2/sites-available/000-default.conf
 a2enmod proxy_fcgi
 a2enmod rewrite
@@ -45,14 +45,21 @@ mv -f composer.phar /usr/local/bin/composer
 #Set locale
 sudo locale-gen de_DE.UTF-8
 
-# Composer install
+# File Setup
 cd /var/www/
 rm -rf html
+ln -s web /vagrant/web
+ln -s app /vagrant/app
+ln -s src /vagrant/src
+ln -s composer.json /vagrant/composer.json
+ln -s composer.lock /vagrant/composer.lock
+
+# Composer install
 composer install
 
 #restarts
 service apache2 restart
-service mysqld restart
+service mysql restart
 service php7.0-fpm restart
 
 
