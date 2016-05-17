@@ -50,8 +50,8 @@ class WorkshopTemplateController extends FOSRestController implements ClassResou
      */
     public function getListAction()
     {
-        $workshoptemplateRepo = &this -> getDoctrine() -> getManager() -> getRepository('CoreEntityBundle:Workshoptemplate');
-	$entits = $workshoptemplateRepo ->getALLWorkshoptemplate();
+        $workshoptemplateRepo = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:WorkshopTemplate');
+	$entits =$workshoptemplateRepo ->getALLWorkshoptemplate();
 	if(!$entits){
         throw $this->createNotFoundException("No WorkshopTemplate found");
     }
