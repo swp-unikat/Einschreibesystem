@@ -1,0 +1,31 @@
+{
+  "name": "swp-unikat",
+  "version": "0.0.1",
+  "description": "Einschrebesystem UNIKAT",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "bower": "^1.3.1",
+    "grunt": "~0.4.5",
+    "grunt-contrib-jshint": "~0.10.0",
+    "grunt-contrib-nodeunit": "~0.4.1",
+    "grunt-contrib-uglify": "~0.5.0",
+    "grunt-jsdoc": "^2.0.0",
+    "karma": "^0.12.16",
+    "karma-chrome-launcher": "^0.1.4",
+    "karma-firefox-launcher": "^0.1.3",
+    "karma-jasmine": "~0.1.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/swp-unikat/Einschreibesystem.git"
+  },
+  "author": "Valentin Schaefer",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/swp-unikat/Einschreibesystem/issues"
+  }
+}
