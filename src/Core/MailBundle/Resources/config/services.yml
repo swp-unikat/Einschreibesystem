@@ -1,0 +1,4 @@
+services:
+#    core_mail.example:
+#        class: Core\MailBundle\Example
+#        arguments: ["@service_id", "plain_value", %parameter%]
