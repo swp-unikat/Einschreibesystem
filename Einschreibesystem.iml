@@ -16,7 +16,7 @@
         </SOURCES>
       </library>
     </orderEntry>
-    <orderEntry type="library" name="angularjs-DefinitelyTyped" level="application" />
     <orderEntry type="library" name="Einschreibesystem node_modules" level="project" />
+    <orderEntry type="library" name="AngularJS" level="project" />
   </component>
 </module>

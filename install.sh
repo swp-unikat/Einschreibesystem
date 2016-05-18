@@ -52,6 +52,7 @@ composer install
 
 #NPM Install
 sudo npm install --no-bin-links
+sudo npm install -g karma-cli
 
 #Bower Install
 bower instaall
