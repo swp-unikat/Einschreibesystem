@@ -55,7 +55,7 @@ sudo npm install --no-bin-links
 sudo npm install -g karma-cli
 
 #Bower Install
-bower instaall
+bower install
 
 #restarts
 service apache2 restart
