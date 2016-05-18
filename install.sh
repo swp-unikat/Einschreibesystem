@@ -49,6 +49,13 @@ cd /var/www/
 # Composer install
 composer install
 
+#NPM Install
+sudo npm install --no-bin-links
+sudo npm install -g karma-cli
+
+#Bower Install
+bower instaall
+
 #restarts
 service apache2 restart
 service mysql restart
