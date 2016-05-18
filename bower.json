@@ -1,0 +1,31 @@
+{
+  "name": "swp-unikat",
+  "description": "Einschrebesystem UNIKAT",
+  "main": "index.js",
+  "authors": [
+    "Valentin Schaefer"
+  ],
+  "license": "BSD-2-Clause",
+  "homepage": "https://github.com/swp-unikat/Einschreibesystem",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "1.5.x",
+    "bootstrap": ">=3.1.x",
+    "angular-route": "1.5.x",
+    "angular-resource": "1.5.x",
+    "angular-animate": "1.5.x",
+    "angular-touch": "1.5.x",
+    "jquery": "~2.1.1",
+    "angular-mocks": "1.5.x",
+    "angular-ui-bootstrap-bower": "0.11.0",
+    "angular-translate-loader-static-files": "^2.11.0",
+    "angular-translate": "^2.11.0"
+  }
+}
