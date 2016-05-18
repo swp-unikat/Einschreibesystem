@@ -233,9 +233,23 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      */
     public function getEnrollConfirmAction($id,$token)
     {
-		
+        $workshop = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Workshop")->find($id);
+        if ($workshop) {
+           if  ($token) {
+           	if ($token== ) {                       //überprüfe ob Nutzer Token zugeordnet
+           	$timestamp = time();                     
+                $compare = $timestamp - strtotime ($row[0]);
+                if ($compare < 30*60) {
+        	 $entry = new participant ($id) ;
+                   }
+                   else echo "Link abgelaufen";
+	         } 
+	           else echo "Anmeldung fehlgeschlagen";
+               }
+                  else echo "Anmeldung fehlgeschlagen";
+	    }
+                  else echo "Anmeldung fehlgeschlagen";
     }
-    
     	/**
      * @ApiDoc(
      *  resource=true,
@@ -253,7 +267,12 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      */
     public function getUnsubscribeAction($id,$token)
     {
-		
+	$workshop = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Workshop")->find($id);
+        if ($workshop) {
+           if  ($token) {
+           	
+           	
+           	
     }
     
     /**
