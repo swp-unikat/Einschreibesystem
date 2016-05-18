@@ -53,8 +53,8 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
 	    
     }
     
-    	/**
-    	 * @Security("has_role('ROLE_ADMIN')")
+    /**
+     * @Security("has_role('ROLE_ADMIN')")
      * @ApiDoc(
      *  resource=true,
      *  description="Returns list of all participants that are blacklisted",
