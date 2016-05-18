@@ -16,6 +16,7 @@ use FOS\RestBundle\Util\Codes;
 use JMS\Serializer\SerializationContext;
 use Core\EntityBundle\Entity\Workshop;
 use Core\EntityBundle\Entity\WorkshopParticipants;
+use Core\EntityBundle\Entity\EmailToken;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -238,15 +239,15 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
     public function getEnrollConfirmAction($workshopId,$participantsId,$token)
     {
         $workshop = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Workshop")->find($workshopId);
-        $token = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Token")->findBy(['token' => $token]);
+        $token = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:EmailToken")->findOneBy(['token' => $token]);
         $participant = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Participants")->find($participantsId);
 
-        // Workshop & Token & participant exsisting
+        // Workshop & Token & participant are valid
         if($workshop && $token && $participant){
             // Check if Token is not older then 30 min
-            if($token->getCreated()->add('+30 min') <= new \DateTime('now')){
+            if($token->getValidUntil() <= new \DateTime('now')){
                 // Check if this token is dedicated to user
-                if($token->getParicipant() != $participant){
+                if($token->getParticipant() != $participant){
                     throw $this->createAccessDeniedException("User does not match");
                 }else{
                     $participantWorkshop = new WorkshopParticipants();
@@ -260,10 +261,11 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
                         $participantWorkshop->setWaiting(true);
                     else
                         $participantWorkshop->setWaiting(false);
-                    // save the Entity to the database
+                    // save to database
+                    $token->setUsedAt(new \DateTime('now'));
+                    $this->getDoctrine()->getManager()->persist($token);
                     $this->getDoctrine()->getManager()->persist($participantWorkshop);
                     $this->getDoctrine()->getManager()->flush();
-
                 }
             }else{
                 throw $this->createAccessDeniedException("Token ist not valid");
