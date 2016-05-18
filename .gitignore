@@ -6,3 +6,5 @@ app/cache
 node_modules
 bower_components
 Einschreibesystem.iml
+app/logs
+web/vendor

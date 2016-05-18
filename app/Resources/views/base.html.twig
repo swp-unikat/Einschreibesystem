@@ -3,11 +3,24 @@
     <head>
         <meta charset="UTF-8" />
         <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <script src="{{ asset('vendor/jquery/dist/jquery.js') }}"></script>
+        <script src="{{ asset('vendor/angular-animate/angular-animate.js') }}"></script>
+        <script src="{{ asset('vendor/angular-animate/angular-animate.js') }}"></script>
+        <script src="{{ asset('vendor/angular-route/angular-route.js') }}"></script>
+        <script src="{{ asset('vendor/angular-resource/angular-resource.js') }}"></script>
+        <script src="{{ asset('vendor/angular-touch/angular-touch.js') }}"></script>
+        <script src="{{ asset('vendor/angular-translate/angular-translate.js') }}"></script>
+        <script src="{{ asset('vendor/angular-translate-loader-static-files/angular-translate-loader-static-files.js') }}"></script>
+        <script src="{{ asset('vendor/bootstrap/dist/js/bootstrap.js') }}"></script>
+        <script src="{{ asset('vendor/angular-ui-bootstrap-bower/ui-bootstrap.js') }}"></script>
+        <link rel="stylesheet" href="{{ asset('vendor/bootstrap/dist/css/bootstrap.css') }}">
+        <style>
+            .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+        </style>
     </head>
     <body>
         {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+
     </body>
 </html>
