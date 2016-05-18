@@ -1,4 +1,35 @@
-app:
-    resource: "@AppBundle/Controller/"
+core_cron:
+    resource: "@CoreCronBundle/Controller/"
     type:     annotation
-    
+    prefix:   /
+
+core_mail:
+    resource: "@CoreMailBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+core_api:
+    resource: "@CoreAPIBundle/Controller/"
+    type:     annotation
+    prefix:   /api
+
+core_entity:
+    resource: "@CoreEntityBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+core_frontend:
+    resource: "@CoreFrontendBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+NelmioApiDocBundle:
+  resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
+  prefix:   /api/doc
+
+restful_services:
+    resource: "@CoreAPIBundle/Resources/config/routing.yml"
+    type:     rest
+
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
