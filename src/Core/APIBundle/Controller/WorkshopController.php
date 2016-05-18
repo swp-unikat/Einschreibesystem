@@ -142,7 +142,6 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
     }
     
 	/**
-	 * @Security("has_role('ROLE_ADMIN')")
      * @ApiDoc(
      *  resource=true,
      *  description="Action to edit a Workshop",
@@ -155,11 +154,16 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      * )
      *
      * @return \Symfony\Component\HttpFoundation\Response
+     * @Rest\RequestParam(name="title", requirements=".*", description="json object of workshop")
+     * @Rest\RequestParam(name="", requirements=".*", description="json object of workshop")
      * @Rest\View()
      */
-    public function patchAction($id)
+    public function patchAction($id,ParamFetcher $paramFetcher)
     {
 
+        $paramFetcher->get('title');
+
+        return $this->handleView($view);
     }
 
     /**
@@ -216,7 +220,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
 		
     }
     
-    	/**	
+    /**
      * @ApiDoc(
      *  resource=true,
      *  description="Action to confirm enrollment to a Workshop",
@@ -231,26 +235,45 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\View()
      */
-    public function getEnrollConfirmAction($id,$token)
+    public function getEnrollConfirmAction($workshopId,$participantsId,$token)
     {
-        $workshop = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Workshop")->find($id);
-        if ($workshop) {
-           if  ($token) {
-           	if ($token== ) {                       //überprüfe ob Nutzer Token zugeordnet
-           	$timestamp = time();                     
-                $compare = $timestamp - strtotime ($row[0]);
-                if ($compare < 30*60) {
-        	 $entry = new participant ($id) ;
-                   }
-                   else echo "Link abgelaufen";
-	         } 
-	           else echo "Anmeldung fehlgeschlagen";
-               }
-                  else echo "Anmeldung fehlgeschlagen";
-	    }
-                  else echo "Anmeldung fehlgeschlagen";
+        $workshop = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Workshop")->find($workshopId);
+        $token = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Token")->findBy(['token' => $token]);
+        $participant = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Participants")->find($participantsId);
+
+        // Workshop & Token & participant exsisting
+        if($workshop && $token && $participant){
+            // Check if Token is not older then 30 min
+            if($token->getCreated()->add('+30 min') <= new \DateTime('now')){
+                // Check if this token is dedicated to user
+                if($token->getParicipant() != $participant){
+                    throw $this->createAccessDeniedException("User does not match");
+                }else{
+                    $participantWorkshop = new WorkshopParticipants();
+                    $participantWorkshop->setWorkshop($workshop);
+                    $participantWorkshop->setParticipant($participant);
+                    $participantWorkshop->setEnrollment(new \DateTime('now'));
+                    // Get Participants
+                    $participants = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Workshop")->getParticipants($workshopId);
+                    // Check if a waitinglist ist requiered
+                    if($participants > $workshop->getMaxParticipants())
+                        $participantWorkshop->setWaiting(true);
+                    else
+                        $participantWorkshop->setWaiting(false);
+                    // save the Entity to the database
+                    $this->getDoctrine()->getManager()->persist($participantWorkshop);
+                    $this->getDoctrine()->getManager()->flush();
+
+                }
+            }else{
+                throw $this->createAccessDeniedException("Token ist not valid");
+            }
+        }else{
+            throw $this->createNotFoundException("Workshop or Token not found");
+        }
     }
-    	/**
+
+    /**
      * @ApiDoc(
      *  resource=true,
      *  description="Action to unsubscribe a Workshop",
@@ -267,12 +290,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      */
     public function getUnsubscribeAction($id,$token)
     {
-	$workshop = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Workshop")->find($id);
-        if ($workshop) {
-           if  ($token) {
-           	
-           	
-           	
+	    $workshop = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Workshop")->find($id);
     }
     
     /**
