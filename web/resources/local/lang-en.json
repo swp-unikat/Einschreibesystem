@@ -1,10 +1,9 @@
 {
+
 "WORKSHOP_NAME":"Workshop name",
-"WORKSHOP_CONTENT": "Workshop content",
-"BEGIN_END_DATE": "Begin end date"
-
-
-
-
+"WORKSHOP_CONTENT":"Workshop content",
+"WORKSHOP_BEGIN_DATE":"Workshop begin date",
+ "WORKSHOP_END_DATE": "Workshop end date",
+"MAXIMUM_NUMBER_OF_PARTICIPANT":"Maximum number of participants"
 
 }
