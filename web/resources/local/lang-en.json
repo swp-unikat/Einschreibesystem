@@ -1,9 +1,19 @@
 {
-
+"CONFIRM":"Confirm",
+ "OK":"Ok",
+ "RETURN":"Return",
+ "CANCEL":"Cancel",
+ "WORKSHOP_LIST":"Workshop list",
+ "WORKSHOP_DETAILS": "Workshop details",
+ "CREATE_WORKSHOP":"Create workshop",
+ "WORKSHOP_MANAGEMENT":"Workshop",
 "WORKSHOP_NAME":"Workshop name",
 "WORKSHOP_CONTENT":"Workshop content",
 "WORKSHOP_BEGIN_DATE":"Workshop begin date",
  "WORKSHOP_END_DATE": "Workshop end date",
-"MAXIMUM_NUMBER_OF_PARTICIPANT":"Maximum number of participants"
+"WORKSHOP_MAXIMUM_NUMBER_OF_PARTICIPANT":"Workshop maximum number of participants",
+ "WORKSHOP_PLACE":"Workshop place",
+ "WORKSHOP_TUTOR":"Workshop tutor"
+
 
 }
