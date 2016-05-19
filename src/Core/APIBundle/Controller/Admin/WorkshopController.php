@@ -2,7 +2,7 @@
 /**
  * Created by IntelliJ IDEA.
  * User: Leon Bergmann
- * Company: SkyLab UG(haftungsbeschränkt)
+ * Company: SkyLab UG(haftungsbeschränkt) 
  * Date: 29.04.2016
  * Time: 16:44
  */
@@ -59,7 +59,35 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
         $view = $this->view($entits, 200);
         return $this->handleView($view);
     }
-    
+
+    /**
+     * @Security("has_role('ROLE_ADMIN')")
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Returns list of all Workshops ",
+     *  output = "Core\EntityBundle\Entity\Workshop",
+     *  statusCodes = {
+     *      200 = "Returned when successful",
+     *      404 = "Returned when the data is not found"
+     *  }
+     * )
+     * )
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Rest\View()
+     */
+    public function historyAction()
+    {
+        $workshopRepo = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:Workshop');
+        $entits = $workshopRepo->getAllWorkshops();
+        if (!$entits) {
+            throw $this->createNotFoundException("No Workshops found");
+        }
+
+        $view = $this->view($entits, 200);
+        return $this->handleView($view);
+    }
+
     /**
      * @ApiDoc(
      *  resource=true,
@@ -93,8 +121,87 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
             return $this->handleView($view);
         }
     }
+    /**
+     * @Security("has_role('ROLE_ADMIN')")
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Action to create a new Workshop",
+     *  output = "",
+     *  statusCodes = {
+     *      200 = "Returned when successful",
+     *      404 = "Returned when the data is not found"
+     *  }
+     * )
+     * )
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Rest\View()
+     */
+    public function putAction()
+    {
+
+    }
+    
+	/**
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Action to edit a Workshop",
+     *  output = "",
+     *  statusCodes = {
+     *      200 = "Returned when successful",
+     *      404 = "Returned when the data is not found"
+     *  }
+     * )
+     * )
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Rest\RequestParam(name="title", requirements=".*", description="json object of workshop")
+     * @Rest\RequestParam(name="", requirements=".*", description="json object of workshop")
+     * @Rest\View()
+     */
+    public function patchAction($id,ParamFetcher $paramFetcher)
+    {
+
+        $paramFetcher->get('title');
+
+        return $this->handleView($view);
+    }
 
     /**
+     * @Security("has_role('ROLE_ADMIN')")
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Action to delete a Workshop",
+     *  output = "",
+     *  statusCodes = {
+     *      200 = "Returned when successful",
+     *      404 = "Returned when the data is not found"
+     *  },requirements={
+     *      {
+     *          "name"="id",
+     *          "dataType"="integer",
+     *          "requirement"="\d+",
+     *          "description"="Workshop ID"
+     *      }
+     *  }
+     * )
+     * )
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Rest\View()
+     */
+    public function deleteAction($id)
+    {
+        $workshop = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Workshop")->find($id);
+        if (!$workshop) {
+            throw $this->createNotFoundException("Workshop not found");
+        }
+        $this->getDoctrine()->getManager()->remove($workshop);
+        $this->getDoctrine()->getManager()->flush($workshop);
+
+        return View::create(null, Codes::HTTP_NO_CONTENT);
+    }
+	/**	
      * @ApiDoc(
      *  resource=true,
      *  description="Action to enroll a Workshop",
@@ -111,9 +218,9 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      */
     public function postEnrollAction($id)
     {
-
+		
     }
-
+    
     /**
      * @ApiDoc(
      *  resource=true,
@@ -185,9 +292,9 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      */
     public function getUnsubscribeAction($id,$token)
     {
-        $workshop = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Workshop")->find($id);
+	    $workshop = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Workshop")->find($id);
     }
-
+    
     /**
      * @ApiDoc(
      *  resource=true,
@@ -220,5 +327,46 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
         $view = $this->view($waitinglist, 200);
         return $this->handleView($view);
     }
+	
+	/**
+	 * @Security("has_role('ROLE_ADMIN')")
+     * @ApiDoc(
+     *  resource=true,
+     *  description="overbook a woorkshop",
+     *  output = "",
+     *  statusCodes = {
+     *      200 = "Returned when successful",
+     *      404 = "Returned when the data is not found"
+     *  },requirements={
+     *      {
+     *          "name"="id",
+     *          "dataType"="integer",
+     *          "requirement"="\d+",
+     *          "description"="Workshop ID"
+     *      },{
+     *          "name"="participantsId",
+     *          "dataType"="integer",
+     *          "requirement"="\d+",
+     *          "description"="Participants ID"
+     *     }
+     *  }
+     * )
+     * )
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Rest\View()
+     */
+    public function patchWaitinglistAction($id, $participantId)
+    {
+        $workshopParticipant = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:WorkshopParticipants")->findById($id,
+            $participantId);
+        if (!$workshopParticipant) {
+            throw $this->createNotFoundException("No participant on waiting list found");
+        }
+        $workshopParticipant->setWaiting(0);
+        $this->getDoctrine()->getManager()->persist($workshopParticipant);
+        $this->getDoctrine()->getManager()->flush();
 
+        return View::create(null, Codes::HTTP_NO_CONTENT);
+    }
 }

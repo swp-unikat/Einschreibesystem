@@ -3,3 +3,4 @@
 vendor/
 bin/
 app/cache
+app/var

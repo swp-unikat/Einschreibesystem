@@ -1,16 +1,6 @@
 api_login_check:
     path: /api/login_check
 
-core_cron:
-    resource: "@CoreCronBundle/Controller/"
-    type:     annotation
-    prefix:   /
-
-core_mail:
-    resource: "@CoreMailBundle/Controller/"
-    type:     annotation
-    prefix:   /
-
 core_api:
     resource: "@CoreAPIBundle/Controller/"
     type:     annotation
