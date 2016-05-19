@@ -2,22 +2,24 @@
  *
  * @type {angular.Module}
  */
-var regApp = angular.module('regApp',[
+var mainApp = angular.module('mainApp',[
     'ngRoute',
-    'regAppCtrls'
+    'mainAppCtrls'
 ]);
 /**
  *
  * @type {angular.Module}
  */
-var regAppCtrls = angular.module('regAppCtrls',[]);
+var mainAppCtrls = angular.module('mainAppCtrls',[]);
 /**
  * Configure routing
  */
-app.config([$routeProvider,function ($routeProvider) {
-
-    $routeProvider.when('/workshops', {
-        templateUrl: 'resources/views/workshopList.html',
-        controller: 'WorkshopListCtrl'
-    });
-}]);
+mainApp.config(['$routeProvider',
+    function($routeProvider)
+    {
+        $routeProvider.when('/workshops', {
+            templateUrl: 'resources/views/workshopList.html',
+            controller: 'WorkshopListCtrl'
+        });
+    }
+]);
