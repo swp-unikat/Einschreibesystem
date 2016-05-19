@@ -6,7 +6,7 @@
  * Date: 29.04.2016
  * Time: 16:44
  */
-namespace Core\APIBundle\Controller;
+namespace Core\APIBundle\Controller\Admin;
 
 use Doctrine\Common\Collections\Criteria;
 use FOS\RestBundle\Controller\FOSRestController;
@@ -61,7 +61,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
     }
 
     /**
-     * @Security("has_role('ROLE_ADMIN')")
+
      * @ApiDoc(
      *  resource=true,
      *  description="Returns list of all Workshops ",
@@ -122,7 +122,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
         }
     }
     /**
-     * @Security("has_role('ROLE_ADMIN')")
+
      * @ApiDoc(
      *  resource=true,
      *  description="Action to create a new Workshop",
@@ -168,7 +168,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
     }
 
     /**
-     * @Security("has_role('ROLE_ADMIN')")
+
      * @ApiDoc(
      *  resource=true,
      *  description="Action to delete a Workshop",
@@ -329,7 +329,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
     }
 	
 	/**
-	 * @Security("has_role('ROLE_ADMIN')")
+	 
      * @ApiDoc(
      *  resource=true,
      *  description="overbook a woorkshop",
