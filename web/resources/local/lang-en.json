@@ -32,6 +32,9 @@
  "WORKSHOP_TEMPLATE":"Worksop template",
 "BLACK_LIST_MANAGEMENT":"Black list management",
  "EMAIL_TEMPLATE":"Email template",
+ "SETTINGS":"Settings",
+ "LOGIN":"Login",
+ "PASSWORD_RESET":"Password reset"
 
 
 }
