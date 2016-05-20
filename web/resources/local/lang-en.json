@@ -25,7 +25,13 @@
  "SHOW_ADMINISTRATORS":"Show administrators",
  "CHANGE_PASSWORD":"Show password",
  "INVITE_AN_ADMININSTRATOR":"Invite an adminstrator",
- "DELETE_AN_ADMNINSTRATOR":"Delete an adminstrator"
+ "DELETE_AN_ADMNINSTRATOR":"Delete an adminstrator",
+"WORKSHOP_TEMPLATE_EDIT":"Workshop template edit",
+ "DELETE_TEMPLATE":"Delete templates",
+ "EDIT_TEMPLATE":"Edit template",
+ "WORKSHOP_TEMPLATE":"Worksop template",
+"BLACK_LIST_MANAGEMENT":"Black list management",
+ "EMAIL_TEMPLATE":"Email template",
 
 
 }
