@@ -4,7 +4,9 @@
  */
 var mainApp = angular.module('mainApp',[
     'ngRoute',
-    'mainAppCtrls'
+    'mainAppCtrls',
+    'mgcrea.ngStrap',
+    'ngTranslate'
 ]);
 /**
  *
@@ -17,9 +19,22 @@ var mainAppCtrls = angular.module('mainAppCtrls',[]);
 mainApp.config(['$routeProvider',
     function($routeProvider)
     {
-        $routeProvider.when('/workshops', {
-            templateUrl: 'resources/views/workshopList.html',
-            controller: 'WorkshopListCtrl'
-        });
+        var prefix = "resources/views/";
+        $routeProvider
+            .when('/workshops', {
+                templateUrl: prefix.concat('workshopList.html'),
+                controller: 'WorkshopListCtrl'
+            })
+            .when('/login', {
+                templateUrl: prefix.concat('login.html'),
+                controller: 'LoginCtrl'
+            })
+            .when('/enrollment_confirm/:id/:token', {
+                templateUrl: prefix.concat('enrollmentConfirm.html'),
+                controller: 'EnrollmentConfirmCtrl'
+            })
+            .otherwise({
+                redirectTo: '/workshops'
+            });
     }
 ]);
