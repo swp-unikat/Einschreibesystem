@@ -4,12 +4,10 @@
  "RETURN":"Return",
  "CANCEL":"Cancel",
  "WORKSHOP_LIST":"Workshop list",
-
  "CREATE_WORKSHOP":"Create workshop",
  "EDIT_WORKSHOP":"Edit workshop",
  "SAVE": "Save",
  "BACK":"Back",
- "CANCEL": "Cancel",
  "WORKSHOP_DETAILS": "Workshop details",
  "WORKSHOP_MANAGEMENT":"Workshop",
 "WORKSHOP_NAME":"Workshop name",
@@ -35,6 +33,7 @@
  "SETTINGS":"Settings",
  "LOGIN":"Login",
  "PASSWORD_RESET":"Password reset"
+
 
 
 }
