@@ -5,8 +5,7 @@
 var mainApp = angular.module('mainApp',[
     'ngRoute',
     'mainAppCtrls',
-    'mgcrea.ngStrap',
-    'ngTranslate'
+    'mgcrea.ngStrap'
 ]);
 /**
  *

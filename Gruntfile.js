@@ -32,7 +32,7 @@ module.exports = function(grunt){
       },
       watch: {
           dev: {
-              files: ['Gruntfile.js'],
+              files: ['Gruntfile.js','web/components/**/*.js'],
               tasks: ['jshint','karma:unit']
           }
       }
