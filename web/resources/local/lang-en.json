@@ -2,7 +2,7 @@
 
 "RETURN":"Return",
 "BACK":"Back",
-"DISCARD":"Discard",
+
 "HOMEPAGE":"Home page",
 "LEGAL_INFORMATION":"Legal information",
 "WEBSITE":"Website",
@@ -59,7 +59,8 @@
 "WORKSHOP_PLACE":"Workshop place",
 "WORKSHOP_ADVISOR":"Workshop advisor",
 "DELETE_WORKSHOP_TEMPLATE":"Delete workshop template",
-
+"DISCARD":"Discard",
+ 
 "EMAIL_TEMPLATE":"Email template",
 "EDIT_EMAIL_TEMPLATE":"Edit email template",
 "NEW_EMAIL_TEMPLATE":"New email template",
@@ -79,6 +80,5 @@
 "ADMINISTRATOR_LOGIN":"Administrator login",
 "ADMINISTRATOR_PASSWORD":"Administrator password",
 "ADMINISTRATOR_PASSWORD_RESET":"Administrator password reset"
-
-
+ 
 }
