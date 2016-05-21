@@ -28,6 +28,7 @@
     "angular-translate": "^2.11.0",
     "angular-strap": "^2.3.8",
     "angular-motion": "^0.4.4",
-    "angular-sanitize": "^1.5.5"
+    "angular-sanitize": "^1.5.5",
+    "angular-ui-router": "^0.3.0"
   }
 }
