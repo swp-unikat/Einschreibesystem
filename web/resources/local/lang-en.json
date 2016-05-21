@@ -1,18 +1,13 @@
 {
 
-
-
-"OK":"Ok",
 "RETURN":"Return",
-
-"SAVE": "Save",
 "BACK":"Back",
 "DISCARD":"Discard",
 "HOMEPAGE":"Home page",
 "LEGAL_INFORMATION":"Legal information",
 
-"WORKSHOPS_LIST":"Workshops list",
 "WORKSHOP_DETAILS": "Workshop details",
+"SHOW_PARTICIPANTS":"Show participants",
 "WORKSHOP_REQUIREMENTS":"Workshop requirements",
 "FREE_PLACES":"Free places",
 "OCCUPIED_PLACES":"Occupied places",
@@ -24,30 +19,39 @@
 "USER_EMAIL_ADDRESS":"User email address",
 "CONFIRM":"Confirm",
 "CANCEL":"Cancel",
+"OK":"Ok",
+"LIST_OF_REGISTERED_WORKSHOPS":"List of registered workshop",
+"DEREGISTER_FROM_WORKSHOP":"Deregister from workshop",
+"ENROLLMENT_ERROR":"Enrollment error",
 
 "WORKSHOP_MANAGEMENT":"Workshop management",
+"LIST_OF_CREATED_WORKSHOPS":"List of created workshops",
 "CREATE_WORKSHOP":"Create workshop",
-"EDIT_WORKSHOP":"Edit workshop",
 "DELETE_WORKSHOP":"Delete workshop",
+"CHOOSE_WORKSHOP":"Choose workshop",
+"EDIT_WORKSHOP":"Edit workshop",
+"SAVE": "Save",
 
-
-
-"SHOW_PARTICIPANTS":"Show participants",
+"WORKSHOP":"Workshop",
+"WORKSHOPS_LIST":"Workshops list",
+"WORKSHOP_PARTICIPANTS":"Workshop participants",
+"WORKSHOP_OVERBOOK":"Workshop overbook",
 
 "BLACKLIST_MANAGEMENT": "Blacklist management",
 "ADD_TO_BLACK_LIST": "Add to black list",
 "REMOVE_FROM_BLACK_LIST": "Remove from black list",
 
-"SHOW_ADMINISTRATORS":"Show administrators",
 "INVITE_AN_ADMINISTRATOR":"Invite an administrator",
+"INVITED_ADMINISTRATOR_EMAIL":"Invited administrator email",
+"LIST_OF_ADMINISTRATORS":"List of administrators",
 "DELETE_AN_ADMINISTRATOR":"Delete an administrator",
 
 "WORKSHOP_TEMPLATE":"Workshop template",
-"NEW_WORKSHOP_TEMPLATE":"New worksop template",
+"SHOW_WORKSHOPS_TEMPLATES":"Show workshops templates",
+"NEW_WORKSHOP_TEMPLATE":"New workshop template",
 "EDIT_WORKSHOP_TEMPLATE":"Edit workshop template",
 "WORKSHOP_NAME":"Workshop name",
 "WORKSHOP_CONTENT":"Workshop content",
-
 "WORKSHOP_BEGIN_DATE":"Workshop begin date",
 "WORKSHOP_END_DATE": "Workshop end date",
 "WORKSHOP_MAXIMUM_NUMBER_OF_PARTICIPANTS":"Workshop maximum number of participants",
@@ -69,9 +73,11 @@
 "DISCARD_DRAFT":"Discard draft",
 "DELETE_EMAIL_TEMPLATE":"Delete email template",
 
+"ADMINISTRATOR_DASHBOARD":"Administrator dashboard",
 "SETTINGS":"Settings",
 "ADMINISTRATOR_LOGIN":"Administrator login",
-"ADMINISTRATOR_PASSWORD_RESET":"Administrator password reset",
-"ADMINISTRATOR_PASSWORD":"Administrator password"
+"ADMINISTRATOR_PASSWORD":"Administrator password",
+"ADMINISTRATOR_PASSWORD_RESET":"Administrator password reset"
+
 
 }
