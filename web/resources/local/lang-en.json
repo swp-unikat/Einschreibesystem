@@ -3,12 +3,13 @@
  "OK":"Ok",
  "RETURN":"Return",
  "CANCEL":"Cancel",
- "WORKSHOP_LIST":"Workshop list",
- "CREATE_WORKSHOP":"Create workshop",
- "EDIT_WORKSHOP":"Edit workshop",
  "SAVE": "Save",
  "BACK":"Back",
 
+ "CREATE_WORKSHOP":"Create workshop",
+ "EDIT_WORKSHOP":"Edit workshop",
+ "DELETE_WORKSHOP":"Delete workshop"
+ "WORKSHOP_LIST":"Workshop list",
  "WORKSHOP_DETAILS": "Workshop details",
  "WORKSHOP_MANAGEMENT":"Workshop management",
 "WORKSHOP_NAME":"Workshop name",
@@ -24,19 +25,22 @@
  "REMOVE_FROM_BLACKLIST": "Remove from blacklist",
 
  "SHOW_ADMINISTRATORS":"Show administrators",
- "CHANGE_PASSWORD":"Show password",
-
+ "CHANGE_PASSWORD":"Change password",
  "INVITE_AN_ADMININSTRATOR":"Invite an adminstrator",
  "DELETE_AN_ADMNINSTRATOR":"Delete an adminstrator",
 
+ "WORKSHOP_TEMPLATE":"Workshop template",
  "NEW_WORKSHOP_TEMPLATE":"New worksop template",
-"WORKSHOP_TEMPLATE_EDIT":"Workshop template edit",
+"EDIT_WORKSHOP_TEMPLATE":"Edit workshop template",
  "DELETE_WORKSHOP_TEMPLATE":"Delete workshop template",
 
-"BLACK_LIST_MANAGEMENT":"Black list management",
  "EMAIL_TEMPLATE":"Email template",
+ "NEW_EMAIL_TEMPLATE":"New email template",
+ "DELETE EMAIL TEMPALTE":"Delete email template",
+ "EDIT EMAIL TEMPLATE":"Edit email template",
+
  "SETTINGS":"Settings",
- "LOGIN":"Login",
+ "ADMINSTRATOR_LOGIN":"Administrator login",
  "PASSWORD_RESET":"Password reset"
 
 
