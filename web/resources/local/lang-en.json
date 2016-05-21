@@ -1,47 +1,47 @@
 {
 "CONFIRM":"Confirm",
- "OK":"Ok",
- "RETURN":"Return",
- "CANCEL":"Cancel",
- "SAVE": "Save",
- "BACK":"Back",
+"OK":"Ok",
+"RETURN":"Return",
+"CANCEL":"Cancel",
+"SAVE": "Save",
+"BACK":"Back",
 
- "CREATE_WORKSHOP":"Create workshop",
- "EDIT_WORKSHOP":"Edit workshop",
- "DELETE_WORKSHOP":"Delete workshop"
- "WORKSHOP_LIST":"Workshop list",
- "WORKSHOP_DETAILS": "Workshop details",
- "WORKSHOP_MANAGEMENT":"Workshop management",
+"CREATE_WORKSHOP":"Create workshop",
+"EDIT_WORKSHOP":"Edit workshop",
+"DELETE_WORKSHOP":"Delete workshop"
+"WORKSHOP_LIST":"Workshop list",
+"WORKSHOP_DETAILS": "Workshop details",
+"WORKSHOP_MANAGEMENT":"Workshop management",
 "WORKSHOP_NAME":"Workshop name",
 "WORKSHOP_CONTENT":"Workshop content",
 "WORKSHOP_BEGIN_DATE":"Workshop begin date",
- "WORKSHOP_END_DATE": "Workshop end date",
+"WORKSHOP_END_DATE": "Workshop end date",
 "WORKSHOP_MAXIMUM_NUMBER_OF_PARTICIPANT":"Workshop maximum number of participants",
- "WORKSHOP_PLACE":"Workshop place",
- "WORKSHOP_TUTOR":"Workshop tutor",
+"WORKSHOP_PLACE":"Workshop place",
+"WORKSHOP_TUTOR":"Workshop tutor",
 
- "BLACKLIST_MANAGEMENT": "Blacklist management",
- "ADD_TO_BLACKLIST": "Add to blacklist",
- "REMOVE_FROM_BLACKLIST": "Remove from blacklist",
+"BLACKLIST_MANAGEMENT": "Blacklist management",
+"ADD_TO_BLACKLIST": "Add to blacklist",
+"REMOVE_FROM_BLACKLIST": "Remove from blacklist",
 
- "SHOW_ADMINISTRATORS":"Show administrators",
- "CHANGE_PASSWORD":"Change password",
- "INVITE_AN_ADMININSTRATOR":"Invite an adminstrator",
- "DELETE_AN_ADMNINSTRATOR":"Delete an adminstrator",
+"SHOW_ADMINISTRATORS":"Show administrators",
+"CHANGE_PASSWORD":"Change password",
+"INVITE_AN_ADMININSTRATOR":"Invite an adminstrator",
+"DELETE_AN_ADMNINSTRATOR":"Delete an adminstrator",
 
- "WORKSHOP_TEMPLATE":"Workshop template",
- "NEW_WORKSHOP_TEMPLATE":"New worksop template",
+"WORKSHOP_TEMPLATE":"Workshop template",
+"NEW_WORKSHOP_TEMPLATE":"New worksop template",
 "EDIT_WORKSHOP_TEMPLATE":"Edit workshop template",
- "DELETE_WORKSHOP_TEMPLATE":"Delete workshop template",
+"DELETE_WORKSHOP_TEMPLATE":"Delete workshop template",
 
- "EMAIL_TEMPLATE":"Email template",
- "NEW_EMAIL_TEMPLATE":"New email template",
- "DELETE EMAIL TEMPALTE":"Delete email template",
- "EDIT EMAIL TEMPLATE":"Edit email template",
+"EMAIL_TEMPLATE":"Email template",
+"NEW_EMAIL_TEMPLATE":"New email template",
+"DELETE EMAIL TEMPALTE":"Delete email template",
+"EDIT EMAIL TEMPLATE":"Edit email template",
 
- "SETTINGS":"Settings",
- "ADMINSTRATOR_LOGIN":"Administrator login",
- "PASSWORD_RESET":"Password reset"
+"SETTINGS":"Settings",
+"ADMINSTRATOR_LOGIN":"Administrator login",
+"PASSWORD_RESET":"Password reset"
 
 
 
