@@ -1,1 +1,36 @@
-Hello World!
+<!DOCTYPE html>
+<html ng-app="mainApp">
+<head>
+    <meta charset="UTF-8" />
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+
+    <script src="{{ asset('vendor/jquery/dist/jquery.js') }}"></script>
+    <script src="{{ asset('vendor/angular/angular.js') }}"></script>
+    <script src="{{ asset('vendor/angular-route/angular-route.js') }}"></script>
+
+    <script src="{{ asset('vendor/angular-resource/angular-resource.js') }}"></script>
+    <script src="{{ asset('vendor/angular-touch/angular-touch.js') }}"></script>
+    <script src="{{ asset('vendor/angular-translate/angular-translate.js') }}"></script>
+    <script src="{{ asset('vendor/angular-translate-loader-static-files/angular-translate-loader-static-files.js') }}"></script>
+
+    <link href="{{ asset('vendor/bootstrap/dist/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
+
+    <script src="{{ asset('vendor/angular-animate/angular-animate.js') }}"></script>
+    <script src="{{ asset('vendor/angular-strap/dist/angular-strap.js') }}"></script>
+    <script src="{{ asset('vendor/angular-strap/dist/angular-strap.tpl.js') }}"></script>
+    <script src="{{ asset('vendor/angular-ui-router/release/angular-ui-router.js') }}"></script>
+
+    <script src="{{ asset('components/app.js') }}"></script>
+    <script src="{{ asset('components/dist/ctrl.js') }}"></script>
+
+    <style>
+        .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+    </style>
+</head>
+<body>
+
+<div ui-view=""></div>
+
+</body>
+</html>

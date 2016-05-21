@@ -1,6 +1,7 @@
-<div ng-controller="WorkshopListCtrl">
+<div class="row" ng-controller="WorkshopListCtrl">
+    <div class = "col-lg-10 col-lg-offset-1">
     <div class="panel-group" role="tablist" aria-multiselectable="true" bs-collapse>
-        <div class="panel panel-default" ng-repeat="panel in panels">
+        <div class="panel panel-default" ng-model="active_panel" ng-repeat="panel in panels">
             <div class="panel-heading" role="tab">
                 <h4 class="panel-title">
                     <a bs-collapse-toggle>
@@ -10,10 +11,16 @@
             </div>
             <div class="panel-collapse" role="tabpanel" bs-collapse-target>
                 <div class="panel-body">
-                    {{ panel.body }}
+                    <div class="row-fluid">
+                        {{ panel.body }}
+                        <div class="span3">
+                            <button type="button" class="btn pull-right">Enroll</button>
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
+    </div>
 </div>
