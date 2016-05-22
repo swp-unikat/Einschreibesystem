@@ -32,7 +32,7 @@ sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password passwor
 sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password root'
 sudo apt-get -y install mysql-server
 sed -i "s/^bind-address/#bind-address/" /etc/mysql/my.cnf
-mysql -u root -proot -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'root' WITH GRANT OPTION; FLUSH PRIVILEGES;"
+mysql -u root -p root -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'root' WITH GRANT OPTION; FLUSH PRIVILEGES;"
 
 
 #composer
@@ -44,10 +44,17 @@ sudo locale-gen de_DE.UTF-8
 
 # File Setup
 cd /var/www/
-#rm -rf html
+rm -rf html
 
 # Composer install
 composer install
+
+#NPM Install
+sudo npm install --no-bin-links
+sudo npm install -g karma-cli
+
+#Bower Install
+bower install
 
 #restarts
 service apache2 restart

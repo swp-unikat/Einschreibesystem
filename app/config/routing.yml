@@ -1,22 +1,5 @@
-core_cron:
-    resource: "@CoreCronBundle/Controller/"
-    type:     annotation
-    prefix:   /
-
-core_mail:
-    resource: "@CoreMailBundle/Controller/"
-    type:     annotation
-    prefix:   /
-
-core_api:
-    resource: "@CoreAPIBundle/Controller/"
-    type:     annotation
-    prefix:   /api
-
-core_entity:
-    resource: "@CoreEntityBundle/Controller/"
-    type:     annotation
-    prefix:   /
+api_login_check:
+    path: /api/login_check
 
 core_frontend:
     resource: "@CoreFrontendBundle/Controller/"

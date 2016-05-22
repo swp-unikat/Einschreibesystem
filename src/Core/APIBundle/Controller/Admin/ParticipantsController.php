@@ -2,11 +2,11 @@
 /**
  * Created by IntelliJ IDEA.
  * User: Leon Bergmann
- * Authors: Marco Harnisch,Martin Griebel
+ * Company: SkyLab UG(haftungsbeschränkt)
  * Date: 29.04.2016
  * Time: 16:44
  */
-namespace Core\APIBundle\Controller;
+namespace Core\APIBundle\Controller\Admin;
 
 use Doctrine\Common\Collections\Criteria;
 use FOS\RestBundle\Controller\FOSRestController;
@@ -27,16 +27,16 @@ use Doctrine\ORM\Query;
 /**
  * Class RestController.
  *
- * @Rest\RouteResource("Template")
+ * @Rest\RouteResource("Participants")
  */
 
-class WorkshopTemplateController extends FOSRestController implements ClassResourceInterface
+class ParticipantsController extends FOSRestController implements ClassResourceInterface
 {
     /**
-     * @Security("has_role('ROLE_ADMIN')")
+     
      * @ApiDoc(
      *  resource=true,
-     *  description="Returns list of all templates",
+     *  description="Returns list of all participants",
      *  output = "Core\EntityBundle\Entity\Participants",
      *  statusCodes = {
      *      200 = "Returned when successful",
@@ -48,72 +48,15 @@ class WorkshopTemplateController extends FOSRestController implements ClassResou
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\View()
      */
-    public function getListAction()
-    {
-        $workshoptemplateRepo = &this -> getDoctrine() -> getManager() -> getRepository('CoreEntityBundle:Workshoptemplate');
-	$entits = $workshoptemplateRepo ->getALLWorkshoptemplate();
-	if(!$entits){
-        throw $this->createNotFoundException("No WorkshopTemplate found");
-    }
-
-	$view = $this->view($entits, 200);
-        return $this->handleView($view);
-    }
-
-    /**
-     * @Security("has_role('ROLE_ADMIN')")
-     * @ApiDoc(
-     *  resource=true,
-     *  description="Load a template",
-     *  output = "Core\EntityBundle\Entity\Participants",
-     *  statusCodes = {
-     *      200 = "Returned when successful",
-     *      404 = "Returned when the data is not found"
-     *  }
-     * )
-     * )
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     * @Rest\View()
-     */
-    public function getAction(Request $request, $id)
-    {
-        $workshoptemplate = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:WorkshopTemplate')->find($id);
-        if (!$workshoptemplate) {
-            throw $this->createNotFoundException("This workshoptemplate was not found");
-        } else {
-            $view = $this->view($workshop, 200);
-            return $this->handleView($view);
-        }
-
-    }
-
-    /**
-     * @Security("has_role('ROLE_ADMIN')")
-     * @ApiDoc(
-     *  resource=true,
-     *  description="Edit a template",
-     *  output = "Core\EntityBundle\Entity\Participants",
-     *  statusCodes = {
-     *      200 = "Returned when successful",
-     *      404 = "Returned when the data is not found"
-     *  }
-     * )
-     * )
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     * @Rest\View()
-     */
-    public function patchAction($id)
+    public function getAllAction()
     {
 
     }
 
     /**
-     * @Security("has_role('ROLE_ADMIN')")
      * @ApiDoc(
      *  resource=true,
-     *  description="Create new template",
+     *  description="Returns list of all participants that are blacklisted",
      *  output = "Core\EntityBundle\Entity\Participants",
      *  statusCodes = {
      *      200 = "Returned when successful",
@@ -125,16 +68,36 @@ class WorkshopTemplateController extends FOSRestController implements ClassResou
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\View()
      */
-    public function putAction($id)
+    public function getBlacklistAllAction()
+    {
+
+    }
+
+    /**     
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Add participants to blacklist ",
+     *  output = "Core\EntityBundle\Entity\Participants",
+     *  statusCodes = {
+     *      200 = "Returned when successful",
+     *      404 = "Returned when the data is not found"
+     *  }
+     * )
+     * )
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Rest\View()
+     */
+    public function putBlacklistAction($id)
     {
 
     }
 
     /**
-     * @Security("has_role('ROLE_ADMIN')")
+     
      * @ApiDoc(
      *  resource=true,
-     *  description="Delete a template",
+     *  description="Remove participants from Blacklist",
      *  output = "Core\EntityBundle\Entity\Participants",
      *  statusCodes = {
      *      200 = "Returned when successful",
@@ -146,14 +109,29 @@ class WorkshopTemplateController extends FOSRestController implements ClassResou
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\View()
      */
-    public function deleteAction($id)
+    public function deleteBlacklistAction($id)
     {
-        $workshoptemplate = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:WorkshopTemplate")->find($id);
-        if (!$workshoptemplate) {
-            throw $this->createNotFoundException("Workshop not found");
-        }
-        $this->getDoctrine()->getManager()->remove($workshoptemplate);
-        $this->getDoctrine()->getManager()->flush($workshoptemplate);
-        return View::create(null, Codes::HTTP_NO_CONTENT);
+
+    }
+
+    /**
+     
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Get detail view of blacklisted user",
+     *  output = "Core\EntityBundle\Entity\Participants",
+     *  statusCodes = {
+     *      200 = "Returned when successful",
+     *      404 = "Returned when the data is not found"
+     *  }
+     * )
+     * )
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Rest\View()
+     */
+    public function getBlacklistAction($id)
+    {
+
     }
 }

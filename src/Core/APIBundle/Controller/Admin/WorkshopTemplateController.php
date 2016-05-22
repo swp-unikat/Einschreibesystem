@@ -2,11 +2,11 @@
 /**
  * Created by IntelliJ IDEA.
  * User: Leon Bergmann
- * Company: SkyLab UG(haftungsbeschränkt)
+ * Authors: Marco Harnisch,Martin Griebel
  * Date: 29.04.2016
  * Time: 16:44
  */
-namespace Core\APIBundle\Controller;
+namespace Core\APIBundle\Controller\Admin;
 
 use Doctrine\Common\Collections\Criteria;
 use FOS\RestBundle\Controller\FOSRestController;
@@ -27,79 +27,16 @@ use Doctrine\ORM\Query;
 /**
  * Class RestController.
  *
- * @Rest\RouteResource("Participants")
+ * @Rest\RouteResource("Template")
  */
 
-class ParticipantsController extends FOSRestController implements ClassResourceInterface
+class WorkshopTemplateController extends FOSRestController implements ClassResourceInterface
 {
-	/**
-	 * @Security("has_role('ROLE_ADMIN')")
-     * @ApiDoc(
-     *  resource=true,
-     *  description="Returns list of all participants",
-     *  output = "Core\EntityBundle\Entity\Participants",
-     *  statusCodes = {
-     *      200 = "Returned when successful",
-     *      404 = "Returned when the data is not found"
-     *  }
-     * )
-     * )
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     * @Rest\View()
-     */
-    public function getAllAction()
-    {
-	    
-    }
-    
-    	/**
-    	 * @Security("has_role('ROLE_ADMIN')")
-     * @ApiDoc(
-     *  resource=true,
-     *  description="Returns list of all participants that are blacklisted",
-     *  output = "Core\EntityBundle\Entity\Participants",
-     *  statusCodes = {
-     *      200 = "Returned when successful",
-     *      404 = "Returned when the data is not found"
-     *  }
-     * )
-     * )
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     * @Rest\View()
-     */
-    public function getBlacklistAllAction()
-    {
-	    
-    }
-    
-    	/**
-    	 * @Security("has_role('ROLE_ADMIN')")
-     * @ApiDoc(
-     *  resource=true,
-     *  description="Add participants to blacklist ",
-     *  output = "Core\EntityBundle\Entity\Participants",
-     *  statusCodes = {
-     *      200 = "Returned when successful",
-     *      404 = "Returned when the data is not found"
-     *  }
-     * )
-     * )
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     * @Rest\View()
-     */
-    public function putBlacklistAction($id)
-    {
-	    
-    }
-    
     /**
-     * @Security("has_role('ROLE_ADMIN')")
+
      * @ApiDoc(
      *  resource=true,
-     *  description="Remove participants from Blacklist",
+     *  description="Returns list of all templates",
      *  output = "Core\EntityBundle\Entity\Participants",
      *  statusCodes = {
      *      200 = "Returned when successful",
@@ -111,16 +48,22 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\View()
      */
-    public function deleteBlacklistAction($id)
+    public function getListAction()
     {
-	    
+        $workshops = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:WorkshopTemplate')->findAll();
+	    if(!$workshops) {
+            throw $this->createNotFoundException("No WorkshopTemplate found");
+        }
+
+	$view = $this->view($entits, 200);
+        return $this->handleView($view);
     }
-    
+
     /**
-     * @Security("has_role('ROLE_ADMIN')")
+     
      * @ApiDoc(
      *  resource=true,
-     *  description="Get detail view of blacklisted user",
+     *  description="Load a template",
      *  output = "Core\EntityBundle\Entity\Participants",
      *  statusCodes = {
      *      200 = "Returned when successful",
@@ -132,8 +75,84 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\View()
      */
-    public function getBlacklistAction($id)
+    public function getAction(Request $request, $id)
     {
-	    
+        $workshoptemplate = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:WorkshopTemplate')->find($id);
+        if (!$workshoptemplate) {
+            throw $this->createNotFoundException("This workshoptemplate was not found");
+        } else {
+            $view = $this->view($workshop, 200);
+            return $this->handleView($view);
+        }
+
+    }
+
+    /**
+
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Edit a template",
+     *  output = "Core\EntityBundle\Entity\Participants",
+     *  statusCodes = {
+     *      200 = "Returned when successful",
+     *      404 = "Returned when the data is not found"
+     *  }
+     * )
+     * )
+     * @REST\QueryParam(name="json", requirements="", default="1", description="json object of workshop")
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Rest\View()
+     */
+    public function patchAction($id)
+    {
+
+    }
+
+    /**
+
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Create new template",
+     *  output = "Core\EntityBundle\Entity\Participants",
+     *  statusCodes = {
+     *      200 = "Returned when successful",
+     *      404 = "Returned when the data is not found"
+     *  }
+     * )
+     * )
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Rest\View()
+     */
+    public function putAction($id)
+    {
+
+    }
+
+    /**
+
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Delete a template",
+     *  output = "Core\EntityBundle\Entity\Participants",
+     *  statusCodes = {
+     *      200 = "Returned when successful",
+     *      404 = "Returned when the data is not found"
+     *  }
+     * )
+     * )
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Rest\View()
+     */
+    public function deleteAction($id)
+    {
+        $workshopTemplate = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:WorkshopTemplate")->find($id);
+        if (!$workshopTemplate) {
+            throw $this->createNotFoundException("WorkshopTemplate not found");
+        }
+        $this->getDoctrine()->getManager()->remove($workshopTemplate);
+        $this->getDoctrine()->getManager()->flush();
+        return View::create(null, Codes::HTTP_NO_CONTENT);
     }
 }

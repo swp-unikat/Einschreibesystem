@@ -128,3 +128,9 @@ fos_rest:
         'Doctrine\ORM\OptimisticLockException': HTTP_CONFLICT
     messages:
         'Symfony\Component\Routing\Exception\ResourceNotFoundException': true
+# JWT
+lexik_jwt_authentication:
+        private_key_path: %kernel.root_dir%/var/jwt/private.pem
+        public_key_path:  %kernel.root_dir%/var/jwt/public.pem
+        pass_phrase:      unikat
+        token_ttl:        86400

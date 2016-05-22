@@ -4,26 +4,38 @@ service_workshop:
     resource: "@CoreAPIBundle/Controller/WorkshopController.php"
     name_prefix:  api_workshop_ # naming collision
 
-service_participants:
+
+# Admin API
+
+service_admin_workshop:
     type: rest
-    prefix: /api
-    resource: "@CoreAPIBundle/Controller/ParticipantsController.php"
-    name_prefix:  api_participants_ # naming collision    
-    
+    prefix: /api/admin
+    resource: "@CoreAPIBundle/Controller/Admin/WorkshopController.php"
+    name_prefix:  api_admin_workshop_
+
+service_admin_participants:
+    type: rest
+    prefix: /api/admin
+    resource: "@CoreAPIBundle/Controller/Admin/ParticipantsController.php"
+    name_prefix:  api_admin_participants_ # naming collision
+
+
 service_workshop_template:
     type: rest
-    prefix: /api/workshops
-    resource: "@CoreAPIBundle/Controller/WorkshopTemplateController.php"
-    name_prefix:  api_workshop_template_ # naming collision
+    prefix: /api/admin/workshops
+    resource: "@CoreAPIBundle/Controller/Admin/WorkshopTemplateController.php"
+    name_prefix:  api_admin_workshop_template_ # naming collision
+
+service_email:
+    type: rest
+    prefix: /api/admin
+    resource: "@CoreAPIBundle/Controller/Admin/EmailController.php"
+    name_prefix:  api_admin_email_ # naming collision
 
 service_email_template:
     type: rest
-    prefix: /api/email
-    resource: "@CoreAPIBundle/Controller/EmailTemplateController.php"
-    name_prefix:  api_email_template_ # naming collision
-    
-service_email:
-    type: rest
-    prefix: /api
-    resource: "@CoreAPIBundle/Controller/EmailController.php"
-    name_prefix:  api_email_ # naming collision            
+    prefix: /api/admin/email
+    resource: "@CoreAPIBundle/Controller/Admin/EmailTemplateController.php"
+    name_prefix:  api_admin_email_template_ # naming collision
+
+

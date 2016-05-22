@@ -6,7 +6,7 @@
  * Date: 29.04.2016
  * Time: 16:44
  */
-namespace Core\APIBundle\Controller;
+namespace Core\APIBundle\Controller\Admin;
 
 use Doctrine\Common\Collections\Criteria;
 use FOS\RestBundle\Controller\FOSRestController;
@@ -33,7 +33,7 @@ use Doctrine\ORM\Query;
 class EmailTemplateController extends FOSRestController implements ClassResourceInterface
 {
 	/**
-	 * @Security("has_role('ROLE_ADMIN')")
+	 
      * @ApiDoc(
      *  resource=true,
      *  description="Returns list of all templates",
@@ -54,7 +54,7 @@ class EmailTemplateController extends FOSRestController implements ClassResource
     }
     
     	/**
-	 * @Security("has_role('ROLE_ADMIN')")
+	 
      * @ApiDoc(
      *  resource=true,
      *  description="Load a template",
@@ -75,7 +75,7 @@ class EmailTemplateController extends FOSRestController implements ClassResource
     }
     
     /**
-	 * @Security("has_role('ROLE_ADMIN')")
+	 
      * @ApiDoc(
      *  resource=true,
      *  description="Edit a template",
@@ -96,7 +96,7 @@ class EmailTemplateController extends FOSRestController implements ClassResource
     }
     
     /**
-	 * @Security("has_role('ROLE_ADMIN')")
+	 
      * @ApiDoc(
      *  resource=true,
      *  description="Create new template",
@@ -116,7 +116,7 @@ class EmailTemplateController extends FOSRestController implements ClassResource
 	    
     }
     
-    /**	 * @Security("has_role('ROLE_ADMIN')")
+    /**	 
      * @ApiDoc(
      *  resource=true,
      *  description="Delete a template",
