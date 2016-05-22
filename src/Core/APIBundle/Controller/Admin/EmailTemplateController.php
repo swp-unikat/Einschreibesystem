@@ -127,7 +127,8 @@ class EmailTemplateController extends FOSRestController implements ClassResource
      * @Rest\View()
      */
     public function putAction($id)
-    {
+    { $emailtemplate = new EmailTemplate ();
+    
 	    
     }
     
