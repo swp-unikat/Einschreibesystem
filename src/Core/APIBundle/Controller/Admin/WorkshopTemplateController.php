@@ -6,7 +6,7 @@
  * Date: 29.04.2016
  * Time: 16:44
  */
-namespace Core\APIBundle\Controller;
+namespace Core\APIBundle\Controller\Admin;
 
 use Doctrine\Common\Collections\Criteria;
 use FOS\RestBundle\Controller\FOSRestController;
@@ -33,7 +33,7 @@ use Doctrine\ORM\Query;
 class WorkshopTemplateController extends FOSRestController implements ClassResourceInterface
 {
     /**
-     * @Security("has_role('ROLE_ADMIN')")
+
      * @ApiDoc(
      *  resource=true,
      *  description="Returns list of all templates",
@@ -50,18 +50,17 @@ class WorkshopTemplateController extends FOSRestController implements ClassResou
      */
     public function getListAction()
     {
-        $workshoptemplateRepo = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:WorkshopTemplate');
-	$entits =$workshoptemplateRepo ->getALLWorkshoptemplate();
-	if(!$entits){
-        throw $this->createNotFoundException("No WorkshopTemplate found");
-    }
+        $workshops = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:WorkshopTemplate')->findAll();
+	    if(!$workshops) {
+            throw $this->createNotFoundException("No WorkshopTemplate found");
+        }
 
 	$view = $this->view($entits, 200);
         return $this->handleView($view);
     }
 
     /**
-     * @Security("has_role('ROLE_ADMIN')")
+     
      * @ApiDoc(
      *  resource=true,
      *  description="Load a template",
@@ -89,7 +88,7 @@ class WorkshopTemplateController extends FOSRestController implements ClassResou
     }
 
     /**
-     * @Security("has_role('ROLE_ADMIN')")
+
      * @ApiDoc(
      *  resource=true,
      *  description="Edit a template",
@@ -100,7 +99,7 @@ class WorkshopTemplateController extends FOSRestController implements ClassResou
      *  }
      * )
      * )
-     *
+     * @REST\QueryParam(name="json", requirements="", default="1", description="json object of workshop")
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\View()
      */
@@ -110,7 +109,7 @@ class WorkshopTemplateController extends FOSRestController implements ClassResou
     }
 
     /**
-     * @Security("has_role('ROLE_ADMIN')")
+
      * @ApiDoc(
      *  resource=true,
      *  description="Create new template",
@@ -131,7 +130,7 @@ class WorkshopTemplateController extends FOSRestController implements ClassResou
     }
 
     /**
-     * @Security("has_role('ROLE_ADMIN')")
+
      * @ApiDoc(
      *  resource=true,
      *  description="Delete a template",
@@ -148,12 +147,12 @@ class WorkshopTemplateController extends FOSRestController implements ClassResou
      */
     public function deleteAction($id)
     {
-        $workshoptemplate = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:WorkshopTemplate")->find($id);
-        if (!$workshoptemplate) {
-            throw $this->createNotFoundException("Workshop not found");
+        $workshopTemplate = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:WorkshopTemplate")->find($id);
+        if (!$workshopTemplate) {
+            throw $this->createNotFoundException("WorkshopTemplate not found");
         }
-        $this->getDoctrine()->getManager()->remove($workshoptemplate);
-        $this->getDoctrine()->getManager()->flush($workshoptemplate);
+        $this->getDoctrine()->getManager()->remove($workshopTemplate);
+        $this->getDoctrine()->getManager()->flush();
         return View::create(null, Codes::HTTP_NO_CONTENT);
     }
 }

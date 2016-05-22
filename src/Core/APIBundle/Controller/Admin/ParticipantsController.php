@@ -6,7 +6,7 @@
  * Date: 29.04.2016
  * Time: 16:44
  */
-namespace Core\APIBundle\Controller;
+namespace Core\APIBundle\Controller\Admin;
 
 use Doctrine\Common\Collections\Criteria;
 use FOS\RestBundle\Controller\FOSRestController;
@@ -32,8 +32,8 @@ use Doctrine\ORM\Query;
 
 class ParticipantsController extends FOSRestController implements ClassResourceInterface
 {
-	/**
-	 * @Security("has_role('ROLE_ADMIN')")
+    /**
+     
      * @ApiDoc(
      *  resource=true,
      *  description="Returns list of all participants",
@@ -50,11 +50,10 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
      */
     public function getAllAction()
     {
-	    
+
     }
-    
-    	/**
-    	 * @Security("has_role('ROLE_ADMIN')")
+
+    /**
      * @ApiDoc(
      *  resource=true,
      *  description="Returns list of all participants that are blacklisted",
@@ -71,11 +70,10 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
      */
     public function getBlacklistAllAction()
     {
-	    
+
     }
-    
-    	/**
-    	 * @Security("has_role('ROLE_ADMIN')")
+
+    /**     
      * @ApiDoc(
      *  resource=true,
      *  description="Add participants to blacklist ",
@@ -92,11 +90,11 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
      */
     public function putBlacklistAction($id)
     {
-	    
+
     }
-    
+
     /**
-     * @Security("has_role('ROLE_ADMIN')")
+     
      * @ApiDoc(
      *  resource=true,
      *  description="Remove participants from Blacklist",
@@ -113,11 +111,11 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
      */
     public function deleteBlacklistAction($id)
     {
-	    
+
     }
-    
+
     /**
-     * @Security("has_role('ROLE_ADMIN')")
+     
      * @ApiDoc(
      *  resource=true,
      *  description="Get detail view of blacklisted user",
@@ -134,6 +132,6 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
      */
     public function getBlacklistAction($id)
     {
-	    
+
     }
 }
