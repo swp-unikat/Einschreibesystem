@@ -97,7 +97,10 @@ class EmailTemplateController extends FOSRestController implements ClassResource
      * @Rest\View()
      */
     public function patchAction($id)
-    {
+    {$emailtemplate = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:EmailTemplate")->findById($id);
+        if (!$emailtemplate) {
+            throw $this->createNotFoundException("No EmailTemplate found");
+        }
 	    
     }
     
