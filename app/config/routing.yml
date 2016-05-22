@@ -1,11 +1,6 @@
 api_login_check:
     path: /api/login_check
 
-core_entity:
-    resource: "@CoreEntityBundle/Controller/"
-    type:     annotation
-    prefix:   /
-
 core_frontend:
     resource: "@CoreFrontendBundle/Controller/"
     type:     annotation
