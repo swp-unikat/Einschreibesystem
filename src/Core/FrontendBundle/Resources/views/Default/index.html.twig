@@ -22,15 +22,18 @@
     <script src="{{ asset('vendor/angular-ui-router/release/angular-ui-router.js') }}"></script>
 
     <script src="{{ asset('components/app.js') }}"></script>
+    <script src="{{ asset('components/services/restService.js') }}"></script>
     <script src="{{ asset('components/dist/ctrl.js') }}"></script>
+
 
     <style>
         .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
     </style>
 </head>
 <body>
-
+<div ui-view="header"></div>
 <div ui-view=""></div>
+<div ui-view="footer"></div>
 
 </body>
 </html>

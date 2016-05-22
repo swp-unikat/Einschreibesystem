@@ -1,15 +1,16 @@
 /**
- *
+ * App
  * @type {angular.Module}
  */
 var mainApp = angular.module('mainApp',[
     'ngRoute',
     'mainAppCtrls',
     'mgcrea.ngStrap',
-    'ui.router'
+    'ui.router',
+    'restSvcs'
 ]);
 /**
- *
+ * Module collecting all used Controllers
  * @type {angular.Module}
  */
 var mainAppCtrls = angular.module('mainAppCtrls',[]);
@@ -86,11 +87,12 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                 url: '/dashboard',
                 controller: 'DashboardCtrl',
                 templateUrl: prefix.concat('adminDashboard.html')
+                
             })
             .state('dashboard.blacklist',{
                 url: '/blacklist',
                 controller: 'BlacklistController',
-                templateUrl: prefix.concat('adminBlacklist.html'),
+                templateUrl: prefix.concat('adminBlacklist.html')
             })
             .state('contact',{
                 url: '/contact',
@@ -100,6 +102,7 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
 
 
         $urlRouterProvider.otherwise('/workshops');
+
 
     }
 ]);
