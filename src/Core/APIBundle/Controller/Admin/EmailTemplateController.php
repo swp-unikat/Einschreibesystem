@@ -139,6 +139,13 @@ class EmailTemplateController extends FOSRestController implements ClassResource
      */
     public function deleteAction($id)
     {
+        $emailtemplate = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:EmailTemplate")->find($id);
+        if (!$emailtemplate) {
+            throw $this->createNotFoundException("EmailTemplate not found");
+        }
+        $this->getDoctrine()->getManager()->remove($emailtemplate);
+        $this->getDoctrine()->getManager()->flush($emailtemplate);
+        return View::create(null, Codes::HTTP_NO_CONTENT);
 	    
     }
 }
