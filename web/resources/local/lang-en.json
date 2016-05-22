@@ -1,13 +1,16 @@
 {
 
 "BUTTON_RETURN":"Return",
-"BUTTON_BACK":"back",
+"BUTTON_BACK":"Back",
 
 "BUTTON_HOMEPAGE":"Homepage",
 "BUTTON_LEGAL_INFORMATION":"Legal information",
-"CONTACT":"Contact",
+
+"BUTTON_CONTACT":"Contact",
 "WEBSITE":"Website",
-"TELEPHONE":"Telephone"
+"EMAIL":"Email",
+"TELEPHONE":"Telephone",
+"ADDRESS":"Address",
 
 "WORKSHOP_DETAILS": "Workshop details",
 "BUTTON_SHOW_PARTICIPANTS":"show participants",
@@ -16,7 +19,7 @@
 "OCCUPIED_PLACES":"Occupied places",
 "WAITING_LIST":"Waiting list",
 
-"BUTTON_ENROLL":"enroll",
+"BUTTON_ENROLL":"Enroll",
 "FIRST_NAME":"First name",
 "LAST_NAME":"Last name",
 "USER_EMAIL_ADDRESS":"User email address",
@@ -33,16 +36,16 @@
 "BUTTON_DELETE_WORKSHOP":"Delete workshop",
 "BUTTON_CHOOSE_WORKSHOP":"Choose workshop",
 "BUTTON_EDIT_WORKSHOP":"Edit workshop",
-"BUTTON_SAVE": "Save",
+"BUTTON_SAVE":"Save",
 
 "WORKSHOP":"Workshop",
 "BUTTON_WORKSHOPS_LIST":"Workshops list",
 "WORKSHOP_PARTICIPANTS":"Workshop participants",
 "BUTTON_WORKSHOP_OVERBOOK":"Workshop overbook",
 
-"BLACKLIST_MANAGEMENT": "Blacklist management",
-"BUTTON_ADD_TO_BLACK_LIST": "Add to black list",
-"BUTTON_REMOVE_FROM_BLACK_LIST": "Remove from black list",
+"BLACKLIST_MANAGEMENT":"Blacklist management",
+"BUTTON_ADD_TO_BLACK_LIST":"Add to black list",
+"BUTTON_REMOVE_FROM_BLACK_LIST":"Remove from black list",
 
 "BUTTON_INVITE_AN_ADMINISTRATOR":"Invite an administrator",
 "BUTTON_INVITED_ADMINISTRATOR_EMAIL":"Invited administrator email",
