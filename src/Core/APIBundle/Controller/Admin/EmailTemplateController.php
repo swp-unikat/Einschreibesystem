@@ -184,7 +184,7 @@ class EmailTemplateController extends FOSRestController implements ClassResource
             throw $this->createNotFoundException("EmailTemplate not found");
         }
         $this->getDoctrine()->getManager()->remove($emailtemplate);
-        $this->getDoctrine()->getManager()->flush($emailtemplate);
+        $this->getDoctrine()->getManager()->flush();
         return View::create(null, Codes::HTTP_NO_CONTENT);
 	    
     }
