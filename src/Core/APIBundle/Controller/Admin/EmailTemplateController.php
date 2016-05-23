@@ -110,7 +110,7 @@ class EmailTemplateController extends FOSRestController implements ClassResource
 	    
     }
     
-    /**
+    /**  
 	 
      * @ApiDoc(
      *  resource=true,
@@ -124,11 +124,16 @@ class EmailTemplateController extends FOSRestController implements ClassResource
      * )
      *
      * @return \Symfony\Component\HttpFoundation\Response
+     * @Rest\RequestParam(name="template_name", requirements=".*", description="name of the emailtemplate")
+     * @Rest\RequestParam(name="email_subject", requirements=".*", description="subject of the emailtemplate")
+     * @Rest\RequestParam(name="email_body", requirements=".*", description="content of the emailtemplate")
      * @Rest\View()
      */
     public function putAction($id)
-    { $emailtemplate = new EmailTemplate ();
-    
+    { 	$emailtemplate = new EmailTemplate ();
+    	$params = $paramFetcher->all();
+    	
+    	
 	    
     }
     
