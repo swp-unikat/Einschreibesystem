@@ -49,13 +49,12 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
      */
     public function getAllAction()
     {
-       $workshopParticipant = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:Participants');
-        $entits = $workshopParticipant->getAllParticipants();
-        if (!$entits) {
+       $participants = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:Participants')->findAll();
+        if (!$participants) {
             throw $this->createNotFoundException("No Participants found");
-                      } 
-            $view = $this->view($entits, 200);
-        return $this->handleView($view)$view = $this->view($entits, 200);	    
+        } 
+        $view = $this->view($participants, 200);
+        return $this->handleView($view);	    
     }
     	/**
     	 * @Security("has_role('ROLE_ADMIN')")
