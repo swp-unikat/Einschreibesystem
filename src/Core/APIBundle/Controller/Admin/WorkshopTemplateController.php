@@ -8,6 +8,7 @@
  */
 namespace Core\APIBundle\Controller\Admin;
 
+use Core\EntityBundle\Entity\WorkshopTemplate;
 use Doctrine\Common\Collections\Criteria;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Request\ParamFetcher;
@@ -154,12 +155,39 @@ class WorkshopTemplateController extends FOSRestController implements ClassResou
      * )
      *
      * @return \Symfony\Component\HttpFoundation\Response
+     * @REST\RequestParam(name="title", requirements=".*", description="title of the Workshop")
+     * @REST\RequestParam(name="description", requirements=".*", description="description of the Workshop")
+     * @REST\RequestParam(name="cost", requirements=".*", description="cost of the Workshop")
+     * @REST\RequestParam(name="requirements", requirements=".*", description="requirements of the Workshop")
+     * @REST\RequestParam(name="location", requirements=".*", description="location of the Workshop")
+     * @REST\RequestParam(name="start_at", requirements=".*", description="starttime of the Workshop")
+     * @REST\RequestParam(name="end_at", requirements=".*", description="endtime of the Workshop")
+     * @REST\RequestParam(name="max_participants", requirements=".*", description="maximum number of participants")
      * @Rest\View()
      */
-    public function putAction($id)
-    {
-
-
+    public function putAction(ParamFetcher $paramFetcher)  {
+        $workshoptemplate= new WorkshopTemplate();
+        $params = $paramFetcher->all();
+        if($params["title"] != NULL)
+            $workshoptemplate->setTitle($params["title"]);
+        if($params["description"] != Null)
+            $workshoptemplate->setDescription($params["description"]);
+        if($params["cost"] != NULL)
+            $workshoptemplate->setCost($params["cost"]);
+        if($params["requirements"] != NULL)
+            $workshoptemplate->setRequirements($params["requirements"]);
+        if($params["location"] != NULL)
+            $workshoptemplate->setLocation($params["location"]);
+        if($params["start_at"] != NULL)
+            $workshoptemplate->setStartAt($params["start_at"]);
+        if($params["end_at"] != NULL)
+            $workshoptemplate->setEndAt($params["end_at"]);
+        if($params["max_participants"] != NULL)
+            $workshoptemplate->setMaxParticipants($params["max_participants"]);
+        $this->getDoctrine()->getManager()->persist($workshoptemplate);
+        $this->getDoctrine()->getManager()->flush();
+        $view = $this->view($workshoptemplate,200);
+        return $this->handleView($view);
     }
 
     /**
