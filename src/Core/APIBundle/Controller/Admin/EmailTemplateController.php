@@ -154,7 +154,7 @@ class EmailTemplateController extends FOSRestController implements ClassResource
         	$emailtemplate->getTemplate_Name($params["template_name"]);
         if($params["email_subject"] != Null)
         	$emailtemplate->getEmail_Subject($params["email_subject"]);
-        if($params["email_body"] != NULL
+        if($params["email_body"] != NULL)
         	$enailtemplate->getEmail_Body($params["email_body"]);
     	$this->getDoctrine()->getManager()->persist($emailtemplate);
         $this->getDoctrine()->getManager()->flush();
