@@ -1,8 +1,10 @@
+app/logs
 .idea
 .vagrant
 vendor/
 bin/
 app/cache
+app/var
 node_modules
 bower_components
 Einschreibesystem.iml
