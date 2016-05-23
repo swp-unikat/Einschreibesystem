@@ -73,13 +73,13 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
      * @Rest\View()
      */
     public function getBlacklistAllAction()
-    {
+    {  
 	    $participantsBlacklist = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:Participants');
-	     $entits = $participantsBlacklist->getAllBlacklistedParticipants();
-	     if (!$entits) {
+	     $participant = $participantsBlacklist->getAllBlacklistedParticipants();
+	     if (!$participant) {
             throw $this->createNotFoundException("No Participant on Blacklist found");
-                           }
-        $view = $this->view($entits, 200);
+         }
+        $view = $this->view($participant, 200);
         return $this->handleView($view);
     }
     	/**
