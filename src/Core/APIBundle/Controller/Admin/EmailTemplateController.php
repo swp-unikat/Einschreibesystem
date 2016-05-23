@@ -106,7 +106,7 @@ class EmailTemplateController extends FOSRestController implements ClassResource
      * @Rest\RequestParam(name="email_body", requirements=".*", description="content of the emailtemplate")
      * @Rest\View()
      */
-    public function patchAction($id)
+    public function patchAction(ParamFetcher $paramFetcher,$id)
     {
     	$params = $paramFetcher->all();
     	$emailtemplate = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:EmailTemplate")->findById($id);
@@ -114,11 +114,11 @@ class EmailTemplateController extends FOSRestController implements ClassResource
         	throw $this->createNotFoundException("No EmailTemplate found");
         }
         if($params["template_name"] != NULL)
-        	$emailtemplate->getTemplate_Name($params["template_name"]);
+        	$emailtemplate->setTemplateName($params["template_name"]);
         if($params["email_subject"] != Null)
-        	$emailtemplate->getEmail_Subject($params["email_subject"]);
+        	$emailtemplate->setEmailSubject($params["email_subject"]);
         if($params["email_body"] != NULL)
-        	$enailtemplate->getEmail_Body($params["email_body"]);
+        	$enailtemplate->setEmailBody($params["email_body"]);
         $this->getDoctrine()->getManager()->persist($emailtemplate);
         $this->getDoctrine()->getManager()->flush();
         $view = $this->view($emailtemplate,200);
