@@ -111,7 +111,7 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
             $this->getDoctrine()->getManager()->persist($participant);
             $this->getDoctrine()->getManager()->flush();
 
-            return View::create(null, Codes:e:HTTP_NO_CONTENT);
+            return View::create(null, Codes:HTTP_NO_CONTENT);
         }
     }
     
