@@ -24,6 +24,7 @@ use FOS\RestBundle\Routing\ClassResourceInterface;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\Query;
+use Core\EntityBundle\Entity\EmailTemplate;
 /**
  * Class RestController.
  *
@@ -50,11 +51,11 @@ class EmailTemplateController extends FOSRestController implements ClassResource
      */
     public function getListAction()
     {
-    	$emailtemplate = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:EmailTemplate')->findAll();
-    	if (!$emailtemplate) {
+    	$emailTemplate = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:EmailTemplate')->findAll();
+    	if (!$emailTemplate) {
             throw $this->createNotFoundException("No emailtemplate was not found");
         } else {
-            $view = $this->view($emailtemplate, 200);
+            $view = $this->view($emailTemplate, 200);
             return $this->handleView($view);
         }
 	    
@@ -77,11 +78,12 @@ class EmailTemplateController extends FOSRestController implements ClassResource
      * @Rest\View()
      */
     public function getAction($id)
-    {$emailtemplate = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:EmailTemplate')->find($id);
-        if (!$emailtemplate) {
+    {
+        $emailTemplate = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:EmailTemplate')->find($id);
+        if (!$emailTemplate) {
             throw $this->createNotFoundException("This emailtemplate was not found");
         } else {
-            $view = $this->view($emailtemplate, 200);
+            $view = $this->view($emailTemplate, 200);
             return $this->handleView($view);
         }
 	    
@@ -109,19 +111,20 @@ class EmailTemplateController extends FOSRestController implements ClassResource
     public function patchAction(ParamFetcher $paramFetcher,$id)
     {
     	$params = $paramFetcher->all();
-    	$emailtemplate = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:EmailTemplate")->findById($id);
-        if (!$emailtemplate) {
+        /** @var EmailTemplate $emailTemplate */
+        $emailTemplate = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:EmailTemplate")->findById($id);
+        if (!$emailTemplate) {
         	throw $this->createNotFoundException("No EmailTemplate found");
         }
         if($params["template_name"] != NULL)
-        	$emailtemplate->setTemplateName($params["template_name"]);
+        	$emailTemplate->setTemplateName($params["template_name"]);
         if($params["email_subject"] != Null)
-        	$emailtemplate->setEmailSubject($params["email_subject"]);
+        	$emailTemplate->setEmailSubject($params["email_subject"]);
         if($params["email_body"] != NULL)
-        	$enailtemplate->setEmailBody($params["email_body"]);
-        $this->getDoctrine()->getManager()->persist($emailtemplate);
+        	$emailTemplate->setEmailBody($params["email_body"]);
+        $this->getDoctrine()->getManager()->persist($emailTemplate);
         $this->getDoctrine()->getManager()->flush();
-        $view = $this->view($emailtemplate,200);
+        $view = $this->view($emailTemplate,200);
         return $this->handleView($view);
 	    
     }
@@ -146,17 +149,17 @@ class EmailTemplateController extends FOSRestController implements ClassResource
      * @Rest\View()
      */
     public function putAction(ParamFetcher $paramFetcher)
-    { 	$emailtemplate = new EmailTemplate ();
+    { 	$emailTemplate = new EmailTemplate ();
     	$params = $paramFetcher->all();
     	if($params["template_name"] != NULL)
-        	$emailtemplate->setTemplateName($params["template_name"]);
+        	$emailTemplate->setTemplateName($params["template_name"]);
         if($params["email_subject"] != Null)
-        	$emailtemplate->setEmailSubject($params["email_subject"]);
+        	$emailTemplate->setEmailSubject($params["email_subject"]);
         if($params["email_body"] != NULL)
-        	$enailtemplate->setEmailBody($params["email_body"]);
-    	$this->getDoctrine()->getManager()->persist($emailtemplate);
+        	$emailTemplate->setEmailBody($params["email_body"]);
+    	$this->getDoctrine()->getManager()->persist($emailTemplate);
         $this->getDoctrine()->getManager()->flush();
-        $view = $this->view($emailtemplate,200);
+        $view = $this->view($emailTemplate,200);
         return $this->handleView($view);
 	    
     }
@@ -178,11 +181,11 @@ class EmailTemplateController extends FOSRestController implements ClassResource
      */
     public function deleteAction($id)
     {
-        $emailtemplate = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:EmailTemplate")->find($id);
-        if (!$emailtemplate) {
+        $emailTemplate = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:EmailTemplate")->find($id);
+        if (!$emailTemplate) {
             throw $this->createNotFoundException("EmailTemplate not found");
         }
-        $this->getDoctrine()->getManager()->remove($emailtemplate);
+        $this->getDoctrine()->getManager()->remove($emailTemplate);
         $this->getDoctrine()->getManager()->flush();
         return View::create(null, Codes::HTTP_NO_CONTENT);
 	    
