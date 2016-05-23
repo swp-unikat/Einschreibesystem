@@ -122,12 +122,12 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
      */
     public function deleteBlacklistAction($id)
     {
-       $participantsBlacklist = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Blacklist")->find($id);
+       $participantsBlacklist = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Participants")->find($id);
         if (!$participantsBlacklist) {
             throw $this->createNotFoundException("No Participant on Blacklist found");
         }
         $this->getDoctrine()->getManager()->remove($participantsBlacklist);
-        $this->getDoctrine()->getManager()->flush($participantsBlacklist);
+        $this->getDoctrine()->getManager()->flush();
         return View::create(null, Codes::HTTP_NO_CONTENT);
     }
     }
