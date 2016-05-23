@@ -132,8 +132,14 @@ class EmailTemplateController extends FOSRestController implements ClassResource
     public function putAction($id)
     { 	$emailtemplate = new EmailTemplate ();
     	$params = $paramFetcher->all();
-    	
-    	
+    	$emailtemplate = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:EmailTemplate')->find($id);
+    	$emailtemplate->setTemplate_Name($params["template_name"]);
+    	$emailtemplate->setEmail_Subject($params["email_subject"]);
+    	$emailtemplate->setEmail_Body($params["email_body"]);
+    	$this->getDoctrine()->getManager()->persist($emailtemplate);
+        $this->getDoctrine()->getManager()->flush();
+        $view = $this->view($emailtemplate,200);
+        return $this->handleView($view);
 	    
     }
     
