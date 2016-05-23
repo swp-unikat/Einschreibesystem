@@ -2,11 +2,10 @@
 /**
  * Created by IntelliJ IDEA.
  * User: Leon Bergmann
- * Company: SkyLab UG(haftungsbeschränkt)
  * Date: 29.04.2016
  * Time: 16:44
  */
-namespace Core\APIBundle\Controller\Admin;
+namespace Core\APIBundle\Controller;
 
 use Doctrine\Common\Collections\Criteria;
 use FOS\RestBundle\Controller\FOSRestController;
@@ -32,8 +31,8 @@ use Doctrine\ORM\Query;
 
 class ParticipantsController extends FOSRestController implements ClassResourceInterface
 {
-    /**
-     
+	/**
+	 * @Security("has_role('ROLE_ADMIN')")
      * @ApiDoc(
      *  resource=true,
      *  description="Returns list of all participants",
@@ -50,10 +49,16 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
      */
     public function getAllAction()
     {
-
+       $workshopParticipant = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:Participants');
+        $entits = $workshopParticipant->getAllParticipants();
+        if (!$entits) {
+            throw $this->createNotFoundException("No Participants found");
+                      } 
+            $view = $this->view($entits, 200);
+        return $this->handleView($view)$view = $this->view($entits, 200);	    
     }
-
-    /**
+    	/**
+    	 * @Security("has_role('ROLE_ADMIN')")
      * @ApiDoc(
      *  resource=true,
      *  description="Returns list of all participants that are blacklisted",
@@ -70,10 +75,16 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
      */
     public function getBlacklistAllAction()
     {
-
+	    $participantsBlacklist = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:Participants');
+	     $entits = $participantsBlacklist->getAllBlacklistedParticipants();
+	     if (!$entits) {
+            throw $this->createNotFoundException("No Participant on Blacklist found");
+                           }
+        $view = $this->view($entits, 200);
+        return $this->handleView($view);
     }
-
-    /**     
+    	/**
+    	 * @Security("has_role('ROLE_ADMIN')")
      * @ApiDoc(
      *  resource=true,
      *  description="Add participants to blacklist ",
@@ -90,11 +101,11 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
      */
     public function putBlacklistAction($id)
     {
-
+	    
     }
-
+    
     /**
-     
+     * @Security("has_role('ROLE_ADMIN')")
      * @ApiDoc(
      *  resource=true,
      *  description="Remove participants from Blacklist",
@@ -111,11 +122,18 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
      */
     public function deleteBlacklistAction($id)
     {
-
+       $participantsBlacklist = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Blacklist")->find($id);
+        if (!$participantsBlacklist) {
+            throw $this->createNotFoundException("No Participant on Blacklist found");
+        }
+        $this->getDoctrine()->getManager()->remove($participantsBlacklist);
+        $this->getDoctrine()->getManager()->flush($participantsBlacklist);
+        return View::create(null, Codes::HTTP_NO_CONTENT);
     }
-
+    }
+    
     /**
-     
+     * @Security("has_role('ROLE_ADMIN')")
      * @ApiDoc(
      *  resource=true,
      *  description="Get detail view of blacklisted user",
@@ -132,6 +150,11 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
      */
     public function getBlacklistAction($id)
     {
-
+    $participantsBlacklist = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:Blacklist')->find($id); 
+    if (!$participantsBlacklist) {
+     throw $this->createNotFoundException("No User found");
+     } else { 
+        $view = $this->view($participantsBlacklist, 200);
+        return $this->handleView($view);
+     }
     }
-}
