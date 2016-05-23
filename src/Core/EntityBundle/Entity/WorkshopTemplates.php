@@ -32,7 +32,7 @@ class WorkshopTemplate{
      */
     protected $title;
     /**
-     * @var MEDIUMTEXT
+     * @var string
      * @ORM\Column(name="description", type="MEDIUMTEXT", nullable=false)
      * @Serializer\Expose
      * @Serializer\SerializedName("description")
@@ -124,7 +124,21 @@ class WorkshopTemplate{
     {
         $this->title = $title;
     }
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
 
+    /**
+     * @param string $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
     /**
      * @return int
      */
