@@ -141,7 +141,6 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
         $this->getDoctrine()->getManager()->flush();
         return View::create(null, Codes::HTTP_NO_CONTENT);
     }
-    }
     
     /**
      * @Security("has_role('ROLE_ADMIN')")
