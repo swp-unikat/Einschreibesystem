@@ -73,13 +73,13 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
      * @Rest\View()
      */
     public function getBlacklistAllAction()
-    {
+    {  
 	    $participantsBlacklist = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:Participants');
-	     $entits = $participantsBlacklist->getAllBlacklistedParticipants();
-	     if (!$entits) {
+	     $participant = $participantsBlacklist->getAllBlacklistedParticipants();
+	     if (!$participant) {
             throw $this->createNotFoundException("No Participant on Blacklist found");
-                           }
-        $view = $this->view($entits, 200);
+         }
+        $view = $this->view($participant, 200);
         return $this->handleView($view);
     }
     	/**
@@ -100,7 +100,19 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
      */
     public function putBlacklistAction($id)
     {
-	    
+        $participant = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:Participants')->find($id);
+        if (!$participant) {
+            throw $this->createNotFoundException("No User found");
+        } else {
+            $participant->setBlacklisted(true);
+            $participant->setBlacklistedAt(new \DateTime("now"));
+            /* ToDO Add User to Database who blacklisted the participant */
+
+            $this->getDoctrine()->getManager()->persist($participant);
+            $this->getDoctrine()->getManager()->flush();
+
+            return View::create(null, Codes:e:HTTP_NO_CONTENT);
+        }
     }
     
     /**
@@ -149,11 +161,11 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
      */
     public function getBlacklistAction($id)
     {
-    $participantsBlacklist = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:Blacklist')->find($id); 
-    if (!$participantsBlacklist) {
-     throw $this->createNotFoundException("No User found");
-     } else { 
-        $view = $this->view($participantsBlacklist, 200);
-        return $this->handleView($view);
-     }
+        $participantsBlacklist = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:Participants')->find($id);
+        if (!$participantsBlacklist) {
+            throw $this->createNotFoundException("No User found");
+         } else {
+            $view = $this->view($participantsBlacklist, 200);
+            return $this->handleView($view);
+         }
     }
