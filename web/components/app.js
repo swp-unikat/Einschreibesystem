@@ -6,13 +6,14 @@ var mainApp = angular.module('mainApp',[
     'ngRoute',
     'mainAppCtrls',
     'mgcrea.ngStrap',
-    'ui.router'
+    'ui.router',
+    'pascalprecht.translate'
 ]);
 /**
  *
  * @type {angular.Module}
  */
-var mainAppCtrls = angular.module('mainAppCtrls',[]);
+var mainAppCtrls = angular.module('mainAppCtrls',["pascalprecht.translate"]);
 /**
  * Configure routing
  */
@@ -103,3 +104,13 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
 
     }
 ]);
+/**
+ * Config translation modul for internationalization
+ */
+mainApp.config(['$translateProvider', function($translateProvider) {
+    $translateProvider.useStaticFilesLoader({
+        prefix: 'resources/local/lang-',
+        suffix: '.json'
+    });
+    $translateProvider.preferredLanguage('en');
+}]);
