@@ -114,7 +114,7 @@ class EmailTemplateController extends FOSRestController implements ClassResource
 	 
      * @ApiDoc(
      *  resource=true,
-     *  description="Create new template",
+     *  description="Edit template",
      *  output = "Core\EntityBundle\Entity\",
      *  statusCodes = {
      *      200 = "Returned when successful",
@@ -135,7 +135,7 @@ class EmailTemplateController extends FOSRestController implements ClassResource
     /**	 
      * @ApiDoc(
      *  resource=true,
-     *  description="Delete a template",
+     *  description="Create a template",
      *  output = "Core\EntityBundle\Entity\Participants",
      *  statusCodes = {
      *      200 = "Returned when successful",
