@@ -78,12 +78,11 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      *  }
      * )
      * )
-     * @param \Symfony\Component\HttpFoundation\Request $request
-
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\View()
      */
-    public function getAction(Request $request, $id)
+    public function getAction($id)
     {
         $workshop = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:Workshop')->find($id);
         if (!$workshop) {
@@ -111,6 +110,12 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      */
     public function postEnrollAction($id)
     {
+
+
+
+
+
+
 
     }
 
@@ -183,9 +188,16 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\View()
      */
-    public function getUnsubscribeAction($id,$token)
+    public function getUnsubscribeAction($id,$token, $participantsID)
     {
         $workshop = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Workshop")->find($id);
+        $token = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Token")->findBy(['token' => $token]);
+
+
+
+
+
+
     }
 
     /**
