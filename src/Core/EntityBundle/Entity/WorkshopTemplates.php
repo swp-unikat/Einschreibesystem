@@ -33,7 +33,7 @@ class WorkshopTemplate{
     protected $title;
     /**
      * @var string
-     * @ORM\Column(name="description", type="MEDIUMTEXT", nullable=false)
+     * @ORM\Column(name="description", type="string", nullable=false)
      * @Serializer\Expose
      * @Serializer\SerializedName("description")
      */
