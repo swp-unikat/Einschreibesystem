@@ -135,26 +135,6 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      * )
      *
      * @return \Symfony\Component\HttpFoundation\Response
-     * @Rest\View()
-     */
-    public function putAction()
-    {
-
-    }
-    
-	/**
-     * @ApiDoc(
-     *  resource=true,
-     *  description="Action to edit a Workshop",
-     *  output = "",
-     *  statusCodes = {
-     *      200 = "Returned when successful",
-     *      404 = "Returned when the data is not found"
-     *  }
-     * )
-     * )
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\RequestParam(name="title", requirements=".*", description="json object of workshop")
      * @Rest\RequestParam(name="description", requirements=".*", description="json object of workshop")
      * @Rest\RequestParam(name="cost", requirements=".*", description="json object of workshop")
@@ -166,7 +146,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      * @Rest\RequestParam(name="created", requirements=".*", description="json object of workshop")
      * @Rest\View()
      */
-    public function patchAction($id,ParamFetcher $paramFetcher)
+    public function putAction(ParamFetcher $paramFetcher)
     {
         $workshop = new Workshop();
         $params = $paramFetcher->all();
@@ -191,6 +171,27 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
         $this->getDoctrine()->getManager()->flush();
         $view = $this->view($workshop,200);
         return $this->handleView($view);
+    }
+    
+	/**
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Action to edit a Workshop",
+     *  output = "",
+     *  statusCodes = {
+     *      200 = "Returned when successful",
+     *      404 = "Returned when the data is not found"
+     *  }
+     * )
+     * )
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+
+     * @Rest\View()
+     */
+    public function patchAction($id)
+    {
+       
     }
 
     /**
