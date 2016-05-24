@@ -344,6 +344,11 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
     public function getUnsubscribeAction($id,$token)
     {
 	    $workshop = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Workshop")->find($id);
+        $token = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Token")->findBy(['token' => $token]);
+
+
+
+        
     }
     
     /**
