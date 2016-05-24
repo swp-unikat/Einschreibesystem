@@ -1,4 +1,4 @@
-<div ng-controller="WorkshopListCtrl">
+<div>
     <div class="col-lg-10 col-lg-offset-1">
     <div class="panel-group" role="tablist" aria-multiselectable="true" bs-collapse>
         <div class="panel panel-default" ng-repeat="panel in panels">
@@ -6,13 +6,13 @@
                 <h4 class="panel-title">
                     <a bs-collapse-toggle>
                         {{ panel.title }}
-                        <div>WORKSHOP_NAME</div>
+                        <div><strong>WORKSHOP_NAME {{ workshop.title }}</strong></div>
                     </a>
                 </h4>
             </div>
             <div class="panel-collapse" role="tabpanel" bs-collapse-target>
-                <div class="panel-body " style="overflow:scroll">
-                    <div class="container-fluid">
+
+                 <div class="container-fluid">
                     <div class="row.fluid">
 
 
@@ -24,7 +24,7 @@
                             </tr>
 
                             <tr>
-                                <td>WORKSHOP_BEGIN_DATE</td>
+                                <td><p translate="WORKSHOP_DATE"></p></td>
                                 <td>WORKSHOP_DURATION</td>
                                 <td>WORKSHOP_PLACE</td>
                             </tr>
@@ -37,7 +37,6 @@
                         </div>
 
 
-                    </div>
                     </div>
                 </div>
             </div>
