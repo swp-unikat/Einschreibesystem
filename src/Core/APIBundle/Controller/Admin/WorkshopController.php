@@ -412,17 +412,17 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\View()
      */
-    public function patchWaitinglistAction($id, $participantId)
+    public function patchWaitinglistAction($id, $participantId) /**Workshop ID!, Workshopüberbuchung: von der Warteliste auf die Nichtwarteliste*/
     {
+        //Relation Workshop <-> Participant
         $workshopParticipant = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:WorkshopParticipants")->findById($id,
             $participantId);
         if (!$workshopParticipant) {
             throw $this->createNotFoundException("No participant on waiting list found");
         }
-        $workshopParticipant->setWaiting(0);
+        $workshopParticipant->setWaiting(0); /** 0 -> im Workshop, 1-> Waiting */
         $this->getDoctrine()->getManager()->persist($workshopParticipant);
         $this->getDoctrine()->getManager()->flush();
-
         return View::create(null, Codes::HTTP_NO_CONTENT);
     }
 }
