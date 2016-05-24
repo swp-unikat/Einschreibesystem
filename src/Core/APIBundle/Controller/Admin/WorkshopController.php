@@ -55,7 +55,6 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
         if (!$entits) {
             throw $this->createNotFoundException("No Workshops found");
         }
-
         $view = $this->view($entits, 200);
         return $this->handleView($view);
     }
@@ -106,12 +105,11 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      *  }
      * )
      * )
-     * @param \Symfony\Component\HttpFoundation\Request $request
-
+     * 
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\View()
      */
-    public function getAction(Request $request, $id)
+    public function getAction($id)
     {
         $workshop = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:Workshop')->find($id);
         if (!$workshop) {
@@ -135,11 +133,42 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      * )
      *
      * @return \Symfony\Component\HttpFoundation\Response
+     * @Rest\RequestParam(name="title", requirements=".*", description="json object of workshop")
+     * @Rest\RequestParam(name="description", requirements=".*", description="json object of workshop")
+     * @Rest\RequestParam(name="cost", requirements=".*", description="json object of workshop")
+     * @Rest\RequestParam(name="requirements", requirements=".*", description="json object of workshop")
+     * @Rest\RequestParam(name="location", requirements=".*", description="json object of workshop")
+     * @Rest\RequestParam(name="start_at", requirements=".*", description="json object of workshop")
+     * @Rest\RequestParam(name="end_at", requirements=".*", description="json object of workshop")
+     * @Rest\RequestParam(name="max_participants", requirements=".*", description="json object of workshop")
+     * @Rest\RequestParam(name="created", requirements=".*", description="json object of workshop")
      * @Rest\View()
      */
-    public function putAction()
+    public function putAction(ParamFetcher $paramFetcher)
     {
-
+        $workshop = new Workshop();
+        $params = $paramFetcher->all();
+        $workshop = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:Workshop')->find($id);
+        if($params["title"] != NULL)
+            $workshop->setTitle($params["title"]);
+        if(§params["description"] != NULL)
+            $workshop->setDescription($params["desctiption"]);
+        if(§params["cost"] != NULL)
+            §workshop->setCost(§params["cost"]);
+        if(§params["requirements"] != NULL)
+            $workshop->setRequirements($params["requirements"]);
+        if($params["location"] != NULL)
+            $workshop->setLocation($params["location"]);
+        if(§params["start_at"] != NULL)
+            $workshop->getStartAt($params["start_at"]);
+        if($params["end_at"] != NULL)
+            $workshop->getEndAt($params["end_at"]);
+        if($params["max_participants"] != NULL)
+            $workshop->getMaxParticipants($params["max_participants"]);
+        $this->getDoctrine()->getManager()->persist($workshop);
+        $this->getDoctrine()->getManager()->flush();
+        $view = $this->view($workshop,200);
+        return $this->handleView($view);
     }
     
 	/**
@@ -156,14 +185,42 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      *
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\RequestParam(name="title", requirements=".*", description="json object of workshop")
-     * @Rest\RequestParam(name="", requirements=".*", description="json object of workshop")
+     * @Rest\RequestParam(name="description", requirements=".*", description="json object of workshop")
+     * @Rest\RequestParam(name="cost", requirements=".*", description="json object of workshop")
+     * @Rest\RequestParam(name="requirements", requirements=".*", description="json object of workshop")
+     * @Rest\RequestParam(name="location", requirements=".*", description="json object of workshop")
+     * @Rest\RequestParam(name="start_at", requirements=".*", description="json object of workshop")
+     * @Rest\RequestParam(name="end_at", requirements=".*", description="json object of workshop")
+     * @Rest\RequestParam(name="max_participants", requirements=".*", description="json object of workshop")
+     * @Rest\RequestParam(name="created", requirements=".*", description="json object of workshop")
      * @Rest\View()
      */
-    public function patchAction($id,ParamFetcher $paramFetcher)
+    public function patchAction($id, ParamFetcher $paramFetcher)
     {
-
-        $paramFetcher->get('title');
-
+        $params = $paramFetcher->all();
+        $workshop = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:Workshop')->find($id);
+        if (!$workshop) {
+            throw $this->createNotFoundException("This workshop was not found");
+        }
+        if($params["title"] != NULL)
+            $workshop->setTitle($params["title"]);
+        if(§params["description"] != NULL)
+            $workshop->setDescription($params["desctiption"]);
+        if(§params["cost"] != NULL)
+            §workshop->setCost(§params["cost"]);
+        if(§params["requirements"] != NULL)
+            $workshop->setRequirements($params["requirements"]);
+        if($params["location"] != NULL)
+            $workshop->setLocation($params["location"]);
+        if(§params["start_at"] != NULL)
+            $workshop->getStartAt($params["start_at"]);
+        if($params["end_at"] != NULL)
+            $workshop->getEndAt($params["end_at"]);
+        if($params["max_participants"] != NULL)
+            $workshop->getMaxParticipants($params["max_participants"]);
+        $this->getDoctrine()->getManager()->persist($workshop);
+        $this->getDoctrine()->getManager()->flush();
+        $view = $this->view($workshop,200);
         return $this->handleView($view);
     }
 
@@ -290,9 +347,14 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\View()
      */
-    public function getUnsubscribeAction($id,$token)
+    public function getUnsubscribeAction($id,$token, $participantsID)
     {
 	    $workshop = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Workshop")->find($id);
+        $token = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Token")->findBy(['token' => $token]);
+
+
+
+        
     }
     
     /**
@@ -356,17 +418,17 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\View()
      */
-    public function patchWaitinglistAction($id, $participantId)
+    public function patchWaitinglistAction($id, $participantId) /**Workshop ID!, Workshopüberbuchung: von der Warteliste auf die Nichtwarteliste*/
     {
+        //Relation Workshop <-> Participant
         $workshopParticipant = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:WorkshopParticipants")->findById($id,
             $participantId);
         if (!$workshopParticipant) {
             throw $this->createNotFoundException("No participant on waiting list found");
         }
-        $workshopParticipant->setWaiting(0);
+        $workshopParticipant->setWaiting(0); /** 0 -> im Workshop, 1-> Waiting */
         $this->getDoctrine()->getManager()->persist($workshopParticipant);
         $this->getDoctrine()->getManager()->flush();
-
         return View::create(null, Codes::HTTP_NO_CONTENT);
     }
 }
