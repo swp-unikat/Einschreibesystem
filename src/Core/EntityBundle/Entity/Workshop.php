@@ -36,7 +36,7 @@ class Workshop
      * @var int
      * @ORM\Column(name="cost", type="decimal",precision=4, scale=2, nullable=false)
      * @Serializer\Expose
-     * @Serializer\SerializedName("title")
+     * @Serializer\SerializedName("cost")
      */
     protected $cost;
     /**
