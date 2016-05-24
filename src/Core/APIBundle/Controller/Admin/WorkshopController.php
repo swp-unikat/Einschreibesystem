@@ -55,7 +55,6 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
         if (!$entits) {
             throw $this->createNotFoundException("No Workshops found");
         }
-
         $view = $this->view($entits, 200);
         return $this->handleView($view);
     }
@@ -106,8 +105,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      *  }
      * )
      * )
-     * @param \Symfony\Component\HttpFoundation\Request $request
-
+     * 
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\View()
      */
@@ -186,7 +184,15 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      * )
      *
      * @return \Symfony\Component\HttpFoundation\Response
-
+     * @Rest\RequestParam(name="title", requirements=".*", description="json object of workshop")
+     * @Rest\RequestParam(name="description", requirements=".*", description="json object of workshop")
+     * @Rest\RequestParam(name="cost", requirements=".*", description="json object of workshop")
+     * @Rest\RequestParam(name="requirements", requirements=".*", description="json object of workshop")
+     * @Rest\RequestParam(name="location", requirements=".*", description="json object of workshop")
+     * @Rest\RequestParam(name="start_at", requirements=".*", description="json object of workshop")
+     * @Rest\RequestParam(name="end_at", requirements=".*", description="json object of workshop")
+     * @Rest\RequestParam(name="max_participants", requirements=".*", description="json object of workshop")
+     * @Rest\RequestParam(name="created", requirements=".*", description="json object of workshop")
      * @Rest\View()
      */
     public function patchAction($id, ParamFetcher $paramFetcher)
