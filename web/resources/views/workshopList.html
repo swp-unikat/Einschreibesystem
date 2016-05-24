@@ -1,47 +1,45 @@
 <div>
-    <div class="col-lg-10 col-lg-offset-1">
-    <div class="panel-group" role="tablist" aria-multiselectable="true" bs-collapse>
-        <div class="panel panel-default" ng-repeat="panel in panels">
-            <div class="panel-heading" role="tab">
-                <h4 class="panel-title">
-                    <a bs-collapse-toggle>
-                        {{ panel.title }}
-                        <div><strong>WORKSHOP_NAME {{ workshop.title }}</strong></div>
-                    </a>
-                </h4>
-            </div>
-            <div class="panel-collapse" role="tabpanel" bs-collapse-target>
+     <div class="col-md-8 col-md-offset-2">
 
-                 <div class="container-fluid">
-                    <div class="row.fluid">
+         <div class="form-group has-feedback">
 
+             <input type="text" class="form-control" placeholder="Search" ng-model="query">
+             <i class="glyphicon glyphicon-search form-control-feedback"></i>
+         </div>
 
-                        <table class = "table table-hover table-condensed table-responsive">
-                            <tr>
-                                <th><strong>Workshop date</strong></th>
-                                <th><strong>Workshop duration</strong></th>
-                                <th><strong>Workshop room</strong></th>
-                            </tr>
+         <div class="col-lg-12">
 
-                            <tr>
-                                <td><p translate="WORKSHOP_DATE"></p></td>
-                                <td>WORKSHOP_DURATION</td>
-                                <td>WORKSHOP_PLACE</td>
-                            </tr>
-                        </table>
-                        <div class="span12">WORKSHOP_CONTENT</div>
-                        <div class="span4 col-l">WORKSHOP_REQUIRMENTS</div>
+             <div class="box-group" ng-repeat="panel in panels">
+             <div class="box box-default">
+                 <div class="box-header with-border">
+                     <div class="container">
+                      <div class="row">
+                            <h4 class="box-title col-md-8">Workshop: {{workshop.title}}</h4>
+                            <label class="text-right" style="color: #99999f;">x/y</label> <!--{{participant.number}}/{{max.participants}}-->
+                      </div>
+                     </div>
 
-                        <div class="span3">
-                            <button type="button" class="btn pull-right">ENROLL_BUTTON</button>
-                        </div>
+                     <div class="box-tools pull-right">
+                         <button type="button" class="btn btn-box-tool" ng-click="toggle = !toggle">
+                             <span ng-class="{'glyphicon glyphicon-menu-down': toggle, 'glyphicon glyphicon-menu-up': !toggle }"></span>
+                         </button>
+                     </div>
+                     <!-- /.box-tools -->
+                 </div>
+                 <!-- /.box-header -->
+                 <div class="box-body " ng-show="toggle">
+                     <p >Workshop short description</p>
 
+                     <div class="span3">
+                         <button type="button" class="btn pull-right">Details</button>
+                     </div>
+                 </div>
+                 <!-- /.box-body -->
+             </div>
+                 <!-- /.box -->
+             </div>
+         </div>
 
-                    </div>
-                </div>
-            </div>
-            </div>
-    </div>
     </div>
 
 </div>
