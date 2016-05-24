@@ -189,9 +189,33 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
 
      * @Rest\View()
      */
-    public function patchAction($id)
+    public function patchAction($id, ParamFetcher $paramFetcher)
     {
-       
+        $params = $paramFetcher->all();
+        $workshop = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:Workshop')->find($id);
+        if (!$workshop) {
+            throw $this->createNotFoundException("This workshop was not found");
+        }
+        if($params["title"] != NULL)
+            $workshop->setTitle($params["title"]);
+        if(§params["description"] != NULL)
+            $workshop->setDescription($params["desctiption"]);
+        if(§params["cost"] != NULL)
+            §workshop->setCost(§params["cost"]);
+        if(§params["requirements"] != NULL)
+            $workshop->setRequirements($params["requirements"]);
+        if($params["location"] != NULL)
+            $workshop->setLocation($params["location"]);
+        if(§params["start_at"] != NULL)
+            $workshop->getStartAt($params["start_at"]);
+        if($params["end_at"] != NULL)
+            $workshop->getEndAt($params["end_at"]);
+        if($params["max_participants"] != NULL)
+            $workshop->getMaxParticipants($params["max_participants"]);
+        $this->getDoctrine()->getManager()->persist($workshop);
+        $this->getDoctrine()->getManager()->flush();
+        $view = $this->view($workshop,200);
+        return $this->handleView($view);
     }
 
     /**
