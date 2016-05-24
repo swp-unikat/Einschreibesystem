@@ -63,4 +63,13 @@ class WorkshopRepository extends EntityRepository
         return $result;
 
     }
+
+    public function getWorkshopsForNotificationEmail(){
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $q  = $qb->select(["workshop"])
+                 ->from("CoreEntityBundle:Workshop","workshop")
+                 ->where();
+
+    }
+
 }

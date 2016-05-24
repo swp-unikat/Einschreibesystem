@@ -5,7 +5,7 @@
  * Date: 29.04.2016
  * Time: 16:44
  */
-namespace Core\APIBundle\Controller;
+namespace Core\APIBundle\Controller\Admin;
 
 use Doctrine\Common\Collections\Criteria;
 use FOS\RestBundle\Controller\FOSRestController;
@@ -111,7 +111,7 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
             $this->getDoctrine()->getManager()->persist($participant);
             $this->getDoctrine()->getManager()->flush();
 
-            return View::create(null, Codes:HTTP_NO_CONTENT);
+            return View::create(null, Codes::HTTP_NO_CONTENT);
         }
     }
     
@@ -168,3 +168,6 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
             return $this->handleView($view);
          }
     }
+}
+
+
