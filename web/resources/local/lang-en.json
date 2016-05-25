@@ -79,12 +79,17 @@
 "BUTTON_DISCARD_DRAFT":"Discard draft",
 "BUTTON_DELETE_EMAIL_TEMPLATE":"Delete email template",
 
+"ADMINISTRATOR_MANAGEMENT":"Administrator management",
+"BUTTON_ADMINISTRATOR_PASSWORD_RESET":"Administrator password reset",
+"ADMINISTRATOR_INVITE":"Administrator invite",
+
 "ADMINISTRATOR_DASHBOARD":"Administrator dashboard",
+
 "BUTTON_SETTINGS":"Settings",
+  "EDIT_IMPRESSUM":"Edit impressum",
 "BUTTON_ADMINISTRATOR_LOGIN":"Administrator login",
-"BUTTON_ADMINSTRATOR_LOGOUT":"Administrator logout",
+"BUTTON_ADMINISTRATOR_LOGOUT":"Administrator logout",
 "ADMINISTRATOR_PASSWORD":"Administrator password",
-"BUTTON_ADMINISTRATOR_PASSWORD_RESET":"Administrator password reset"
 
  
 }
