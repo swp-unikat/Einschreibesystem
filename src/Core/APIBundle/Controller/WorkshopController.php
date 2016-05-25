@@ -132,12 +132,26 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
             $participant->setName($params["name"]);
             $participant->setSurname($params["surname"]);
             
-            //Email senden
+            //send mail
+            $template = $this->getDoctrine()->getRepository("CoreEntityBundle:EmailTemplate")->find(1);
+            /* Creating Twig template from Database */
+            $renderTemplate = $this->get('twig')->createTemplate($template->getEmailBody());
+            /* Sending E-Mail with Confirmation Link - NOT INCLUDED?*/
+            $message = \Swift_Message::newInstance()
+                ->setSubject($template->getEmailSubject())
+                ->setFrom('send@example.com')
+                ->setTo($participant['email'])
+                ->setBody($renderTemplate->render(["workshop" => $workshop,"participant" => $participant]),'text/html');
+            $this->get('mailer')->send($message);
+
             
         } else {
             //alle Workshops an denen der Nutzer noch nicht teilgenommen hat
             $workshopParticipants = $this->getDoctrine()->getRepository("CoreEntityBundle:WorkshopParticipants")->findBy(["participant" => $participant, "participated" => 0]);
-            //über Arry iterieren , Workshop laden (get Wokrshop?) Anfangs und Endzeit mit dem Workshop vergleichen
+            //über Array iterieren , Workshop laden (get Wokrshop?) Anfangs und Endzeit mit dem Workshop vergleichen
+            if ($workshop->getStartAt() >= $workshopParticipants->getWorkshop($id)->getStartat() && $workshop->getStartAt() <= $workshopParticipants->getWorkshop($id)->getEndat()){
+                throw $this->createAccessDeniedException("Already in Workshop at same Time");
+            }
             
             
         }
@@ -148,8 +162,8 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
         
 
         /*
-         * 0) Paramfetcher (name,vorname,email)
-         * 1) Gibt es den User => lade User aus | erstellen
+         * 0) Paramfetcher (name,vorname,email) check
+         * 1) Gibt es den User => lade User aus check| erstellen check
          * 2) Hat der User einen anderen Workshop zu der Zeit => ja ablehnen
          * 3) E-Mail senden mit Anmeldelink
          *      - Workshop ID
