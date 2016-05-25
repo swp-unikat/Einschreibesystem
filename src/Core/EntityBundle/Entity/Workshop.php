@@ -88,6 +88,11 @@ class Workshop
      * @Serializer\SerializedName("created")
      */
     protected $created;
+    /**
+     * @var bool
+     * @ORM\Column(name="notified", type="boolean", nullable=false)
+     */
+    protected $notified;
 
     public function __construct()
     {
@@ -253,5 +258,22 @@ class Workshop
     {
         $this->description = $description;
     }
+
+    /**
+     * @return \DateTime
+     */
+    public function getNotified()
+    {
+        return $this->notified;
+    }
+
+    /**
+     * @param \DateTime $notified
+     */
+    public function setNotified($notified)
+    {
+        $this->notified = $notified;
+    }
+
 
 }

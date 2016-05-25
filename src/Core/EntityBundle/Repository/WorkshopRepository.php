@@ -65,11 +65,14 @@ class WorkshopRepository extends EntityRepository
     }
 
     public function getWorkshopsForNotificationEmail(){
+        $now = new \DateTime("now");
         $qb = $this->getEntityManager()->createQueryBuilder();
-        $q  = $qb->select(["workshop"])
+        $q  = $qb->select(["workshop.id"])
                  ->from("CoreEntityBundle:Workshop","workshop")
-                 ->where();
-
+                 ->where("workshop.notified = 0 and workshop.start_at < ?1");
+        $q->setParameter(1,$now);
+        $result = $q->getQuery()->getResult();
+        return $result;
     }
 
 }
