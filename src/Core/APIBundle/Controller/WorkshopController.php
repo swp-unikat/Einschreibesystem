@@ -8,6 +8,7 @@
  */
 namespace Core\APIBundle\Controller;
 
+use Core\EntityBundle\Entity\Participants;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Request\ParamFetcher;
 use FOS\RestBundle\View\View;
@@ -104,15 +105,47 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      * )
      *
      * @return \Symfony\Component\HttpFoundation\Response
+     * @Rest\RequestParam(name="name", requirements=".*", description="json object of workshop")
+     * @Rest\RequestParam(name="surname", requirements".*", description="json object of workshop")
+     * @Rest\RequestParan(name="email", requirements".*", description="json object of workshop")
+     *
      * @Rest\View()
      */
-    public function postEnrollAction($id)
+    public function postEnrollAction($id, ParamFetcher $paramFetcher)
     {
+        $params = $paramFetcher->all();
+
         $workshop = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Workshop")->find($id);
+        $participant = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Participants")->findOneBy(["email" => $params["email"]]);
+
+        
         if (!$workshop) {
             throw $this->createNotFoundException("Workshop not found");
         }
+        
+       
+        
+        if ($participant == NULL){
+            $participant = new Participants();
+            $participant->setBlacklisted(false);
+            $participant->setEmail($params["email"]);
+            $participant->setName($params["name"]);
+            $participant->setSurname($params["surname"]);
+            
+            //Email senden
+            
+        } else {
+            //alle Workshops an denen der Nutzer noch nicht teilgenommen hat
+            $workshopParticipants = $this->getDoctrine()->getRepository("CoreEntityBundle:WorkshopParticipants")->findBy(["participant" => $participant, "participated" => 0]);
+            //über Arry iterieren , Workshop laden (get Wokrshop?) Anfangs und Endzeit mit dem Workshop vergleichen
+            
+            
+        }
 
+        
+        
+        
+        
 
         /*
          * 0) Paramfetcher (name,vorname,email)
@@ -122,6 +155,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
          *      - Workshop ID
          *      - Participant ID
          *      - Token
+         * Pull before Commit !! (strg+T)
          */
         
 

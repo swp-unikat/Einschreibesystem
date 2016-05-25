@@ -89,7 +89,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
     {
         $workshop = new Workshop();
         $params = $paramFetcher->all();
-        $workshop = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:Workshop')->find($id);
+        
         if($params["title"] != NULL)
             $workshop->setTitle($params["title"]);
         if($params["description"] != NULL)
