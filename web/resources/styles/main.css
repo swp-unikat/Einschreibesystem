@@ -92,7 +92,7 @@
     clear: both;
 }
 .box-header {
-    color: rgb(85, 89, 89);
+    color: #444;
     display: block;
     padding: 10px;
     position: relative;
@@ -173,16 +173,6 @@
     padding: 10px;
     background-color: #ffffff;
 }
-
-.participants{
-    color: #dddddd;
-}
-
-.btn.success{
-    background-color: #5cb85c;
-    color: #ffffff;
-}
-
 @media (max-width: 991px) {
     .chart-legend > li {
         float: left;
