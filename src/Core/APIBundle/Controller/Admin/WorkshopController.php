@@ -283,7 +283,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
 
         
         
-        //Enroll?
+   
         
         
 
