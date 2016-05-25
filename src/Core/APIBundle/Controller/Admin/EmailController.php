@@ -39,6 +39,13 @@ class EmailController extends FOSRestController implements ClassResourceInterfac
      *  statusCodes = {
      *      200 = "Returned when successful",
      *      404 = "Returned when the data is not found"
+     *  },requirements={
+     *      {
+     *          "name"="workshopId",
+     *          "dataType"="integer",
+     *          "requirement"="\d+",
+     *          "description"="Workshop ID"
+     *      }
      *  }
      * )
      * )
