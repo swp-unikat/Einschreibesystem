@@ -39,7 +39,6 @@
 "BUTTON_SAVE":"Save",
 
 "WORKSHOP":"Workshop",
-"BUTTON_WORKSHOPS_LIST":"Workshops list",
 "WORKSHOP_PARTICIPANTS":"Workshop participants",
 "BUTTON_WORKSHOP_OVERBOOK":"Workshop overbook",
 
@@ -64,7 +63,7 @@
 "WORKSHOP_PLACE":"Workshop place",
 "WORKSHOP_ADVISOR":"Workshop advisor",
 "BUTTON_DELETE_WORKSHOP_TEMPLATE":"Delete workshop template",
-"BUTTON_DISCARD":"Discard",
+"BUTTON_DISCARD_TEMPLATE":"Discard template",
  
 "EMAIL_TEMPLATE":"Email template",
 "BUTTON_EDIT_EMAIL_TEMPLATE":"Edit email template",
