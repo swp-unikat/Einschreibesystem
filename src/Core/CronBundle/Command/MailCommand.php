@@ -16,6 +16,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\LockHandler;
 
 
+
 class MailCommand extends ContainerAwareCommand
 {
     protected function configure()
@@ -33,9 +34,10 @@ class MailCommand extends ContainerAwareCommand
 
             return 0;
         }
-        
-        /* */
-        
+
+        $mail = $this->getContainer()->getParameter("mail");
+        $msg = $mail->run();
+
         $dauer = microtime(true) - $beginn;
         $output->writeln('Verarbeitung von '.$msg." Datensaetzen: $dauer Sek.");
         $output->writeln($msg);

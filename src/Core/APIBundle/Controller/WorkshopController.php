@@ -8,7 +8,6 @@
  */
 namespace Core\APIBundle\Controller;
 
-use Doctrine\Common\Collections\Criteria;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Request\ParamFetcher;
 use FOS\RestBundle\View\View;
@@ -55,7 +54,6 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
         if (!$entits) {
             throw $this->createNotFoundException("No Workshops found");
         }
-
         $view = $this->view($entits, 200);
         return $this->handleView($view);
     }
