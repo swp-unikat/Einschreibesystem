@@ -8,7 +8,7 @@
  */
 namespace Core\APIBundle\Controller;
 
-use Doctrine\Common\Collections\Criteria;
+use Core\EntityBundle\Entity\Participants;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Request\ParamFetcher;
 use FOS\RestBundle\View\View;
@@ -55,7 +55,6 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
         if (!$entits) {
             throw $this->createNotFoundException("No Workshops found");
         }
-
         $view = $this->view($entits, 200);
         return $this->handleView($view);
     }
@@ -78,12 +77,11 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      *  }
      * )
      * )
-     * @param \Symfony\Component\HttpFoundation\Request $request
-
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\View()
      */
-    public function getAction(Request $request, $id)
+    public function getAction($id)
     {
         $workshop = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:Workshop')->find($id);
         if (!$workshop) {
@@ -107,11 +105,64 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      * )
      *
      * @return \Symfony\Component\HttpFoundation\Response
+     * @Rest\RequestParam(name="name", requirements=".*", description="json object of workshop")
+     * @Rest\RequestParam(name="surname", requirements".*", description="json object of workshop")
+     * @Rest\RequestParan(name="email", requirements".*", description="json object of workshop")
+     *
      * @Rest\View()
      */
-    public function postEnrollAction($id)
+    public function postEnrollAction($id, ParamFetcher $paramFetcher)
     {
+        $params = $paramFetcher->all();
 
+        $workshop = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Workshop")->find($id);
+        $participant = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Participants")->findOneBy(["email" => $params["email"]]);
+
+        
+        if (!$workshop) {
+            throw $this->createNotFoundException("Workshop not found");
+        }
+        
+       
+        
+        if ($participant == NULL){
+            $participant = new Participants();
+            $participant->setBlacklisted(false);
+            $participant->setEmail($params["email"]);
+            $participant->setName($params["name"]);
+            $participant->setSurname($params["surname"]);
+            
+            //Email senden
+            
+        } else {
+            //alle Workshops an denen der Nutzer noch nicht teilgenommen hat
+            $workshopParticipants = $this->getDoctrine()->getRepository("CoreEntityBundle:WorkshopParticipants")->findBy(["participant" => $participant, "participated" => 0]);
+            //über Arry iterieren , Workshop laden (get Wokrshop?) Anfangs und Endzeit mit dem Workshop vergleichen
+            
+            
+        }
+
+        
+        
+        
+        
+
+        /*
+         * 0) Paramfetcher (name,vorname,email)
+         * 1) Gibt es den User => lade User aus | erstellen
+         * 2) Hat der User einen anderen Workshop zu der Zeit => ja ablehnen
+         * 3) E-Mail senden mit Anmeldelink
+         *      - Workshop ID
+         *      - Participant ID
+         *      - Token
+         * Pull before Commit !! (strg+T)
+         */
+        
+
+        $this->getDoctrine()->getManager()->persist($workshop);
+        $this->getDoctrine()->getManager()->flush();
+        $view = $this->view($workshop,200);
+        return $this->handleView($view);
     }
 
     /**
@@ -179,13 +230,42 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      *  }
      * )
      * )
-     *
+     * @param $id
+     * @param $token
+     * @param $participantsID
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\View()
      */
-    public function getUnsubscribeAction($id,$token)
+    public function getUnsubscribeAction($id,$token, $participantsID)
     {
         $workshop = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Workshop")->find($id);
+        $token = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Token")->findBy(
+            ['token' => $token]
+        );
+        $participant = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Participants")->find(
+            $participantsID
+        );
+        $workshopParticipant = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:WorkshopParticipants")->findById($id, $participantsID);
+
+        if ($workshop != NULL && $token != NULL && $participant != NULL) {
+            if ($token->getValidUntil() <= new \DateTime('now')) {
+                if ($token->getParticipant() != $participant) {
+                    throw $this->createAccessDeniedException("User does not match");
+                } else {
+                    $workshopParticipant->getWorkshop($id);
+                    $workshopParticipant->getParticipant($participant);
+
+                    $token->setUsedAt(new \DateTime('now'));
+                    $this->getDoctrine()->getManager()->persist($token);
+                    $this->getDoctrine()->getManager()->remove($workshopParticipant);
+                    $this->getDoctrine()->getManager()->flush();
+                }
+            } else {
+                throw $this->createAccessDeniedException("Token ist not valid");
+            }
+        } else {
+            throw $this->createNotFoundException("Workshop or Token not found");
+        }
     }
 
     /**
