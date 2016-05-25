@@ -151,6 +151,18 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
             //über Array iterieren , Workshop laden (get Wokrshop?) Anfangs und Endzeit mit dem Workshop vergleichen
             if ($workshop->getStartAt() >= $workshopParticipants->getWorkshop($id)->getStartat() && $workshop->getStartAt() <= $workshopParticipants->getWorkshop($id)->getEndat()){
                 throw $this->createAccessDeniedException("Already in Workshop at same Time");
+            } else {
+                //send mail
+                $template = $this->getDoctrine()->getRepository("CoreEntityBundle:EmailTemplate")->find(1);
+                /* Creating Twig template from Database */
+                $renderTemplate = $this->get('twig')->createTemplate($template->getEmailBody());
+                /* Sending E-Mail with Confirmation Link - NOT INCLUDED?*/
+                $message = \Swift_Message::newInstance()
+                    ->setSubject($template->getEmailSubject())
+                    ->setFrom('send@example.com')
+                    ->setTo($participant['email'])
+                    ->setBody($renderTemplate->render(["workshop" => $workshop,"participant" => $participant]),'text/html');
+                $this->get('mailer')->send($message);
             }
             
             
