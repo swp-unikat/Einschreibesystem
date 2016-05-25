@@ -104,7 +104,70 @@ class WorkshopTemplateController extends FOSRestController implements ClassResou
      *  statusCodes = {
      *      200 = "Returned when successful",
      *      404 = "Returned when the data is not found"
-     *  }
+     *  },requirements={
+     *      {
+     *          "name"="id",
+     *          "dataType"="integer",
+     *          "requirement"="\d+",
+     *          "description"="WorkshopTemplate ID"
+     *      }
+     *  },requirements={
+     *      {
+     *          "name"="title",
+     *          "dataType"="string",
+     *          "requirement"="\w+",
+     *          "description"="title of the workshop"
+     *      }
+     *  },requirements={
+     *      {
+     *          "name"="description",
+     *          "dataType"="string",
+     *          "requirement"="\w+",
+     *          "description"="description of the workshop"
+     *      }
+     *  },requirements={
+     *      {
+     *          "name"="cost",
+     *          "dataType"="float",
+     *          "requirement"="[0-9\.]+",
+     *          "description"="cost of the Workshop"
+     *      }
+     *  },requirements={
+     *      {
+     *          "name"="requirements",
+     *          "dataType"="string",
+     *          "requirement"="\w+",
+     *          "description"="requirements of the Workshop"
+     *      }
+     *  },requirements={
+     *      {
+     *          "name"="location",
+     *          "dataType"="string",
+     *          "requirement"="\w+",
+     *          "description"="location of the Workshop"
+     *      }
+     *  },requirements={
+     *      {
+     *          "name"="start_at",
+     *          "dataType"="date",
+     *          "requirement"=".*",
+     *          "description"="starttime of the Workshop"
+     *      }
+     *  },requirements={
+     *      {
+     *          "name"="end_at",
+     *          "dataType"="date",
+     *          "requirement"=".*",
+     *          "description"="endtime of the Workshop"
+     *      }
+     *  },requirements={
+     *      {
+     *          "name"="max_participants",
+     *          "dataType"="integer",
+     *          "requirement"="\d+",
+     *          "description"="maximum number of participants"
+     *      }
+     *   }
      * )
      * )
      * @REST\QueryParam(name="json", requirements="", default="1", description="json object of workshop")
