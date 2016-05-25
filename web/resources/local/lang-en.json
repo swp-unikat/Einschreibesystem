@@ -1,4 +1,5 @@
 {
+
 "BUTTON_BACK":"Back",
 
 "BUTTON_HOMEPAGE":"Homepage",
@@ -10,6 +11,7 @@
 "ADDRESS":"Address",
 "FACEBOOK":"Facebook",
 
+ "WORKSHOP_LIST":"Workshop list",
 "WORKSHOP_DETAILS": "Workshop details",
 "BUTTON_SHOW_PARTICIPANTS":"Show participants",
 "WORKSHOP_REQUIREMENTS":"Workshop requirements",
