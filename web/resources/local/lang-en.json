@@ -51,7 +51,8 @@
 "BUTTON_DELETE_AN_ADMINISTRATOR":"Delete an administrator",
 
 "WORKSHOP_TEMPLATE":"Workshop template",
-"BUTTON_SHOW_WORKSHOPS_TEMPLATES":"Show workshops templates",
+"AVAILABLE_WORKSHOP_TEMPLATES":"Available workshop templates",
+"WORKSHOP_TEMPLATE_NAME":"Workshop template name",
 "BUTTON_NEW_WORKSHOP_TEMPLATE":"New workshop template",
 "BUTTON_EDIT_WORKSHOP_TEMPLATE":"Edit workshop template",
 "WORKSHOP_NAME":"Workshop name",
@@ -88,7 +89,7 @@
   "EDIT_IMPRESSUM":"Edit impressum",
 "BUTTON_ADMINISTRATOR_LOGIN":"Administrator login",
 "BUTTON_ADMINISTRATOR_LOGOUT":"Administrator logout",
-"ADMINISTRATOR_PASSWORD":"Administrator password",
+"ADMINISTRATOR_PASSWORD":"Administrator password"
 
  
 }
