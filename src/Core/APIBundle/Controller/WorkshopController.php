@@ -168,10 +168,6 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
             
         }
 
-        
-        
-        
-        
 
         /*
          * 0) Paramfetcher (name,vorname,email) check
