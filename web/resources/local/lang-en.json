@@ -1,19 +1,17 @@
 {
-
-"BUTTON_RETURN":"Return",
 "BUTTON_BACK":"Back",
 
 "BUTTON_HOMEPAGE":"Homepage",
-"BUTTON_LEGAL_INFORMATION":"Legal information",
-
-"BUTTON_CONTACT":"Contact",
+"LEGAL_INFORMATION":"Legal information",
+"IMPRESSUM":"Impressum",
 "WEBSITE":"Website",
 "EMAIL":"Email",
 "TELEPHONE":"Telephone",
 "ADDRESS":"Address",
+"FACEBOOK":"Facebook",
 
 "WORKSHOP_DETAILS": "Workshop details",
-"BUTTON_SHOW_PARTICIPANTS":"show participants",
+"BUTTON_SHOW_PARTICIPANTS":"Show participants",
 "WORKSHOP_REQUIREMENTS":"Workshop requirements",
 "WORKSHOP_DURATION":"Workshop duration",
 "FREE_PLACES":"Free places",
@@ -59,8 +57,8 @@
 "BUTTON_EDIT_WORKSHOP_TEMPLATE":"Edit workshop template",
 "WORKSHOP_NAME":"Workshop name",
 "WORKSHOP_CONTENT":"Workshop content",
-"WORKSHOP_BEGIN_DATE":"Workshop begin date",
-"WORKSHOP_END_DATE": "Workshop end date",
+"WORKSHOP_DATE":"Workshop date",
+"WORKSHOP_START_TIME":"Workshop start time",
 "WORKSHOP_MAXIMUM_NUMBER_OF_PARTICIPANTS":"Workshop maximum number of participants",
 "WORKSHOP_PLACE":"Workshop place",
 "WORKSHOP_ADVISOR":"Workshop advisor",
@@ -83,7 +81,8 @@
 
 "ADMINISTRATOR_DASHBOARD":"Administrator dashboard",
 "BUTTON_SETTINGS":"Settings",
-"ADMINISTRATOR_LOGIN":"Administrator login",
+"BUTTON_ADMINISTRATOR_LOGIN":"Administrator login",
+"BUTTON_ADMINSTRATOR_LOGOUT":"Administrator logout",
 "ADMINISTRATOR_PASSWORD":"Administrator password",
 "BUTTON_ADMINISTRATOR_PASSWORD_RESET":"Administrator password reset"
 
