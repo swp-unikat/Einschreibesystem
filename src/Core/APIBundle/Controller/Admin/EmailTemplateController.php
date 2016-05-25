@@ -228,6 +228,13 @@ class EmailTemplateController extends FOSRestController implements ClassResource
      *  statusCodes = {
      *      200 = "Returned when successful",
      *      404 = "Returned when the data is not found"
+     *  },requirements={
+     *      {
+     *          "name"="id",
+     *          "dataType"="integer",
+     *          "requirement"="\d+",
+     *          "description"="EmailTemplate ID"
+     *      }
      *  }
      * )
      * )
