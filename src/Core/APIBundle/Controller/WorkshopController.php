@@ -112,7 +112,20 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
     {
 
 
+        $workshop = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Workshop")->find($id);
+        if (!$workshop) {
+            throw $this->createNotFoundException("Workshop not found");
+        }
 
+        
+        
+        //Enroll?
+
+
+        $this->getDoctrine()->getManager()->persist($workshop);
+        $this->getDoctrine()->getManager()->flush();
+        $view = $this->view($workshop,200);
+        return $this->handleView($view);
 
 
 
