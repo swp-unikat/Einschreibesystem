@@ -50,6 +50,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      */
     public function getAllAction()
     {
+        //Repository
         $workshopRepo = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:Workshop');
         $entits = $workshopRepo->getAllActiveWorkshops();
         if (!$entits) {
@@ -275,7 +276,21 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      */
     public function postEnrollAction($id)
     {
-		
+        $workshop = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Workshop")->find($id);
+        if (!$workshop) {
+            throw $this->createNotFoundException("Workshop not found");
+        }
+
+        
+        
+        
+        
+        
+
+        $this->getDoctrine()->getManager()->persist($workshop);
+        $this->getDoctrine()->getManager()->flush();
+        $view = $this->view($workshop,200);
+        return $this->handleView($view);
     }
     
     /**
@@ -302,7 +317,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
         // Workshop & Token & participant are valid
         if($workshop && $token && $participant){
             // Check if Token is not older then 30 min
-            if($token->getValidUntil() <= new \DateTime('now')){
+            if($token->getValidUntil() <= new \DateTime('now')){ //30min?
                 // Check if this token is dedicated to user
                 if($token->getParticipant() != $participant){
                     throw $this->createAccessDeniedException("User does not match");
@@ -313,7 +328,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
                     $participantWorkshop->setEnrollment(new \DateTime('now'));
                     // Get Participants
                     $participants = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Workshop")->getParticipants($workshopId);
-                    // Check if a waitinglist ist requiered
+                    // Check if a waitinglist is requiered
                     if($participants > $workshop->getMaxParticipants())
                         $participantWorkshop->setWaiting(true);
                     else
@@ -349,13 +364,49 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      */
     public function getUnsubscribeAction($id,$token, $participantsID)
     {
-	    $workshop = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Workshop")->find($id);
-        $token = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Token")->findBy(['token' => $token]);
+        $workshop = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Workshop")->find($id);
+        $token = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Token")->findBy(
+            ['token' => $token]
+        );
+        $participant = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Participants")->find(
+            $participantsId
+        );
+        $workshopParticipant = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:WorkshopParticipants")->findById($id, $participantId);
 
+        // get participantWorkshop?
+
+
+        if ($workshop && $token && $participant) {
+            if ($token->getValidUntil() <= new \DateTime('now')) {
+                if ($token->getParticipant() != $participant) {
+                    throw $this->createAccessDeniedException("User does not match");
+                } else {
+                    $workshopParticipant->getWorkshop($id);
+                    $workshopParticipant->getParticipant($participant);
+
+                    //$workshopParticipant->setUnsubscribe(...) // ???
+
+                    $token->setUsedAt(new \DateTime('now'));
+                    $this->getDoctrine()->getManager()->persist($token);
+                    $this->getDoctrine()->getManager()->remove($participantWorkshop);
+                    $this->getDoctrine()->getManager()->flush();
+                }
+            } else {
+                throw $this->createAccessDeniedException("Token ist not valid");
+            }
+        } else {
+            throw $this->createNotFoundException("Workshop or Token not found");
+        }
+    }
+        
+        
+        
+        
+        
 
 
         
-    }
+
     
     /**
      * @ApiDoc(
