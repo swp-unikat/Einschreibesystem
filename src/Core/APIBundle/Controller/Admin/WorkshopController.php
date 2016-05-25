@@ -282,6 +282,10 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
         }
 
         
+        
+        //Enroll?
+        
+        
 
         $this->getDoctrine()->getManager()->persist($workshop);
         $this->getDoctrine()->getManager()->flush();
