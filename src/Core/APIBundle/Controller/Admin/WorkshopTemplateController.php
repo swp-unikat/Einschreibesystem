@@ -68,14 +68,21 @@ class WorkshopTemplateController extends FOSRestController implements ClassResou
      *  statusCodes = {
      *      200 = "Returned when successful",
      *      404 = "Returned when the data is not found"
-     *  }
+     *  },requirements={
+     *      {
+     *          "name"="id",
+     *          "dataType"="integer",
+     *          "requirement"="\d+",
+     *          "description"="Workshoptemplate ID"
+     *      }
+     * }
      * )
      * )
      *
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\View()
      */
-    public function getAction(Request $request, $id)
+    public function getAction($id)
     {
         $workshoptemplate = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:WorkshopTemplate')->find($id);
         if (!$workshoptemplate) {
