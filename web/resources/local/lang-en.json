@@ -11,7 +11,6 @@
 "ADDRESS":"Address",
 "FACEBOOK":"Facebook",
 
- "WORKSHOP_LIST":"Workshop list",
 "WORKSHOP_DETAILS": "Workshop details",
 "BUTTON_SHOW_PARTICIPANTS":"Show participants",
 "WORKSHOP_REQUIREMENTS":"Workshop requirements",
@@ -32,7 +31,7 @@
 "ENROLLMENT_ERROR":"Enrollment error",
 
 "WORKSHOP_MANAGEMENT":"Workshop management",
-"BUTTON_LIST_OF_CREATED_WORKSHOPS":"List of created workshops",
+"BUTTON_WORKSHOP_LIST":"Workshop list",
 "BUTTON_CREATE_WORKSHOP":"Create workshop",
 "BUTTON_DELETE_WORKSHOP":"Delete workshop",
 "BUTTON_CHOOSE_WORKSHOP":"Choose workshop",
