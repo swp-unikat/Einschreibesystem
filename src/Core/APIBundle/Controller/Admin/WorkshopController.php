@@ -274,17 +274,19 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\View()
      */
-    public function postEnrollAction($id, $participantsId)
+    public function postEnrollAction($id)
     {
         $workshop = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Workshop")->find($id);
         if (!$workshop) {
             throw $this->createNotFoundException("Workshop not found");
         }
 
+        
 
-
-
-
+        $this->getDoctrine()->getManager()->persist($workshop);
+        $this->getDoctrine()->getManager()->flush();
+        $view = $this->view($workshop,200);
+        return $this->handleView($view);
     }
     
     /**
@@ -365,14 +367,9 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
         $participant = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Participants")->find(
             $participantsId
         );
-        $workshopParticipant = $this->getDoctrine()->getManager()->getRepository(
-            "CoreEntityBundle:WorkshopParticipants"
-        )->findById(
-            $id,
-            $participantId
-        );
+        $workshopParticipant = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:WorkshopParticipants")->findById($id, $participantId);
 
-       
+        // get participantWorkshop?
 
 
         if ($workshop && $token && $participant) {
@@ -405,7 +402,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
 
 
         
-    
+
     
     /**
      * @ApiDoc(
