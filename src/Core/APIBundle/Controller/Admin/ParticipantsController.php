@@ -131,7 +131,14 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
      *  statusCodes = {
      *      200 = "Returned when successful",
      *      404 = "Returned when the data is not found"
-     *  }
+     *  },requirements={
+     *      {
+     *          "name"="id",
+     *          "dataType"="integer",
+     *          "requirement"="\d+",
+     *          "description"="Blacklist ID"
+     *      }
+     * }
      * )
      * )
      *
