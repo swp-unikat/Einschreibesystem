@@ -2,8 +2,7 @@
 
 "BUTTON_BACK":"Back",
 "BUTTON_HOMEPAGE":"Homepage",
-"LEGAL_INFORMATION":"Legal information",
-"IMPRESSUM":"Impressum",
+"LEGAL_NOTICE":"Legal notice",
 "WEBSITE":"Website",
 "EMAIL":"Email",
 "TELEPHONE":"Telephone",
@@ -33,7 +32,7 @@
 "PRINT_PARTICIPANTS_LIST":"Print participants list",
 "BUTTON_WORKSHOP_LIST":"Workshop list",
 "BUTTON_CREATE_WORKSHOP":"Create workshop",
-"MANAGE_WORKSHOP":"Manageworkshop",
+"MANAGE_WORKSHOP":"Manage workshop",
 "BUTTON_DELETE_WORKSHOP":"Delete workshop",
 "BUTTON_EDIT_WORKSHOP":"Edit workshop",
 "BUTTON_SAVE":"Save",
