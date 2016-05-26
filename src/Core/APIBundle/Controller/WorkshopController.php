@@ -106,8 +106,8 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      *
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\RequestParam(name="name", requirements=".*", description="json object of workshop")
-     * @Rest\RequestParam(name="surname", requirements".*", description="json object of workshop")
-     * @Rest\RequestParan(name="email", requirements".*", description="json object of workshop")
+     * @Rest\RequestParam(name="surname", requirements=".*", description="json object of workshop")
+     * @Rest\RequestParam(name="email", requirements=".*", description="json object of workshop")
      *
      * @Rest\View()
      */

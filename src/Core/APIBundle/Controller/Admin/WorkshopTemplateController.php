@@ -44,7 +44,6 @@ class WorkshopTemplateController extends FOSRestController implements ClassResou
      *      404 = "Returned when the data is not found"
      *  }
      * )
-     * )
      *
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\View()
@@ -76,8 +75,7 @@ class WorkshopTemplateController extends FOSRestController implements ClassResou
      *          "requirement"="\d+",
      *          "description"="Workshoptemplate ID"
      *      }
-     * }
-     * )
+     *    }
      * )
      *
      * @return \Symfony\Component\HttpFoundation\Response
@@ -168,7 +166,6 @@ class WorkshopTemplateController extends FOSRestController implements ClassResou
      *          "description"="maximum number of participants"
      *      }
      *   }
-     * )
      * )
      * @REST\QueryParam(name="json", requirements="", default="1", description="json object of workshop")
      * @return \Symfony\Component\HttpFoundation\Response
@@ -276,7 +273,7 @@ class WorkshopTemplateController extends FOSRestController implements ClassResou
      *          "requirement"="\d+",
      *          "description"="maximum number of participants"
      *      }
-     * )
+     *  }
      * )
      *
      * @return \Symfony\Component\HttpFoundation\Response
@@ -332,7 +329,6 @@ class WorkshopTemplateController extends FOSRestController implements ClassResou
      *          "description"="Workshoptemplate ID"
      *      }
      * }
-     * )
      * )
      *
      * @return \Symfony\Component\HttpFoundation\Response
