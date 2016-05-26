@@ -63,6 +63,27 @@ class loadParticipantsData extends AbstractFixture implements OrderedFixtureInte
         $participant6->setBlacklisted(false);
         $manager->persist($participant6);
 
+        $participant7 = new Participants();
+        $participant7->setName("von Sachsen");
+        $participant7->setSurname("Albert");
+        $participant7->setEmail("albertiner@t-online.de");
+        $participant7->setBlacklisted(true);
+        $manager->persist($participant7);
+
+        $participant8 = new Participants();
+        $participant8->setName("Mustermann");
+        $participant8->setSurname("Max");
+        $participant8->setEmail("max.mustermann@web.de");
+        $participant8->setBlacklisted(true);
+        $manager->persist($participant8);
+
+        $participant9 = new Participants();
+        $participant9->setName("Melanchthon");
+        $participant9->setSurname("Phillip");
+        $participant9->setEmail("phil.melanchthon@uni-wittenberg.de");
+        $participant9->setBlacklisted(true);
+        $manager->persist($participant9);
+
         $manager->flush();
 
     }
