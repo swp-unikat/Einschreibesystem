@@ -66,7 +66,7 @@
 "BUTTON_DISCARD_TEMPLATE":"Discard template",
  
 "EMAIL_TEMPLATE":"Email template",
-"AVAILABLE_WORKSHOP_TEMPLATES":"Available workshop templates",
+"AVAILABLE_EMAIL_TEMPLATES":"Available email templates",
 "BUTTON_EDIT_EMAIL_TEMPLATE":"Edit template",
 "BUTTON_NEW_EMAIL_TEMPLATE":"New template",
 "EMAIL_TITLE":"Email title",
@@ -86,7 +86,7 @@
 
 "ADMINISTRATOR_DASHBOARD":"Administrator dashboard",
 "BUTTON_SETTINGS":"Settings",
-"EDIT_IMPRESSUM":"Edit impressum",
+"EDIT_LEGAL_NOTICE":"Edit legal notice",
 "BUTTON_ADMINISTRATOR_LOGIN":"Administrator login",
 "BUTTON_ADMINISTRATOR_LOGOUT":"Administrator logout",
 "ADMINISTRATOR_PASSWORD":"Administrator password"
