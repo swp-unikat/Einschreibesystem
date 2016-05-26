@@ -167,8 +167,8 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
                 ->setBody($renderTemplate->render(["workshop" => $workshop,"participant" => $participant]),'text/html');
             $this->get('mailer')->send($message);
             
-            }
-            }
+            
+            
         }
 
 
