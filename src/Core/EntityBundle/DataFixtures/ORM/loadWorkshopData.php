@@ -34,17 +34,17 @@ class loadWorkshopData extends AbstractFixture implements OrderedFixtureInterfac
         $workshop->setNotified(0);
         $manager->persist($workshop);
 
-        $workshop = new Workshop();
-        $workshop->setTitle("Optische Pulsmessung Level 1");
-        $workshop->setCost(4.00);
-        $workshop->setLocation("Haus M, Raum 606");
-        $workshop->setMaxParticipants(5);
-        $workshop->setEndAt(new \DateTime("20.05.2016 21:00:00"));
-        $workshop->setStartAt(new \DateTime("20.05.2016 19:00:00"));
-        $workshop->setRequirements("Wenn möglich, bitte eine Wäscheklammer mitbringen!");
-        $workshop->setDescription("In diesem Workshop bekommst du die Möglichkeit, dir deinen eigenen optischen Pulsmesser zu bauen. Du lernst, wie man eine typische Signalkette mit Sensorik und Verstärkung aufbaut, grundlegende Filterschaltungen und wie eigentlich Operationsverstärker wirklich aussehen. Am Ende des Workshops hast du deinen eigenen Fitnessclip in der Hand, welcher rein analog mit Hilfe einer LED deinen Puls anzeigt.");
-        $workshop->setNotified(0);
-        $manager->persist($workshop);
+        $workshop2 = new Workshop();
+        $workshop2->setTitle("Optische Pulsmessung Level 1");
+        $workshop2->setCost(4.00);
+        $workshop2->setLocation("Haus M, Raum 606");
+        $workshop2->setMaxParticipants(5);
+        $workshop2->setEndAt(new \DateTime("20.05.2016 21:00:00"));
+        $workshop2->setStartAt(new \DateTime("20.05.2016 19:00:00"));
+        $workshop2->setRequirements("Wenn möglich, bitte eine Wäscheklammer mitbringen!");
+        $workshop2->setDescription("In diesem Workshop bekommst du die Möglichkeit, dir deinen eigenen optischen Pulsmesser zu bauen. Du lernst, wie man eine typische Signalkette mit Sensorik und Verstärkung aufbaut, grundlegende Filterschaltungen und wie eigentlich Operationsverstärker wirklich aussehen. Am Ende des Workshops hast du deinen eigenen Fitnessclip in der Hand, welcher rein analog mit Hilfe einer LED deinen Puls anzeigt.");
+        $workshop2->setNotified(0);
+        $manager->persist($workshop2);
 
         $workshop3 = new Workshop();
         $workshop3->setTitle("Test Pneumatiksysteme");
