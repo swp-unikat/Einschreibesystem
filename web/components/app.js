@@ -7,7 +7,9 @@ var mainApp = angular.module('mainApp',[
     'mainAppCtrls',
     'mgcrea.ngStrap',
     'ui.router',
-    'restSvcs'
+    'angular-jwt',
+    'restSvcs',
+    'angular-storage'
 ]);
 /**
  * Module collecting all used Controllers
@@ -21,42 +23,7 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
     function($urlRouterProvider,$stateProvider)
     {
         var prefix = "resources/views/";
-        // $routeProvider
-        //     .when('/workshops', {
-        //         templateUrl: prefix.concat('workshopList.html'),
-        //         controller: 'WorkshopListCtrl'
-        //     })
-        //     .when('/login', {
-        //         templateUrl: prefix.concat('login.html'),
-        //         controller: 'LoginCtrl'
-        //     })
-        //     .when('/enrollment_confirm/:id/:token', {
-        //         templateUrl: prefix.concat('enrollmentConfirm.html'),
-        //         controller: 'EnrollmentConfirmCtrl'
-        //     })
-        //     .when('/dashboard', {
-        //         templateUrl: prefix.concat('adminDashboard.html'),
-        //         controller: 'DashboardCtrl'
-        //     })
-        //     .when('/dashboard/settings',{
-        //         templateUrl: prefix.concat('adminSettings.html'),
-        //         controller: 'SettingsCtrl'
-        //     })
-        //     .when('/dashboard/blacklist',{
-        //
-        //     })
-        //     .when('/dashboard/workshop_management',{
-        //
-        //     })
-        //     .when('/dashboard/workshoptemplate_management',{
-        //
-        //     })
-        //     .when('/dashboard/emailtemplate_managemetn',{
-        //
-        //     })
-        //     .otherwise({
-        //         redirectTo: '/workshops'
-        //     });
+
         $stateProvider
             .state('workshops',{
                 url: '/workshops',
@@ -86,8 +53,10 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
             .state('dashboard',{
                 url: '/dashboard',
                 controller: 'DashboardCtrl',
-                templateUrl: prefix.concat('adminDashboard.html')
-                
+                templateUrl: prefix.concat('adminDashboard.html'),
+                data: {
+                    requiresLogin: true
+                }
             })
             .state('dashboard.blacklist',{
                 url: '/blacklist',
@@ -106,3 +75,24 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
 
     }
 ]);
+/**
+ * Configure JWT
+ */
+mainApp.config(['jwtInterceptorProvider','$httpProvider','$urlRouterProvider',function(jwtInterceptorProvider,$httpProvider,$urlRouterProvider){
+    jwtInterceptorProvider.tokenGetter = function(store) {
+        return store.get('jwt');
+    }
+
+    $httpProvider.interceptors.push('jwtInterceptor');
+}])
+    .run(['$rootScope','$state','store','jwtHelper',function($rootScope, $state, store, jwtHelper) {
+        $rootScope.$on('$stateChangeStart', function(e, to) {
+            if (to.data && to.data.requiresLogin) {
+                if (!store.get('jwt') || jwtHelper.isTokenExpired(store.get('jwt'))) {
+                    e.preventDefault();
+                    $state.go('login');
+                    $rootScope.notAuthorizised;
+                }
+            }
+        });
+    }]);
