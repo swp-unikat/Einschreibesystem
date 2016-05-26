@@ -43,7 +43,6 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      *      404 = "Returned when the data is not found"
      *  }
      * )
-     * )
      *
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\View()
@@ -76,7 +75,6 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      *      }
      *  }
      * )
-     * )
      *
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\View()
@@ -101,7 +99,6 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      *      200 = "Returned when successful",
      *      404 = "Returned when the data is not found"
      *  }
-     * )
      * )
      *
      * @return \Symfony\Component\HttpFoundation\Response
@@ -197,7 +194,6 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      *      404 = "Returned when the data is not found"
      *  }
      * )
-     * )
      *
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\View()
@@ -250,7 +246,6 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      *      200 = "Returned when successful",
      *      404 = "Returned when the data is not found"
      *  }
-     * )
      * )
      * @param $id
      * @param $token
@@ -306,7 +301,6 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      *          "description"="Workshop ID"
      *      }
      *  }
-     * )
      * )
      *
      * @return \Symfony\Component\HttpFoundation\Response
