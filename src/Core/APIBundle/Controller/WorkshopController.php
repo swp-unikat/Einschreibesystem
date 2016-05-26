@@ -322,5 +322,28 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
         $view = $this->view($waitinglist, 200);
         return $this->handleView($view);
     }
-
+    /**
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Returns the list of participants",
+     *  output = "Core\EntityBundle\Entity\WorkshopParticipants",
+     *  statusCodes = {
+     *      200 = "Returned when successful",
+     *      404 = "Returned when the data is not found"
+     *  }
+     * )
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Rest\View()
+     */
+     public function getParticipantsAction()
+    {  
+	    $participantslist = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:Participants');
+	     $participant = $participantslist->getAllParticipants();
+	     if (!$participant) {
+            throw $this->createNotFoundException("No Participant in Workshop found");
+         }
+        $view = $this->view($participant, 200);
+        return $this->handleView($view);
+    }
 }
