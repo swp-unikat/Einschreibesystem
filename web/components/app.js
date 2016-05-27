@@ -9,13 +9,14 @@ var mainApp = angular.module('mainApp',[
     'ui.router',
     'angular-jwt',
     'restSvcs',
-    'angular-storage'
+    'angular-storage',
+    'pascalprecht.translate'
 ]);
 /**
  * Module collecting all used Controllers
  * @type {angular.Module}
  */
-var mainAppCtrls = angular.module('mainAppCtrls',[]);
+var mainAppCtrls = angular.module('mainAppCtrls',["pascalprecht.translate"]);
 /**
  * Configure routing
  */
@@ -91,8 +92,17 @@ mainApp.config(['jwtInterceptorProvider','$httpProvider','$urlRouterProvider',fu
                 if (!store.get('jwt') || jwtHelper.isTokenExpired(store.get('jwt'))) {
                     e.preventDefault();
                     $state.go('login');
-                    $rootScope.notAuthorizised;
                 }
             }
         });
     }]);
+/**
+ * Config translation module for internationalization
+ */
+mainApp.config(['$translateProvider', function($translateProvider) {
+    $translateProvider.useStaticFilesLoader({
+        prefix: 'resources/local/lang-',
+        suffix: '.json'
+    });
+    $translateProvider.preferredLanguage('en');
+}]);

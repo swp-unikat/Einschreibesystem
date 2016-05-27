@@ -51,7 +51,7 @@ module.exports = function(grunt) {
             }
         }
     });
-        //Loading and registering tasks
+    //Loading and registering tasks
     grunt.loadNpmTasks("grunt-contrib-jshint");
     grunt.loadNpmTasks("grunt-jsdoc");
     grunt.loadNpmTasks("grunt-contrib-uglify");
@@ -59,9 +59,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks("grunt-karma");
     grunt.loadNpmTasks("grunt-contrib-watch");
     grunt.loadNpmTasks("grunt-contrib-concat");
-
     grunt.registerTask('dev', ['watch:dev']);
-
-
 };
 
