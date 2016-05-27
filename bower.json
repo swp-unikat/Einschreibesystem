@@ -29,6 +29,8 @@
     "angular-strap": "^2.3.8",
     "angular-motion": "^0.4.4",
     "angular-sanitize": "^1.5.5",
-    "angular-ui-router": "^0.3.0"
+    "angular-ui-router": "^0.3.0",
+    "angular-jwt": "^0.0.9",
+    "a0-angular-storage": "^0.0.15"
   }
 }
