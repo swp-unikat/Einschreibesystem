@@ -38,8 +38,14 @@
 </head>
 <body>
 
-<nav class="navbar navbar-default"> <ul class="nav navbar-nav navbar-right">
-        <li><a href="#about"><button type="button" class="btn btn-success">Login</button></a></li> </ul></nav>
+<nav class="navbar navbar-default">
+    <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="#about"><button type="button" class="btn btn-success">Login</button></a></li>
+            <li><a href="#about"><button type="button" class="btn btn-logout">Logout</button></a></li></ul>
+    </div></nav>
+
+
 <div ui-view=""></div>
 
 <footer class="footer"><div class="row text-center">
