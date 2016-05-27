@@ -181,19 +181,6 @@ class RequirementCollection implements IteratorAggregate
     }
 
     /**
-     * Adds a mandatory requirement.
-     *
-     * @param bool $fulfilled Whether the requirement is fulfilled
-     * @param string $testMessage The message for testing the requirement
-     * @param string $helpHtml The help text formatted in HTML for resolving the problem
-     * @param string|null $helpText The help text (when null, it will be inferred from $helpHtml, i.e. stripped from HTML tags)
-     */
-    public function addRequirement($fulfilled, $testMessage, $helpHtml, $helpText = null)
-    {
-        $this->add(new Requirement($fulfilled, $testMessage, $helpHtml, $helpText, false));
-    }
-
-    /**
      * Adds a Requirement.
      *
      * @param Requirement $requirement A Requirement instance
@@ -201,6 +188,19 @@ class RequirementCollection implements IteratorAggregate
     public function add(Requirement $requirement)
     {
         $this->requirements[] = $requirement;
+    }
+
+    /**
+     * Adds a mandatory requirement.
+     *
+     * @param bool        $fulfilled   Whether the requirement is fulfilled
+     * @param string      $testMessage The message for testing the requirement
+     * @param string      $helpHtml    The help text formatted in HTML for resolving the problem
+     * @param string|null $helpText    The help text (when null, it will be inferred from $helpHtml, i.e. stripped from HTML tags)
+     */
+    public function addRequirement($fulfilled, $testMessage, $helpHtml, $helpText = null)
+    {
+        $this->add(new Requirement($fulfilled, $testMessage, $helpHtml, $helpText, false));
     }
 
     /**

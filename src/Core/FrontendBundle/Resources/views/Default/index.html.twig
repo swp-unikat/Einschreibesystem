@@ -1,1 +1,53 @@
-Hello World!
+<!DOCTYPE html>
+<html ng-app="mainApp">
+<head>
+    <meta charset="UTF-8" />
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+
+    <script src="{{ asset('vendor/jquery/dist/jquery.js') }}"></script>
+    <script src="{{ asset('vendor/angular/angular.js') }}"></script>
+    <script src="{{ asset('vendor/angular-route/angular-route.js') }}"></script>
+
+    <script src="{{ asset('vendor/angular-resource/angular-resource.js') }}"></script>
+    <script src="{{ asset('vendor/angular-touch/angular-touch.js') }}"></script>
+    <script src="{{ asset('vendor/angular-translate/angular-translate.js') }}"></script>
+    <script src="{{ asset('vendor/angular-translate-loader-static-files/angular-translate-loader-static-files.js') }}"></script>
+
+    <link href="{{ asset('vendor/bootstrap/dist/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('resources/styles/main.css') }}" rel="stylesheet" type="text/css" />
+<<<<<<< HEAD
+
+=======
+>>>>>>> frontend
+    <script src="{{ asset('vendor/angular-animate/angular-animate.js') }}"></script>
+    <script src="{{ asset('vendor/angular-strap/dist/angular-strap.js') }}"></script>
+    <script src="{{ asset('vendor/angular-strap/dist/angular-strap.tpl.js') }}"></script>
+    <script src="{{ asset('vendor/angular-ui-router/release/angular-ui-router.js') }}"></script>
+    <script src="{{ asset('vendor/angular-jwt/dist/angular-jwt.js') }}"></script>
+    <script src="{{ asset('vendor/a0-angular-storage/dist/angular-storage.js') }}"></script>
+
+    <script src="{{ asset('components/app.js') }}"></script>
+    <script src="{{ asset('components/services/restService.js') }}"></script>
+    <script src="{{ asset('components/dist/ctrl.js') }}"></script>
+
+
+    <style>
+        .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-default"> <ul class="nav navbar-nav navbar-right">
+        <li><a href="#about"><button type="button" class="btn btn-success">Login</button></a></li> </ul></nav>
+<div ui-view=""></div>
+
+<footer class="footer"><div class="row text-center">
+        <hr class="top-buffer">
+        <div class="col-md-4"><span style="font-size:3em;" class="glyphicon glyphicon-phone" aria-hidden="true"></span></div>
+        <div class="col-md-4"><span style="font-size:3em;" class="glyphicon glyphicon-map-marker" aria-hidden="true"></span></div>
+        <div class="col-md-4"><span style="font-size:3em;" class="glyphicon glyphicon-envelope" aria-hidden="true"></span></div>
+    </div></footer>
+
+</body>
+</html>
