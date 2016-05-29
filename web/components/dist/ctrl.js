@@ -8,7 +8,7 @@ var mainAppCtrls = angular.module("mainAppCtrls");
 //TODO: if /dashboard is called, change hideDashboard to false
 mainAppCtrls.controller('DashboardCtrl',['$scope',
     function($scope) {
-        $scope.hideDashboard = false;
+
     }
 
 ]);
@@ -35,7 +35,14 @@ mainAppCtrls.controller('BlacklistCtrl',['$scope',
 mainAppCtrls.controller('WorkshopListCtrl',['$scope','Workshops',
     function($scope,Workshops) {
         //TODO : replace with workshop details
-        $scope.workshopList =  Workshops.getAll();
-    }
+        $scope.loading = true;
+        Workshops.getAll().$promise.then(function(value){
+            $scope.workshopList = value;
+            $scope.loading = false;
+        },function(httpResponse) {
+            alert(httpResponse.status + '');
+            $scope.loading = false;
+        });
 
+    }
 ]);

@@ -41,10 +41,15 @@
                     <!-- /.box -->
                 </div>
             </div>
+            <!-- loading -->
+            <div ng-show="loading">
+                <span class="glyphicon glyphicon-refresh glyphicon-spin" style="font-size: 5.0em;"></span>
+            </div>
+            <div ng-hide="workshopList.length || loading">
+                No workshops available at the moment!
+            </div>
+            <!-- loading end -->
+        </div>
 
-        </div>
-        <div ng-hide="workshopList.length">
-            No workshops available at the moment!
-        </div>
     </div>
 </div>
