@@ -2,7 +2,7 @@
 sudo apt-get update
 
 # Some stuff
-sudo apt-get install -y nano wget python-software-properties htop npm git unzip
+sudo apt-get install -y nano wget python-software-properties http npm git unzip
 
 #grunt
 npm install -g grunt-cli
@@ -54,12 +54,12 @@ sudo npm install --no-bin-links
 sudo npm install -g karma-cli
 
 #Bower Install
-node_modules/bower/bin/bower install
+
 
 #Doctrine
 
 php app/console doctrine:database:create
-php app/console doctrine:schmema:update --force
+php app/console doctrine:schema:update --force
 php app/console doctrine:fixtures:load
 
 #restarts

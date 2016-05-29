@@ -35,7 +35,7 @@ mainAppCtrls.controller('BlacklistCtrl',['$scope',
 mainAppCtrls.controller('WorkshopListCtrl',['$scope','Workshops',
     function($scope,Workshops) {
         //TODO : replace with workshop details
-        $scope.workshopList.$promise =  Workshops.getAll();
+        $scope.workshopList =  Workshops.getAll();
     }
 
 ]);
