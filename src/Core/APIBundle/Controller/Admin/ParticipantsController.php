@@ -32,7 +32,6 @@ use Doctrine\ORM\Query;
 class ParticipantsController extends FOSRestController implements ClassResourceInterface
 {
 	/**
-	 * @Security("has_role('ROLE_ADMIN')")
      * @ApiDoc(
      *  resource=true,
      *  description="Returns list of all participants",
@@ -57,7 +56,6 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
         return $this->handleView($view);	    
     }
     	/**
-    	 * @Security("has_role('ROLE_ADMIN')")
      * @ApiDoc(
      *  resource=true,
      *  description="Returns list of all participants that are blacklisted",
@@ -83,7 +81,6 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
         return $this->handleView($view);
     }
     	/**
-    	 * @Security("has_role('ROLE_ADMIN')")
      * @ApiDoc(
      *  resource=true,
      *  description="Add participants to blacklist ",
@@ -123,7 +120,6 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
     }
     
     /**
-     * @Security("has_role('ROLE_ADMIN')")
      * @ApiDoc(
      *  resource=true,
      *  description="Remove participants from Blacklist",
@@ -157,7 +153,6 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
     }
     
     /**
-     * @Security("has_role('ROLE_ADMIN')")
      * @ApiDoc(
      *  resource=true,
      *  description="Get detail view of blacklisted user",

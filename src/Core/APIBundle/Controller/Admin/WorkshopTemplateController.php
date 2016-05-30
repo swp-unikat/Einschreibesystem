@@ -8,7 +8,7 @@
  */
 namespace Core\APIBundle\Controller\Admin;
 
-use Core\EntityBundle\Entity\WorkshopTemplate;
+use Core\EntityBundle\Entity\WorkshopTemplates;
 use Doctrine\Common\Collections\Criteria;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Request\ParamFetcher;
