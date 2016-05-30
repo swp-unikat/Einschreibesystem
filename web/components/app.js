@@ -64,12 +64,44 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                 controller:'WorkshopTemplateCtrl',
                 templateUrl: prefix.concat('workshopTemplate.html')
             })
-            
+            .state('dashboard.workshop_template.new', {
+                url: '/new',
+                controller: 'NewWorkshopTemplateCtrl',
+                templateUrl: prefix.concat('workshopTemplateNew.html')
+            })
+            .state('dashboard.workshop_template.edit', {
+                url: '/edit/:id',
+                controller: 'EditWorkshopTemplateCtrl',
+                templateUrl: prefix.concat('workshopTemplateNew.html')
+            })
+            .state('dashboard.email_template.new', {
+                url: '/new',
+                controller: 'NewEmailTemplateCtrl',
+                templateUrl: prefix.concat('emailTemplateNew.html')
+            })
+            .state('dashboard.email_template.edit', {
+                url: '/edit/:id',
+                controller: 'EditEmailTemplateCtrl',
+                templateUrl: prefix.concat('emailTemplateNew.html')
+            })
             .state('dashboard.blacklist',{
                 url: '/blacklist',
                 controller: 'BlacklistCtrl',
                 templateUrl: prefix.concat('adminBlacklist.html')
             })
+            .state('dashboard.administrator_management', {
+                    url: '/administrator_management',
+                    controller: 'AdministratorManagementCtrl',
+                    templateUrl: prefix.concat('administratorManagement.html')
+                })
+            .state('dashboard.settings', {
+                url: '/settings',
+                controller: 'SettingsCtrl',
+                templateUrl: prefix.concat('settings.html')
+            })
+    }
+
+            
             .state('contact',{
                 url: '/contact',
                 controller: 'ContactCtrl',
