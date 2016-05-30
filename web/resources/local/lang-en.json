@@ -89,6 +89,7 @@
 "EDIT_LEGAL_NOTICE":"Edit legal notice",
 "BUTTON_ADMINISTRATOR_LOGIN":"Administrator login",
 "BUTTON_ADMINISTRATOR_LOGOUT":"Administrator logout",
-"ADMINISTRATOR_PASSWORD":"Administrator password"
-
+"ADMINISTRATOR_PASSWORD":"Administrator password",
+"Old_Password":"Old password",
+"New_Password":"New password"
 }
