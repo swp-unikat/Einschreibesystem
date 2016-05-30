@@ -182,7 +182,7 @@ class WorkshopTemplateController extends FOSRestController implements ClassResou
     public function patchAction(ParamFetcher $paramFetcher,$id)
     {
         $params = $paramFetcher->all();
-        $workshoptemplate = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:WorkshopTemplates")->findById($id);
+        $workshoptemplate = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:WorkshopTemplates")->find($id);
         if (!$workshoptemplate) {
             throw $this->createNotFoundException("No WorkshopTemplate found");
         }
@@ -288,7 +288,7 @@ class WorkshopTemplateController extends FOSRestController implements ClassResou
      * @Rest\View()
      */
     public function putAction(ParamFetcher $paramFetcher)  {
-        $workshoptemplate= new WorkshopTemplate();
+        $workshoptemplate= new WorkshopTemplates();
         $params = $paramFetcher->all();
         if($params["title"] != NULL)
             $workshoptemplate->setTitle($params["title"]);
