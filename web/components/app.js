@@ -59,9 +59,15 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                     requiresLogin: true
                 }
             })
+            .state('dashboard.workshop_template',{
+                url:'/workshop_template',
+                controller:'WorkshopTemplateCtrl',
+                templateUrl: prefix.concat('workshopTemplate.html')
+            })
+            
             .state('dashboard.blacklist',{
                 url: '/blacklist',
-                controller: 'BlacklistController',
+                controller: 'BlacklistCtrl',
                 templateUrl: prefix.concat('adminBlacklist.html')
             })
             .state('contact',{
