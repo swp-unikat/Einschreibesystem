@@ -10,18 +10,18 @@ ln -s /usr/bin/nodejs /usr/bin/node
 
 # PHP7
 sudo apt-get install -y language-pack-en-base
-sudo LC_ALL=en_US.UTF-8 add-apt-repository ppa:ondrej/php
-snmp-mibs-downloader
-apt-get install -y php7.0-fpm php7.0-cli php7.0-common php7.0-json php7.0-opcache php7.0-mysql php7.0-phpdbg php7.0-gd php7.0-imap php7.0-ldap php7.0-pgsql php7.0-pspell php7.0-recode php7.0-snmp php7.0-tidy php7.0-dev php7.0-intl php7.0-gd php7.0-curl php7.0-zip snmp-mibs-downloader --force-yes
+sudo LC_ALL=en_US.UTF-8 add-apt-repository ppa:ondrej/php -y
+sudo apt-get update
+sudo apt-get install -y php7.0-fpm php7.0-cli php7.0-common php7.0-json php7.0-opcache php7.0-mysql php7.0-phpdbg php7.0-gd php7.0-imap php7.0-ldap php7.0-pgsql php7.0-pspell php7.0-recode php7.0-snmp php7.0-tidy php7.0-dev php7.0-intl php7.0-gd php7.0-curl php7.0-zip snmp-mibs-downloader --force-yes
 
 
 #Apache
 apt-get install -y apache2
 echo "ServerName localhost" >> /etc/apache2/httpd.conf
-apt-get install -y apache2-mpm-worker 
+apt-get install -y apache2-mpm-worker
 
 # php fpm & apache config
-sudo cp /vagrant/apache.conf /etc/apache2/sites-available/000-default.conf
+sudo cp /var/www/apache.conf /etc/apache2/sites-available/000-default.conf
 a2enmod proxy_fcgi
 a2enmod rewrite
 sed -i "s/listen = \/run\/php\/php7.0-fpm.sock/listen = 127.0.0.1:9000/" /etc/php/7.0/fpm/pool.d/www.conf
@@ -45,9 +45,6 @@ sudo locale-gen de_DE.UTF-8
 # File Setup
 cd /var/www/
 rm -rf html
-
-# Composer install
-composer install
 
 #NPM Install
 sudo npm install --no-bin-links
