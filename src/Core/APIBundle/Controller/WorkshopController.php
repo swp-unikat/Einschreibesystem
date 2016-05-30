@@ -337,6 +337,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      *          "requirement"="\d+",
      *          "description"="Workshop ID"
      *      }
+     *  }
      * )
      *
      * @return \Symfony\Component\HttpFoundation\Response
