@@ -2,7 +2,7 @@
 sudo apt-get update
 
 # Some stuff
-sudo apt-get install -y nano wget python-software-properties http npm git unzip
+sudo apt-get install -y nano wget python-software-properties htop npm git unzip
 
 #grunt
 npm install -g grunt-cli
