@@ -50,7 +50,7 @@ class WorkshopTemplateController extends FOSRestController implements ClassResou
      */
     public function getListAction()
     {
-        $workshops = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:WorkshopTemplate')->findAll();
+        $workshops = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:WorkshopTemplates')->findAll();
 	    if(!$workshops) {
             throw $this->createNotFoundException("No WorkshopTemplate found");
         }
@@ -83,7 +83,7 @@ class WorkshopTemplateController extends FOSRestController implements ClassResou
      */
     public function getAction($id)
     {
-        $workshoptemplate = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:WorkshopTemplate')->find($id);
+        $workshoptemplate = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:WorkshopTemplates')->find($id);
         if (!$workshoptemplate) {
             throw $this->createNotFoundException("This workshoptemplate was not found");
         } else {
@@ -336,7 +336,7 @@ class WorkshopTemplateController extends FOSRestController implements ClassResou
      */
     public function deleteAction($id)
     {
-        $workshopTemplate = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:WorkshopTemplate")->find($id);
+        $workshopTemplate = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:WorkshopTemplates")->find($id);
         if (!$workshopTemplate) {
             throw $this->createNotFoundException("WorkshopTemplate not found");
         }
