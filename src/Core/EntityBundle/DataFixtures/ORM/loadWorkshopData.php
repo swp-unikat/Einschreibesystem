@@ -27,8 +27,8 @@ class loadWorkshopData extends AbstractFixture implements OrderedFixtureInterfac
         $workshop->setCost(10.00);
         $workshop->setLocation("Haus M, Raum 606");
         $workshop->setMaxParticipants(12);
-        $workshop->setEndAt(new \DateTime("23.05.2016 21:00:00"));
-        $workshop->setStartAt(new \DateTime("23.05.2016 19:00:00"));
+        $workshop->setEndAt(new \DateTime("+17 Day"));
+        $workshop->setStartAt(new \DateTime("19 Day"));
         $workshop->setRequirements("");
         $workshop->setDescription("In unserem Level 0 Lötworkshop vermitteln wir alle nötigen Grundlagen zum Umgang mit dem Lötkolben. Dabei erklären wir, worauf es beim Löten ankommt, geben Tipps und helfen die Unsicherheit vieler Anfänger zu nehmen. Dieser Workshop richtet sich an jeden interessierten Mitarbeiter aller Fakultäten und Verwaltungen der TU Ilmenau.");
         $workshop->setNotified(0);
@@ -39,8 +39,8 @@ class loadWorkshopData extends AbstractFixture implements OrderedFixtureInterfac
         $workshop->setCost(4.00);
         $workshop->setLocation("Haus M, Raum 606");
         $workshop->setMaxParticipants(5);
-        $workshop->setEndAt(new \DateTime("20.05.2016 21:00:00"));
-        $workshop->setStartAt(new \DateTime("20.05.2016 19:00:00"));
+        $workshop->setEndAt(new \DateTime("+10 Day"));
+        $workshop->setStartAt(new \DateTime("11 Day"));
         $workshop->setRequirements("Wenn möglich, bitte eine Wäscheklammer mitbringen!");
         $workshop->setDescription("In diesem Workshop bekommst du die Möglichkeit, dir deinen eigenen optischen Pulsmesser zu bauen. Du lernst, wie man eine typische Signalkette mit Sensorik und Verstärkung aufbaut, grundlegende Filterschaltungen und wie eigentlich Operationsverstärker wirklich aussehen. Am Ende des Workshops hast du deinen eigenen Fitnessclip in der Hand, welcher rein analog mit Hilfe einer LED deinen Puls anzeigt.");
         $workshop->setNotified(0);
