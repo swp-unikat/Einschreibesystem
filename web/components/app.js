@@ -99,9 +99,7 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                 controller: 'SettingsCtrl',
                 templateUrl: prefix.concat('settings.html')
             })
-    }
-
-            
+    
             .state('contact',{
                 url: '/contact',
                 controller: 'ContactCtrl',
