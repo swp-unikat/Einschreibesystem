@@ -45,7 +45,7 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
      *
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\View()
-     */
+     */  
     public function getAllAction()
     {
        $participants = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:Participants')->findAll();
