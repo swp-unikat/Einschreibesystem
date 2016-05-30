@@ -149,9 +149,10 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
         if (!$participantsBlacklist) {
             throw $this->createNotFoundException("No Participant on Blacklist found");
         }
-        $this->getDoctrine()->getManager()->remove($participantsBlacklist);
+        $participantsBlacklist->setBlacklisted(false);
+        $this->getDoctrine()->getManager()->persist($participantsBlacklist);
         $this->getDoctrine()->getManager()->flush();
-        return View::create(null, Codes::HTTP_NO_CONTENT);
+        return View::create($participantsBlacklist->getEmail()." remove from Blacklist", Codes::HTTP_OK);
     }
     
     /**
