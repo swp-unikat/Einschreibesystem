@@ -59,7 +59,7 @@ class loadWorkshopData extends AbstractFixture implements OrderedFixtureInterfac
     Erstellung pneumatischer Schaltpläne
     Praktische Umsetzung der erstellten Schaltpläne
     Experimenteller Teil zur Untersuchung der Effizienz von pneumatischen Schaltplänen");
-        $workshop->setNotified(0);
+        $workshop3->setNotified(0);
         $manager->persist($workshop3);
 
 
