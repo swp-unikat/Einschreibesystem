@@ -32,7 +32,7 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                 templateUrl: prefix.concat('workshopList.html')
             })
             .state('workshops.details',{
-                url: '/:id',
+                url: '/workshops/:id',
                 controller: 'WorkshopDetailsCtrl',
                 templateUrl: prefix.concat('workshopDetails.html')
             })
