@@ -31,6 +31,11 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                 controller: 'WorkshopListCtrl',
                 templateUrl: prefix.concat('workshopList.html')
             })
+            .state('workshops.details',{
+                url: '/workshops/:id',
+                controller: 'WorkshopDetailsCtrl',
+                templateUrl: prefix.concat('workshopDetails.html')
+            })
             .state('login',{
                 url: '/login',
                 controller: 'LoginCtrl',
@@ -99,9 +104,7 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                 controller: 'SettingsCtrl',
                 templateUrl: prefix.concat('settings.html')
             })
-    }
-
-            
+    
             .state('contact',{
                 url: '/contact',
                 controller: 'ContactCtrl',
