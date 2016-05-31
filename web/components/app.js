@@ -129,7 +129,7 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                 }
             })
             .state('admininvite',{
-                url: '/admin/create',
+                url: '/admin/create/:token',
                 controller: 'AdminCreateCtrl',
                 templateUrl: prefix.concat('adminInvite.html')
             })
