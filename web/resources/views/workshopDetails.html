@@ -1,5 +1,5 @@
 <div>
-    <div class="col-md-10 col-md-offset-1">
+    <div class="col-md-12">
 
         <div class="col-lg-12 col-xs-12">
             <div class="col-lg-6 col-xs-6">
@@ -16,12 +16,48 @@
                     </div>
                 </div>
             </div>
-                <div class="list-group pull-right" ng-repeat="participant in List">
-                    <a href="#" translate class="list-group-item active">WORKSHOP_PARTICIPANTS</a>
+                <div class="list-group pull-right"> <!--ng-repeat="participant in List"-->
+                    <a href="#" translate class="list-group-item">WORKSHOP_PARTICIPANTS</a>
                     <!-- schauen welche variable um teilnemher zu entnehmen udn wird in diser form nun alle teilnehmer eingetragen -->
                     <a href="#" class="list-group-item">{{participants}}</a>
 
                 </div>
+            <!--Enroll PANEL -->
+            <div class="container">
+                <div class="row centered-form">
+                    <div class="col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 col-md-offset-4">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 translate class="panel-title">ENROLL</h3>
+                            </div>
+                            <div class="panel-body">
+                                <form role="form">
+                                    <div class="row">
+                                        <div class="col-xs-6 col-sm-6 col-md-6">
+                                            <div class="form-group">
+                                                <input type="text" name="first_name" id="first_name" class="form-control input-sm" placeholder="First Name">
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-6 col-sm-6 col-md-6">
+                                            <div class="form-group">
+                                                <input type="text" name="last_name" id="last_name" class="form-control input-sm" placeholder="Last Name">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <input type="email" name="email" id="email" class="form-control input-sm" placeholder="Email Address">
+                                    </div>
+                                    <button type="button" translate class="btn success btn-block">BUTTON_ENROLL</button>
+
+
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         <!-- loading -->
         <div ng-show="loading">
