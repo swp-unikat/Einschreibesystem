@@ -23,7 +23,6 @@ namespace Core\APIBundle\Controller\Admin;
      *      404 = "Returned when the data is not found"
      *  }
      * )
-     * )
      *
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\View()
@@ -31,4 +30,27 @@ namespace Core\APIBundle\Controller\Admin;
      public function putAction()
      {
      }
+     	/**
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Action to invite an Admin",
+     *  output = "Core\EntityBundle\Entity\Admin",
+     *  statusCodes = {
+     *      200 = "Returned when successful",
+     *      404 = "Returned when the data is not found"
+     *  },requirements={
+              "name"="adminId",
+     *        "dataType"="integer",
+     *        "requirement"="\d+",
+     *        "description"="Admin ID"
+     }
+     * )
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Rest\View()
+     */
+     public function sendAction ($adminID)
+     {
+     }
      
+     }
