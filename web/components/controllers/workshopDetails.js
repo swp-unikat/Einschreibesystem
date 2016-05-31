@@ -8,7 +8,7 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
         var workshopid;
         workshopid = $stateParams.id;
         $scope.loading = true;
-        Workshops.get(workshopid).$promise.then(function(value,httpResponse){
+        Workshops.get({id: workshopid}).$promise.then(function(value,httpResponse){
             $scope.workshop = value;
 
             $scope.loading = false;
