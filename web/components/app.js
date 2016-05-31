@@ -31,8 +31,8 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                 controller: 'WorkshopListCtrl',
                 templateUrl: prefix.concat('workshopList.html')
             })
-            .state('workshops.details',{
-                url: '/details/:id',
+            .state('workshopsdetails',{
+                url: '/workshops/details/:id',
                 controller: 'WorkshopDetailsCtrl',
                 templateUrl: prefix.concat('workshopDetails.html')
             })
@@ -64,45 +64,69 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                     requiresLogin: true
                 }
             })
-            .state('dashboard.workshop_template',{
+            .state('workshop_template',{
                 url:'/workshop_template',
                 controller:'WorkshopTemplateCtrl',
-                templateUrl: prefix.concat('workshopTemplate.html')
+                templateUrl: prefix.concat('workshopTemplate.html'),
+                data: {
+                    requiresLogin: true
+                }
             })
-            .state('dashboard.workshop_template.new', {
+            .state('workshop_template.new', {
                 url: '/new',
                 controller: 'NewWorkshopTemplateCtrl',
-                templateUrl: prefix.concat('workshopTemplateNew.html')
+                templateUrl: prefix.concat('workshopTemplateNew.html'),
+                data: {
+                    requiresLogin: true
+                }
             })
-            .state('dashboard.workshop_template.edit', {
+            .state('workshop_template.edit', {
                 url: '/edit/:id',
                 controller: 'EditWorkshopTemplateCtrl',
-                templateUrl: prefix.concat('workshopTemplateNew.html')
+                templateUrl: prefix.concat('workshopTemplateNew.html'),
+                data: {
+                    requiresLogin: true
+                }
             })
-            .state('dashboard.email_template.new', {
+            .state('email_template.new', {
                 url: '/new',
                 controller: 'NewEmailTemplateCtrl',
-                templateUrl: prefix.concat('emailTemplateNew.html')
+                templateUrl: prefix.concat('emailTemplateNew.html'),
+                data: {
+                    requiresLogin: true
+                }
             })
-            .state('dashboard.email_template.edit', {
+            .state('email_template.edit', {
                 url: '/edit/:id',
                 controller: 'EditEmailTemplateCtrl',
-                templateUrl: prefix.concat('emailTemplateNew.html')
+                templateUrl: prefix.concat('emailTemplateNew.html'),
+                data: {
+                    requiresLogin: true
+                }
             })
-            .state('dashboard.blacklist',{
+            .state('blacklist',{
                 url: '/blacklist',
                 controller: 'BlacklistCtrl',
-                templateUrl: prefix.concat('adminBlacklist.html')
+                templateUrl: prefix.concat('adminBlacklist.html'),
+                data: {
+                    requiresLogin: true
+                }
             })
-            .state('dashboard.administrator_management', {
+            .state('administrator_management', {
                     url: '/administrator_management',
                     controller: 'AdministratorManagementCtrl',
-                    templateUrl: prefix.concat('administratorManagement.html')
+                    templateUrl: prefix.concat('administratorManagement.html'),
+                data: {
+                    requiresLogin: true
+                }
                 })
-            .state('dashboard.settings', {
+            .state('settings', {
                 url: '/settings',
                 controller: 'SettingsCtrl',
-                templateUrl: prefix.concat('settings.html')
+                templateUrl: prefix.concat('settings.html'),
+                data: {
+                    requiresLogin: true
+                }
             })
             .state('admininvite',{
                 url: '/admin/create',
