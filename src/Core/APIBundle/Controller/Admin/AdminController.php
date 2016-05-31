@@ -74,5 +74,26 @@ namespace Core\APIBundle\Controller\Admin;
      public function deleteAction ($adminID)
      {
      }
-     
+     	/**
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Action to change the password",
+     *  output = "Core\EntityBundle\Entity\Admin",
+     *  statusCodes = {
+     *      200 = "Returned when successful",
+     *      404 = "Returned when the data is not found"
+     *  },requirements={
+              "name"="adminId",
+     *        "dataType"="integer",
+     *        "requirement"="\d+",
+     *        "description"="Admin ID"
+     }
+     * )
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Rest\View()
+     */
+     public function patchAction ($adminID)
+     {
+     }
      }
