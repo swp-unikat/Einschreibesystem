@@ -11,6 +11,8 @@ use Doctrine\Common\Collections\Criteria;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Request\ParamFetcher;
 use FOS\RestBundle\View\View;
+use FOS\RestBundle\Util\Codes;
+
 use JMS\Serializer\SerializationContext;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -32,7 +34,6 @@ use Doctrine\ORM\Query;
 class ParticipantsController extends FOSRestController implements ClassResourceInterface
 {
 	/**
-	 * @Security("has_role('ROLE_ADMIN')")
      * @ApiDoc(
      *  resource=true,
      *  description="Returns list of all participants",
@@ -46,7 +47,7 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
      *
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\View()
-     */
+     */  
     public function getAllAction()
     {
        $participants = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:Participants')->findAll();
@@ -57,7 +58,6 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
         return $this->handleView($view);	    
     }
     	/**
-    	 * @Security("has_role('ROLE_ADMIN')")
      * @ApiDoc(
      *  resource=true,
      *  description="Returns list of all participants that are blacklisted",
@@ -83,7 +83,6 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
         return $this->handleView($view);
     }
     	/**
-    	 * @Security("has_role('ROLE_ADMIN')")
      * @ApiDoc(
      *  resource=true,
      *  description="Add participants to blacklist ",
@@ -123,7 +122,6 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
     }
     
     /**
-     * @Security("has_role('ROLE_ADMIN')")
      * @ApiDoc(
      *  resource=true,
      *  description="Remove participants from Blacklist",
@@ -151,13 +149,13 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
         if (!$participantsBlacklist) {
             throw $this->createNotFoundException("No Participant on Blacklist found");
         }
-        $this->getDoctrine()->getManager()->remove($participantsBlacklist);
+        $participantsBlacklist->setBlacklisted(false);
+        $this->getDoctrine()->getManager()->persist($participantsBlacklist);
         $this->getDoctrine()->getManager()->flush();
-        return View::create(null, Codes::HTTP_NO_CONTENT);
+        return View::create($participantsBlacklist->getEmail()." remove from Blacklist", Codes::HTTP_OK);
     }
     
     /**
-     * @Security("has_role('ROLE_ADMIN')")
      * @ApiDoc(
      *  resource=true,
      *  description="Get detail view of blacklisted user",

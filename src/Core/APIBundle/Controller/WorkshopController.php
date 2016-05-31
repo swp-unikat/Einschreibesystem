@@ -43,7 +43,6 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      *      404 = "Returned when the data is not found"
      *  }
      * )
-     * )
      *
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\View()
@@ -76,7 +75,6 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      *      }
      *  }
      * )
-     * )
      *
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\View()
@@ -102,12 +100,11 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      *      404 = "Returned when the data is not found"
      *  }
      * )
-     * )
      *
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\RequestParam(name="name", requirements=".*", description="json object of workshop")
-     * @Rest\RequestParam(name="surname", requirements".*", description="json object of workshop")
-     * @Rest\RequestParan(name="email", requirements".*", description="json object of workshop")
+     * @Rest\RequestParam(name="surname", requirements=".*", description="json object of workshop")
+     * @Rest\RequestParam(name="email", requirements=".*", description="json object of workshop")
      *
      * @Rest\View()
      */
@@ -132,24 +129,52 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
             $participant->setName($params["name"]);
             $participant->setSurname($params["surname"]);
             
-            //Email senden
+            //send mail
+            $template = $this->getDoctrine()->getRepository("CoreEntityBundle:EmailTemplate")->find(1);
+            /* Creating Twig template from Database */
+            $renderTemplate = $this->get('twig')->createTemplate($template->getEmailBody());
+            /* Sending E-Mail with Confirmation Link - NOT INCLUDED?*/
+            $message = \Swift_Message::newInstance()
+                ->setSubject($template->getEmailSubject())
+                ->setFrom('send@example.com')
+                ->setTo($participant['email'])
+                ->setBody($renderTemplate->render(["workshop" => $workshop,"participant" => $participant]),'text/html');
+            $this->get('mailer')->send($message);
+
             
         } else {
             //alle Workshops an denen der Nutzer noch nicht teilgenommen hat
             $workshopParticipants = $this->getDoctrine()->getRepository("CoreEntityBundle:WorkshopParticipants")->findBy(["participant" => $participant, "participated" => 0]);
-            //über Arry iterieren , Workshop laden (get Wokrshop?) Anfangs und Endzeit mit dem Workshop vergleichen
+            //über Array iterieren , Workshop laden (get Wokrshop?) Anfangs und Endzeit mit dem Workshop vergleichen
+
+            foreach($workshopParticipants as $tupel){
+                
+                $tempWorkshop = $this->getDoctrine()->getRepository("Workshop")->find($tupel["id"]);
+                if($workshop->getStartAt() >= $tempWorkshop->getStartAt() && $workshop->getEndAt() <= $tempWorkshop->getEndAt()){
+                    throw $this->createAccessDeniedException("Already in Workshop at same Time");
+                }
+            } //foreach
+            
+            //send mail
+            $template = $this->getDoctrine()->getRepository("CoreEntityBundle:EmailTemplate")->find(1);
+            /* Creating Twig template from Database */
+            $renderTemplate = $this->get('twig')->createTemplate($template->getEmailBody());
+            /* Sending E-Mail with Confirmation Link - NOT INCLUDED?*/
+            $message = \Swift_Message::newInstance()
+                ->setSubject($template->getEmailSubject())
+                ->setFrom('send@example.com')
+                ->setTo($participant['email'])
+                ->setBody($renderTemplate->render(["workshop" => $workshop,"participant" => $participant]),'text/html');
+            $this->get('mailer')->send($message);
+            
             
             
         }
 
-        
-        
-        
-        
 
         /*
-         * 0) Paramfetcher (name,vorname,email)
-         * 1) Gibt es den User => lade User aus | erstellen
+         * 0) Paramfetcher (name,vorname,email) check
+         * 1) Gibt es den User => lade User aus check| erstellen check
          * 2) Hat der User einen anderen Workshop zu der Zeit => ja ablehnen
          * 3) E-Mail senden mit Anmeldelink
          *      - Workshop ID
@@ -174,7 +199,6 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      *      200 = "Returned when successful",
      *      404 = "Returned when the data is not found"
      *  }
-     * )
      * )
      *
      * @return \Symfony\Component\HttpFoundation\Response
@@ -228,7 +252,6 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      *      200 = "Returned when successful",
      *      404 = "Returned when the data is not found"
      *  }
-     * )
      * )
      * @param $id
      * @param $token
@@ -285,7 +308,6 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      *      }
      *  }
      * )
-     * )
      *
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\View()
@@ -300,5 +322,34 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
         $view = $this->view($waitinglist, 200);
         return $this->handleView($view);
     }
-
+    /**
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Returns the list of participants",
+     *  output = "Core\EntityBundle\Entity\WorkshopParticipants",
+     *  statusCodes = {
+     *      200 = "Returned when successful",
+     *      404 = "Returned when the data is not found"
+     *  },requirements={
+     *      {
+     *          "name"="id",
+     *          "dataType"="integer",
+     *          "requirement"="\d+",
+     *          "description"="Workshop ID"
+     *      }
+     *  }
+     * )
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Rest\View()
+     */
+     public function getParticipantsAction($id)
+    {  
+	    $participantslist = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:Participants')->findBy(['workshop' => $id],['enrollment' => "DESC"]);
+	    if (!$participantslist) {
+            throw $this->createNotFoundException("No Participant in Workshop found");
+         }
+        $view = $this->view($participant, 200);
+        return $this->handleView($view);
+    }
 }

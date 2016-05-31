@@ -44,7 +44,6 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      *      404 = "Returned when the data is not found"
      *  }
      * )
-     * )
      *
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\View()
@@ -71,7 +70,6 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      *      404 = "Returned when the data is not found"
      *  }
      * )
-     * )
      *
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\RequestParam(name="title", requirements=".*", description="json object of workshop")
@@ -93,7 +91,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
         if($params["title"] != NULL)
             $workshop->setTitle($params["title"]);
         if($params["description"] != NULL)
-            $workshop->setDescription($params["desctiption"]);
+            $workshop->setDescription($params["description"]);
         if($params["cost"] != NULL)
             $workshop->setCost($params["cost"]);
         if($params["requirements"] != NULL)
@@ -101,11 +99,11 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
         if($params["location"] != NULL)
             $workshop->setLocation($params["location"]);
         if($params["start_at"] != NULL)
-            $workshop->getStartAt($params["start_at"]);
+            $workshop->setStartAt($params["start_at"]);
         if($params["end_at"] != NULL)
-            $workshop->getEndAt($params["end_at"]);
+            $workshop->setEndAt($params["end_at"]);
         if($params["max_participants"] != NULL)
-            $workshop->getMaxParticipants($params["max_participants"]);
+            $workshop->setMaxParticipants($params["max_participants"]);
         $this->getDoctrine()->getManager()->persist($workshop);
         $this->getDoctrine()->getManager()->flush();
         $view = $this->view($workshop,200);
@@ -121,7 +119,6 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      *      200 = "Returned when successful",
      *      404 = "Returned when the data is not found"
      *  }
-     * )
      * )
      *
      * @return \Symfony\Component\HttpFoundation\Response
@@ -146,7 +143,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
         if($params["title"] != NULL)
             $workshop->setTitle($params["title"]);
         if($params["description"] != NULL)
-            $workshop->setDescription($params["desctiption"]);
+            $workshop->setDescription($params["description"]);
         if($params["cost"] != NULL)
             $workshop->setCost($params["cost"]);
         if($params["requirements"] != NULL)
@@ -182,7 +179,6 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      *          "description"="Workshop ID"
      *      }
      *  }
-     * )
      * )
      *
      * @return \Symfony\Component\HttpFoundation\Response
@@ -222,7 +218,6 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      *          "description"="Participants ID"
      *     }
      *  }
-     * )
      * )
      *
      * @return \Symfony\Component\HttpFoundation\Response

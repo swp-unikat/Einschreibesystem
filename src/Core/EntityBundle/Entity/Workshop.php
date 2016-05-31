@@ -89,7 +89,7 @@ class Workshop
      */
     protected $created;
     /**
-     * @var bool
+     * @var boolean
      * @ORM\Column(name="notified", type="boolean", nullable=false)
      */
     protected $notified;
@@ -260,7 +260,7 @@ class Workshop
     }
 
     /**
-     * @return \DateTime
+     * @return boolean
      */
     public function getNotified()
     {
@@ -268,7 +268,7 @@ class Workshop
     }
 
     /**
-     * @param \DateTime $notified
+     * @param oolean $notified
      */
     public function setNotified($notified)
     {

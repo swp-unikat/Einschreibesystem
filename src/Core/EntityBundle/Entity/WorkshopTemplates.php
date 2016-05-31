@@ -13,9 +13,9 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 /**
  * @ORM\Entity()
- * @ORM\Table(name="workshop_template")
+ * @ORM\Table(name="workshop_templates")
  */
-class WorkshopTemplate{
+class WorkshopTemplates{
 
     /**
      * @var int

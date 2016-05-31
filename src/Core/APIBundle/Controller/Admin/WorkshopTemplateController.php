@@ -8,11 +8,12 @@
  */
 namespace Core\APIBundle\Controller\Admin;
 
-use Core\EntityBundle\Entity\WorkshopTemplate;
+use Core\EntityBundle\Entity\WorkshopTemplates;
 use Doctrine\Common\Collections\Criteria;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Request\ParamFetcher;
 use FOS\RestBundle\View\View;
+use FOS\RestBundle\Util\Codes;
 use JMS\Serializer\SerializationContext;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -44,14 +45,13 @@ class WorkshopTemplateController extends FOSRestController implements ClassResou
      *      404 = "Returned when the data is not found"
      *  }
      * )
-     * )
      *
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\View()
      */
     public function getListAction()
     {
-        $workshops = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:WorkshopTemplate')->findAll();
+        $workshops = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:WorkshopTemplates')->findAll();
 	    if(!$workshops) {
             throw $this->createNotFoundException("No WorkshopTemplate found");
         }
@@ -76,8 +76,7 @@ class WorkshopTemplateController extends FOSRestController implements ClassResou
      *          "requirement"="\d+",
      *          "description"="Workshoptemplate ID"
      *      }
-     * }
-     * )
+     *    }
      * )
      *
      * @return \Symfony\Component\HttpFoundation\Response
@@ -85,7 +84,7 @@ class WorkshopTemplateController extends FOSRestController implements ClassResou
      */
     public function getAction($id)
     {
-        $workshoptemplate = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:WorkshopTemplate')->find($id);
+        $workshoptemplate = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:WorkshopTemplates')->find($id);
         if (!$workshoptemplate) {
             throw $this->createNotFoundException("This workshoptemplate was not found");
         } else {
@@ -169,7 +168,6 @@ class WorkshopTemplateController extends FOSRestController implements ClassResou
      *      }
      *   }
      * )
-     * )
      * @REST\QueryParam(name="json", requirements="", default="1", description="json object of workshop")
      * @return \Symfony\Component\HttpFoundation\Response
      * @REST\RequestParam(name="title", requirements=".*", description="title of the Workshop")
@@ -185,7 +183,7 @@ class WorkshopTemplateController extends FOSRestController implements ClassResou
     public function patchAction(ParamFetcher $paramFetcher,$id)
     {
         $params = $paramFetcher->all();
-        $workshoptemplate = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:WorkshopTemplates")->findById($id);
+        $workshoptemplate = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:WorkshopTemplates")->find($id);
         if (!$workshoptemplate) {
             throw $this->createNotFoundException("No WorkshopTemplate found");
         }
@@ -276,7 +274,7 @@ class WorkshopTemplateController extends FOSRestController implements ClassResou
      *          "requirement"="\d+",
      *          "description"="maximum number of participants"
      *      }
-     * )
+     *  }
      * )
      *
      * @return \Symfony\Component\HttpFoundation\Response
@@ -291,7 +289,7 @@ class WorkshopTemplateController extends FOSRestController implements ClassResou
      * @Rest\View()
      */
     public function putAction(ParamFetcher $paramFetcher)  {
-        $workshoptemplate= new WorkshopTemplate();
+        $workshoptemplate= new WorkshopTemplates();
         $params = $paramFetcher->all();
         if($params["title"] != NULL)
             $workshoptemplate->setTitle($params["title"]);
@@ -333,14 +331,13 @@ class WorkshopTemplateController extends FOSRestController implements ClassResou
      *      }
      * }
      * )
-     * )
      *
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\View()
      */
     public function deleteAction($id)
     {
-        $workshopTemplate = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:WorkshopTemplate")->find($id);
+        $workshopTemplate = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:WorkshopTemplates")->find($id);
         if (!$workshopTemplate) {
             throw $this->createNotFoundException("WorkshopTemplate not found");
         }

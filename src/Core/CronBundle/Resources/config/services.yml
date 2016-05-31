@@ -1,6 +1,6 @@
 services:
-  mail:
-    class: Core\CronBundle\Controller\MailController;
+#  mail:
+#    class: Core\CronBundle\Controller\MailController;
 
 #    core_cron.example:
 #        class: Core\CronBundle\Example
