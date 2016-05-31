@@ -93,5 +93,6 @@
 "BUTTON_ADMINISTRATOR_LOGOUT":"Administrator logout",
 "ADMINISTRATOR_PASSWORD":"Administrator password",
 "Old_Password":"Old password",
-"New_Password":"New password"
+"New_Password":"New password",
+"BUTTON_CREATE_ACCOUNT": "Create Admin Account"
 }
