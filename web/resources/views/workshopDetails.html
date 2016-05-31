@@ -1,8 +1,8 @@
 <div>
-    <div class="col-md-8 col-md-offset-2">
+    <div class="col-md-10 col-md-offset-1">
 
         <div class="col-lg-12 col-xs-12">
-            <div class="col-lg-12 col-xs-12">
+            <div class="col-lg-6 col-xs-6">
 
                 <div class="box box-default">
                     <div class="box-header with-border">
@@ -15,13 +15,14 @@
                         <div class="col-sm-10 col-sm-12"><p>{{workshop.description}}</p></div>
                     </div>
                 </div>
+            </div>
                 <div class="list-group pull-right" ng-repeat="participant in List">
                     <a href="#" translate class="list-group-item active">WORKSHOP_PARTICIPANTS</a>
                     <!-- schauen welche variable um teilnemher zu entnehmen udn wird in diser form nun alle teilnehmer eingetragen -->
                     <a href="#" class="list-group-item">{{participants}}</a>
 
                 </div>
-            </div>
+
         <!-- loading -->
         <div ng-show="loading">
             <span class="glyphicon glyphicon-refresh glyphicon-spin" style="font-size: 5.0em;"></span>
