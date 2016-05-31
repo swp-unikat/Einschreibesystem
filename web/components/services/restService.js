@@ -4,7 +4,7 @@ var restSvcs = angular.module('restSvcs',['ngResource']);
  */
 restSvcs.factory('Workshops',['$resource',function($resource){
     return $resource('/api/workshops/:id',{id: '@id'},{
-        getAll: {method: 'GET', isArray: true,id: 'all'},
-        get: {method: 'GET', isArray: false,id: '@id'}
+        getAll: {method: 'GET',params: {id: 'all'}, isArray: true},
+        get: {method: 'GET',isArray: false}
     });
 }]);
