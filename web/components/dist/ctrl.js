@@ -193,13 +193,30 @@ mainAppCtrls.controller('PasswordResetCtrl',['$scope',
  */
 
 /**
- *
+ * @name SettingsCtrl
+ * @description Controller for the Settings view
  */
-mainAppCtrls.controller('SettingsCtrl',['$scope',
-    function($scope) {
+mainAppCtrls.controller('SettingsCtrl',['$scope','UIHelper',
+    function($scope,UIHelper) {
+        UIHelper.HideUserUI();
+        $scope.tabs = [
 
+            {
+                title: "Change Password",
+                page: "resources/views/adminEditPassword.html"
+            },
+            {
+                title: "Edit Info",
+                page: "resources/views/adminEditInfo.html"
+            }
+        ];
+        $scope.placeholder = {
+            password: "New Password",
+            password_confirm: "Repeat Password",
+            old_password: "Old Password"
+        }
+        //TODO: Add error handling, alert on successful data change
     }
-
 ]);
 
 // Source: web/components/controllers/unsubscribeCtrl.js
@@ -274,6 +291,15 @@ mainAppCtrls.controller('WorkshopListCtrl',['$scope','Workshops','$alert','$tran
                         dismissable: false,
                         show: true
                     });
+                case 500:
+                    $scope.myAlert = $alert({
+                        title: $scope.errorTitle,
+                        type: 'danger',
+                        content: 'Internal server error.',
+                        container: '#alert',
+                        dismissable: false,
+                        show: true
+                    })
                 break;
             }
             $scope.loading = false;
