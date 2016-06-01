@@ -7,7 +7,7 @@
  * Date: 29.04.2016
  * Time: 16:44
  */
-namespace Core\APIBundle\Controller;
+namespace Core\APIBundle\Controller\Admin;
 
 use Doctrine\Common\Collections\Criteria;
 use FOS\RestBundle\Controller\FOSRestController;
@@ -32,7 +32,6 @@ use Doctrine\ORM\Query;
 class EmailController extends FOSRestController implements ClassResourceInterface
 {
 	/**
-	 * @Security("has_role('ROLE_ADMIN')")
      * @ApiDoc(
      *  resource=true,
      *  description="Send E-Mail to workshop participants",
@@ -40,6 +39,13 @@ class EmailController extends FOSRestController implements ClassResourceInterfac
      *  statusCodes = {
      *      200 = "Returned when successful",
      *      404 = "Returned when the data is not found"
+     *  },requirements={
+     *      {
+     *          "name"="workshopId",
+     *          "dataType"="integer",
+     *          "requirement"="\d+",
+     *          "description"="Workshop ID"
+     *      }
      *  }
      * )
      * )
@@ -49,6 +55,7 @@ class EmailController extends FOSRestController implements ClassResourceInterfac
      */
     public function sendAction($workshopId)
     {
-	    
+	    $workshopParticipants = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:WorkshopParticipants")->findBy(['workshop'=> $workshopId]);
+
     }
 }

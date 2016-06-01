@@ -1,3 +1,6 @@
+api_login_check:
+    path: /api/login_check
+
 core_frontend:
     resource: "@CoreFrontendBundle/Controller/"
     type:     annotation
