@@ -1,18 +1,22 @@
 /**
- *
+ * App
  * @type {angular.Module}
  */
 var mainApp = angular.module('mainApp',[
     'ngRoute',
     'mainAppCtrls',
     'mgcrea.ngStrap',
-    'ui.router'
+    'ui.router',
+    'angular-jwt',
+    'restSvcs',
+    'angular-storage',
+    'pascalprecht.translate'
 ]);
 /**
- *
+ * Module collecting all used Controllers
  * @type {angular.Module}
  */
-var mainAppCtrls = angular.module('mainAppCtrls',[]);
+var mainAppCtrls = angular.module('mainAppCtrls',["pascalprecht.translate"]);
 /**
  * Configure routing
  */
@@ -20,47 +24,17 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
     function($urlRouterProvider,$stateProvider)
     {
         var prefix = "resources/views/";
-        // $routeProvider
-        //     .when('/workshops', {
-        //         templateUrl: prefix.concat('workshopList.html'),
-        //         controller: 'WorkshopListCtrl'
-        //     })
-        //     .when('/login', {
-        //         templateUrl: prefix.concat('login.html'),
-        //         controller: 'LoginCtrl'
-        //     })
-        //     .when('/enrollment_confirm/:id/:token', {
-        //         templateUrl: prefix.concat('enrollmentConfirm.html'),
-        //         controller: 'EnrollmentConfirmCtrl'
-        //     })
-        //     .when('/dashboard', {
-        //         templateUrl: prefix.concat('adminDashboard.html'),
-        //         controller: 'DashboardCtrl'
-        //     })
-        //     .when('/dashboard/settings',{
-        //         templateUrl: prefix.concat('adminSettings.html'),
-        //         controller: 'SettingsCtrl'
-        //     })
-        //     .when('/dashboard/blacklist',{
-        //
-        //     })
-        //     .when('/dashboard/workshop_management',{
-        //
-        //     })
-        //     .when('/dashboard/workshoptemplate_management',{
-        //
-        //     })
-        //     .when('/dashboard/emailtemplate_managemetn',{
-        //
-        //     })
-        //     .otherwise({
-        //         redirectTo: '/workshops'
-        //     });
+
         $stateProvider
             .state('workshops',{
                 url: '/workshops',
                 controller: 'WorkshopListCtrl',
                 templateUrl: prefix.concat('workshopList.html')
+            })
+            .state('workshopsdetails',{
+                url: '/workshops/details/:id',
+                controller: 'WorkshopDetailsCtrl',
+                templateUrl: prefix.concat('workshopDetails.html')
             })
             .state('login',{
                 url: '/login',
@@ -85,12 +59,79 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
             .state('dashboard',{
                 url: '/dashboard',
                 controller: 'DashboardCtrl',
-                templateUrl: prefix.concat('adminDashboard.html')
+                templateUrl: prefix.concat('adminDashboard.html'),
+                data: {
+                    //requiresLogin: true
+                }
             })
-            .state('dashboard.blacklist',{
+            .state('workshop_template',{
+                url:'/workshop_template',
+                controller:'WorkshopTemplateCtrl',
+                templateUrl: prefix.concat('workshopTemplate.html'),
+                data: {
+                    //requiresLogin: true
+                }
+            })
+            .state('workshop_template.new', {
+                url: '/new',
+                controller: 'NewWorkshopTemplateCtrl',
+                templateUrl: prefix.concat('workshopTemplateNew.html'),
+                data: {
+                    //requiresLogin: true
+                }
+            })
+            .state('workshop_template.edit', {
+                url: '/edit/:id',
+                controller: 'EditWorkshopTemplateCtrl',
+                templateUrl: prefix.concat('workshopTemplateNew.html'),
+                data: {
+                    //requiresLogin: true
+                }
+            })
+            .state('email_template.new', {
+                url: '/new',
+                controller: 'NewEmailTemplateCtrl',
+                templateUrl: prefix.concat('emailTemplateNew.html'),
+                data: {
+                    //requiresLogin: true
+                }
+            })
+            .state('email_template.edit', {
+                url: '/edit/:id',
+                controller: 'EditEmailTemplateCtrl',
+                templateUrl: prefix.concat('emailTemplateNew.html'),
+                data: {
+                    //requiresLogin: true
+                }
+            })
+            .state('blacklist',{
                 url: '/blacklist',
-                controller: 'BlacklistController',
+                controller: 'BlacklistCtrl',
                 templateUrl: prefix.concat('adminBlacklist.html'),
+                data: {
+                    //requiresLogin: true
+                }
+            })
+            .state('administrator_management', {
+                    url: '/administrator_management',
+                    controller: 'AdministratorManagementCtrl',
+                    templateUrl: prefix.concat('administratorManagement.html'),
+                data: {
+                    //requiresLogin: true
+                }
+                })
+            .state('settings', {
+                url: '/settings',
+                controller: 'SettingsCtrl',
+                templateUrl: prefix.concat('settings.html'),
+                data: {
+                    //requiresLogin: true
+                }
+            })
+            .state('admininvite',{
+                url: '/admin/create/:token',
+                controller: 'AdminCreateCtrl',
+                templateUrl: prefix.concat('adminInvite.html')
             })
             .state('contact',{
                 url: '/contact',
@@ -101,5 +142,52 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
 
         $urlRouterProvider.otherwise('/workshops');
 
+
     }
 ]);
+/**
+ * Configure JWT
+ */
+mainApp.config(['jwtInterceptorProvider','$httpProvider','$urlRouterProvider',function(jwtInterceptorProvider,$httpProvider,$urlRouterProvider){
+    jwtInterceptorProvider.tokenGetter = function(store) {
+        return store.get('jwt');
+    }
+
+    $httpProvider.interceptors.push('jwtInterceptor');
+}])
+    .run(['$rootScope','$state','store','jwtHelper',function($rootScope, $state, store, jwtHelper) {
+        $rootScope.$on('$stateChangeStart', function(e, to) {
+            if (to.data && to.data.requiresLogin) {
+                if (!store.get('jwt') || jwtHelper.isTokenExpired(store.get('jwt'))) {
+                    e.preventDefault();
+                    $state.go('login');
+                }
+            }
+        });
+    }]);
+/**
+ * Config translation module for internationalization
+ */
+mainApp.config(['$translateProvider', function($translateProvider) {
+    $translateProvider.useStaticFilesLoader({
+        prefix: 'resources/local/lang-',
+        suffix: '.json'
+    });
+    $translateProvider.preferredLanguage('en');
+}]);
+/**
+ * Hide certain elements of the Navbars for Admin views
+ */
+mainApp.factory('UIHelper',['$rootScope',function($rootScope){
+    return {
+        HideUserUI: function(){
+            $rootScope.hide_user_ui = true;
+        },
+        ShowUserUI: function(){
+            $rootScope.hide_user_ui = false;
+        },
+        ToggleUserUI: function(){
+            $rootScope.hide_user_ui = ! $rootScope.hide;
+        }
+    }
+}]);

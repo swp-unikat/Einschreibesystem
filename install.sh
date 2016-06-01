@@ -51,7 +51,13 @@ sudo npm install --no-bin-links
 sudo npm install -g karma-cli
 
 #Bower Install
-bower install
+
+
+#Doctrine
+
+php app/console doctrine:database:create
+php app/console doctrine:schema:update --force
+php app/console doctrine:fixtures:load
 
 #restarts
 service apache2 restart
