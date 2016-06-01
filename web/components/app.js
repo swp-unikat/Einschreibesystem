@@ -61,7 +61,7 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                 controller: 'DashboardCtrl',
                 templateUrl: prefix.concat('adminDashboard.html'),
                 data: {
-                    requiresLogin: true
+                    //requiresLogin: true
                 }
             })
             .state('workshop_template',{
@@ -69,7 +69,7 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                 controller:'WorkshopTemplateCtrl',
                 templateUrl: prefix.concat('workshopTemplate.html'),
                 data: {
-                    requiresLogin: true
+                    //requiresLogin: true
                 }
             })
             .state('workshop_template.new', {
@@ -77,7 +77,7 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                 controller: 'NewWorkshopTemplateCtrl',
                 templateUrl: prefix.concat('workshopTemplateNew.html'),
                 data: {
-                    requiresLogin: true
+                    //requiresLogin: true
                 }
             })
             .state('workshop_template.edit', {
@@ -85,7 +85,7 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                 controller: 'EditWorkshopTemplateCtrl',
                 templateUrl: prefix.concat('workshopTemplateNew.html'),
                 data: {
-                    requiresLogin: true
+                    //requiresLogin: true
                 }
             })
             .state('email_template.new', {
@@ -93,7 +93,7 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                 controller: 'NewEmailTemplateCtrl',
                 templateUrl: prefix.concat('emailTemplateNew.html'),
                 data: {
-                    requiresLogin: true
+                    //requiresLogin: true
                 }
             })
             .state('email_template.edit', {
@@ -101,7 +101,7 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                 controller: 'EditEmailTemplateCtrl',
                 templateUrl: prefix.concat('emailTemplateNew.html'),
                 data: {
-                    requiresLogin: true
+                    //requiresLogin: true
                 }
             })
             .state('blacklist',{
@@ -109,7 +109,7 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                 controller: 'BlacklistCtrl',
                 templateUrl: prefix.concat('adminBlacklist.html'),
                 data: {
-                    requiresLogin: true
+                    //requiresLogin: true
                 }
             })
             .state('administrator_management', {
@@ -117,7 +117,7 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                     controller: 'AdministratorManagementCtrl',
                     templateUrl: prefix.concat('administratorManagement.html'),
                 data: {
-                    requiresLogin: true
+                    //requiresLogin: true
                 }
                 })
             .state('settings', {
@@ -125,7 +125,7 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                 controller: 'SettingsCtrl',
                 templateUrl: prefix.concat('settings.html'),
                 data: {
-                    requiresLogin: true
+                    //requiresLogin: true
                 }
             })
             .state('admininvite',{
