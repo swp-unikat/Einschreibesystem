@@ -1,6 +1,8 @@
 /**
- * App
+ * @name mainApp
+ * @requieres
  * @type {angular.Module}
+ * @description Main module of the application
  */
 var mainApp = angular.module('mainApp',[
     'ngRoute',
@@ -13,13 +15,12 @@ var mainApp = angular.module('mainApp',[
     'pascalprecht.translate'
 ]);
 /**
- * Module collecting all used Controllers
+ * @name mainAppCtrls
  * @type {angular.Module}
+ * @description Module containg all controller of the application
  */
 var mainAppCtrls = angular.module('mainAppCtrls',["pascalprecht.translate"]);
-/**
- * Configure routing
- */
+
 mainApp.config(['$urlRouterProvider','$stateProvider',
     function($urlRouterProvider,$stateProvider)
     {
@@ -145,9 +146,7 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
 
     }
 ]);
-/**
- * Configure JWT
- */
+
 mainApp.config(['jwtInterceptorProvider','$httpProvider','$urlRouterProvider',function(jwtInterceptorProvider,$httpProvider,$urlRouterProvider){
     jwtInterceptorProvider.tokenGetter = function(store) {
         return store.get('jwt');
@@ -165,9 +164,7 @@ mainApp.config(['jwtInterceptorProvider','$httpProvider','$urlRouterProvider',fu
             }
         });
     }]);
-/**
- * Config translation module for internationalization
- */
+
 mainApp.config(['$translateProvider', function($translateProvider) {
     $translateProvider.useStaticFilesLoader({
         prefix: 'resources/local/lang-',
@@ -176,16 +173,36 @@ mainApp.config(['$translateProvider', function($translateProvider) {
     $translateProvider.preferredLanguage('en');
 }]);
 /**
- * Hide certain elements of the Navbars for Admin views
+ * @ngdoc service
+ * @descrption Helper service to show or hide User UI elements
+ * @name  mainApp.UIHelper
  */
 mainApp.factory('UIHelper',['$rootScope',function($rootScope){
     return {
+        /**
+         * @ngdoc function
+         * @name mainApp.UIHelper#HideUserUI
+         * @description hide the user UI
+         * @methodOf mainApp.UIHelper
+         */
         HideUserUI: function(){
             $rootScope.hide_user_ui = true;
         },
+        /**
+         * @ngdoc function
+         * @name mainApp.UIHelper#ShowUserUI
+         * @description show the user UI
+         * @methodOf mainApp.UIHelper
+         */
         ShowUserUI: function(){
             $rootScope.hide_user_ui = false;
         },
+        /**
+         * @ngdoc function
+         * @name mainApp.UIHelper#ToggleUserUI
+         * @description toggle the user UI
+         * @methodOf mainApp.UIHelper
+         */
         ToggleUserUI: function(){
             $rootScope.hide_user_ui = ! $rootScope.hide;
         }
