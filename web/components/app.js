@@ -175,3 +175,19 @@ mainApp.config(['$translateProvider', function($translateProvider) {
     });
     $translateProvider.preferredLanguage('en');
 }]);
+/**
+ * Hide certain elements of the Navbars for Admin views
+ */
+mainApp.factory('UIHelper',['$rootScope',function($rootScope){
+    return {
+        HideUserUI: function(){
+            $rootScope.hide_user_ui = true;
+        },
+        ShowUserUI: function(){
+            $rootScope.hide_user_ui = false;
+        },
+        ToggleUserUI: function(){
+            $rootScope.hide_user_ui = ! $rootScope.hide;
+        }
+    }
+}]);
