@@ -36,7 +36,7 @@ class Workshop
      * @var int
      * @ORM\Column(name="cost", type="decimal",precision=4, scale=2, nullable=false)
      * @Serializer\Expose
-     * @Serializer\SerializedName("title")
+     * @Serializer\SerializedName("cost")
      */
     protected $cost;
     /**
@@ -88,6 +88,11 @@ class Workshop
      * @Serializer\SerializedName("created")
      */
     protected $created;
+    /**
+     * @var boolean
+     * @ORM\Column(name="notified", type="boolean", nullable=false)
+     */
+    protected $notified;
 
     public function __construct()
     {
@@ -253,5 +258,22 @@ class Workshop
     {
         $this->description = $description;
     }
+
+    /**
+     * @return boolean
+     */
+    public function getNotified()
+    {
+        return $this->notified;
+    }
+
+    /**
+     * @param oolean $notified
+     */
+    public function setNotified($notified)
+    {
+        $this->notified = $notified;
+    }
+
 
 }

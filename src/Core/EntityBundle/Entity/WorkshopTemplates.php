@@ -13,9 +13,9 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 /**
  * @ORM\Entity()
- * @ORM\Table(name="workshop_template")
+ * @ORM\Table(name="workshop_templates")
  */
-class WorkshopTemplate{
+class WorkshopTemplates{
 
     /**
      * @var int
@@ -32,10 +32,17 @@ class WorkshopTemplate{
      */
     protected $title;
     /**
+     * @var string
+     * @ORM\Column(name="description", type="string", nullable=false)
+     * @Serializer\Expose
+     * @Serializer\SerializedName("description")
+     */
+    protected $description;
+    /**
      * @var int
      * @ORM\Column(name="cost", type="decimal",precision=4, scale=2, nullable=false)
      * @Serializer\Expose
-     * @Serializer\SerializedName("title")
+     * @Serializer\SerializedName("cost")
      */
     protected $cost;
     /**
@@ -117,7 +124,21 @@ class WorkshopTemplate{
     {
         $this->title = $title;
     }
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
 
+    /**
+     * @param string $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
     /**
      * @return int
      */

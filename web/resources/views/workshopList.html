@@ -45,8 +45,8 @@
             <div ng-show="loading">
                 <span class="glyphicon glyphicon-refresh glyphicon-spin" style="font-size: 5.0em;"></span>
             </div>
-            <div ng-hide="workshopList.length || loading">
-                No workshops available at the moment!
+            <div ng-hide="workshopList.length || loading" id="alert" bs-alert>
+
             </div>
             <!-- loading end -->
         </div>

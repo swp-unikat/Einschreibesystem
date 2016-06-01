@@ -53,4 +53,26 @@ class WorkshopRepository extends EntityRepository
             return $result;
         }
     }
+
+    public function getParticipants($workshopId){
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder();
+        $q = $qb->select(["count(wt.id)"])->from("CoreEntityBundle:WorkshopParticipants","wt")->where("wt.workshop = ?1");
+        $q->setParameter(1,$workshopId);
+        $result = $q->getQuery()->getResult();
+        return $result;
+
+    }
+
+    public function getWorkshopsForNotificationEmail(){
+        $now = new \DateTime("now");
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $q  = $qb->select(["workshop.id"])
+                 ->from("CoreEntityBundle:Workshop","workshop")
+                 ->where("workshop.notified = 0 and workshop.start_at < ?1");
+        $q->setParameter(1,$now);
+        $result = $q->getQuery()->getResult();
+        return $result;
+    }
+
 }
