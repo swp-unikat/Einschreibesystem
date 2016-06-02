@@ -31,6 +31,15 @@ mainAppCtrls.controller('WorkshopListCtrl',['$scope','Workshops','$alert','$tran
                         dismissable: false,
                         show: true
                     });
+                case 500:
+                    $scope.myAlert = $alert({
+                        title: $scope.errorTitle,
+                        type: 'danger',
+                        content: 'Internal server error.',
+                        container: '#alert',
+                        dismissable: false,
+                        show: true
+                    })
                 break;
             }
             $scope.loading = false;

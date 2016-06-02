@@ -124,7 +124,7 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
             .state('settings', {
                 url: '/settings',
                 controller: 'SettingsCtrl',
-                templateUrl: prefix.concat('settings.html'),
+                templateUrl: prefix.concat('adminSettings.html'),
                 data: {
                     //requiresLogin: true
                 }
