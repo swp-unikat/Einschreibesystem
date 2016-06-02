@@ -52,9 +52,9 @@ use FOS\RestBundle\Request\ParamFetcher;
           */
          
          $invitation = new Invitation();
-         $code = $invitation->getCode()
+         $code = $invitation->getCode();
          
-         $email = $paramFetcher->get($email)
+         $email = $paramFetcher->get($email);
 
          /* Loading the default E-Mail template*/
          $template = $this->getDoctrine()->getRepository("CoreEntityBundle:EmailTemplate")->find(1);
