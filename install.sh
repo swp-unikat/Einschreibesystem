@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # apt update
 sudo apt-get update
 
@@ -51,7 +52,24 @@ sudo npm install --no-bin-links
 sudo npm install -g karma-cli
 
 #Bower Install
-bower install
+npm install -g bower
+bower install --allow-root
+
+
+# JWT
+cd /var/www
+mkdir -p app/var/jwt
+openssl genrsa -passout pass:unikat -out app/var/jwt/private.pem -aes256 4096
+openssl rsa -passin pass:unikat -pubout -in app/var/jwt/private.pem -out app/var/jwt/public.pem
+
+#composer
+cd /var/www
+composer install
+
+#Doctrine
+php app/console doctrine:database:create
+php app/console doctrine:schema:update --force
+php app/console doctrine:fixtures:load
 
 #restarts
 service apache2 restart
