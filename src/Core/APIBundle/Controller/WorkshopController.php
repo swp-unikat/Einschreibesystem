@@ -29,7 +29,7 @@ use Symfony\Component\HttpFoundation\Request;
  * Class RestController.
  *
  * @Rest\RouteResource("Workshops")
- */a
+ */
 
 class WorkshopController extends FOSRestController implements ClassResourceInterface
 {
