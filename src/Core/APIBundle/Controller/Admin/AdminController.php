@@ -27,13 +27,12 @@ use FOS\RestBundle\Request\ParamFetcher;
      *  }
      * )
      *
-     * 
      *
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\RequestParam(name="email", requirements=".*", description="js object of workshop")
      * @Rest\View()
      */  
-     public function inviteAdminAction(ParamFetcher $paramFetcher)
+     public function inviteAdminAction(ParamFetcher $paramFetcher) //kein Param
      {
          /**
           * When sending invitation set this value to 'true'
@@ -83,16 +82,17 @@ use FOS\RestBundle\Request\ParamFetcher;
       *        "description"="Admin ID"
      }
       * )
-      *
+      * @
       * @return \Symfony\Component\HttpFoundation\Response
       * @Rest\View()
       */
      
-     public function createAdmin()
+     public function createAdmin($code) //Param Email Passwort Token
      {
-         
-         //Prüfe ob gesendet wurde
-         
+         $invitation = $this->getDoctrine()->getManager()->getRepository("invitation")->find();
+         //check if invitation was sended
+         if ($invitation)
+        //FOSUSERBUNDLE Nachschauen
      }
      
      
