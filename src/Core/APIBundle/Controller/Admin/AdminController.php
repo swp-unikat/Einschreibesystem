@@ -33,7 +33,7 @@ use FOS\RestBundle\Request\ParamFetcher;
      * @Rest\RequestParam(name="email", requirements=".*", description="js object of workshop")
      * @Rest\View()
      */  
-     public function inviteAdmin(ParamFetcher $paramFetcher)
+     public function inviteAdminAction(ParamFetcher $paramFetcher)
      {
          /**
           * When sending invitation set this value to 'true'
@@ -50,32 +50,23 @@ use FOS\RestBundle\Request\ParamFetcher;
           *Funktion Passwort ändern
           *
           */
-         
          $invitation = new Invitation();
          $code = $invitation->getCode();
-         
-         $email = $paramFetcher->get($email);
-
+         $email = $paramFetcher->get("email");
          /* Loading the default E-Mail template*/
          $template = $this->getDoctrine()->getRepository("CoreEntityBundle:EmailTemplate")->find(1);
          /* Creating Twig template from Database */
          $renderTemplate = $this->get('twig')->createTemplate($template->getEmailBody());
-
-             /* Sending E-Mail */
-             $message = \Swift_Message::newInstance()
-                 ->setSubject($template->getEmailSubject())
-                 ->setFrom('send@example.com')
-                 ->setTo($email['email'])
-                 ->setBody($renderTemplate->render(["code" => $code,"email" => $email]),'text/html');
-             $this->get('mailer')->send($message);
-         
-         
-         
-         
-         
-         
-
-
+         /* Sending E-Mail */
+         $message = \Swift_Message::newInstance()
+             ->setSubject($template->getEmailSubject())
+             ->setFrom('send@example.com')
+             ->setTo($email)
+             ->setBody($renderTemplate->render(["code" => $code,"email" => $email]),'text/html');
+         $this->get('mailer')->send($message);
+         $invitation->send(); //prevents sending invitations twice
+         $this->getDoctrine()->getManager()->persist($invitation);
+         $this->getDoctrine()->getManager()->flush();
      }
      /**
       * @ApiDoc(
@@ -100,7 +91,7 @@ use FOS\RestBundle\Request\ParamFetcher;
      public function createAdmin()
      {
          
-         
+         //Prüfe ob gesendet wurde
          
      }
      

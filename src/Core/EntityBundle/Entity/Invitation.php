@@ -39,16 +39,7 @@ class Invitation
         return $this->code;
     }
 
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    public function setEmail($email)
-    {
-        $this->email = $email;
-    }
-
+    
     public function isSent()
     {
         return $this->sent;
