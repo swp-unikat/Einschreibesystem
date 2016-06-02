@@ -12,18 +12,28 @@
                             <label translate class="col-lg-2 col-sm-12 control-label">WORKSHOP_DESCRIPTION</label>
                             <div class="col-sm-10 col-sm-12"><p>{{workshop.description}}</p></div>
                         </div>
+
                         <div class="form-group">
                             <label translate class="col-lg-2 col-sm-12 control-label">WORKSHOP_COST</label>
-                            <div class="col-sm-10 col-sm-12"><label>{{workshop.cost}}</label></div>
+                            <div class="col-sm-10 col-sm-12"><p>{{workshop.cost}}</p></div>
                         </div>
+
                         <div class="form-group">
                             <label translate class="col-lg-2 col-sm-12 control-label">WORKSHOP_REQUIREMENTS</label>
-                            <div class="col-sm-10 col-sm-12"><label>{{workshop.requirement}}</label></div>
+                            <div class="col-sm-10 col-sm-12"><p>{{workshop.requirement}}</p></div>
                         </div>
+
                         <div class="form-group">
-                            <label translate class="col-lg-2 col-sm-12 control-label">WORKSHOP_COST</label>
-                            <div class="col-sm-10 col-sm-12"><label>{{workshop.location}}</label></div>
+                            <label translate class="col-lg-2 col-sm-12 control-label">WORKSHOP_LOCATION</label>
+                            <div class="col-sm-10 col-sm-12"><p>{{workshop.location}}</p></div>
                         </div>
+
+                        <div class="form-group">
+                            <label translate class="col-lg-2 col-sm-12 control-label">WORKSHOP_START_TIME</label>
+                            <div class="col-sm-10 col-sm-12"><p>{{workshop.start_at | date: "dd/MM/yyyy"}}</p></div>
+                        </div>
+
+
                     </div>
                 </div>
             </div>
