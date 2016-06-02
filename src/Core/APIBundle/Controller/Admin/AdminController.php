@@ -29,7 +29,7 @@ namespace Core\APIBundle\Controller\Admin;
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\View()
      */  
-     public function putAction()
+     public function invite()
      {
          /**
           * When sending invitation set this value to 'true'
@@ -37,6 +37,14 @@ namespace Core\APIBundle\Controller\Admin;
           * It prevents sending invitations twice
           *
           * protected $sent =false;
+          *
+          * neue Invitation erstellen
+          *Email versenden mit Link
+          *
+          *nächste Funktion: Invite Code überprüfen, falls stimmt, neuen User anlegen und auf enabled setzen
+          *
+          *Funktion Passwort ändern
+          *
           */
          
 

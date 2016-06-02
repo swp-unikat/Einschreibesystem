@@ -6,7 +6,7 @@
  * Date: 02.06.2016
  * Time: 10:27
  */
-namespace AppBundle\Entity;
+namespace Core\EntityBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
