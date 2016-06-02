@@ -99,5 +99,7 @@
 "BUTTON_CREATE_ACCOUNT": "Create Admin Account",
 
 "ERROR_NO_WORKSHOPS": "No workshops available at the moment!",
-"TITLE_ERROR": "Error"
+"TITLE_ERROR": "Error",
+
+"C":"Euro"
 }
