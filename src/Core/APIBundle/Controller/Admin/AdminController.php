@@ -8,6 +8,9 @@
  */
 namespace Core\APIBundle\Controller\Admin;
 
+use Core\EntityBundle\Entity\Invitation;
+use FOS\RestBundle\Request\ParamFetcher;
+
 /**
  * Class RestController.
  */
@@ -24,12 +27,75 @@ namespace Core\APIBundle\Controller\Admin;
      *  }
      * )
      *
+     * 
+     *
      * @return \Symfony\Component\HttpFoundation\Response
+     * @Rest\RequestParam(name="email", requirements=".*", description="js object of workshop")
      * @Rest\View()
      */  
-     public function putAction()
+     public function inviteAdminAction(ParamFetcher $paramFetcher)
      {
+         /**
+          * When sending invitation set this value to 'true'
+          *
+          * It prevents sending invitations twice
+          *
+          * protected $sent =false;
+          *
+          * neue Invitation erstellen
+          *Email versenden mit Link
+          *
+          *nächste Funktion: Invite Code überprüfen, falls stimmt, neuen User anlegen und auf enabled setzen
+          *
+          *Funktion Passwort ändern
+          *
+          */
+         $invitation = new Invitation();
+         $code = $invitation->getCode();
+         $email = $paramFetcher->get("email");
+         /* Loading the default E-Mail template*/
+         $template = $this->getDoctrine()->getRepository("CoreEntityBundle:EmailTemplate")->find(1);
+         /* Creating Twig template from Database */
+         $renderTemplate = $this->get('twig')->createTemplate($template->getEmailBody());
+         /* Sending E-Mail */
+         $message = \Swift_Message::newInstance()
+             ->setSubject($template->getEmailSubject())
+             ->setFrom('send@example.com')
+             ->setTo($email)
+             ->setBody($renderTemplate->render(["code" => $code,"email" => $email]),'text/html');
+         $this->get('mailer')->send($message);
+         $invitation->send(); //prevents sending invitations twice
+         $this->getDoctrine()->getManager()->persist($invitation);
+         $this->getDoctrine()->getManager()->flush();
      }
+     /**
+      * @ApiDoc(
+      *  resource=true,
+      *  description="Action to create an Admin",
+      *  output = "Core\EntityBundle\Entity\Admin",
+      *  statusCodes = {
+      *      200 = "Returned when successful",
+      *      404 = "Returned when the data is not found"
+      *  },requirements={
+     "name"="adminId",
+      *        "dataType"="integer",
+      *        "requirement"="\d+",
+      *        "description"="Admin ID"
+     }
+      * )
+      *
+      * @return \Symfony\Component\HttpFoundation\Response
+      * @Rest\View()
+      */
+     
+     public function createAdmin()
+     {
+         
+         //Prüfe ob gesendet wurde
+         
+     }
+     
+     
      	/**
      * @ApiDoc(
      *  resource=true,
@@ -73,6 +139,7 @@ namespace Core\APIBundle\Controller\Admin;
      */
      public function deleteAction ($adminID)
      {
+
      }
      	/**
      * @ApiDoc(
@@ -95,5 +162,8 @@ namespace Core\APIBundle\Controller\Admin;
      */
      public function patchAction ($adminID)
      {
+
      }
+
+
      }
