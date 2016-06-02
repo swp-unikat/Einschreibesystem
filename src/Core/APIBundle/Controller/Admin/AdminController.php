@@ -92,7 +92,7 @@ use FOS\RestBundle\Request\ParamFetcher;
          $invitation = $this->getDoctrine()->getManager()->getRepository("invitation")->find();
          //check if invitation was sended
          if ($invitation)
-        //FOSUSERBUNDLE Nachschauen
+        //FOSUSERBUNDLE Nachschauen 
      }
      
      
