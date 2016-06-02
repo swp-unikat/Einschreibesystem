@@ -24,11 +24,23 @@ namespace Core\APIBundle\Controller\Admin;
      *  }
      * )
      *
+     * # app/config/config.yml ?
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\View()
      */  
      public function putAction()
      {
+         /**
+          * When sending invitation set this value to 'true'
+          *
+          * It prevents sending invitations twice
+          *
+          * protected $sent =false;
+          */
+         
+
+
      }
      	/**
      * @ApiDoc(
@@ -73,6 +85,7 @@ namespace Core\APIBundle\Controller\Admin;
      */
      public function deleteAction ($adminID)
      {
+
      }
      	/**
      * @ApiDoc(
@@ -95,5 +108,8 @@ namespace Core\APIBundle\Controller\Admin;
      */
      public function patchAction ($adminID)
      {
+
      }
+
+
      }
