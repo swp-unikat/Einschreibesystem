@@ -35,6 +35,39 @@ restSvcs.factory('Workshops',['$resource',function($resource){
          * @methodOf restSvcs.Workshops
          * @param {integer} id Workshop-ID
          */
-        'getParticipants': {method: 'GET',url:'/api/workshops/:id/participants',params: {id: '@id'},isArray: true}
+        'getParticipants': {method: 'GET',url:'/api/workshops/:id/participants',params: {id: '@id'},isArray: true}, 
+        /**
+         * @ngdoc funtion
+         * @name restSvcs.Workshops#enrollWorkshop
+         * @description Action to enroll a Workshop
+         * @methodOf restSvcs.Workshops
+         * @param {integer} id Workshop-ID
+         */
+        'post': {method: 'POST',url:'/api/workshops/:id/enrolls',params: {id: '@id'},isArray: true},
+        /**
+         * @ngdoc funtion
+         * @name restSvcs.Workshops#unsubscribeWorkshop
+         * @description Action to unsubscribe a Workshop
+         * @methodOf restSvcs.Workshops
+         * @param {integer} id Workshop-ID
+         * @param {string} token Unsubscribetoken
+         */
+        'getUnsubscribes': {method: 'GET',url:'/api/workshops/:id/unsubscribes/:token',params: {id: '@id', token: '@token'},isArray: true},
+        /**
+         * @ngdoc funtion
+         * @name restSvcs.Workshops#unsubscribeWorkshop
+         * @description Get Waitinglist of a Workshop
+         * @methodOf restSvcs.Workshops
+         * @param {integer} id Workshop-ID
+         */
+        'getWaitinglist': {method: 'GET',url:'/api/workshops/:id/waitinglist',params: {id: '@id'},isArray: true},/**
+         * @ngdoc funtion
+         * @name restSvcs.Workshops#unsubscribeWorkshop
+         * @description Confirm Enrollment of the WOrkshop
+         * @methodOf restSvcs.Workshops
+         * @param {integer} id Workshop-ID, participantsid Participants-ID
+         * @param {string} token Confirmtoken
+         */
+        'getConfirmEnrollment': {method: 'GET',url:'/api/workshops/:id/enrolls/:participantsid/confirms/:token',params: {id: '@id',participantsid: '@participantsid',token: '@token'},isArray: true},
     });
 }]);
