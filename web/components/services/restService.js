@@ -120,3 +120,46 @@ restSvcs.factory('WorkshopsTemplate',['$resource',function($resource){
           'delete': {method: 'DELETE',params: {id: '@id'}, isArray: false}
     });
 }]);
+restSvcs.factory('AdminWorkshop',['$resource',function($resource){
+    return $resource('/api/admin/workshops/:id',{},{
+         /**
+          * @ngdoc function
+          * @name restSvcs.AdminWorkshop#history
+          * @description show all workshops
+          * @methodOf restSvcs.AdminWorkshop
+          * @returns {httpPromise} resolve with fetched data, or fails with error description.
+         */
+        'gethistory': {method: 'GET',params: {id: 'all'}, isArray: true},
+         /**
+          * @ngdoc function
+          * @name restSvcs.Adminworkshop#put
+          * @description create a new workshop
+          * @methodOf restSvcs.AdminWorkshop
+          */
+          'put': {method: 'PUT', isArray:false},
+         /**
+         * @ngdoc function
+         * @name restSvcs.AdminWorkshop#patch
+         * @description edit a single workshop
+         * @methodOf restSvcs.AdminWorkshop
+         * @param {integer} id Workshop-ID
+         */
+        'patch': {method: 'PATCH',params: {id: '@id'}, isArray: false},
+         /**
+          * @ngdoc function
+          * @name restSvcs.AdminWorkshop#delete
+          * @description delete a workshop
+          * @methodOf restSvcs.AdminWorkshop
+          * @param {integer} id Workshop-ID
+          */
+          'delete': {method: 'DELETE',params: {id: '@id'}, isArray: false},
+         /**
+          * @ngdoc function
+          * @name restSvcs.AdminWorkshop#patchWaitinglist
+          * @description overbook the workshop
+          * @methodOf restScvs.AdminWorkshop
+          * @param {integer} id Workshop-ID, participantsid Participants-ID
+          */
+          'patchwaitinglist': {method: 'PATCH',url:'/api/admin/workshops/:id/waitinglists/:participantid' ,params: {id: '@id', participantsid: '@participantsid', isArray: false},
+    });
+}]);
