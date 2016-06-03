@@ -205,9 +205,57 @@ restSvcs.factory('Participants',['$resource',function($resource){
          * @ngdoc funtion
          * @name restSvcs.Participants#get
          * @description get a single participant
-         * @methodOf restSvcs.WParticipants
+         * @methodOf restSvcs.Participants
          * @param {integer} id Participants-ID
          */
         'get': {method: 'GET',params: {id: '@id'}, isArray: false}
+    });
+}]);
+/**
+ * @ngdoc service
+ * @name restSvcs.EmailTemplate
+ * @description Provides CRUD operations for Emailtemplate-functions provided by the API
+ */
+restSvcs.factory('EmailTemplate',['$resource',function($resource){
+    return $resource('/api/email/template/:id',{},{
+        /**
+          * @ngdoc function
+          * @name restSvcs.EmailTemplate#all
+          * @description show all emailtemplates
+          * @methodOf restSvcs.EmailTemplate
+          * @returns {httpPromise} resolve with fetched data, or fails with error description
+         */
+        'getall': {method: 'GET',params: {id: 'all'}, isArray: true},
+        /**
+         * @ngdoc funtion
+         * @name restSvcs.EmailTemplate#get
+         * @description get a single emailtemplate
+         * @methodOf restSvcs.EmailTemplate
+         * @param {integer} id Emailtemplate-ID
+         */
+        'get': {method: 'GET',params: {id: '@id'}, isArray: false},
+        /**
+         * @ngdoc function
+         * @name restSvcs.EmailTemplate#patch
+         * @description edit a single emailtemplate
+         * @methodOf restSvcs.EmailTemplate
+         * @param {integer} id Emailtemplate-ID
+         */
+        'patch': {method: 'PATCH',params: {id: '@id'}, isArray: false},
+        /**
+          * @ngdoc function
+          * @name restSvcs.EmailTemplate#put
+          * @description create a new Emailtemplate
+          * @methodOf restSvcs.EmailTemplate
+          */
+        'put': {method: 'PUT', isArray:false},
+        /**
+          * @ngdoc function
+          * @name restSvcs.EmailTemplate#delete
+          * @description remove a emailtemplate
+          * @methodOf restSvcs.EmailTemplate
+          * @param {integer} id Emailtemplate-ID
+          */
+          'delete': {method: 'DELETE',params: {id: '@id'}, isArray: false}
     });
 }]);
