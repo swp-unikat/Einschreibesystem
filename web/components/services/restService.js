@@ -163,3 +163,51 @@ restSvcs.factory('AdminWorkshop',['$resource',function($resource){
           'patchwaitinglist': {method: 'PATCH',url:'/api/admin/workshops/:id/waitinglists/:participantid' ,params: {id: '@id', participantsid: '@participantsid', isArray: false},
     });
 }]);
+/**
+ * @ngdoc service
+ * @name restSvcs.Participants
+ * @description Provides CRUD operations for Participant-functions provided by the API
+ */
+restSvcs.factory('Participants',['$resource',function($resource){
+    return $resource('/api/admin/participants/:id',{},{
+         /**
+          * @ngdoc function
+          * @name restSvcs.Participants#all
+          * @description show all participants
+          * @methodOf restSvcs.Participant
+          * @returns {httpPromise} resolve with fetched data, or fails with error description
+         */
+        'getall': {method: 'GET',params: {id: 'all'}, isArray: true},
+         /**
+          * @ngdoc function
+          * @name restSvcs.Participants#all
+          * @description show all blacklisted participants
+          * @methodOf restSvcs.Participant
+          * @returns {httpPromise} resolve with fetched data, or fails with error description
+          */
+        'getblacklistall': {method: 'GET',url: '/api/admin/participants/blacklist/all', params: {id: 'all'}, isArray: true},
+         /**
+          * @ngdoc function
+          * @name restSvcs.Participants#put
+          * @description create a new Participants
+          * @methodOf restSvcs.Participants
+          */
+        'put': {method: 'PUT', isArray:false},
+        /**
+          * @ngdoc function
+          * @name restSvcs.Participants#delete
+          * @description remove a participant from blacklist
+          * @methodOf restSvcs.Participants
+          * @param {integer} id Participants-ID
+          */
+          'delete': {method: 'DELETE',params: {id: '@id'}, isArray: false},
+        /**
+         * @ngdoc funtion
+         * @name restSvcs.Participants#get
+         * @description get a single participant
+         * @methodOf restSvcs.WParticipants
+         * @param {integer} id Participants-ID
+         */
+        'get': {method: 'GET',params: {id: '@id'}, isArray: false}
+    });
+}]);
