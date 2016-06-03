@@ -259,3 +259,20 @@ restSvcs.factory('EmailTemplate',['$resource',function($resource){
           'delete': {method: 'DELETE',params: {id: '@id'}, isArray: false}
     });
 }]);
+/**
+ * @ngdoc service
+ * @name restSvcs.Email
+ * @description Provides CRUD operations for Email-functions provided by the API
+ */
+restSvcs.factory('Email',['$resource',function($resource){
+    return $resource('/api/admin/emails/:workshopid/send',{},{
+        /**
+          * @ngdoc function
+          * @name restSvcs.Email#send
+          * @description send Email
+          * @methodOf restSvcs.Email
+          * @param {integer} workshopid Workshop-ID
+          */
+        'send': {method: 'PATCH',params: {id: '@id'}, isArray: false}
+    });
+}]);
