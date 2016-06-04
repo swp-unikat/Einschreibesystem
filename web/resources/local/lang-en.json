@@ -98,6 +98,9 @@
 "New_Password":"New password",
 "BUTTON_CREATE_ACCOUNT": "Create Admin Account",
 
+"TEMPLATE_TITLE":"Template title",
+"DESCRIPTION":"Description",
+
 "ERROR_NO_WORKSHOPS": "No workshops available at the moment!",
 "TITLE_ERROR": "Error",
 
