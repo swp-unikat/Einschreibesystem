@@ -216,6 +216,7 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','UIHelper',
     function($scope,UIHelper) {
 
         UIHelper.HideUserUI();
+        //TODO: load i18n for Placeholders and Tabnames
         $scope.tabs = [
 
             {
