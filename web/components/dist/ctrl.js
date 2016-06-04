@@ -214,12 +214,12 @@ mainAppCtrls.controller('PasswordResetCtrl',['$scope',
  */
 mainAppCtrls.controller('SettingsCtrl',['$scope','UIHelper',
     function($scope,UIHelper) {
-        
+
         UIHelper.HideUserUI();
         $scope.tabs = [
 
             {
-                title: "Change Password",
+                title: "Change Personal Info",
                 page: "resources/views/adminEditPassword.html"
             },
             {
