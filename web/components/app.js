@@ -68,7 +68,7 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
             .state('workshop_template',{
                 url:'/workshop_template',
                 controller:'WorkshopTemplateCtrl',
-                templateUrl: prefix.concat('workshopTemplate.html'),
+                templateUrl: prefix.concat('adminWorkshopTemplate.html'),
                 data: {
                     //requiresLogin: true
                 }

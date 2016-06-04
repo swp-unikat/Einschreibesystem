@@ -71,6 +71,8 @@ php app/console doctrine:database:create
 php app/console doctrine:schema:update --force
 php app/console doctrine:fixtures:load
 
+sudo php app/console cache:clear --env=prod
+
 #restarts
 service apache2 restart
 service mysql restart
