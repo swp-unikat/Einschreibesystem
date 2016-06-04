@@ -160,7 +160,7 @@ restSvcs.factory('AdminWorkshop',['$resource',function($resource){
           * @methodOf restScvs.AdminWorkshop
           * @param {integer} id Workshop-ID, participantsid Participants-ID
           */
-          'patchwaitinglist': {method: 'PATCH',url:'/api/admin/workshops/:id/waitinglists/:participantid' ,params: {id: '@id', participantsid: '@participantsid', isArray: false},
+          'patchwaitinglist': {method: 'PATCH',url:'/api/admin/workshops/:id/waitinglists/:participantid' ,params: {id: '@id', participantsid: '@participantsid'}, isArray: false},
     });
 }]);
 /**

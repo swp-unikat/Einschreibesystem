@@ -169,7 +169,7 @@ mainApp.config(['jwtInterceptorProvider','$httpProvider','$urlRouterProvider',fu
 }])
     .run(['$rootScope','$state','store','jwtHelper',function($rootScope, $state, store, jwtHelper) {
         $rootScope.$on('$stateChangeStart', function(e, to) {
-            if (to.data && to.data.requiresLogin) {
+            if (to.data.requiresLogin) {
                 if (!store.get('jwt') || jwtHelper.isTokenExpired(store.get('jwt'))) {
                     e.preventDefault();
                     $state.go('login');
