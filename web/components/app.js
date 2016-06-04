@@ -12,7 +12,8 @@ var mainApp = angular.module('mainApp',[
     'angular-jwt',
     'restSvcs',
     'angular-storage',
-    'pascalprecht.translate'
+    'pascalprecht.translate',
+    'textAngular'
 ]);
 /**
  * @name mainAppCtrls
@@ -49,7 +50,7 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
             })
             .state('unsubscribe',{
                 url: '/unsubscribe/:id/:workshopid/:token',
-                templateUrl: prefix.concat('unsubscribe.html'),
+                templateUrl: prefix.concat('unsubscribemessage.html'),
                 controller: 'UnsubscribeController'
             })
             .state('password_reset',{
