@@ -8,6 +8,7 @@ var mainAppCtrls = angular.module("mainAppCtrls");
  */
 mainAppCtrls.controller('SettingsCtrl',['$scope','UIHelper',
     function($scope,UIHelper) {
+        
         UIHelper.HideUserUI();
         $scope.tabs = [
 
@@ -16,8 +17,12 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','UIHelper',
                 page: "resources/views/adminEditPassword.html"
             },
             {
-                title: "Edit Info",
+                title: "Edit Contact Info",
                 page: "resources/views/adminEditInfo.html"
+            },
+            {
+                title: "Edit Legal Notice",
+                page: "resources/views/adminEditLegalNotice.html"
             }
         ];
         $scope.placeholder = {
@@ -25,6 +30,14 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','UIHelper',
             password_confirm: "Repeat Password",
             old_password: "Old Password"
         }
+
+        $scope.lnToolbar = [
+            ['h1', 'h2', 'h3', 'p', 'bold', 'italics'],
+            ['ul', 'ol'],
+            ['redo', 'undo', 'clear'],
+            ['html', 'insertImage', 'insertLink'],
+            ['justifyLeft', 'justifyCenter', 'justifyRight', 'indent', 'outdent']
+        ];
         //TODO: Add error handling, alert on successful data change
     }
 ]);
