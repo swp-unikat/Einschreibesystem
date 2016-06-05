@@ -8,7 +8,7 @@
 "TELEPHONE":"Telephone",
 "ADDRESS":"Address",
 "FACEBOOK":"Facebook",
-"Contact":"Contact",
+"CONTACT":"Contact",
 "WORKSHOP_DETAILS": "Workshop details",
 "BUTTON_SHOW_PARTICIPANTS":"Show participants",
 "WORKSHOP_REQUIREMENTS":"Requirements",
@@ -92,19 +92,24 @@
 "ADMINISTRATOR_DASHBOARD":"Administrator dashboard",
 "BUTTON_SETTINGS":"Settings",
 "EDIT_LEGAL_NOTICE":"Edit legal notice",
+"LEGAL_NOTICE": "Legal notice",
 "LOGIN": "Login here",
 "BUTTON_ADMINISTRATOR_LOGIN":"Administrator login",
 "BUTTON_ADMINISTRATOR_LOGOUT":"Administrator logout",
 "ADMINISTRATOR_PASSWORD":"Administrator password",
-"Old_Password":"Old password",
-"New_Password":"New password",
+"OLD_PASSWORD":"Old password",
+"NEW_PASSWORD":"New password",
+"REPEAT_PASSWORD": "Repeat password",
 "BUTTON_CREATE_ACCOUNT": "Create Admin Account",
+"BUTTON_CHANGE_PASSWORD": "Change password",
+"BUTTON_CHANGE_MAIL": "Change E-Mail",
 
 "TEMPLATE_TITLE":"Template title",
 "DESCRIPTION":"Description",
 
 "ERROR_NO_WORKSHOPS": "No workshops available at the moment!",
 "TITLE_ERROR": "Error",
+"ENTER_MAIL": "Enter E-Mail",
 
 "C":"Euro"
 }

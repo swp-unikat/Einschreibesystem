@@ -52,10 +52,13 @@
 
 
     <div class="col-sm-offset-5 col-sm-2 text-center">
-    <form class="navbar-form navbar-center" role="search" ng-hide="hide_user_ui">
-        <div class="form-group has-feedback">
-        <input type="text" class="form-control" placeholder="Search" ng-model="query" ng-hide="hide_user_ui">
-        <i class="glyphicon glyphicon-search form-control-feedback"></i> </div></form></div>
+        <form class="navbar-form navbar-center" role="search" ng-hide="hide_user_ui">
+             <div class="form-group has-feedback">
+                <input type="text" class="form-control" placeholder="Search" ng-model="query">
+                <i class="glyphicon glyphicon-search form-control-feedback"></i>
+             </div>
+        </form>
+    </div>
 
     <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav navbar-right">
@@ -71,10 +74,10 @@
 <nav class="navbar navbar-inverse navbar-fixed-bottom">
     <div class="row text-center">
         <hr class="top-buffer">
-        <div class="col-md-4"><span style="font-size:3em;" class="glyphicon glyphicon-phone" aria-hidden="true" ng-hide="hide_user_ui"></span></div>
-        <div class="col-md-4"><span style="font-size:3em;" class="glyphicon glyphicon-map-marker" aria-hidden="true" ng-hide="hide_user_ui"></span></div>
-        <div class="col-md-4"><span style="font-size:3em;" class="glyphicon glyphicon-envelope" aria-hidden="true" ng-hide="hide_user_ui"></span></div>
-    </div></nav>
+        <a ui-sref="legalnotice"><button translate type="button" class="btn btn-link">LEGAL_NOTICE</button></a>
+        <a ui-sref="contact"><button translate type="button" class="btn btn-link">CONTACT</button></a>
+    </div>
+</nav>
 
 </body>
 </html>

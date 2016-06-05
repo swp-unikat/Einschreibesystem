@@ -232,12 +232,6 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','UIHelper',
                 page: "resources/views/adminEditLegalNotice.html"
             }
         ];
-        $scope.placeholder = {
-            password: "New Password",
-            password_confirm: "Repeat Password",
-            old_password: "Old Password"
-        }
-
         $scope.lnToolbar = [
             ['h1', 'h2', 'h3', 'p', 'bold', 'italics'],
             ['ul', 'ol'],

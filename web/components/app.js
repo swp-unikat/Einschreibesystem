@@ -12,7 +12,8 @@ var mainApp = angular.module('mainApp',[
     'angular-jwt',
     'restSvcs',
     'angular-storage',
-    'pascalprecht.translate'
+    'pascalprecht.translate',
+    'textAngular'
 ]);
 /**
  * @name mainAppCtrls
@@ -45,11 +46,11 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
             .state('enrollment_confirm',{
                 url: '/enrollment_confirm/:id/:token',
                 templateUrl: prefix.concat('enrollmentConfirm.html'),
-                controller: 'EnrollmentConfirmCrtl'
+                controller: 'EnrollmentConfirm'
             })
             .state('unsubscribe',{
                 url: '/unsubscribe/:id/:workshopid/:token',
-                templateUrl: prefix.concat('unsubscribe.html'),
+                templateUrl: prefix.concat('unsubscribemessage.html'),
                 controller: 'UnsubscribeController'
             })
             .state('password_reset',{
@@ -68,7 +69,7 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
             .state('workshop_template',{
                 url:'/workshop_template',
                 controller:'WorkshopTemplateCtrl',
-                templateUrl: prefix.concat('workshopTemplate.html'),
+                templateUrl: prefix.concat('adminWorkshopTemplate.html'),
                 data: {
                     //requiresLogin: true
                 }
@@ -85,6 +86,14 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                 url: '/edit/:id',
                 controller: 'EditWorkshopTemplateCtrl',
                 templateUrl: prefix.concat('workshopTemplateNew.html'),
+                data: {
+                    //requiresLogin: true
+                }
+            })
+            .state('email_template', {
+                url: '/email_template',
+                controller: 'EmailTemplateCtrl',
+                templateUrl: prefix.concat('adminEmailTemplate.html'),
                 data: {
                     //requiresLogin: true
                 }
@@ -129,10 +138,20 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                     //requiresLogin: true
                 }
             })
+            .state('workshop_managment',{
+                url: '/workshop_managment',
+                controller: 'WorkshopManagmentCtrl',
+                templateUrl: prefix.concat('adminWorkshopManagement.html')
+            })
             .state('admininvite',{
                 url: '/admin/create/:token',
                 controller: 'AdminCreateCtrl',
                 templateUrl: prefix.concat('adminInvite.html')
+            })
+            .state('legalnotice',{
+                url: '/legalnotice',
+                controller: 'LegalNoticeCtrl',
+                templateUrl: prefix.concat('legalNotice.html')
             })
             .state('contact',{
                 url: '/contact',
@@ -154,14 +173,16 @@ mainApp.config(['jwtInterceptorProvider','$httpProvider','$urlRouterProvider',fu
 
     $httpProvider.interceptors.push('jwtInterceptor');
 }])
-    .run(['$rootScope','$state','store','jwtHelper',function($rootScope, $state, store, jwtHelper) {
+    .run(['$rootScope','$state','store','jwtHelper','UIHelper',function($rootScope, $state, store, jwtHelper,UIHelper) {
+        UIHelper.ToggleLogout();
         $rootScope.$on('$stateChangeStart', function(e, to) {
-            if (to.data && to.data.requiresLogin) {
+            if (to.data.requiresLogin) {
                 if (!store.get('jwt') || jwtHelper.isTokenExpired(store.get('jwt'))) {
                     e.preventDefault();
                     $state.go('login');
                 }
             }
+
         });
     }]);
 
@@ -177,7 +198,7 @@ mainApp.config(['$translateProvider', function($translateProvider) {
  * @descrption Helper service to show or hide User UI elements
  * @name  mainApp.UIHelper
  */
-mainApp.factory('UIHelper',['$rootScope',function($rootScope){
+mainApp.factory('UIHelper',['$rootScope','store','jwtHelper',function($rootScope,store,jwtHelper){
     return {
         /**
          * @ngdoc function
@@ -204,7 +225,44 @@ mainApp.factory('UIHelper',['$rootScope',function($rootScope){
          * @methodOf mainApp.UIHelper
          */
         ToggleUserUI: function(){
-            $rootScope.hide_user_ui = ! $rootScope.hide;
+            $rootScope.hide_user_ui = ! $rootScope.hide_user_ui;
+        },
+        /**
+         * @ngdoc function
+         * @name mainApp.UIHelper#ToggleLogout
+         * @description Toggles, if the Logout or the Login Button is shown
+         * @methodOf mainApp.UIHelper
+         */
+        ToggleLogout: function(){
+            var jwt  = store.get('jwt');
+            if(!jwt){
+                $rootScope.logged_in = false;
+                return;
+            }
+            $rootScope.logged_in = jwtHelper.isTokenExpired(jwt);
         }
     }
 }]);
+/**
+ * @ngdoc directive
+ * @name mainApp.compare-to
+ */
+mainApp.directive('compareTo',[function(){
+    return {
+        require: "ngModel",
+        scope: {
+            otherModelValue: "=compareTo"
+        },
+        link: function(scope, element, attributes, ngModel) {
+
+            ngModel.$validators.compareTo = function(modelValue) {
+                return modelValue == scope.otherModelValue;
+            };
+
+            scope.$watch("otherModelValue", function() {
+                ngModel.$validate();
+            });
+        }
+    };
+    }
+]);
