@@ -143,6 +143,11 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                     //requiresLogin: true
                 }
             })
+            .state('workshop_managment',{
+                url: '/workshop_managment',
+                controller: 'WorkshopManagmentCtrl',
+                templateUrl: prefix.concat('adminWorkshopManagement.html')
+            })
             .state('admininvite',{
                 url: '/admin/create/:token',
                 controller: 'AdminCreateCtrl',
@@ -168,7 +173,8 @@ mainApp.config(['jwtInterceptorProvider','$httpProvider','$urlRouterProvider',fu
 
     $httpProvider.interceptors.push('jwtInterceptor');
 }])
-    .run(['$rootScope','$state','store','jwtHelper',function($rootScope, $state, store, jwtHelper) {
+    .run(['$rootScope','$state','store','jwtHelper','UIHelper',function($rootScope, $state, store, jwtHelper,UIHelper) {
+        UIHelper.ToggleLogout();
         $rootScope.$on('$stateChangeStart', function(e, to) {
             if (to.data.requiresLogin) {
                 if (!store.get('jwt') || jwtHelper.isTokenExpired(store.get('jwt'))) {
@@ -176,6 +182,7 @@ mainApp.config(['jwtInterceptorProvider','$httpProvider','$urlRouterProvider',fu
                     $state.go('login');
                 }
             }
+
         });
     }]);
 
@@ -191,7 +198,7 @@ mainApp.config(['$translateProvider', function($translateProvider) {
  * @descrption Helper service to show or hide User UI elements
  * @name  mainApp.UIHelper
  */
-mainApp.factory('UIHelper',['$rootScope',function($rootScope){
+mainApp.factory('UIHelper',['$rootScope','store','jwtHelper',function($rootScope,store,jwtHelper){
     return {
         /**
          * @ngdoc function
@@ -218,7 +225,21 @@ mainApp.factory('UIHelper',['$rootScope',function($rootScope){
          * @methodOf mainApp.UIHelper
          */
         ToggleUserUI: function(){
-            $rootScope.hide_user_ui = ! $rootScope.hide;
+            $rootScope.hide_user_ui = ! $rootScope.hide_user_ui;
+        },
+        /**
+         * @ngdoc function
+         * @name mainApp.UIHelper#ToggleLogout
+         * @description Toggles, if the Logout or the Login Button is shown
+         * @methodOf mainApp.UIHelper
+         */
+        ToggleLogout: function(){
+            var jwt  = store.get('jwt');
+            if(!jwt){
+                $rootScope.logged_in = false;
+                return;
+            }
+            $rootScope.logged_in = jwtHelper.isTokenExpired(jwt);
         }
     }
 }]);

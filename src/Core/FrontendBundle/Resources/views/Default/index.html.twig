@@ -59,8 +59,8 @@
 
     <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="#login"><button type="button" class="btn btn-link">Login</button></a></li>
-            <li><button type="button" class="btn btn-default">Logout</button></li></ul>
+            <li  ng-hide="logged_in"><a href="#login"><button type="button" class="btn btn-link">Login</button></a></li>
+            <li ng-hide="!logged_in"><button type="button" class="btn btn-default" >Logout</button></li></ul>
     </div>
 </div>
 </nav>
