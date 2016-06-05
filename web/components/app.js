@@ -90,8 +90,6 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                     //requiresLogin: true
                 }
             })
-            
-            //Müsste geschaut werden ob es passt erstellt von Ahmet
             .state('email_template', {
                 url: '/email_template',
                 controller: 'EmailTemplateCtrl',
@@ -100,9 +98,6 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                     //requiresLogin: true
                 }
             })
-            
-            
-            
             .state('email_template.new', {
                 url: '/new',
                 controller: 'NewEmailTemplateCtrl',
@@ -152,6 +147,11 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                 url: '/admin/create/:token',
                 controller: 'AdminCreateCtrl',
                 templateUrl: prefix.concat('adminInvite.html')
+            })
+            .state('legalnotice',{
+                url: '/legalnotice',
+                controller: 'LegalNoticeCtrl',
+                templateUrl: prefix.concat('legalNotice.html')
             })
             .state('contact',{
                 url: '/contact',
@@ -243,3 +243,26 @@ mainApp.factory('UIHelper',['$rootScope','store','jwtHelper',function($rootScope
         }
     }
 }]);
+/**
+ * @ngdoc directive
+ * @name mainApp.compare-to
+ */
+mainApp.directive('compareTo',[function(){
+    return {
+        require: "ngModel",
+        scope: {
+            otherModelValue: "=compareTo"
+        },
+        link: function(scope, element, attributes, ngModel) {
+
+            ngModel.$validators.compareTo = function(modelValue) {
+                return modelValue == scope.otherModelValue;
+            };
+
+            scope.$watch("otherModelValue", function() {
+                ngModel.$validate();
+            });
+        }
+    };
+    }
+]);
