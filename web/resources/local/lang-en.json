@@ -106,6 +106,7 @@
 
 "TEMPLATE_TITLE":"Template title",
 "DESCRIPTION":"Description",
+"OPTIONS":"Options",
 
 "ERROR_NO_WORKSHOPS": "No workshops available at the moment!",
 "TITLE_ERROR": "Error",
