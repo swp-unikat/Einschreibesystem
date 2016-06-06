@@ -99,18 +99,18 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                     //requiresLogin: true
                 }
             })
-            .state('email_template.new', {
-                url: '/new',
+            .state('email_template_new', {
+                url: '/email/template/new',
                 controller: 'NewEmailTemplateCtrl',
-                templateUrl: prefix.concat('emailTemplateNew.html'),
+                templateUrl: prefix.concat('adminNewEmailTemplate.html'),
                 data: {
                     //requiresLogin: true
                 }
             })
-            .state('email_template.edit', {
-                url: '/edit/:id',
+            .state('email_template_edit', {
+                url: 'email/template/edit/:id',
                 controller: 'EditEmailTemplateCtrl',
-                templateUrl: prefix.concat('emailTemplateNew.html'),
+                templateUrl: prefix.concat('adminEditEmailTemplate.html'),
                 data: {
                     //requiresLogin: true
                 }

@@ -1,6 +1,14 @@
 <div ng-controller="BlacklistCtrl">
-    <div class="col-md-offset-5 col-md-10">
-        <h1>Blacklist</h1><br>
+
+    <div class="col-md-8 col-md-offset-2">
+        <h1><translate>BLACKLIST_MANAGEMENT</translate></h1>
+        <div class="col-md-2 col-xs-2 pull-right"
+        <a ui-sref="dashboard" href="#/dashboard">
+            <button class="btn btn-default">{{ "BACK_TO_DASHBOARD" | translate}}</button>
+        </a>
+    </div>
+        <hr>
+        <br>
     </div>
 
     <div class="container">
@@ -12,18 +20,18 @@
                             <table class="table user-list">
                                 <thead>
                                 <tr>
-                                    <th><span>Nachname</span></th>
-                                    <th><span>Vorname</user></th>
-                                    <th><span>Email</span></th>
+                                    <th><span><translate>LAST_NAME</translate></span></th>
+                                    <th><span><translate>FIRST_NAME</translate></span></th>
+                                    <th><span><translate>USER_EMAIL_ADDRESS</translate></span></th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr ng-repeat="x in userdata">
-                                    <td>{{ x.name }}</td>
-                                    <td>{{ x.firstname }}</td>
-                                    <td>{{ x.email }}</td>
+                                    <td>{{ x.LAST_NAME }}</td>
+                                    <td>{{ x.FIRST_NAME }}</td>
+                                    <td>{{ x.USER_EMAIL_ADDRESS }}</td>
                                     <td><button type="button" class="btn btn-default btn-xs">
-                                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> remove </button>
+                                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>{{ "BUTTON_REMOVE_FROM_BLACKLIST" | translate}}</button>
                                     </td>
                                 </tr></tbody>
 
