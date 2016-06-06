@@ -2,9 +2,25 @@
     <div class="col-md-10 col-md-offset-1">
         <br>
         <h2><translate>ADMINISTRATOR_MANAGEMENT</translate></h2>
+        <br>
+        <br>
+        <br>
         <form class="form" role="form">
             <div class="form-group">
-                <button translate type="button" class="btn btn-default">BUTTON_LIST_OF_ADMINISTRATORS</button>
+                <div class="dropdown">
+                    <button translate class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        BUTTON_LIST_OF_ADMINISTRATORS
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                        <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">Separated link</a></li>
+                    </ul>
+                </div>
+
             </div>
             <div class="form-group">
                 <button translate type="button" class="btn btn-default">BUTTON_INVITE_AN_ADMINISTRATOR</button>
@@ -12,9 +28,12 @@
             <div class="form-group">
                 <button translate type="button" class="btn btn-default">BUTTON_EDIT_ADMINISTRATOR</button>
             </div>
+            <br>
+            <br>
+            <br>
+            <br>
+            <a ui-sref="dashboard"> <button translate class="btn btn-default">BUTTON_BACK_TO_DASHBOARD</button></a>
 
-            <a ui-sref="dashboard"> <button class="btn btn-default">Back to Dashboard</button></a>
-
-
+</form>
     </div>
 </div>
