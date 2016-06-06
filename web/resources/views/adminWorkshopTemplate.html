@@ -27,16 +27,16 @@
                                 <td>{{ x.title }}</td>
                                 <td>{{ x.description }}</td>
                                 <td>
-
-                                        <button type="button" translate class="btn success btn-secondary span4">BUTTON_EDIT_WORKSHOP</button>
-                                        <button type="button" translate class="btn btn-secondary span4">BUTTON_DELETE_WORKSHOP_TEMPLATE</button>
-
+                                    <div class="btn-group pull-right" role="group">
+                                        <button type="button" translate class="btn success">BUTTON_EDIT_WORKSHOP</button>
+                                        <button type="button" translate class="btn" >BUTTON_DELETE_WORKSHOP_TEMPLATE</button>
+                                    </div>
                                 </td>
                             </tr>
                             </tbody>
                         </table>
                         <button type="button" class="btn btn-default btn-xs">
-                            <a ui-sref="workshop_template_new"><button class="btn span 4">{{ "BUTTON_NEW_WORKSHOP_TEMPLATE" | translate}}</button></a>
+                            <a ui-sref="workshop_template_new"><button class="btn">{{ "BUTTON_NEW_WORKSHOP_TEMPLATE" | translate}}</button></a>
                         </button>
                     </div>
                 </div>
