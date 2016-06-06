@@ -94,6 +94,9 @@
 "EDIT_LEGAL_NOTICE":"Edit legal notice",
 "LEGAL_NOTICE": "Legal notice",
 "LOGIN": "Login here",
+  "BUTTON_LOGIN":"Login",
+  "BUTTON_FORGOT_PASSWORD":"Forgot password?",
+
 "BUTTON_ADMINISTRATOR_LOGIN":"Administrator login",
 "BUTTON_ADMINISTRATOR_LOGOUT":"Administrator logout",
 "ADMINISTRATOR_PASSWORD":"Administrator password",
