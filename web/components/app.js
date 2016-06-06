@@ -75,7 +75,7 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                 }
             })
             .state('workshop_template_new', {
-                url: 'workshop/template/new',
+                url: '/workshop/template/new',
                 controller: 'NewWorkshopTemplateCtrl',
                 templateUrl: prefix.concat('adminNewWorkshopTemplate.html'),
                 data: {
