@@ -1,5 +1,8 @@
 <div class="col-md-8 col-md-offset-2">
     <h1><translate>AVAILABLE_EMAIL_TEMPLATES</translate></h1>
+    <div class="col-md-2 col-xs-2 pull-right">
+        <a ui-sref="dashboard"> <button class="btn btn-default">Back to Dashboard</button></a>
+    </div>
     <hr>
     <br>
 </div>
@@ -33,8 +36,9 @@
                                 </tr>
                             </tbody>
                         </table>
+                        <a ui-sref="adminnewemailtemplate" href="#/email/template/new">
                         <button type="button" class="btn btn-default btn-xs">
-                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>{{ "BUTTON_NEW_EMAIL_TEMPLATE" | translate}}</button>
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>{{ "BUTTON_NEW_EMAIL_TEMPLATE" | translate}}</button></a>
                     </div>
                 </div>
             </div>
