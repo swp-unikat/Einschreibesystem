@@ -6,7 +6,7 @@
 
 /* footer */
 .footer {
-    position: absolute;
+    position: fixed;
     bottom: 0;
     width: 100%;
     background-color: #000000;
@@ -240,4 +240,15 @@
     }
 }
 /* End Spinner */
-
+/* Begin button tile */
+.tile {
+    width: 100%;
+    display: inline-block;
+    box-sizing: border-box;
+    padding: 20px;
+    margin-top: 5%;
+    margin-bottom: 10px;
+    border-radius: 0;
+}
+.tile.hover
+/* End button tile */
