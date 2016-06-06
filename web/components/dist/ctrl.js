@@ -212,9 +212,10 @@ mainAppCtrls.controller('PasswordResetCtrl',['$scope',
  * @name SettingsCtrl
  * @description Controller for the Settings view
  */
-mainAppCtrls.controller('SettingsCtrl',['$scope','UIHelper',
-    function($scope,UIHelper) {
+mainAppCtrls.controller('SettingsCtrl',['$scope','UIHelper','$alert',
+    function($scope,UIHelper,$alert) {
 
+        $scope.form = {};
         UIHelper.HideUserUI();
         //TODO: load i18n for Placeholders and Tabnames
         $scope.tabs = [
@@ -239,6 +240,23 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','UIHelper',
             ['html', 'insertImage', 'insertLink'],
             ['justifyLeft', 'justifyCenter', 'justifyRight', 'indent', 'outdent']
         ];
+        $scope.pwAlert = $alert({
+            title: "Error",
+            type: 'danger',
+            content: 'Internal server error.',
+            container: '#pwalert',
+            dismissable: false,
+            show: false
+        });
+        $scope.validatePW = function() {
+            var pw = $scope.form.password;
+            var pwc = $scope.form.password_confirm;
+            if(pw != pwc) {
+                $scope.pwAlert.show();
+            }else{
+                $scope.pwAlert.hide();
+            }
+        };
         //TODO: Add error handling, alert on successful data change
     }
 ]);
