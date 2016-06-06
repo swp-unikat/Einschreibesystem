@@ -74,14 +74,15 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                     //requiresLogin: true
                 }
             })
-            .state('workshop_template.new', {
-                url: '/new',
+            .state('workshop_template_new', {
+                url: 'workshop/template/new',
                 controller: 'NewWorkshopTemplateCtrl',
-                templateUrl: prefix.concat('workshopTemplateNew.html'),
+                templateUrl: prefix.concat('adminNewWorkshopTemplate.html'),
                 data: {
                     //requiresLogin: true
                 }
             })
+          
             .state('workshop_template.edit', {
                 url: '/edit/:id',
                 controller: 'EditWorkshopTemplateCtrl',
