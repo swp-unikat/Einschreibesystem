@@ -15,7 +15,6 @@ prntSvcs.factory('printer',['printer', function($rootScope, $compile, $http, $ti
 
     };
 
-
     var print = function (templateUrl, data) {
         $http.get(templateUrl).success(function(template){
             var printScope = $rootScope.$new()
