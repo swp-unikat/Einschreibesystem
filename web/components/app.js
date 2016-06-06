@@ -99,8 +99,8 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                     //requiresLogin: true
                 }
             })
-            .state('email_template.new', {
-                url: '/new',
+            .state('email_template_new', {
+                url: '/email/template/new',
                 controller: 'NewEmailTemplateCtrl',
                 templateUrl: prefix.concat('emailTemplateNew.html'),
                 data: {
