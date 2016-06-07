@@ -67,7 +67,6 @@ use FOS\RestBundle\Request\ParamFetcher;
          $invitation->send(); //prevents sending invitations twice
          $this->getDoctrine()->getManager()->persist($invitation);
          $this->getDoctrine()->getManager()->flush();
-         
      }
      /**
       * @ApiDoc(
@@ -103,8 +102,12 @@ use FOS\RestBundle\Request\ParamFetcher;
              //FOSUserBundle
              //$userManager = $container->get('fos_user.user_manager');
              //$usermanager = $this->getContainer()->get('fos_user.util.user_manipulator');
-             //$user = $userManager->createUser();
-             //$user->create($params);
+             //$admin = $userManager->createUser();
+             //$admin->create($params);
+             
+             $admin->setName($params['name']);
+             //...
+             
          } else {
              throw $this->createAccessDeniedException("No invitation was sended!");
          }
@@ -130,7 +133,7 @@ use FOS\RestBundle\Request\ParamFetcher;
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\View()
      */
-     public function sendAction ($adminID)
+     public function sendAction ($adminID) //Still needed?
      {
      }
      	/**
@@ -152,8 +155,19 @@ use FOS\RestBundle\Request\ParamFetcher;
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\View()
      */
-     public function deleteAction ($adminID)
+     public function deleteAction ($adminID) //ParamFetcher?
      {
+         /**
+          * ToDo: - find Admin in Database
+          * setEnabled function -> false
+          */
+         $admin = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle')->findby($adminID)
+         //$UserManager = $this->container->get('fos_user.user_manager');
+         if(!$admin){
+            throw $this->createNotFoundException("Admin not found");
+         } else {
+             $admin->setEnabled(false);
+         }
 
      }
      	/**
@@ -177,7 +191,13 @@ use FOS\RestBundle\Request\ParamFetcher;
      */
      public function patchAction ($adminID)
      {
-
+        /**
+         * ToDo: - find Admin in Database
+         *       - delete Password
+         *       - send new Email with Token
+         *       - check if send / Token valid
+         *       - setPasswort ?
+         */
      }
 
 
