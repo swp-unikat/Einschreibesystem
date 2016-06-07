@@ -16,7 +16,8 @@ use FOS\RestBundle\Request\ParamFetcher;
  */
  
  class AdminController extends FOSRestController implements ClassResourceInterface
-{	/**
+{	
+    /**
      * @ApiDoc(
      *  resource=true,
      *  description="Action to create new Admin",
