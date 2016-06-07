@@ -1,8 +1,8 @@
 <div class="container">
     <body data-spy="scroll" data-target=".navbar"><!--Wie bekommt man scrollen hin-->
-    <h1>>{{ "WORKSHOP_TEMPLATE" | translate}}</h1>
+    <h1>{{ "NEW_WORKSHOP_TEMPLATE" | translate}}</h1>
     <div class="col-md-2 col-xs-2 pull-right">
-        <a ui-sref="workshop_template"> <button class="btn btn-default">{{ "BUTTON_BACK_TO_DASHBOARD" | translate}}</button></a>
+        <a ui-sref="workshop_template"> <button class="btn btn-default">{{ "BUTTON_BACK" | translate}}</button></a>
     </div>
     <hr>
     <br>
@@ -30,9 +30,7 @@
 
         <div class="form-group row text-center">
 
-            <div class="col-sm-12 col-md-6 ">
-                <button type="Confirm" class="btn btn-default">Confirm</button>
-            </div>
+                <button type="Confirm" class="btn btn-default">{{ "BUTTON_SAVE" | translate }}</button>
         </div>
     </form>
     </body>
