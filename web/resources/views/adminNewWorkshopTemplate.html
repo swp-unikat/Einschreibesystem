@@ -1,32 +1,30 @@
 <div class="container">
     <body data-spy="scroll" data-target=".navbar"><!--Wie bekommt man scrollen hin-->
-    <h1><translate>WORKSHOP_TEMPLATE</translate></h1>
-    <hr>
-    <div class="col-md-2 col-xs-2">
-        <a ui-sref="dashboard"> <button class="btn btn-default">Back to Dashboard</button></a>
+    <h1>>{{ "WORKSHOP_TEMPLATE" | translate}}</h1>
+    <div class="col-md-2 col-xs-2 pull-right">
+        <a ui-sref="workshop_template"> <button class="btn btn-default">{{ "BUTTON_BACK_TO_DASHBOARD" | translate}}</button></a>
     </div>
+    <hr>
     <br>
     <form role="search">
-        <div class="form-group">
-            <label translate class="col-lg-2 col-sm-12 control-label">WORKSHOP_DESCRIPTION</label>
-            <div text-angular class="col-sm-10 col-sm-12"  ng-model="newDescription" id={{workshop.description}} class="form-control "></div>
-        </div>
-        <div class="form-group">
-            <label translate class="col-lg-2 col-sm-12 control-label">WORKSHOP_COST</label>
-            <input class="col-sm-10 col-sm-12" type="text" id={{workshop.cost}} class="form-control ">
-        </div>
-        <div class="form-group">
-            <label translate class="col-lg-2 col-sm-12 control-label">WORKSHOP_REQUIREMENTS</label>
-            <input class="col-sm-10 col-sm-12" type="text" id={{workshop.requirement}} class="form-control ">
-        </div>
-        <div class="form-group">
-            <label translate class="col-lg-2 col-sm-12 control-label">WORKSHOP_LOCATION</label>
-            <input class="col-sm-10 col-sm-12" type="text" id={{workshop.location}} class="form-control ">
-        </div>
-        <div class="form-group">
-            <label translate class="col-lg-2 col-sm-12 control-label">WORKSHOP_START_TIME</label>
-            <input type="text" class="col-sm-2 col-sm-12" data-date-format="dd-MM-yyyy" ng-model="selectedDate" name="date" bs-datepicker placeholder="Date">
-            <input type="text" size="8" class="col-sm-2 col-sm-12" ng-model="sharedDate" data-time-format="HH:mm" data-autoclose="1" placeholder="Time" bs-timepicker>
+        <div class="from-group col-md-8 col-md-offset-2">
+
+            <label>{{ "WORKSHOP_DESCRIPTION" | translate}}</label>
+            <div text-angular  ng-model="newDescription"></div>
+
+            <label>{{ "WORKSHOP_COST" | translate}}</label>
+            <input type="text" ng-model="workshop.cost" class="form-control ">
+
+            <label>{{ "WORKSHOP_REQUIREMENTS" | translate}}</label>
+            <input type="text" ng-model=workshop.requirement class="form-control ">
+
+            <label>{{ "WORKSHOP_LOCATION" | translate}}</label>
+            <input type="text" ng-model=workshop.location class="form-control ">
+
+
+            <label>{{ "WORKSHOP_START_TIME" | translate}}WORKSHOP_START_TIME</label>
+            <input type="text"  data-date-format="dd-MM-yyyy" ng-model="sharedDate" name="date" bs-datepicker placeholder="Date">
+            <input type="text" size="8"  ng-model="sharedDate" data-time-format="HH:mm" data-autoclose="1" placeholder="Time" bs-timepicker>
         </div>
 
 

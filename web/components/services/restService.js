@@ -27,11 +27,11 @@ restSvcs.factory('Workshops',['$resource',function($resource){
          * @methodOf restSvcs.Workshops
          * @param {integer} id Workshop-ID
          */
-        'get': {method: 'GET',params: {id: '@id'}, isArray: false},
+        'getWorkshop': {method: 'GET',params: {id: '@id'}, isArray: false},
         /**
          * @ngdoc funtion
          * @name restSvcs.Workshops#getParticipants
-         * @description Get list of enrolled participants to a workshop
+         * @description get list of enrolled participants to a workshop
          * @methodOf restSvcs.Workshops
          * @param {integer} id Workshop-ID
          */
@@ -94,7 +94,7 @@ restSvcs.factory('WorkshopTemplate',['$resource',function($resource){
          * @methodOf restSvcs.WorkshopTemplate
          * @param {integer} id Workshop-ID
          */
-        'get': {method: 'GET',params: {id: '@id'}, isArray: false},
+        'getWorkshopTemplate': {method: 'GET',params: {id: '@id'}, isArray: false},
         /**
          * @ngdoc function
          * @name restSvcs.WorkshopTemplate#patch
@@ -102,14 +102,14 @@ restSvcs.factory('WorkshopTemplate',['$resource',function($resource){
          * @methodOf restSvcs.WorkshopTemplate
          * @param {integer} id Workshop-ID
          */
-        'patch': {method: 'PATCH',params: {id: '@id'}, isArray: false},
+        'patchWorkshopTemplate': {method: 'PATCH',params: {id: '@id'}, isArray: false},
         /**
          * @ngdoc function
          * @name restSvcs.WorkshopTemplate#put
          * @description create a new workshoptemplate
          * @methodOf restSvcs.WorkshopTemplate
          */
-         'put': {method: 'PUT', isArray: false},
+         'putWorkshopTemplate': {method: 'PUT', isArray: false},
          /**
           * @ngdoc function
           * @name restSvcs.WorkshopTemplate#delete
@@ -117,13 +117,13 @@ restSvcs.factory('WorkshopTemplate',['$resource',function($resource){
           * @methodOf restSvcs.WorkshopTemplate
           * @param {integer} id Workshop-ID
           */
-          'delete': {method: 'DELETE',params: {id: '@id'}, isArray: false}
+          'deleteWorkshopTemplate': {method: 'DELETE',params: {id: '@id'}, isArray: false}
     });
 }]);
 /**
  * @ngdoc service
  * @name restSvcs.AdminWorkshop
- * @description Provides CRUD operations for Workshop-Template-functions provided by the API
+ * @description Provides CRUD operations for Admin-Workshop-functions provided by the API
  */
 restSvcs.factory('AdminWorkshop',['$resource',function($resource){
     return $resource('/api/admin/workshops/:id',{},{
@@ -141,7 +141,7 @@ restSvcs.factory('AdminWorkshop',['$resource',function($resource){
           * @description create a new workshop
           * @methodOf restSvcs.AdminWorkshop
           */
-          'put': {method: 'PUT', isArray:false},
+          'putWorkshop': {method: 'PUT', isArray:false},
          /**
          * @ngdoc function
          * @name restSvcs.AdminWorkshop#patch
@@ -149,7 +149,7 @@ restSvcs.factory('AdminWorkshop',['$resource',function($resource){
          * @methodOf restSvcs.AdminWorkshop
          * @param {integer} id Workshop-ID
          */
-        'patch': {method: 'PATCH',params: {id: '@id'}, isArray: false},
+        'patchWorkshop': {method: 'PATCH',params: {id: '@id'}, isArray: false},
          /**
           * @ngdoc function
           * @name restSvcs.AdminWorkshop#delete
@@ -157,13 +157,14 @@ restSvcs.factory('AdminWorkshop',['$resource',function($resource){
           * @methodOf restSvcs.AdminWorkshop
           * @param {integer} id Workshop-ID
           */
-          'delete': {method: 'DELETE',params: {id: '@id'}, isArray: false},
+          'deleteWorkshop': {method: 'DELETE',params: {id: '@id'}, isArray: false},
          /**
           * @ngdoc function
           * @name restSvcs.AdminWorkshop#patchwaitinglist
           * @description overbook the workshop
           * @methodOf restSvcs.AdminWorkshop
-          * @param {integer} id Workshop-ID, participantsid Participants-ID
+          * @param {integer} id Workshop-ID
+          * @param {integer} participantsid Participants-ID
           */
           'patchwaitinglist': {method: 'PATCH',url:'/api/admin/workshops/:id/waitinglists/:participantid' ,params: {id: '@id', participantsid: '@participantsid'}, isArray: false},
     });
@@ -197,7 +198,7 @@ restSvcs.factory('Participants',['$resource',function($resource){
           * @description create a new Participants
           * @methodOf restSvcs.Participants
           */
-        'put': {method: 'PUT', isArray:false},
+        'putParticipant': {method: 'PUT', isArray:false},
         /**
           * @ngdoc function
           * @name restSvcs.Participants#delete
@@ -205,7 +206,7 @@ restSvcs.factory('Participants',['$resource',function($resource){
           * @methodOf restSvcs.Participants
           * @param {integer} id Participants-ID
           */
-          'delete': {method: 'DELETE',params: {id: '@id'}, isArray: false},
+          'deleteParticipant': {method: 'DELETE',params: {id: '@id'}, isArray: false},
         /**
          * @ngdoc funtion
          * @name restSvcs.Participants#get
@@ -213,7 +214,7 @@ restSvcs.factory('Participants',['$resource',function($resource){
          * @methodOf restSvcs.Participants
          * @param {integer} id Participants-ID
          */
-        'get': {method: 'GET',params: {id: '@id'}, isArray: false}
+        'getParticipant': {method: 'GET',params: {id: '@id'}, isArray: false}
     });
 }]);
 /**
@@ -238,7 +239,7 @@ restSvcs.factory('EmailTemplate',['$resource',function($resource){
          * @methodOf restSvcs.EmailTemplate
          * @param {integer} id Emailtemplate-ID
          */
-        'get': {method: 'GET',params: {id: '@id'}, isArray: false},
+        'getEmailTemplate': {method: 'GET',params: {id: '@id'}, isArray: false},
         /**
          * @ngdoc function
          * @name restSvcs.EmailTemplate#patch
@@ -246,14 +247,14 @@ restSvcs.factory('EmailTemplate',['$resource',function($resource){
          * @methodOf restSvcs.EmailTemplate
          * @param {integer} id Emailtemplate-ID
          */
-        'patch': {method: 'PATCH',params: {id: '@id'}, isArray: false},
+        'patchEmailTemplate': {method: 'PATCH',params: {id: '@id'}, isArray: false},
         /**
           * @ngdoc function
           * @name restSvcs.EmailTemplate#put
           * @description create a new Emailtemplate
           * @methodOf restSvcs.EmailTemplate
           */
-        'put': {method: 'PUT', isArray:false},
+        'putEmailTemplate': {method: 'PUT', isArray:false},
         /**
           * @ngdoc function
           * @name restSvcs.EmailTemplate#delete
@@ -261,7 +262,7 @@ restSvcs.factory('EmailTemplate',['$resource',function($resource){
           * @methodOf restSvcs.EmailTemplate
           * @param {integer} id Emailtemplate-ID
           */
-          'delete': {method: 'DELETE',params: {id: '@id'}, isArray: false}
+          'deleteEmailTemplate': {method: 'DELETE',params: {id: '@id'}, isArray: false}
     });
 }]);
 /**
@@ -278,6 +279,6 @@ restSvcs.factory('Email',['$resource',function($resource){
           * @methodOf restSvcs.Email
           * @param {integer} workshopid Workshop-ID
           */
-        'send': {method: 'PATCH',params: {id: '@id'}, isArray: false}
+        'sendEmail': {method: 'PATCH',params: {id: '@id'}, isArray: false}
     });
 }]);
