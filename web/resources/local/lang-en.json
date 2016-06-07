@@ -77,6 +77,7 @@
 "AVAILABLE_EMAIL_TEMPLATES":"Available email templates",
 "BUTTON_EDIT_EMAIL_TEMPLATE":"Edit template",
 "BUTTON_NEW_EMAIL_TEMPLATE":"New template",
+"NEW_EMAIL_TEMPLATE":"New Email template",
 "EMAIL_TITLE":"Email title",
 "EMAIL_RECIPIENTS":"Recipients",
 "EMAIL_CONTENT":"Content",
