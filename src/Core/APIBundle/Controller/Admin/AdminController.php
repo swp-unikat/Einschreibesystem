@@ -50,6 +50,7 @@ use FOS\RestBundle\Request\ParamFetcher;
           *
           */
          $invitation = new Invitation();
+         //Create Token
          $code = $invitation->getCode();
          $email = $paramFetcher->get("email");
          /* Loading the default E-Mail template*/
@@ -66,6 +67,7 @@ use FOS\RestBundle\Request\ParamFetcher;
          $invitation->send(); //prevents sending invitations twice
          $this->getDoctrine()->getManager()->persist($invitation);
          $this->getDoctrine()->getManager()->flush();
+         
      }
      /**
       * @ApiDoc(
@@ -76,23 +78,36 @@ use FOS\RestBundle\Request\ParamFetcher;
       *      200 = "Returned when successful",
       *      404 = "Returned when the data is not found"
       *  },requirements={
-     "name"="adminId",
+      *        "name"="adminId",
       *        "dataType"="integer",
       *        "requirement"="\d+",
       *        "description"="Admin ID"
      }
       * )
-      * @
+      *
       * @return \Symfony\Component\HttpFoundation\Response
+      * @Rest\RequestParam(name="email", requirements=".*", description="json object of workshop")
+      * @Rest\RequestParam(name="password", requirements=".*", description="json object of workshop")
+      * @Rest\RequestParam(name="code", requirements=".*", description="json object of workshop")
       * @Rest\View()
       */
      
-     public function createAdmin($code) //Param Email Passwort Token
+     public function createAdmin(ParamFetcher $paramFetcher) //Param Email Passwort Token
      {
+         //$params is array with E-Mail Password and Token (Code)
+         $params = $paramFetcher->all();
+         //find invitation in database
          $invitation = $this->getDoctrine()->getManager()->getRepository("invitation")->find();
-         //check if invitation was sended
-         if ($invitation)
-        //FOSUSERBUNDLE Nachschauen 
+         //check if invitation parameter sended is true
+         if ($invitation->isSend() && $params["code"] == $invitation->getcode()){
+             //FOSUserBundle
+             //$userManager = $container->get('fos_user.user_manager');
+             //$usermanager = $this->getContainer()->get('fos_user.util.user_manipulator');
+             //$user = $userManager->createUser();
+             //$user->create($params);
+         } else {
+             throw $this->createAccessDeniedException("No invitation was sended!");
+         }
      }
      
      
