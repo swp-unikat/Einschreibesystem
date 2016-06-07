@@ -62,8 +62,8 @@
 
     <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav navbar-right">
-            <li  ng-hide="logged_in"><a href="#login"><button type="button" class="btn btn-link">Login</button></a></li>
-            <li ng-hide="!logged_in"><button type="button" class="btn btn-default" >Logout</button></li></ul>
+            <li  ng-hide="$rootScope.logged_in"><a href="#login"><button type="button" class="btn btn-link">Login</button></a></li>
+            <li ng-show="$rootScope.logged_in"><button type="button" class="btn btn-default" ng-click="$rootScope.logout()">Logout</button></li></ul>
     </div>
 </div>
 </nav>

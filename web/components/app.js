@@ -63,7 +63,7 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                 controller: 'DashboardCtrl',
                 templateUrl: prefix.concat('adminDashboard.html'),
                 data: {
-                    //requiresLogin: true
+                    requiresLogin: true
                 }
             })
             .state('workshop_template',{
@@ -177,7 +177,7 @@ mainApp.config(['jwtInterceptorProvider','$httpProvider','$urlRouterProvider',fu
     .run(['$rootScope','$state','store','jwtHelper','UIHelper',function($rootScope, $state, store, jwtHelper,UIHelper) {
         UIHelper.ToggleLogout();
         $rootScope.$on('$stateChangeStart', function(e, to) {
-            if (to.data.requiresLogin) {
+            if (to.data && to.data.requiresLogin) {
                 if (!store.get('jwt') || jwtHelper.isTokenExpired(store.get('jwt'))) {
                     e.preventDefault();
                     $state.go('login');
@@ -240,7 +240,17 @@ mainApp.factory('UIHelper',['$rootScope','store','jwtHelper',function($rootScope
                 $rootScope.logged_in = false;
                 return;
             }
-            $rootScope.logged_in = jwtHelper.isTokenExpired(jwt);
+            $rootScope.logged_in = !jwtHelper.isTokenExpired(jwt);
+        },
+        /**
+         * @ndoc function
+         * @name mainApp.UIHelper#logout
+         * @description Deletes the saved JWT token from last login
+         * @methodOf mainApp.UIHelper
+         */
+        logout: function(){
+            if(store.get('jwt'))
+                store.delete('jwt');
         }
     }
 }]);
