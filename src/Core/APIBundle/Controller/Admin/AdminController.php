@@ -33,7 +33,7 @@ use FOS\RestBundle\Request\ParamFetcher;
      * @Rest\RequestParam(name="email", requirements=".*", description="js object of workshop")
      * @Rest\View()
      */  
-     public function inviteAdminAction(ParamFetcher $paramFetcher) //kein Param
+     public function inviteAdminAction($email) //kein Param
      {
          /**
           * When sending invitation set this value to 'true'
@@ -61,7 +61,7 @@ use FOS\RestBundle\Request\ParamFetcher;
          /* Sending E-Mail */
          $message = \Swift_Message::newInstance()
              ->setSubject($template->getEmailSubject())
-             ->setFrom('send@example.com')
+             ->setFrom('send@example.com') //unsure which email!
              ->setTo($email)
              ->setBody($renderTemplate->render(["code" => $code,"email" => $email]),'text/html');
          $this->get('mailer')->send($message);
@@ -106,8 +106,9 @@ use FOS\RestBundle\Request\ParamFetcher;
              //$admin = $userManager->createUser();
              //$admin->create($params);
              
-             $admin->setName($params['name']);
-             //...
+             $admin->setName($params['email']);
+             
+             //...?
              
          } else {
              throw $this->createAccessDeniedException("No invitation was sended!");
@@ -160,7 +161,7 @@ use FOS\RestBundle\Request\ParamFetcher;
      {
          /**
           * ToDo: - find Admin in Database
-          * setEnabled function -> false
+          *       - setEnabled function -> false
           */
          $admin = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle')->findby($adminID)
          //$UserManager = $this->container->get('fos_user.user_manager');
@@ -199,7 +200,16 @@ use FOS\RestBundle\Request\ParamFetcher;
          *       - check if send / Token valid
          *       - setPasswort ?
          */
+         $admin = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle')->findby($adminID);
+         
+         
+         
+         
+         
      }
 
-
+    //Passwort ändern
+     
+     
+     
      }
