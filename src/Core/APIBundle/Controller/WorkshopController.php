@@ -128,6 +128,10 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
             $participant->setEmail($params["email"]);
             $participant->setName($params["name"]);
             $participant->setSurname($params["surname"]);
+
+            $this->getDoctrine()->getManager()->persist($participant);
+            $this->getDoctrine()->getManager()->flush();
+
             
             //send mail
             $template = $this->getDoctrine()->getRepository("CoreEntityBundle:EmailTemplate")->find(1);
@@ -135,7 +139,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
             $renderTemplate = $this->get('twig')->createTemplate($template->getEmailBody());
             /* Sending E-Mail with Confirmation Link - NOT INCLUDED?*/
             $message = \Swift_Message::newInstance()
-                ->setSubject($template->getEmailSubject())
+                ->setSubject($this->get('twig')->createTemplate($template->getEmailSubject())->render(["workshop" => $workshop]))
                 ->setFrom("info@sky-lab.de")
                 ->setTo($participant->getEmail())
                 ->setBody($renderTemplate->render(["workshop" => $workshop,"participant" => $participant]),'text/html');
@@ -148,7 +152,6 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
             //über Array iterieren , Workshop laden (get Wokrshop?) Anfangs und Endzeit mit dem Workshop vergleichen
 
             foreach($workshopParticipants as $tupel){
-                
                 $tempWorkshop = $this->getDoctrine()->getRepository("Workshop")->find($tupel["id"]);
                 if($workshop->getStartAt() >= $tempWorkshop->getStartAt() && $workshop->getEndAt() <= $tempWorkshop->getEndAt()){
                     throw $this->createAccessDeniedException("Already in Workshop at same Time");
@@ -167,27 +170,9 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
                 ->setBody($renderTemplate->render(["workshop" => $workshop,"participant" => $participant]),'text/html');
             $this->get('mailer')->send($message);
             
-            
-            
         }
 
-
-        /*
-         * 0) Paramfetcher (name,vorname,email) check
-         * 1) Gibt es den User => lade User aus check| erstellen check
-         * 2) Hat der User einen anderen Workshop zu der Zeit => ja ablehnen
-         * 3) E-Mail senden mit Anmeldelink
-         *      - Workshop ID
-         *      - Participant ID
-         *      - Token
-         * Pull before Commit !! (strg+T)
-         */
-        
-
-        $this->getDoctrine()->getManager()->persist($workshop);
-        $this->getDoctrine()->getManager()->flush();
-        $view = $this->view($workshop,200);
-        return $this->handleView($view);
+        return View::create($message, Codes::HTTP_OK);
     }
 
     /**
