@@ -306,7 +306,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      *      }
      *  }
      * )
-     *
+     * @param $id int id of workshop
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\View()
      */
@@ -336,7 +336,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      *      }
      *  }
      * )
-     *
+     * @param $id int id of workshop
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\View()
      */

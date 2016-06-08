@@ -107,6 +107,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
         $this->getDoctrine()->getManager()->flush();
         $view = $this->view($workshop,200);
         return $this->handleView($view);
+
     }
     
 	/**
@@ -225,8 +226,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
     public function patchWaitinglistAction($id, $participantId) /**Workshop ID!, Workshopüberbuchung: von der Warteliste auf die Nichtwarteliste*/
     {
         //Relation Workshop <-> Participant
-        $workshopParticipant = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:WorkshopParticipants")->findById($id,
-            $participantId);
+        $workshopParticipant = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:WorkshopParticipants")->findOneBy([ "workshop"=>$id,"participant"=>$participantId]);
         if (!$workshopParticipant) {
             throw $this->createNotFoundException("No participant on waiting list found");
         }
@@ -234,5 +234,47 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
         $this->getDoctrine()->getManager()->persist($workshopParticipant);
         $this->getDoctrine()->getManager()->flush();
         return View::create(null, Codes::HTTP_NO_CONTENT);
+    }
+
+    /**
+     * @ApiDoc(
+     *  resource=true,
+     *  description="overbook a workshop",
+     *  output = "",
+     *  statusCodes = {
+     *      200 = "Returned when successful",
+     *      404 = "Returned when the data is not found"
+     *  },requirements={
+     *      {
+     *          "name"="workshopId",
+     *          "dataType"="integer",
+     *          "requirement"="\d+",
+     *          "description"="Workshop ID"
+     *      },{
+     *          "name"="participantsId",
+     *          "dataType"="integer",
+     *          "requirement"="\d+",
+     *          "description"="Participants ID"
+     *     }
+     *  }
+     * )
+     * @param $workshopId int
+     * @param $participantId int
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Rest\View()
+     */
+    public function postHasParticipated($workshopId, $participantId)
+    {
+        $workshopParticipant = $this->getDoctrine()->getRepository("CoreEntityBundle:WorkshopParticipants")->findOneBy(["workshop" => $workshopId,"participant" => $participantId]);
+
+        if(!$workshopParticipant){
+            throw $this->createNotFoundException("User not found in this Workshop");
+        }
+
+        $workshopParticipant->setParticipated(true);
+        $this->getDoctrine()->getManager()->persist($workshopParticipant);
+        $this->getDoctrine()->getManager()->flush();
+        return View::create(null, Codes::HTTP_OK);
+
     }
 }
