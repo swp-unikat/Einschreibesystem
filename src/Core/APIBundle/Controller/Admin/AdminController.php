@@ -53,7 +53,7 @@ use FOS\RestBundle\Request\ParamFetcher;
          $invitation = new Invitation();
          //Create Token
          $code = $invitation->getCode();
-         $email = $paramFetcher->get("email");
+         //$email = $paramFetcher->get("email"); //not needed anymore
          /* Loading the default E-Mail template*/
          $template = $this->getDoctrine()->getRepository("CoreEntityBundle:EmailTemplate")->find(1);
          /* Creating Twig template from Database */
@@ -101,10 +101,12 @@ use FOS\RestBundle\Request\ParamFetcher;
          //check if invitation parameter sended is true
          if ($invitation->isSend() && $params["code"] == $invitation->getcode()){
              //FOSUserBundle
-             //$userManager = $container->get('fos_user.user_manager');
+             $UserManager = ->get('fos_user.user_manager');
              //$usermanager = $this->getContainer()->get('fos_user.util.user_manipulator');
              //$admin = $userManager->createUser();
              //$admin->create($params);
+
+             $UserManager = $this->get('fos_user.user_manager');
              
              $admin->setName($params['email']);
              
@@ -116,28 +118,7 @@ use FOS\RestBundle\Request\ParamFetcher;
      }
      
      
-     	/**
-     * @ApiDoc(
-     *  resource=true,
-     *  description="Action to invite an Admin",
-     *  output = "Core\EntityBundle\Entity\Admin",
-     *  statusCodes = {
-     *      200 = "Returned when successful",
-     *      404 = "Returned when the data is not found"
-     *  },requirements={
-              "name"="adminId",
-     *        "dataType"="integer",
-     *        "requirement"="\d+",
-     *        "description"="Admin ID"
-     }
-     * )
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     * @Rest\View()
-     */
-     public function sendAction ($adminID) //Still needed?
-     {
-     }
+
      	/**
      * @ApiDoc(
      *  resource=true,
@@ -164,7 +145,7 @@ use FOS\RestBundle\Request\ParamFetcher;
           *       - setEnabled function -> false
           */
          $admin = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle')->findby($adminID)
-         //$UserManager = $this->container->get('fos_user.user_manager');
+         $UserManager = $this->get('fos_user.user_manager'); //Object vom Typ FOSUserManager
          if(!$admin){
             throw $this->createNotFoundException("Admin not found");
          } else {
@@ -189,23 +170,27 @@ use FOS\RestBundle\Request\ParamFetcher;
      * )
      *
      * @return \Symfony\Component\HttpFoundation\Response
+     * @Rest\RequestParam(name="oldpassword", requirements=".*", description="json object of workshop")
+     * @Rest\RequestParam(name="newpassword", requirements=".*", description="json object of workshop")
      * @Rest\View()
      */
-     public function patchAction ($adminID)
+     public function patchAction (ParamFetcher $paramfetcher)
      {
         /**
-         * ToDo: - find Admin in Database
+         * To do: - find Admin in Database
          *       - delete Password
-         *       - send new Email with Token
-         *       - check if send / Token valid
          *       - setPasswort ?
          */
-         $admin = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle')->findby($adminID);
-         
-         
-         
-         
-         
+         $params = $paramfetcher->all();
+         $admin = $this->getUser();
+         $encoder_service = $this->get('security.encoder_factory');
+         $encoder = $encoder_service->getEncoder($admin);
+         if($encoder->isPasswordValid($admin->getPassword(), $params['oldpassword'], $admin->getSalt())){
+            $admin->setPlainPassword($params['newpassword']);
+         } else {
+             throw $this->createAccessDeniedException("The old password is incorrect");
+         }
+
      }
 
     //Passwort ändern
