@@ -16,7 +16,8 @@ use FOS\RestBundle\Request\ParamFetcher;
  */
  
  class AdminController extends FOSRestController implements ClassResourceInterface
-{	/**
+{	
+    /**
      * @ApiDoc(
      *  resource=true,
      *  description="Action to create new Admin",
@@ -27,13 +28,12 @@ use FOS\RestBundle\Request\ParamFetcher;
      *  }
      * )
      *
-     * 
      *
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\RequestParam(name="email", requirements=".*", description="js object of workshop")
      * @Rest\View()
      */  
-     public function inviteAdminAction(ParamFetcher $paramFetcher)
+     public function inviteAdminAction($email) //kein Param
      {
          /**
           * When sending invitation set this value to 'true'
@@ -51,6 +51,7 @@ use FOS\RestBundle\Request\ParamFetcher;
           *
           */
          $invitation = new Invitation();
+         //Create Token
          $code = $invitation->getCode();
          $email = $paramFetcher->get("email");
          /* Loading the default E-Mail template*/
@@ -60,7 +61,7 @@ use FOS\RestBundle\Request\ParamFetcher;
          /* Sending E-Mail */
          $message = \Swift_Message::newInstance()
              ->setSubject($template->getEmailSubject())
-             ->setFrom('send@example.com')
+             ->setFrom('send@example.com') //unsure which email!
              ->setTo($email)
              ->setBody($renderTemplate->render(["code" => $code,"email" => $email]),'text/html');
          $this->get('mailer')->send($message);
@@ -77,7 +78,7 @@ use FOS\RestBundle\Request\ParamFetcher;
       *      200 = "Returned when successful",
       *      404 = "Returned when the data is not found"
       *  },requirements={
-     "name"="adminId",
+      *        "name"="adminId",
       *        "dataType"="integer",
       *        "requirement"="\d+",
       *        "description"="Admin ID"
@@ -85,14 +86,33 @@ use FOS\RestBundle\Request\ParamFetcher;
       * )
       *
       * @return \Symfony\Component\HttpFoundation\Response
+      * @Rest\RequestParam(name="email", requirements=".*", description="json object of workshop")
+      * @Rest\RequestParam(name="password", requirements=".*", description="json object of workshop")
+      * @Rest\RequestParam(name="code", requirements=".*", description="json object of workshop")
       * @Rest\View()
       */
      
-     public function createAdmin()
+     public function createAdmin(ParamFetcher $paramFetcher) //Param Email Passwort Token
      {
-         
-         //Prüfe ob gesendet wurde
-         
+         //$params is array with E-Mail Password and Token (Code)
+         $params = $paramFetcher->all();
+         //find invitation in database
+         $invitation = $this->getDoctrine()->getManager()->getRepository("invitation")->find();
+         //check if invitation parameter sended is true
+         if ($invitation->isSend() && $params["code"] == $invitation->getcode()){
+             //FOSUserBundle
+             //$userManager = $container->get('fos_user.user_manager');
+             //$usermanager = $this->getContainer()->get('fos_user.util.user_manipulator');
+             //$admin = $userManager->createUser();
+             //$admin->create($params);
+             
+             $admin->setName($params['email']);
+             
+             //...?
+             
+         } else {
+             throw $this->createAccessDeniedException("No invitation was sended!");
+         }
      }
      
      
@@ -115,7 +135,7 @@ use FOS\RestBundle\Request\ParamFetcher;
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\View()
      */
-     public function sendAction ($adminID)
+     public function sendAction ($adminID) //Still needed?
      {
      }
      	/**
@@ -137,8 +157,19 @@ use FOS\RestBundle\Request\ParamFetcher;
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\View()
      */
-     public function deleteAction ($adminID)
+     public function deleteAction ($adminID) //ParamFetcher?
      {
+         /**
+          * ToDo: - find Admin in Database
+          *       - setEnabled function -> false
+          */
+         $admin = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle')->findby($adminID)
+         //$UserManager = $this->container->get('fos_user.user_manager');
+         if(!$admin){
+            throw $this->createNotFoundException("Admin not found");
+         } else {
+             $admin->setEnabled(false);
+         }
 
      }
      	/**
@@ -162,8 +193,23 @@ use FOS\RestBundle\Request\ParamFetcher;
      */
      public function patchAction ($adminID)
      {
-
+        /**
+         * ToDo: - find Admin in Database
+         *       - delete Password
+         *       - send new Email with Token
+         *       - check if send / Token valid
+         *       - setPasswort ?
+         */
+         $admin = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle')->findby($adminID);
+         
+         
+         
+         
+         
      }
 
-
+    //Passwort ändern
+     
+     
+     
      }

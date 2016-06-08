@@ -25,22 +25,21 @@
                 <input type="text" ng-model="email.template.title" class="form-control ">
 
                 <label>{{ "EMAIL_SUBJECT" | translate}}</label>
-                <input text-angular ta-toolbar="lnToolbar" ng-model="email.template.subject">
+                <div text-angular ta-toolbar="lnToolbar" ng-model="email.template.subject"></div>
 
                 <label>{{ "EMAIL_BODY" | translate}}</label>
-                <div text-angular  ng-model="email.template.body"></div>
-
+                <div text-angular ng-model="email.template.body"></div>
 
 
                 <div class="form-group row text-right">
-                <div class="btn-group">
-                    <button type="Discard" class="btn btn-info">Discard</button>
-                    <button type="Confirm" class="btn btn-info">Confirm</button>
+                    <div class="btn-group">
+                        <button type="Discard" class="btn btn-info">Discard</button>
+                        <button type="Confirm" class="btn btn-info">Confirm</button>
+                    </div>
                 </div>
             </div>
-        </div>
-        <br>
-        <br>
+            <br>
+            <br>
 
 
     </form>
