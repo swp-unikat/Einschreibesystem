@@ -73,6 +73,84 @@ mainAppCtrls.controller('EmailTemplateCtrl',['$scope',
 ]);
 
 
+// Source: web/components/controllers/adminWorkshopDetailsCtrl.js
+/**
+ * Created by Ahmet on 08.06.2016.
+ */
+
+
+mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops', '$stateParams', "$alert",
+    function($scope,Workshops,$stateParams, $alert) {
+        //TODO : replace with workshop details
+        var workshopid;
+        workshopid = $stateParams.id;
+        $scope.loading = true;
+        Workshops.get({id: workshopid}).$promise.then(function(value,httpResponse){
+            $scope.workshop = value;
+
+            $scope.loading = false;
+        },function(httpResponse) {
+            alert(httpResponse.status + '');
+            $scope.loading = false;
+        });
+
+    }
+])
+
+// Source: web/components/controllers/adminWorkshopManagementCtrl.js
+/**
+ * Created by Ahmet on 08.06.2016.
+ */
+
+/**
+ *
+ */
+mainAppCtrls.controller('adminWorkshopManagementCtrl',['$scope','Workshops','$alert','$translate',
+    function($scope,Workshops,$alert,$translate) {
+
+        //Define object to store the alert in
+        $scope.myAlert;
+
+        //Get and store translation for alert title.
+        $translate(['TITLE_ERROR', 'ERROR_NO_WORKSHOPS']).then(function (translations) {
+            $scope.errorTitle = translations.TITLE_ERROR;
+            $scope.errorMsg = translations.ERROR_NO_WORKSHOPS;
+        });
+        $scope.loading = true;
+        Workshops.getAll().$promise.then(function(value){
+            $scope.workshopList = value;
+            $scope.loading = false;
+        },function(httpResponse) {
+            //switch through all possible errors
+            switch(httpResponse.status){
+                //Alert for error 404, no workshops available
+                case 404:
+                    $scope.myAlert = $alert({
+
+                        title: $scope.errorTitle,
+                        type: 'danger',
+                        content: $scope.errorMsg,
+                        container: '#alert',
+                        dismissable: false,
+                        show: true
+                    });
+                case 500:
+                    $scope.myAlert = $alert({
+                        title: $scope.errorTitle,
+                        type: 'danger',
+                        content: 'Internal server error.',
+                        container: '#alert',
+                        dismissable: false,
+                        show: true
+                    })
+                    break;
+            }
+            $scope.loading = false;
+        });
+
+    }
+]);
+
 // Source: web/components/controllers/administratorManagementCtrl.js
 /**
  * Created by hunte on 31/05/2016.
@@ -119,8 +197,23 @@ mainAppCtrls.controller('ContactCtrl',['$scope',
 // Source: web/components/controllers/editEmailTemplateCtrl.js
 /**
  * Created by hunte on 31/05/2016.
- */
+*/
 
+/**
+ *
+ */
+mainAppCtrls.controller('EditEmailTemplateCtrl',['$scope',
+    function($scope) {
+        $scope.lnToolbar = [
+            ['h1', 'h2', 'h3', 'p', 'bold', 'italics'],
+            ['ul', 'ol'],
+            ['redo', 'undo', 'clear'],
+            ['html', 'insertImage', 'insertLink'],
+            ['justifyLeft', 'justifyCenter', 'justifyRight', 'indent', 'outdent']
+        ];
+    }
+
+]);
 
 // Source: web/components/controllers/editWorkshopTemplateCtrl.js
 /**
@@ -164,7 +257,7 @@ mainAppCtrls.controller('LoginCtrl',['$scope','$http','store','$state',
                 $state.go('dashboard');
             },function(httpResponse){
                 //TODO: Show alert in view
-                alert(httpResponse.status);
+                alert(httpResponse.status+'\n'+httpResponse.statusText);
             });
         }
     }
@@ -180,7 +273,13 @@ mainAppCtrls.controller('LoginCtrl',['$scope','$http','store','$state',
  */
 mainAppCtrls.controller('NewEmailTemplateCtrl',['$scope',
     function($scope) {
-
+        $scope.lnToolbar = [
+            ['h1', 'h2', 'h3', 'p', 'bold', 'italics'],
+            ['ul', 'ol'],
+            ['redo', 'undo', 'clear'],
+            ['html', 'insertImage', 'insertLink'],
+            ['justifyLeft', 'justifyCenter', 'justifyRight', 'indent', 'outdent']
+        ];
     }
 
 ]);

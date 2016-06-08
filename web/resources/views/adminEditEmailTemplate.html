@@ -1,10 +1,48 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<div class="container">
 
-</body>
-</html>
+    <h1>
+        <translate>EDIT_EMAIL_TEMPLATE</translate>
+    </h1>
+    <div class="col-md-2 col-xs-2 pull-right">
+        <a ui-sref="email_template">
+            <button class="btn btn-default">{{ "BUTTON_BACK" | translate}}</button>
+        </a>
+    </div>
+    <hr>
+    <br>
+
+</div>
+
+<div>
+    <body data-spy="scroll" data-target=".navbar">
+    <form role="search">
+
+
+        <div class="col-md-6">
+            <div class="form-group">
+
+                <label>{{ "EMAIL_TITLE" | translate}}</label>
+                <input type="text" ng-model="email.template.title" class="form-control ">
+
+                <label>{{ "EMAIL_SUBJECT" | translate}}</label>
+                <div text-angular ta-toolbar="lnToolbar" ng-model="email.template.subject"></div>
+
+                <label>{{ "EMAIL_BODY" | translate}}</label>
+                <div text-angular  ng-model="email.template.body"></div>
+
+
+
+                <div class="form-group row text-right">
+                    <div class="btn-group">
+                        <button type="Discard" class="btn btn-info">Discard</button>
+                        <button type="Confirm" class="btn btn-info">Confirm</button>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <br>
+
+
+    </form>
+    </body>
+</div>
