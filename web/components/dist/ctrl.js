@@ -403,24 +403,46 @@ mainAppCtrls.controller('UnsubscribeCtrl',['$scope',
 mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$stateParams', "$alert",
     function($scope,Workshops,$stateParams, $alert) {
         //TODO : replace with workshop details
-        var workshopid;
+        var workshopid = $stateParams.id;
         $scope.sendInfo= function(){
             var first_name=$scope.first_name;   
             var last_name=$scope.last_name;
-            var email=$scope.e_mail;
+            var _email=$scope.e_mail;
 
-            if(!email.$valid){
-              alert("testiii");
-            }
-            if(!first_name){
+            //check if input is valid
+            var _data = {
+              //URL-Params  
+              id: workshopid,
+              //Data to be send  
+              name: first_name,
+              surname: last_name,
+              email:   _email
+            };
+            Workshops.enroll(_data).$promise.then(function(value,httpResponse){
+                $alert({
+                    title: 'Success',
+                    type: 'success',
+                    content: 'Enrollment successful. Please check your E-Mail!',
+                    container: '#alertEnroll',
+                    dismissable: true,
+                    duration: 10,
+                    show: true
+                });
+            },function(httpResponse){
+                $alert({
 
-            }
-            if(!last_name){
-
-            }
+                    title: 'Error',
+                    type: 'danger',
+                    content: 'success',
+                    container: '#alertEnroll',
+                    dismissable: true,
+                    duration: 10,
+                    show: true
+                });
+            });
         };
 
-        workshopid = $stateParams.id;
+
         $scope.loading = true;
         Workshops.get({id: workshopid}).$promise.then(function(value,httpResponse){
             $scope.workshop = value;
