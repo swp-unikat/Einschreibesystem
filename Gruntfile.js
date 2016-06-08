@@ -49,9 +49,18 @@ module.exports = function(grunt) {
                 ],
                 dest: 'web/components/dist/ctrl.js'
             }
+        },
+        ngdocs: {
+            options: {
+                title: "UNIKAT Einschreibesystem Documentation",
+                inlinePartials: true,
+                bestMatch: true,
+                html5Mode: false
+            },
+            all: ['web/components/app.js','web/components/dist/ctrl.js','web/components/services/*.js']
         }
     });
-        //Loading and registering tasks
+    //Loading and registering tasks
     grunt.loadNpmTasks("grunt-contrib-jshint");
     grunt.loadNpmTasks("grunt-jsdoc");
     grunt.loadNpmTasks("grunt-contrib-uglify");
@@ -59,9 +68,8 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks("grunt-karma");
     grunt.loadNpmTasks("grunt-contrib-watch");
     grunt.loadNpmTasks("grunt-contrib-concat");
-
+    grunt.loadNpmTasks('grunt-ngdocs');
     grunt.registerTask('dev', ['watch:dev']);
-
-
+    grunt.registerTask('doc',['ngdocs:all']);
 };
 

@@ -15,14 +15,25 @@
     <script src="{{ asset('vendor/angular-translate-loader-static-files/angular-translate-loader-static-files.js') }}"></script>
 
     <link href="{{ asset('vendor/bootstrap/dist/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('resources/styles/main.css') }}" rel="stylesheet" type="text/css" />
 
     <script src="{{ asset('vendor/angular-animate/angular-animate.js') }}"></script>
     <script src="{{ asset('vendor/angular-strap/dist/angular-strap.js') }}"></script>
     <script src="{{ asset('vendor/angular-strap/dist/angular-strap.tpl.js') }}"></script>
     <script src="{{ asset('vendor/angular-ui-router/release/angular-ui-router.js') }}"></script>
+    <script src="{{ asset('vendor/angular-jwt/dist/angular-jwt.js') }}"></script>
+    <script src="{{ asset('vendor/a0-angular-storage/dist/angular-storage.js') }}"></script>
+
+    <link rel='stylesheet' href="{{ asset('vendor/textAngular/dist/textAngular.css') }}">
+    <script src="{{ asset('vendor/textAngular/dist/textAngular-rangy.min.js') }}"></script>
+    <script src='{{ asset('vendor/textAngular/dist/textAngular-sanitize.min.js') }}'></script>
+    <script src='{{ asset('vendor/textAngular/dist/textAngular.min.js') }}'></script>
 
     <script src="{{ asset('components/app.js') }}"></script>
+    <script src="{{ asset('components/services/restService.js') }}"></script>
     <script src="{{ asset('components/dist/ctrl.js') }}"></script>
+
+
 
     <style>
         .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
@@ -30,7 +41,39 @@
 </head>
 <body>
 
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+
+            <ul class="nav navbar-nav navbar-left">
+                <img alt="Titel" src="..." width="100"/>
+            </ul>
+
+
+
+    <div class="col-sm-offset-5 col-sm-2 text-center">
+    <form class="navbar-form navbar-center" role="search" ng-hide="hide_user_ui">
+        <div class="form-group has-feedback">
+        <input type="text" class="form-control" placeholder="Search" ng-model="query" ng-hide="hide_user_ui">
+        <i class="glyphicon glyphicon-search form-control-feedback"></i> </div></form></div>
+
+    <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="#login"><button type="button" class="btn btn-link">Login</button></a></li>
+            <li><button type="button" class="btn btn-default">Logout</button></li></ul>
+    </div>
+</div>
+</nav>
+
+
 <div ui-view=""></div>
+
+<nav class="navbar navbar-inverse navbar-fixed-bottom">
+    <div class="row text-center">
+        <hr class="top-buffer">
+        <div class="col-md-4"><span style="font-size:3em;" class="glyphicon glyphicon-phone" aria-hidden="true" ng-hide="hide_user_ui"></span></div>
+        <div class="col-md-4"><span style="font-size:3em;" class="glyphicon glyphicon-map-marker" aria-hidden="true" ng-hide="hide_user_ui"></span></div>
+        <div class="col-md-4"><span style="font-size:3em;" class="glyphicon glyphicon-envelope" aria-hidden="true" ng-hide="hide_user_ui"></span></div>
+    </div></nav>
 
 </body>
 </html>

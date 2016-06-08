@@ -1,3 +1,4 @@
-<div>
-    Settings
+<div bs-tabs>
+
+    <div ng-repeat="tab in tabs" title="{{ tab.title }}" name="{{ tab.title }}" ng-include src="tab.page" bs-pane ></div>
 </div>

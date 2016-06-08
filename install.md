@@ -5,8 +5,8 @@ vagrant ssh
 cd /var/www/
 
 mkdir -p app/var/jwt
-openssl genrsa -out app/var/jwt/private.pem -aes256 4096
-openssl rsa -pubout -in app/var/jwt/private.pem -out app/var/jwt/public.pem
+openssl genrsa -passout pass:unikat -out app/var/jwt/private.pem -aes256 4096
+openssl rsa -passin pass:unikat -pubout -in app/var/jwt/private.pem -out app/var/jwt/public.pem
 
 php composer.phar install
 
