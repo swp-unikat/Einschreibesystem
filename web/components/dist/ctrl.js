@@ -73,6 +73,31 @@ mainAppCtrls.controller('EmailTemplateCtrl',['$scope',
 ]);
 
 
+// Source: web/components/controllers/LegalNoticeCtrl.js
+/**
+ * Created by hunte on 08/06/2016.
+ */
+
+/**
+ *
+ */
+mainAppCtrls.controller('LegalNoticeCtrl',['$scope',
+    function($scope) {
+
+    }
+
+]);
+
+// Source: web/components/controllers/TestPrintServiceCtrl.js
+
+/**
+ * @name SettingsCtrl
+ * @description Controller for the Settings view
+ */
+mainAppCtrls.controller('TestPrintServiceCtrl',function($scope, prntSvcs) {
+    printer.print('resources/views/workshopDetails.html',WORKSHOP_PARTICIPANTS);
+});
+
 // Source: web/components/controllers/adminWorkshopDetailsCtrl.js
 /**
  * Created by Ahmet on 08.06.2016.
@@ -227,7 +252,7 @@ mainAppCtrls.controller('EditEmailTemplateCtrl',['$scope',
  */
 
 
-// Source: web/components/controllers/enrollmentConfirmCtrl.js
+// Source: web/components/controllers/EnrollmentConfirmCtrl.js
 /**
  * Created by hunte on 30/05/2016.
  */
