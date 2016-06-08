@@ -1,13 +1,16 @@
+/**
+ * Created by Ahmet on 08.06.2016.
+ */
 var mainAppCtrls = angular.module("mainAppCtrls");
 /**
- * 
+ *
  */
-mainAppCtrls.controller('WorkshopListCtrl',['$scope','Workshops','$alert','$translate',
+mainAppCtrls.controller('adminWorkshopManagementCtrl',['$scope','Workshops','$alert','$translate',
     function($scope,Workshops,$alert,$translate) {
-        
+
         //Define object to store the alert in
         $scope.myAlert;
-        
+
         //Get and store translation for alert title.
         $translate(['TITLE_ERROR', 'ERROR_NO_WORKSHOPS']).then(function (translations) {
             $scope.errorTitle = translations.TITLE_ERROR;
@@ -40,7 +43,7 @@ mainAppCtrls.controller('WorkshopListCtrl',['$scope','Workshops','$alert','$tran
                         dismissable: false,
                         show: true
                     })
-                break;
+                    break;
             }
             $scope.loading = false;
         });

@@ -1,3 +1,36 @@
-<div>
-    <p>Login here</p>
-</div>
+<div class="container">
+<div class="row">
+
+<div class="col-sm-offset-5 col-sm-3">
+    <div class="panel panel-default">
+        <div class="panel-heading text-center">
+            <h3 translate class="panel-title">LOGIN</h3>
+        </div>
+        <div class="panel-body">
+            <form role="form">
+                <div class="row">
+                    <div>
+                        <div class="form-group">
+                            <input type="text" name="user" ng-model="e_mail" class="form-control input-sm" placeholder="Email">
+                        </div>
+                    </div></div>
+                    <div class ="row">
+                    <div>
+                        <div class="form-group">
+                            <input type="password" name="pass" ng-model="password" class="form-control input-sm" placeholder="Password">
+                        </div>
+                    </div>
+                </div>
+
+                <button type="button" translate class="btn btn-info btn-block" ng-click="sendInfo()">BUTTON_LOGIN</button>
+            </form>
+
+            <div class="login-help">
+                <div>
+                    <button type="button" class="btn btn-link"translate class="col-xs-6 col-sm-6 col-md-6">BUTTON_FORGOT_PASSWORD</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div></div></div>
+

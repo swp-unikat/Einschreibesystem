@@ -1,0 +1,49 @@
+<div class="col-md-8 col-md-offset-2">
+    <h1><translate>AVAILABLE_WORKSHOP_TEMPLATES</translate></h1>
+    <div class="col-md-2 col-xs-2 pull-right">
+        <a ui-sref="dashboard"> <button class="btn btn-default">{{ "BUTTON_BACK_TO_DASHBOARD" | translate}}</button></a>
+    </div>
+    <hr>
+    <br>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="main-box no-header clearfix">
+                <div class="main-box-body clearfix">
+                    <div class="table-responsive table-hover">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th><span>{{ "TEMPLATE_TITLE" | translate}}</span></th>
+                                <th><span>{{ "DESCRIPTION" | translate}}</span></th>
+                                <th><span>{{ "OPTIONS" | translate}}</span> </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            <tr ng-repeat="x in data">
+                                <td>{{ x.title }}</td>
+                                <td>{{ x.description }}</td>
+                                <td>
+                                    <div class="btn-group pull-right" role="group">
+                                        <button type="button" translate class="btn success">BUTTON_EDIT_WORKSHOP</button>
+                                        <button type="button" translate class="btn" >BUTTON_DELETE_WORKSHOP_TEMPLATE</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+
+                        <a ui-sref="workshop_template_new">
+                        <button type="button" class="btn btn-default btn-xs">
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>{{ "BUTTON_NEW_WORKSHOP_TEMPLATE" | translate}}</button></a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
