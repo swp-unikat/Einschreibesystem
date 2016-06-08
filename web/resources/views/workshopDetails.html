@@ -38,10 +38,10 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="list-group pull-right"> <!--ng-repeat="participant in List"-->
-                    <a href="#" translate class="list-group-item">WORKSHOP_PARTICIPANTS</a>
-                    <!-- schauen welche variable um teilnemher zu entnehmen udn wird in diser form nun alle teilnehmer eingetragen -->
-                    <a href="#" class="list-group-item">{{participants}}</a>
+                <div class="list-group pull-right" ng-repeat="p in participants">
+                    <li class="list-group-item">
+                        {{p.name}} {{p.surname}}
+                    </li>
                 </div>
             </div>
         </div>

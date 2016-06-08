@@ -117,7 +117,7 @@ mainAppCtrls.controller('adminWorkshopManagementCtrl',['$scope','Workshops','$al
             $scope.errorMsg = translations.ERROR_NO_WORKSHOPS;
         });
         $scope.loading = true;
-        Workshops.getAll().$promise.then(function(value){
+        Workshops.gethistory().$promise.then(function(value){
             $scope.workshopList = value;
             $scope.loading = false;
         },function(httpResponse) {
@@ -420,6 +420,14 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
             $scope.loading = false;
         },function(httpResponse) {
             alert(httpResponse.status + '');
+            $scope.loading = false;
+        });
+        Workshops.getParticipants({id: workshopid}).$promise.then(function(value,httpResponse){
+            $scope.participants = value;
+
+            $scope.loading = false;
+        },function(httpResponse) {
+            alert('Participants: ' +httpResponse.status + '');
             $scope.loading = false;
         });
 

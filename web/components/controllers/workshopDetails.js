@@ -32,6 +32,14 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
             alert(httpResponse.status + '');
             $scope.loading = false;
         });
+        Workshops.getParticipants({id: workshopid}).$promise.then(function(value,httpResponse){
+            $scope.participants = value;
+
+            $scope.loading = false;
+        },function(httpResponse) {
+            alert('Participants: ' +httpResponse.status + '');
+            $scope.loading = false;
+        });
 
     }
 ]);
