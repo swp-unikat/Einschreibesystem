@@ -10,6 +10,12 @@ namespace Core\APIBundle\Controller\Admin;
 
 use Core\EntityBundle\Entity\Invitation;
 use FOS\RestBundle\Request\ParamFetcher;
+use FOS\RestBundle\Routing\ClassResourceInterface;
+use FOS\RestBundle\Controller\FOSRestController;
+use FOS\RestBundle\Controller\Annotations as Rest;
+use FOS\RestBundle\View\View;
+use FOS\RestBundle\Util\Codes;
+use Core\EntityBundle\Entity\User;
 
 /**
  * Class RestController.
@@ -68,6 +74,8 @@ use FOS\RestBundle\Request\ParamFetcher;
          $invitation->send(); //prevents sending invitations twice
          $this->getDoctrine()->getManager()->persist($invitation);
          $this->getDoctrine()->getManager()->flush();
+         return View::create(null, Codes::HTTP_OK);
+
      }
      /**
       * @ApiDoc(
@@ -101,7 +109,7 @@ use FOS\RestBundle\Request\ParamFetcher;
          //check if invitation parameter sended is true
          if ($invitation->isSend() && $params["code"] == $invitation->getcode()){
              //FOSUserBundle
-             $UserManager = ->get('fos_user.user_manager');
+             $UserManager = $this->get('fos_user.user_manager');
              //$usermanager = $this->getContainer()->get('fos_user.util.user_manipulator');
              //$admin = $userManager->createUser();
              //$admin->create($params);
@@ -119,7 +127,7 @@ use FOS\RestBundle\Request\ParamFetcher;
      
      
 
-     	/**
+     /**
      * @ApiDoc(
      *  resource=true,
      *  description="Action to disable an Admin",
@@ -144,7 +152,7 @@ use FOS\RestBundle\Request\ParamFetcher;
           * ToDo: - find Admin in Database
           *       - setEnabled function -> false
           */
-         $admin = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle')->findby($adminID)
+         $admin = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle')->findby($adminID);
          $UserManager = $this->get('fos_user.user_manager'); //Object vom Typ FOSUserManager
          if(!$admin){
             throw $this->createNotFoundException("Admin not found");
@@ -152,8 +160,12 @@ use FOS\RestBundle\Request\ParamFetcher;
              $admin->setEnabled(false);
          }
 
+
+         return View::create(null, Codes::HTTP_OK);
+
      }
-     	/**
+
+     /**
      * @ApiDoc(
      *  resource=true,
      *  description="Action to change the password",
@@ -193,10 +205,57 @@ use FOS\RestBundle\Request\ParamFetcher;
          }
          $this->getDoctrine()->getManager()->persist($admin);
          $this->getDoctrine()->getManager()->fluch();
+         return View::create(null, Codes::HTTP_OK);
+
 
      }
 
-    //Passwort reset
+     /**
+      * @ApiDoc(
+      *  resource=true,
+      *  description="Action to change the password",
+      *  output = "Core\EntityBundle\Entity\Admin",
+      *  statusCodes = {
+      *      200 = "Returned when successful",
+      *      404 = "Returned when the data is not found"
+      *  },requirements={
+      *        "name"="email",
+      *        "dataType"="string",
+      *        "requirement"=".*",
+      *        "description"="email of the admin"
+      * }
+      * )
+      * @param $email string E-Mail
+      * @return \Symfony\Component\HttpFoundation\Response
+      * @Rest\View()
+      */
+     public function postSendPasswordForgotEmailAction($email){
+         /** @var $user User */
+         $user = $this->get('fos_user.user_manager')->findUserByUsernameOrEmail($email);
+
+         if (null === $user) {
+            $this->createNotFoundException("Username not found");
+         }
+
+         if ($user->isPasswordRequestNonExpired($this->container->getParameter('fos_user.resetting.token_ttl'))) {
+             return $this->createAccessDeniedException("Password already requested");
+         }
+
+         if (null === $user->getConfirmationToken()) {
+             /** @var $tokenGenerator \FOS\UserBundle\Util\TokenGeneratorInterface */
+             $tokenGenerator = $this->get('fos_user.util.token_generator');
+             $user->setConfirmationToken($tokenGenerator->generateToken());
+         }
+
+         /*
+          * @ToDo add Mail
+          * */
+         $user->setPasswordRequestedAt(new \DateTime());
+         $this->get('fos_user.user_manager')->updateUser($user);
+         return View::create(null, Codes::HTTP_OK);
+
+     }
+     //Passwort reset
      
      
      

@@ -8,7 +8,6 @@
  */
 namespace Core\APIBundle\Controller\Admin;
 
-use Doctrine\Common\Collections\Criteria;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Request\ParamFetcher;
 use FOS\RestBundle\View\View;
