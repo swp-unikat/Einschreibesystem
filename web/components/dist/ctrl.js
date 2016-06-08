@@ -252,7 +252,7 @@ mainAppCtrls.controller('EditEmailTemplateCtrl',['$scope',
  */
 
 
-// Source: web/components/controllers/enrollmentConfirmCtrl.js
+// Source: web/components/controllers/EnrollmentConfirmCtrl.js
 /**
  * Created by hunte on 30/05/2016.
  */
