@@ -70,7 +70,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      *      404 = "Returned when the data is not found"
      *  }
      * )
-     *
+     * @param $paramFetcher ParamFetcher
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\RequestParam(name="title", requirements=".*", description="json object of workshop")
      * @Rest\RequestParam(name="description", requirements=".*", description="json object of workshop")
@@ -80,7 +80,6 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      * @Rest\RequestParam(name="start_at", requirements=".*", description="json object of workshop")
      * @Rest\RequestParam(name="end_at", requirements=".*", description="json object of workshop")
      * @Rest\RequestParam(name="max_participants", requirements=".*", description="json object of workshop")
-     * @Rest\RequestParam(name="created", requirements=".*", description="json object of workshop")
      * @Rest\View()
      */
     public function putAction(ParamFetcher $paramFetcher)
@@ -151,11 +150,11 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
         if($params["location"] != NULL)
             $workshop->setLocation($params["location"]);
         if($params["start_at"] != NULL)
-            $workshop->getStartAt($params["start_at"]);
+            $workshop->setStartAt($params["start_at"]);
         if($params["end_at"] != NULL)
-            $workshop->getEndAt($params["end_at"]);
+            $workshop->setEndAt($params["end_at"]);
         if($params["max_participants"] != NULL)
-            $workshop->getMaxParticipants($params["max_participants"]);
+            $workshop->setMaxParticipants($params["max_participants"]);
         $this->getDoctrine()->getManager()->persist($workshop);
         $this->getDoctrine()->getManager()->flush();
         $view = $this->view($workshop,200);
@@ -200,7 +199,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
 	/**
      * @ApiDoc(
      *  resource=true,
-     *  description="overbook a woorkshop",
+     *  description="overbook a workshop",
      *  output = "",
      *  statusCodes = {
      *      200 = "Returned when successful",

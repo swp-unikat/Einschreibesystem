@@ -9,22 +9,15 @@
 namespace Core\APIBundle\Controller\Admin;
 
 use Core\EntityBundle\Entity\WorkshopTemplates;
-use Doctrine\Common\Collections\Criteria;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Request\ParamFetcher;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\Util\Codes;
 use JMS\Serializer\SerializationContext;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Routing\ClassResourceInterface;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
-use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\Query;
 /**
  * Class RestController.
@@ -51,12 +44,12 @@ class WorkshopTemplateController extends FOSRestController implements ClassResou
      */
     public function getListAction()
     {
-        $workshops = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:WorkshopTemplates')->findAll();
-	    if(!$workshops) {
+        $workshopTemplates = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:WorkshopTemplates')->findAll();
+	    if(!$workshopTemplates) {
             throw $this->createNotFoundException("No WorkshopTemplate found");
         }
 
-	$view = $this->view($entits, 200);
+	    $view = $this->view($workshopTemplates, 200);
         return $this->handleView($view);
     }
 
@@ -78,24 +71,22 @@ class WorkshopTemplateController extends FOSRestController implements ClassResou
      *      }
      *    }
      * )
-     *
+     * @param $id int Id of the Workshop Template
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\View()
      */
     public function getAction($id)
     {
-        $workshoptemplate = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:WorkshopTemplates')->find($id);
-        if (!$workshoptemplate) {
-            throw $this->createNotFoundException("This workshoptemplate was not found");
+        $workshopTemplate = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:WorkshopTemplates')->find($id);
+        if (!$workshopTemplate) {
+            throw $this->createNotFoundException("This workshop template was not found");
         } else {
-            $view = $this->view($workshop, 200);
+            $view = $this->view($workshopTemplate, 200);
             return $this->handleView($view);
         }
-
     }
 
     /**
-
      * @ApiDoc(
      *  resource=true,
      *  description="Edit a template",
@@ -168,7 +159,8 @@ class WorkshopTemplateController extends FOSRestController implements ClassResou
      *      }
      *   }
      * )
-     * @REST\QueryParam(name="json", requirements="", default="1", description="json object of workshop")
+     * @param $paramFetcher ParamFetcher
+     * @param $id int id of the workshop template
      * @return \Symfony\Component\HttpFoundation\Response
      * @REST\RequestParam(name="title", requirements=".*", description="title of the Workshop")
      * @REST\RequestParam(name="description", requirements=".*", description="description of the Workshop")
@@ -182,31 +174,37 @@ class WorkshopTemplateController extends FOSRestController implements ClassResou
      */
     public function patchAction(ParamFetcher $paramFetcher,$id)
     {
+
+         /* load all parameters */
         $params = $paramFetcher->all();
-        $workshoptemplate = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:WorkshopTemplates")->find($id);
-        if (!$workshoptemplate) {
+        /* load the workshopTemplate from the database*/
+        $workshopTemplate = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:WorkshopTemplates")->find($id);
+        /* check if the workshopTemplate exist */
+        if (!$workshopTemplate) {
             throw $this->createNotFoundException("No WorkshopTemplate found");
         }
+        /* check the parameters */
         if($params["title"] != NULL)
-            $workshoptemplate->setTitle($params["title"]);
+            $workshopTemplate->setTitle($params["title"]);
         if($params["description"] != Null)
-            $workshoptemplate->setDescription($params["description"]);
+            $workshopTemplate->setDescription($params["description"]);
         if($params["cost"] != NULL)
-        $workshoptemplate->setCost($params["cost"]);
+            $workshopTemplate->setCost($params["cost"]);
         if($params["requirements"] != NULL)
-            $workshoptemplate->setRequirements($params["requirements"]);
+            $workshopTemplate->setRequirements($params["requirements"]);
         if($params["location"] != NULL)
-            $workshoptemplate->setLocation($params["location"]);
+            $workshopTemplate->setLocation($params["location"]);
         if($params["start_at"] != NULL)
-            $workshoptemplate->setStartAt($params["start_at"]);
+            $workshopTemplate->setStartAt($params["start_at"]);
         if($params["end_at"] != NULL)
-            $workshoptemplate->setEndAt($params["end_at"]);
+            $workshopTemplate->setEndAt($params["end_at"]);
         if($params["max_participants"] != NULL)
-            $workshoptemplate->setMaxParticipants($params["max_participants"]);
-        $this->getDoctrine()->getManager()->persist($workshoptemplate);
+            $workshopTemplate->setMaxParticipants($params["max_participants"]);
+        /* save the edited template to the database*/
+        $this->getDoctrine()->getManager()->persist($workshopTemplate);
         $this->getDoctrine()->getManager()->flush();
-        $view = $this->view($workshoptemplate,200);
-        return $this->handleView($view);
+        /* return empty view with http ok*/
+        return View::create(null, Codes::HTTP_OK);
     }
 
     /**
@@ -277,6 +275,7 @@ class WorkshopTemplateController extends FOSRestController implements ClassResou
      *  }
      * )
      *
+     * @param $paramFetcher ParamFetcher
      * @return \Symfony\Component\HttpFoundation\Response
      * @REST\RequestParam(name="title", requirements=".*", description="title of the Workshop")
      * @REST\RequestParam(name="description", requirements=".*", description="description of the Workshop")
@@ -285,31 +284,31 @@ class WorkshopTemplateController extends FOSRestController implements ClassResou
      * @REST\RequestParam(name="location", requirements=".*", description="location of the Workshop")
      * @REST\RequestParam(name="start_at", requirements=".*", description="starttime of the Workshop")
      * @REST\RequestParam(name="end_at", requirements=".*", description="endtime of the Workshop")
-     * @REST\RequestParam(name="max_participants", requirements=".*", description="maximum number of participants")
+     * @REST\RequestParam(name="max_participants", requirements="\d+", description="maximum number of participants")
      * @Rest\View()
      */
     public function putAction(ParamFetcher $paramFetcher)  {
-        $workshoptemplate= new WorkshopTemplates();
+        $workshopTemplate= new WorkshopTemplates();
         $params = $paramFetcher->all();
         if($params["title"] != NULL)
-            $workshoptemplate->setTitle($params["title"]);
+            $workshopTemplate->setTitle($params["title"]);
         if($params["description"] != Null)
-            $workshoptemplate->setDescription($params["description"]);
+            $workshopTemplate->setDescription($params["description"]);
         if($params["cost"] != NULL)
-            $workshoptemplate->setCost($params["cost"]);
+            $workshopTemplate->setCost($params["cost"]);
         if($params["requirements"] != NULL)
-            $workshoptemplate->setRequirements($params["requirements"]);
+            $workshopTemplate->setRequirements($params["requirements"]);
         if($params["location"] != NULL)
-            $workshoptemplate->setLocation($params["location"]);
+            $workshopTemplate->setLocation($params["location"]);
         if($params["start_at"] != NULL)
-            $workshoptemplate->setStartAt($params["start_at"]);
+            $workshopTemplate->setStartAt($params["start_at"]);
         if($params["end_at"] != NULL)
-            $workshoptemplate->setEndAt($params["end_at"]);
+            $workshopTemplate->setEndAt($params["end_at"]);
         if($params["max_participants"] != NULL)
-            $workshoptemplate->setMaxParticipants($params["max_participants"]);
-        $this->getDoctrine()->getManager()->persist($workshoptemplate);
+            $workshopTemplate->setMaxParticipants($params["max_participants"]);
+        $this->getDoctrine()->getManager()->persist($workshopTemplate);
         $this->getDoctrine()->getManager()->flush();
-        $view = $this->view($workshoptemplate,200);
+        $view = $this->view($workshopTemplate,200);
         return $this->handleView($view);
     }
 
@@ -318,7 +317,7 @@ class WorkshopTemplateController extends FOSRestController implements ClassResou
      * @ApiDoc(
      *  resource=true,
      *  description="Delete a template",
-     *  output = "Core\EntityBundle\Entity\Participants",
+     *  output = "",
      *  statusCodes = {
      *      200 = "Returned when successful",
      *      404 = "Returned when the data is not found"
@@ -331,7 +330,7 @@ class WorkshopTemplateController extends FOSRestController implements ClassResou
      *      }
      * }
      * )
-     *
+     * @param $id int id of the workshop template
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\View()
      */
@@ -343,6 +342,6 @@ class WorkshopTemplateController extends FOSRestController implements ClassResou
         }
         $this->getDoctrine()->getManager()->remove($workshopTemplate);
         $this->getDoctrine()->getManager()->flush();
-        return View::create(null, Codes::HTTP_NO_CONTENT);
+        return View::create(null, Codes::HTTP_OK);
     }
 }

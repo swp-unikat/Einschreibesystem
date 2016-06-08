@@ -101,12 +101,10 @@ use FOS\RestBundle\Request\ParamFetcher;
          //check if invitation parameter sended is true
          if ($invitation->isSend() && $params["code"] == $invitation->getcode()){
              //FOSUserBundle
-             //$userManager = $container->get('fos_user.user_manager');
-             //$usermanager = $this->getContainer()->get('fos_user.util.user_manipulator');
-             //$admin = $userManager->createUser();
-             //$admin->create($params);
-             
+             $userManager =  $this->get('fos_user.user_manager');
+             $admin = $userManager->createUser();
              $admin->setName($params['name']);
+             $admin->set
              //...
              
          } else {
@@ -114,8 +112,7 @@ use FOS\RestBundle\Request\ParamFetcher;
          }
      }
      
-     
-     	/**
+     /**
      * @ApiDoc(
      *  resource=true,
      *  description="Action to invite an Admin",
