@@ -73,7 +73,10 @@
 "BUTTON_DISCARD_TEMPLATE":"Discard template",
 "CURRENT_WORKSHOPS":"Current workshops",
 "ELAPSED_WORKSHOPS":"Elapsed Workshops",
-
+"BLACKLIST_MANAGEMENT":"Blacklist management",
+"BUTTON_NEW_WORKSHOP":"New workshop",
+"PARTICIPANTS":"Participants",
+"WAITINGLIST":"Waitinglist",
  
 "BUTTON_EMAIL_TEMPLATE":"Email template",
 "AVAILABLE_EMAIL_TEMPLATES":"Available email templates",
