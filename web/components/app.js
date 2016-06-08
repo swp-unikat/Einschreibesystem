@@ -13,7 +13,8 @@ var mainApp = angular.module('mainApp',[
     'restSvcs',
     'angular-storage',
     'pascalprecht.translate',
-    'textAngular'
+    'textAngular',
+    'prntSvcs'
 ]);
 /**
  * @name mainAppCtrls
@@ -38,6 +39,7 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                 controller: 'WorkshopDetailsCtrl',
                 templateUrl: prefix.concat('workshopDetails.html')
             })
+
             .state('login',{
                 url: '/login',
                 controller: 'LoginCtrl',
