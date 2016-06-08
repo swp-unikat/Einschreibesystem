@@ -17,7 +17,7 @@ mainAppCtrls.controller('adminWorkshopManagementCtrl',['$scope','Workshops','$al
             $scope.errorMsg = translations.ERROR_NO_WORKSHOPS;
         });
         $scope.loading = true;
-        Workshops.getAll().$promise.then(function(value){
+        Workshops.gethistory().$promise.then(function(value){
             $scope.workshopList = value;
             $scope.loading = false;
         },function(httpResponse) {

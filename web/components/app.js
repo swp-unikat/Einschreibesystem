@@ -71,7 +71,7 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                 controller:'WorkshopTemplateCtrl',
                 templateUrl: prefix.concat('adminWorkshopTemplate.html'),
                 data: {
-                    //requiresLogin: true
+                    requiresLogin: true
                 }
             })
             .state('workshop_template_new', {
@@ -79,7 +79,7 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                 controller: 'NewWorkshopTemplateCtrl',
                 templateUrl: prefix.concat('adminNewWorkshopTemplate.html'),
                 data: {
-                    //requiresLogin: true
+                    requiresLogin: true
                 }
             })
           
@@ -88,7 +88,7 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                 controller: 'EditWorkshopTemplateCtrl',
                 templateUrl: prefix.concat('workshopTemplateNew.html'),
                 data: {
-                    //requiresLogin: true
+                    requiresLogin: true
                 }
             })
             .state('email_template', {
@@ -96,7 +96,7 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                 controller: 'EmailTemplateCtrl',
                 templateUrl: prefix.concat('adminEmailTemplate.html'),
                 data: {
-                    //requiresLogin: true
+                    requiresLogin: true
                 }
             })
             .state('email_template_new', {
@@ -104,7 +104,7 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                 controller: 'NewEmailTemplateCtrl',
                 templateUrl: prefix.concat('adminNewEmailTemplate.html'),
                 data: {
-                    //requiresLogin: true
+                    requiresLogin: true
                 }
             })
             .state('email_template_edit', {
@@ -112,7 +112,7 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                 controller: 'EditEmailTemplateCtrl',
                 templateUrl: prefix.concat('adminEditEmailTemplate.html'),
                 data: {
-                    //requiresLogin: true
+                    requiresLogin: true
                 }
             })
             .state('blacklist',{
@@ -120,7 +120,7 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                 controller: 'BlacklistCtrl',
                 templateUrl: prefix.concat('adminBlacklist.html'),
                 data: {
-                    //requiresLogin: true
+                    requiresLogin: true
                 }
             })
             .state('administrator_management', {
@@ -128,7 +128,7 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                     controller: 'AdministratorManagementCtrl',
                     templateUrl: prefix.concat('administratorManagement.html'),
                 data: {
-                    //requiresLogin: true
+                    requiresLogin: true
                 }
                 })
 
@@ -137,7 +137,7 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                 controller: 'adminWorkshopDetailsCtrl',
                 templateUrl: prefix.concat('adminWorkshopDetails.html'),
                 data: {
-                    //requiresLogin: true
+                    requiresLogin: true
                 }
             })
 
@@ -146,7 +146,7 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                 controller: 'adminWorkshopManagementCtrl',
                 templateUrl: prefix.concat('adminWorkshopManagement.html'),
                 data: {
-                    //requiresLogin: true
+                    requiresLogin: true
                 }
             })
 
@@ -155,7 +155,7 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                 controller: 'SettingsCtrl',
                 templateUrl: prefix.concat('adminSettings.html'),
                 data: {
-                    //requiresLogin: true
+                    requiresLogin: true
                 }
             })
 
@@ -163,6 +163,7 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                 url: '/admin/create/:token',
                 controller: 'AdminCreateCtrl',
                 templateUrl: prefix.concat('adminInvite.html')
+
             })
             .state('legalnotice',{
                 url: '/legalnotice',
