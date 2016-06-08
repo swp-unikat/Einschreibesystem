@@ -342,11 +342,17 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      */
      public function getParticipantsAction($id)
     {  
-	    $participantsList = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:Participants')->findBy(['workshop' => $id],['enrollment' => "DESC"]);
+	    $participantsList = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:WorkshopParticipants')->findBy(['workshop' => $id],['enrollment' => "DESC"]);
 	    if (!$participantsList) {
             throw $this->createNotFoundException("No Participant in Workshop found");
          }
-        $view = $this->view($participantsList, 200);
+
+        foreach($participantsList as $participant){
+            $participants[]['name'] = $participant->getParticipant()->getName();
+            $participants[]['surname'] = $participant->getParticipant()->getSurname();
+        }
+
+        $view = $this->view($participants, 200);
         return $this->handleView($view);
     }
 }
