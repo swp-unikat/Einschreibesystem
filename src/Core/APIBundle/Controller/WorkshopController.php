@@ -129,23 +129,10 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
             $participant->setName($params["name"]);
             $participant->setSurname($params["surname"]);
 
+
             $this->getDoctrine()->getManager()->persist($participant);
             $this->getDoctrine()->getManager()->flush();
 
-            
-            //send mail
-            $template = $this->getDoctrine()->getRepository("CoreEntityBundle:EmailTemplate")->find(1);
-            /* Creating Twig template from Database */
-            $renderTemplate = $this->get('twig')->createTemplate($template->getEmailBody());
-            /* Sending E-Mail with Confirmation Link - NOT INCLUDED?*/
-            $message = \Swift_Message::newInstance()
-                ->setSubject($this->get('twig')->createTemplate($template->getEmailSubject())->render(["workshop" => $workshop]))
-                ->setFrom("info@sky-lab.de")
-                ->setTo($participant->getEmail())
-                ->setBody($renderTemplate->render(["workshop" => $workshop,"participant" => $participant]),'text/html');
-            $this->get('mailer')->send($message);
-
-            
         } else {
             //alle Workshops an denen der Nutzer noch nicht teilgenommen hat
             $workshopParticipants = $this->getDoctrine()->getRepository("CoreEntityBundle:WorkshopParticipants")->findBy(["participant" => $participant, "participated" => 0]);
@@ -156,21 +143,25 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
                 if($workshop->getStartAt() >= $tempWorkshop->getStartAt() && $workshop->getEndAt() <= $tempWorkshop->getEndAt()){
                     throw $this->createAccessDeniedException("Already in Workshop at same Time");
                 }
-            } //foreach
-            
-            //send mail
-            $template = $this->getDoctrine()->getRepository("CoreEntityBundle:EmailTemplate")->find(1);
-            /* Creating Twig template from Database */
-            $renderTemplate = $this->get('twig')->createTemplate($template->getEmailBody());
-            /* Sending E-Mail with Confirmation Link - NOT INCLUDED?*/
-            $message = \Swift_Message::newInstance()
-                ->setSubject($template->getEmailSubject())
-                ->setFrom('send@example.com')
-                ->setTo($participant->getEmail())
-                ->setBody($renderTemplate->render(["workshop" => $workshop,"participant" => $participant]),'text/html');
-            $this->get('mailer')->send($message);
-            
+            }
         }
+
+
+        $token = new EmailToken();
+        $token->setParticipant($participant);
+        $this->getDoctrine()->getManager()->persist($token);
+
+        //send mail
+        $template = $this->getDoctrine()->getRepository("CoreEntityBundle:EmailTemplate")->find(1);
+        /* Creating Twig template from Database */
+        $renderTemplate = $this->get('twig')->createTemplate($template->getEmailBody());
+        /* Sending E-Mail with Confirmation Link - NOT INCLUDED?*/
+        $message = \Swift_Message::newInstance()
+            ->setSubject($this->get('twig')->createTemplate($template->getEmailSubject())->render(["workshop" => $workshop]))
+            ->setFrom("info@sky-lab.de")
+            ->setTo($participant->getEmail())
+            ->setBody($renderTemplate->render(["workshop" => $workshop,"participant" => $participant,'token' => $token->getToken()]),'text/html');
+        $this->get('mailer')->send($message);
 
         return View::create(NULL, Codes::HTTP_OK);
     }
