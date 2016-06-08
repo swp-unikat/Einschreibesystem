@@ -134,7 +134,7 @@ restSvcs.factory('AdminWorkshop',['$resource',function($resource){
           * @methodOf restSvcs.AdminWorkshop
           * @returns {httpPromise} resolve with fetched data, or fails with error description.
          */
-        'gethistory': {method: 'GET',params: {id: 'all'}, isArray: true},
+        'gethistory': {method: 'GET',params: {id: 'history'}, isArray: true},
          /**
           * @ngdoc function
           * @name restSvcs.AdminWorkshop#put
