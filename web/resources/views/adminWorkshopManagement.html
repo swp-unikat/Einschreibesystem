@@ -3,10 +3,10 @@
 
         <h1>{{ "CURRENT_WORKSHOPS" | translate}}</h1>
         <div class="btn-group pull-right" role="group">
-            <a ui-sref="workshop_template"> <button class="btn btn-default">{{ "BUTTON_BACK_TO_DASHBOARD" | translate}}</button></a>
+            <a ui-sref="dashboard"> <button class="btn btn-default">{{ "BUTTON_BACK_TO_DASHBOARD" | translate}}</button></a>
             <a ui-sref="workshop_template">
                 <button type="button" class="btn btn-default">
-                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>{{ "NEW_WORKSHOP" | translate}}</button>
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>{{ "BUTTON_NEW_WORKSHOP" | translate}}</button>
             </a>
 
         </div>
@@ -43,31 +43,16 @@
                                 <a ui-sref="administrator_workshop_details({id: workshop.id})"><button type="button" translate class="btn btn-secondary span4">BUTTON_DETAILS</button></a>
                             </div>
                         </div>
-                        <div class="col-md-2 col-xs-2 pull-right">
-                            <a ui-sref="workshop_template">
-                                <button type="button" class="btn btn-default">
-                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>{{ "NEW_WORKSHOP" | translate}}</button>
-                            </a>
-                        </div>
+
                         <!-- /.box-body -->
                     </div>
 
                     <!-- /.box -->
                 </div>
             </div>
-            <!-- loading -->
-            <div ng-show="loading">
-                <span class="glyphicon glyphicon-refresh glyphicon-spin" style="font-size: 5.0em;"></span>
-            </div>
-            <div ng-hide="workshopList.length || loading" id="alert" bs-alert>
 
-            </div>
-            <!-- loading end -->
         </div>
         <h1>{{ "ELAPSED_WORKSHOPS" | translate}}</h1>
-        <div class="col-md-2 col-xs-2 pull-right">
-            <a ui-sref="workshop_template"> <button class="btn btn-default">{{ "BUTTON_BACK" | translate}}</button></a>
-        </div>
         <hr>
         <br>
         <div class="col-lg-12 col-xs-12">
@@ -107,5 +92,14 @@
                 </div>
             </div>
 
+    </div>
+        <!-- loading -->
+        <div ng-show="loading">
+            <span class="glyphicon glyphicon-refresh glyphicon-spin" style="font-size: 5.0em;"></span>
+        </div>
+        <div ng-hide="workshopList.length || loading" id="alert" bs-alert>
+
+        </div>
+        <!-- loading end -->
     </div>
 </div>

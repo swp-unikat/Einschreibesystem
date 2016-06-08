@@ -33,17 +33,30 @@
                             <div class="col-sm-10 col-sm-12"><p>{{workshop.start_at|date: "dd/MM/yyyy hh:mm"}}</p></div>
                         </div>
 
-
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="list-group pull-right"> <!--ng-repeat="participant in List"-->
-                    <a href="#" translate class="list-group-item">WORKSHOP_PARTICIPANTS</a>
-                    <!-- schauen welche variable um teilnemher zu entnehmen udn wird in diser form nun alle teilnehmer eingetragen -->
-                    <a href="#" class="list-group-item">{{participants}}</a>
-                </div>
+            <div class="col-md-2">
+                <ul class="list-group">
+                    <li class="list-group-item text-center">
+                        <h4 translate>PARTICIPANTS</h4>
+                    </li>
+                    <li class="list-group-item"  ng-repeat="p in participants">
+                        {{p.name}} {{p.surname}} {{p.email}}
+                    </li>
+                </ul>
             </div>
+            <div class="col-md-2">
+                <ul class="list-group">
+                    <li class="list-group-item text-center">
+                        <h4 translate>WAITINGLIST</h4>
+                    </li>
+                    <li class="list-group-item"  ng-repeat="p in waitingList">
+                        {{p.name}} {{p.surname}} {{p.email}}
+                    </li>
+                </ul>
+            </div>
+
         </div>
     </div>
 </div>
