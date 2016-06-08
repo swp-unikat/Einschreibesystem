@@ -71,6 +71,8 @@
 "WORKSHOP_COST":"Cost",
 "BUTTON_DELETE_WORKSHOP_TEMPLATE":"Delete workshop template",
 "BUTTON_DISCARD_TEMPLATE":"Discard template",
+"CURRENT_WORKSHOPS":"Current workshops",
+"ELAPSED_WORKSHOPS":"Elapsed Workshops",
 
  
 "BUTTON_EMAIL_TEMPLATE":"Email template",
