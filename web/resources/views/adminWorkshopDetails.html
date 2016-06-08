@@ -1,4 +1,4 @@
-<div>
+<div ng-hide="loading">
     <div class="container">
         <div class="row">
             <div class="col-md-8">
@@ -49,8 +49,11 @@
 </div>
 
     <!-- loading -->
-    <div ng-show="loading">
+
+
+    <div ng-show="loading" class="container" style="margin-left: 50%;">
         <span class="glyphicon glyphicon-refresh glyphicon-spin centered-form" style="font-size: 5.0em;"></span>
     </div>
+
 
 
