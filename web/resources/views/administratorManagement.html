@@ -1,36 +1,58 @@
 <div class="col-md-8 col-md-offset-2">
-<h1><translate>ADMINISTRATOR_MANAGEMENT</translate></h1>
+    <h1><translate>ADMINISTRATOR_MANAGEMENT</translate></h1>
 <div class="col-md-2 col-xs-2 pull-right">
     <a ui-sref="dashboard"> <button class="btn btn-default">Back to Dashboard</button></a>
 </div>
 <hr>
 <br>
 </div>
-        <div class="container">
+    <div class="container">
+        <div class="row">
             <div class="col-md-10 col-xs-10">
                 <div class="list-group" ng-repeat="admin in administratorList">
                     <a href="#" class="list-group-item active">
                         Cras justo odio
+                           <button onclick="myFunction()">
+                               <span class="glyphicon glyphicon-trash"></span>
+                            </button>
+                    </a>
+                </div>
+                <div class="col-md-6 col-xs-6">
+                    <a href="#" class="list-group-item">
+                        awdwfw@fff.com
                         <button onclick="myFunction()">
-                        <span class="glyphicon glyphicon-trash"></span>
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </button>
+                    </a>
+
+                    <a href="#" class="list-group-item">
+                        awssasadwfw@fsasasaff.com
+                        <button onclick="myFunction()">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </button>
+                    </a>
+
+                    <a href="#" class="list-group-item">
+                        awssqqqqqasadwfw@fsqqas.com
+                        <button onclick="myFunction()">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </button>
+                    </a>
+
+
+                    <a href="#" class="list-group-item">
+                        aasasasasdwfw@fsasasqqaff.com
+                        <button onclick="myFunction()">
+                            <span class="glyphicon glyphicon-remove"></span>
                         </button>
                     </a>
                 </div>
-            </div>
-            <div class="col-md-6 col-xs-6">
-                <a href="#" class="list-group-item">
-                    Dapibus ac facilisis in
-                    <button onclick="myFunction()">
-                        <span class="glyphicon glyphicon-remove"></span>
-                    </button>
-                </a>
-            </div>
-            </div>
-            <div class="col-md-10 col-xs-10 text-right">
-                <a ui-sref="admininvite">
-                    <br><br>
-                    <button translate type="button" class="btn btn-default">BUTTON_INVITE_AN_ADMINISTRATOR</button>
-                </a>
 
+                <div class="col-md-4 col-xs-10 text-right">
+                    <a ui-sref="admininvite">
+                        <button translate type="button" class="btn btn-default">BUTTON_INVITE_AN_ADMINISTRATOR</button>
+                    </a>
+                </div>
             </div>
+        </div>
 </div>
