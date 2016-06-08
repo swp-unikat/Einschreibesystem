@@ -1,11 +1,6 @@
 <div>
     <div class="col-md-8 col-md-offset-2">
 
-        <div class="form-group has-feedback">
-
-            <input type="text" class="form-control" placeholder="Search" ng-model="query">
-            <i class="glyphicon glyphicon-search form-control-feedback"></i>
-        </div>
 
         <div class="col-lg-12 col-xs-12">
             <div class="col-lg-12 col-xs-12">
@@ -32,9 +27,9 @@
                                 <label translate class="col-lg-2 col-sm-12 control-label">WORKSHOP_COST</label>
                                 <div class="col-sm-10 col-sm-12"><label>{{workshop.cost}}</label></div>
                             </div>
-                            <div class="btn-group pull-right" role="group">
-                                <button type="button" translate class="btn success btn-secondary span4">BUTTON_ENROLL</button>
-                                <a ui-sref="workshopsdetails({id: workshop.id})"><button type="button" translate class="btn btn-secondary span4">BUTTON_DETAILS</button></a>
+                            <div class="btn pull-right">
+
+                                <a ui-sref="administrator_workshop_details({id: workshop.id})"><button type="button" translate class="btn btn-secondary span4">BUTTON_DETAILS</button></a>
                             </div>
                         </div>
                         <!-- /.box-body -->

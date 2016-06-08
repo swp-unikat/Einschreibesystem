@@ -257,7 +257,7 @@ mainAppCtrls.controller('LoginCtrl',['$scope','$http','store','$state',
                 $state.go('dashboard');
             },function(httpResponse){
                 //TODO: Show alert in view
-                alert(httpResponse.status);
+                alert(httpResponse.status+'\n'+httpResponse.statusText);
             });
         }
     }
