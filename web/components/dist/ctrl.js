@@ -57,6 +57,46 @@ mainAppCtrls.controller('AdminCreateCtrl',['$scope', '$stateParams','$alert',
 ]);
 
 
+// Source: web/components/controllers/EmailTemplateCtrl.js
+/**
+ * Created by Ahmet on 04.06.2016.
+ */
+
+/**
+ *
+ */
+mainAppCtrls.controller('EmailTemplateCtrl',['$scope',
+    function($scope) {
+
+    }
+
+]);
+
+
+// Source: web/components/controllers/adminWorkshopDetailsCtrl.js
+/**
+ * Created by Ahmet on 08.06.2016.
+ */
+
+
+mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops', '$stateParams', "$alert",
+    function($scope,Workshops,$stateParams, $alert) {
+        //TODO : replace with workshop details
+        var workshopid;
+        workshopid = $stateParams.id;
+        $scope.loading = true;
+        Workshops.get({id: workshopid}).$promise.then(function(value,httpResponse){
+            $scope.workshop = value;
+
+            $scope.loading = false;
+        },function(httpResponse) {
+            alert(httpResponse.status + '');
+            $scope.loading = false;
+        });
+
+    }
+])
+
 // Source: web/components/controllers/administratorManagementCtrl.js
 /**
  * Created by hunte on 31/05/2016.
@@ -135,11 +175,23 @@ mainAppCtrls.controller('EnrollmentConfirmCtrl',['$scope',
 /**
  *
  */
-mainAppCtrls.controller('LoginCtrl',['$scope',
-    function($scope) {
-        
+mainAppCtrls.controller('LoginCtrl',['$scope','$http','store','$state',
+    function($scope,$http,store,$state) {
+        $scope.sendInfo = function(){
+            var _data = {
+                _username: $scope.e_mail,
+                _password: $scope.password
+            };
+            $http({method:'POST',url: '/api/login_check',data: _data}).then(function(httpResponse) {
+                var token = httpResponse.data.token;
+                store.set('jwt',token);
+                $state.go('dashboard');
+            },function(httpResponse){
+                //TODO: Show alert in view
+                alert(httpResponse.status);
+            });
+        }
     }
-
 ]);
 
 // Source: web/components/controllers/newEmailTemplateCtrl.js
@@ -196,25 +248,51 @@ mainAppCtrls.controller('PasswordResetCtrl',['$scope',
  * @name SettingsCtrl
  * @description Controller for the Settings view
  */
-mainAppCtrls.controller('SettingsCtrl',['$scope','UIHelper',
-    function($scope,UIHelper) {
+mainAppCtrls.controller('SettingsCtrl',['$scope','UIHelper','$alert',
+    function($scope,UIHelper,$alert) {
+
+        $scope.form = {};
         UIHelper.HideUserUI();
+        //TODO: load i18n for Placeholders and Tabnames
         $scope.tabs = [
 
             {
-                title: "Change Password",
+                title: "Change Personal Info",
                 page: "resources/views/adminEditPassword.html"
             },
             {
-                title: "Edit Info",
+                title: "Edit Contact Info",
                 page: "resources/views/adminEditInfo.html"
+            },
+            {
+                title: "Edit Legal Notice",
+                page: "resources/views/adminEditLegalNotice.html"
             }
         ];
-        $scope.placeholder = {
-            password: "New Password",
-            password_confirm: "Repeat Password",
-            old_password: "Old Password"
-        }
+        $scope.lnToolbar = [
+            ['h1', 'h2', 'h3', 'p', 'bold', 'italics'],
+            ['ul', 'ol'],
+            ['redo', 'undo', 'clear'],
+            ['html', 'insertImage', 'insertLink'],
+            ['justifyLeft', 'justifyCenter', 'justifyRight', 'indent', 'outdent']
+        ];
+        $scope.pwAlert = $alert({
+            title: "Error",
+            type: 'danger',
+            content: 'Internal server error.',
+            container: '#pwalert',
+            dismissable: false,
+            show: false
+        });
+        $scope.validatePW = function() {
+            var pw = $scope.form.password;
+            var pwc = $scope.form.password_confirm;
+            if(pw != pwc) {
+                $scope.pwAlert.show();
+            }else{
+                $scope.pwAlert.hide();
+            }
+        };
         //TODO: Add error handling, alert on successful data change
     }
 ]);
@@ -239,10 +317,26 @@ mainAppCtrls.controller('UnsubscribeCtrl',['$scope',
  * Created by Ahmet on 31.05.2016.
  */
 
-mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$stateParams',
-    function($scope,Workshops,$stateParams) {
+mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$stateParams', "$alert",
+    function($scope,Workshops,$stateParams, $alert) {
         //TODO : replace with workshop details
         var workshopid;
+        $scope.sendInfo= function(){
+            var first_name=$scope.first_name;   
+            var last_name=$scope.last_name;
+            var email=$scope.e_mail;
+
+            if(!email.$valid){
+              alert("testiii");
+            }
+            if(!first_name){
+
+            }
+            if(!last_name){
+
+            }
+        };
+
         workshopid = $stateParams.id;
         $scope.loading = true;
         Workshops.get({id: workshopid}).$promise.then(function(value,httpResponse){

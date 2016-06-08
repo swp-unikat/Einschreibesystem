@@ -1,42 +1,29 @@
 <div class="container-fluid">
-    <h1>Contact</h1>
-    <hr>
     <br>
-    <form role="search">
-        <div class="form-group row">
-            <div class="col-sm-10 col-md-4 ">
-                <label class="col-sm-2 col-md-2 form-control-label text-right" for="Website">Website</label>
-                <input type="text" id="Website" class="form-control " placeholder="Website">
-            </div>
+        <div class="col-md-4 col-xs-4">
+            <label translate for="website">
+                WEBSITE
+            </label>
+            <input id="website" class="form-control" type="text" ng-model="website" placeholder="{{'WEBSITE' | translate}}"/>
+            <label translate for="email">
+                EMAIL
+            </label>
+            <input id="email" class="form-control" type="email" ng-model="email" placeholder="{{'EMAIL' | translate}}"/>
+            <label translate for="telephone">
+                TELEPHONE
+            </label>
+            <input id="telephone" class="form-control" type="text" ng-model="telephone" placeholder="{{'TELEPHONE'| translate}}"/>
+            <label translate for="facebook">
+                FACEBOOK
+            </label>
+            <input id="facebook" class="form-control" type="text" ng-model="facebook" placeholder="{{'FACEBOOK'| translate}}"/>
+            <label translate for="address">
+                ADDRESS
+            </label>
+            <input id="address" class="form-control" type="text" ng-model="address" placeholder="{{'ADDRESS'| translate}}"/>
+            <button translate type="button" class="btn btn-primary">BUTTON_DISCARD</button>
+            <button translate type="button" class="btn btn-primary">BUTTON_SAVE</button>
+
         </div>
-        <div class="form-group row">
-            <div class="col-sm-10 col-md-4 ">
-                <label class="col-sm-2 col-md-2 form-control-label text-right" for="Email">Email Address</label>
-                <input type="text" id="Email" class="form-control " placeholder="Email">
-            </div>
-        </div>
-        <div class="form-group row">
-            <div class="col-sm-10 col-md-4 ">
-                <label class="col-sm-2 col-md-2 form-control-label text-right" for="Telephone">Telephone</label>
-                <input type="text" id="Telephone" class="form-control " placeholder="Telephone">
-            </div>
-        </div>
-        <div class="form-group row">
-            <div class="col-sm-10 col-md-4 ">
-                <label class="col-sm-2 col-md-2 form-control-label text-right" for="Facebook">Facebook Page</label>
-                <input type="text" id="Facebook" class="form-control " placeholder="Facebook">
-            </div>
-        </div>
-        <div class="form-group row">
-            <div class="col-sm-10 col-md-4 ">
-                <label class="col-sm-2 col-md-2 form-control-label text-right" for="Address">Address</label>
-                <input type="text" id="Address" class="form-control " placeholder="email">
-            </div>
-        </div>
-        <div class="form-group row text-center">
-            <div class="col-sm-12 col-md-6 ">
-                <button type="Confirm" class="btn btn-default">Confirm</button>
-            </div>
-        </div>
-    </form>
+
 </div>
