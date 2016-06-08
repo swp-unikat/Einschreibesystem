@@ -1,4 +1,13 @@
-<div bs-tabs>
+<div>
+    <h1 style="margin-left: 1.5%;">Settings</h1>
+    <hr>
+    <div class="col-md-10 col-xs-10" bs-tabs>
+        <div ng-repeat="tab in tabs" title="{{ tab.title }}" name="{{ tab.title }}" bs-pane>
+            <div  ng-include src="tab.page"></div>
+        </div>
+    </div>
+    <div class="col-md-2 col-xs-2">
+        <a ui-sref="dashboard"> <button class="btn btn-default">Back to Dashboard</button></a>
+    </div>
 
-    <div ng-repeat="tab in tabs" title="{{ tab.title }}" name="{{ tab.title }}" ng-include src="tab.page" bs-pane ></div>
 </div>

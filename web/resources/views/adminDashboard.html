@@ -1,31 +1,28 @@
-<div>
-    <div class="container-fluid">
-        <h1>Administrator Dashboard</h1>
-        <hr>
-        <br>
-        <br>
-        <div class="row text-center">
-            <div class="col-sm-4"><button type="button" class="btn btn-default btn-block">Workshop Management</button></div>
+<h1 style="margin-left: 1.5%;">Administrator Dashboard</h1>
+<hr>
+<div class="container">
+
+
+        <div class="col-md-4 col-sm-4 col-md-offset-2 col-sm-offset-2">
+            <a ui-sref="workshop_management">
+                <button translate type="button" class="btn btn-default btn-block tile">BUTTON_WORKSHOP_MANAGEMENT</button>
+            </a>
+            <a ui-sref="workshop_template">
+                <button translate type="button" class="btn btn-default btn-block tile">BUTTON_WORKSHOP_TEMPLATE</button>
+            </a>
+            <a ui-sref="email_template">
+                <button translate type="button" class="btn btn-default btn-block tile">BUTTON_EMAIL_TEMPLATE</button>
+            </a>
         </div>
-        <br>
-        <div class="row text-center">
-            <div class="col-sm-4"><button type="button" class="btn btn-default btn-block">Workshop Templates</button></div>
+        <div class="col-md-4 col-sm-4">
+            <a ui-sref="blacklist">
+                <button translate type="button" class="btn btn-default btn-block tile">BUTTON_BLACKLIST_MANAGEMENT</button>
+            </a>
+            <a ui-sref="administrator_management">
+                <button translate type="button" class="btn btn-default btn-block tile">BUTTON_ADMINISTRATOR_MANAGEMENT</button>
+            </a>
+            <a ui-sref="settings">
+                <button translate type="button" class="btn btn-default btn-block tile">BUTTON_SETTINGS</button>
+            </a>
         </div>
-        <br>
-        <div class="row text-center">
-            <div class="col-sm-4"><button type="button" class="btn btn-default btn-block">Email Templates</button></div>
-        </div>
-        <br>
-        <div class="row text-center">
-            <div class="col-sm-4"><button type="button" class="btn btn-default btn-block">Blacklist Management</button></div>
-        </div>
-        <br>
-        <div class="row text-center">
-            <div class="col-sm-4"><button type="button" class="btn btn-default btn-block">Administrator Management</button></div>
-        </div>
-        <br>
-        <div class="row text-center">
-            <div class="col-sm-4"><button type="button" class="btn btn-default btn-block">Settings</button></div>
-        </div>
-    </div>
 </div>
