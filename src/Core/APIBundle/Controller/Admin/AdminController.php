@@ -2,7 +2,7 @@
 /**
  * Created by IntelliJ IDEA.
  * User: Marco Hanisch
- * Authors: Marco Hanisch 
+ * Authors: Marco Hanisch, Andreas Ifland
  * Date: 31.05.2016
  * Time: 13:01
  */
@@ -36,26 +36,11 @@ use Core\EntityBundle\Entity\User;
       *
       *
       * @return \Symfony\Component\HttpFoundation\Response
-      * @Rest\RequestParam(name="email", requirements=".*", description="js object of workshop")
+      * @param $email string email as the username of administrator
       * @Rest\View()
       */
-     public function inviteAdminAction($email) //kein Param
+     public function inviteAdminAction($email)
      {
-         /**
-          * When sending invitation set this value to 'true'
-          *
-          * It prevents sending invitations twice
-          *
-          * protected $sent =false;
-          *
-          * neue Invitation erstellen
-          *Email versenden mit Link
-          *
-          *nächste Funktion: Invite Code überprüfen, falls stimmt, neuen User anlegen und auf enabled setzen
-          *
-          *Funktion Passwort ändern
-          *
-          */
          $invitation = new Invitation();
          //Create Token
          $code = $invitation->getCode();
@@ -102,7 +87,7 @@ use Core\EntityBundle\Entity\User;
       * @Rest\View()
       */
 
-     public function createAdmin(ParamFetcher $paramFetcher) //Param Email Passwort Token
+     public function createAdmin(ParamFetcher $paramFetcher)
      {
          //$params is array with E-Mail Password and Token (Code)
          $params = $paramFetcher->all();
@@ -112,19 +97,15 @@ use Core\EntityBundle\Entity\User;
          if ($invitation->isSend() && $params["code"] == $invitation->getcode()) {
              //FOSUserBundle
              $UserManager = $this->get('fos_user.user_manager');
-             //$usermanager = $this->getContainer()->get('fos_user.util.user_manipulator');
-             //$admin = $userManager->createUser();
-             //$admin->create($params);
-
-             $UserManager = $this->get('fos_user.user_manager');
-
+             $admin = $UserManager->create();
              $admin->setName($params['email']);
-
-             //...?
-
+             $admin->setPlainPassword($params["password"])
          } else {
              throw $this->createAccessDeniedException("No invitation was sended!");
          }
+
+         $this->getDoctrine()->getManager()->persist($admin);
+         $this->getDoctrine()->getManager()->flush();
      }
 
 
@@ -143,19 +124,20 @@ use Core\EntityBundle\Entity\User;
       *        "description"="Admin ID"
      }
       * )
-      *
+      * @param $adminID integer adminID
       * @return \Symfony\Component\HttpFoundation\Response
       * @Rest\View()
       */
-     public function deleteAction($adminID) //ParamFetcher?
+     public function deleteAction($adminID)
      {
          $admin = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle')->findby($adminID);
-         //$UserManager = $this->get('fos_user.user_manager'); //Object vom Typ FOSUserManager
          if (!$admin) {
              throw $this->createNotFoundException("Admin not found");
          } else {
              $admin->setEnabled(false);
          }
+         $this->getDoctrine()->getManager()->persist($admin);
+         $this->getDoctrine()->getManager()->flush();
          return View::create(null, Codes::HTTP_OK);
      }
 
@@ -172,7 +154,7 @@ use Core\EntityBundle\Entity\User;
       *        "dataType"="integer",
       *        "requirement"="\d+",
       *        "description"="Admin ID"
-     }
+      *}
       * )
       *
       * @return \Symfony\Component\HttpFoundation\Response
@@ -201,8 +183,6 @@ use Core\EntityBundle\Entity\User;
          $this->getDoctrine()->getManager()->fluch();
 
          return View::create(null, Codes::HTTP_OK);
-
-
      }
 
      /**
@@ -268,7 +248,8 @@ use Core\EntityBundle\Entity\User;
       *        "description"="email of the admin"
       * }
       * )
-      *
+      * @param  $token string
+      * @param  $password string
       * @return \Symfony\Component\HttpFoundation\Response
       * @Rest\View()
       */
@@ -283,7 +264,6 @@ use Core\EntityBundle\Entity\User;
          }
          $this->getDoctrine()->getManager()->persist($admin);
          $this->getDoctrine()->getManager()->flush();
-
      }
  }
 
