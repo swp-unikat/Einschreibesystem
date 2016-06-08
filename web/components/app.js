@@ -108,7 +108,7 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                 }
             })
             .state('email_template_edit', {
-                url: 'email/template/edit/:id',
+                url: '/email/template/edit',
                 controller: 'EditEmailTemplateCtrl',
                 templateUrl: prefix.concat('adminEditEmailTemplate.html'),
                 data: {
