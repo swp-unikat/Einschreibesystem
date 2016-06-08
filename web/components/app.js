@@ -48,7 +48,7 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
             .state('enrollment_confirm',{
                 url: '/enrollment_confirm/:id/:token',
                 templateUrl: prefix.concat('enrollmentConfirm.html'),
-                controller: 'EnrollmentConfirm'
+                controller: 'enrollmentConfirmCtrl'
             })
             .state('unsubscribe',{
                 url: '/unsubscribe/:id/:workshopid/:token',
