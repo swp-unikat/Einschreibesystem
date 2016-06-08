@@ -22,23 +22,23 @@ use Core\EntityBundle\Entity\User;
  */
  
  class AdminController extends FOSRestController implements ClassResourceInterface
-{	
-    /**
-     * @ApiDoc(
-     *  resource=true,
-     *  description="Action to create new Admin",
-     *  output = "Core\EntityBundle\Entity\Admin",
-     *  statusCodes = {
-     *      200 = "Returned when successful",
-     *      404 = "Returned when the data is not found"
-     *  }
-     * )
-     *
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     * @Rest\RequestParam(name="email", requirements=".*", description="js object of workshop")
-     * @Rest\View()
-     */  
+ {
+     /**
+      * @ApiDoc(
+      *  resource=true,
+      *  description="Action to create new Admin",
+      *  output = "Core\EntityBundle\Entity\Admin",
+      *  statusCodes = {
+      *      200 = "Returned when successful",
+      *      404 = "Returned when the data is not found"
+      *  }
+      * )
+      *
+      *
+      * @return \Symfony\Component\HttpFoundation\Response
+      * @Rest\RequestParam(name="email", requirements=".*", description="js object of workshop")
+      * @Rest\View()
+      */
      public function inviteAdminAction($email) //kein Param
      {
          /**
@@ -67,16 +67,18 @@ use Core\EntityBundle\Entity\User;
          /* Sending E-Mail */
          $message = \Swift_Message::newInstance()
              ->setSubject($template->getEmailSubject())
-             ->setFrom('send@example.com') //unsure which email!
+             ->setFrom('send@example.com')//unsure which email!
              ->setTo($email)
-             ->setBody($renderTemplate->render(["code" => $code,"email" => $email]),'text/html');
+             ->setBody($renderTemplate->render(["code" => $code, "email" => $email]), 'text/html');
          $this->get('mailer')->send($message);
          $invitation->send(); //prevents sending invitations twice
          $this->getDoctrine()->getManager()->persist($invitation);
          $this->getDoctrine()->getManager()->flush();
+
          return View::create(null, Codes::HTTP_OK);
 
      }
+
      /**
       * @ApiDoc(
       *  resource=true,
@@ -99,7 +101,7 @@ use Core\EntityBundle\Entity\User;
       * @Rest\RequestParam(name="code", requirements=".*", description="json object of workshop")
       * @Rest\View()
       */
-     
+
      public function createAdmin(ParamFetcher $paramFetcher) //Param Email Passwort Token
      {
          //$params is array with E-Mail Password and Token (Code)
@@ -107,7 +109,7 @@ use Core\EntityBundle\Entity\User;
          //find invitation in database
          $invitation = $this->getDoctrine()->getManager()->getRepository("invitation")->find();
          //check if invitation parameter sended is true
-         if ($invitation->isSend() && $params["code"] == $invitation->getcode()){
+         if ($invitation->isSend() && $params["code"] == $invitation->getcode()) {
              //FOSUserBundle
              $UserManager = $this->get('fos_user.user_manager');
              //$usermanager = $this->getContainer()->get('fos_user.util.user_manipulator');
@@ -115,78 +117,70 @@ use Core\EntityBundle\Entity\User;
              //$admin->create($params);
 
              $UserManager = $this->get('fos_user.user_manager');
-             
+
              $admin->setName($params['email']);
-             
+
              //...?
-             
+
          } else {
              throw $this->createAccessDeniedException("No invitation was sended!");
          }
      }
-     
-     
+
 
      /**
-     * @ApiDoc(
-     *  resource=true,
-     *  description="Action to disable an Admin",
-     *  output = "Core\EntityBundle\Entity\Admin",
-     *  statusCodes = {
-     *      200 = "Returned when successful",
-     *      404 = "Returned when the data is not found"
-     *  },requirements={
-              "name"="adminId",
-     *        "dataType"="integer",
-     *        "requirement"="\d+",
-     *        "description"="Admin ID"
+      * @ApiDoc(
+      *  resource=true,
+      *  description="Action to disable an Admin",
+      *  output = "Core\EntityBundle\Entity\Admin",
+      *  statusCodes = {
+      *      200 = "Returned when successful",
+      *      404 = "Returned when the data is not found"
+      *  },requirements={
+     "name"="adminId",
+      *        "dataType"="integer",
+      *        "requirement"="\d+",
+      *        "description"="Admin ID"
      }
-     * )
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     * @Rest\View()
-     */
-     public function deleteAction ($adminID) //ParamFetcher?
+      * )
+      *
+      * @return \Symfony\Component\HttpFoundation\Response
+      * @Rest\View()
+      */
+     public function deleteAction($adminID) //ParamFetcher?
      {
-         /**
-          * ToDo: - find Admin in Database
-          *       - setEnabled function -> false
-          */
          $admin = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle')->findby($adminID);
-         $UserManager = $this->get('fos_user.user_manager'); //Object vom Typ FOSUserManager
-         if(!$admin){
-            throw $this->createNotFoundException("Admin not found");
+         //$UserManager = $this->get('fos_user.user_manager'); //Object vom Typ FOSUserManager
+         if (!$admin) {
+             throw $this->createNotFoundException("Admin not found");
          } else {
              $admin->setEnabled(false);
          }
-
-
          return View::create(null, Codes::HTTP_OK);
-
      }
 
      /**
-     * @ApiDoc(
-     *  resource=true,
-     *  description="Action to change the password",
-     *  output = "Core\EntityBundle\Entity\Admin",
-     *  statusCodes = {
-     *      200 = "Returned when successful",
-     *      404 = "Returned when the data is not found"
-     *  },requirements={
-              "name"="adminId",
-     *        "dataType"="integer",
-     *        "requirement"="\d+",
-     *        "description"="Admin ID"
+      * @ApiDoc(
+      *  resource=true,
+      *  description="Action to change the password",
+      *  output = "Core\EntityBundle\Entity\Admin",
+      *  statusCodes = {
+      *      200 = "Returned when successful",
+      *      404 = "Returned when the data is not found"
+      *  },requirements={
+     "name"="adminId",
+      *        "dataType"="integer",
+      *        "requirement"="\d+",
+      *        "description"="Admin ID"
      }
-     * )
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     * @Rest\RequestParam(name="oldpassword", requirements=".*", description="json object of workshop")
-     * @Rest\RequestParam(name="newpassword", requirements=".*", description="json object of workshop")
-     * @Rest\View()
-     */
-     public function patchAction (ParamFetcher $paramfetcher)
+      * )
+      *
+      * @return \Symfony\Component\HttpFoundation\Response
+      * @Rest\RequestParam(name="oldpassword", requirements=".*", description="json object of workshop")
+      * @Rest\RequestParam(name="newpassword", requirements=".*", description="json object of workshop")
+      * @Rest\View()
+      */
+     public function patchAction(ParamFetcher $paramfetcher)
      {
          //get all params
          $params = $paramfetcher->all();
@@ -196,15 +190,16 @@ use Core\EntityBundle\Entity\User;
          $encoder_service = $this->get('security.encoder_factory');
          $encoder = $encoder_service->getEncoder($admin);
          //check if old password input equals the current password in database
-         if($encoder->isPasswordValid($admin->getPassword(), $params['oldpassword'], $admin->getSalt())){
-            //set new password
-            $admin->setPlainPassword($params['newpassword']);
+         if ($encoder->isPasswordValid($admin->getPassword(), $params['oldpassword'], $admin->getSalt())) {
+             //set new password
+             $admin->setPlainPassword($params['newpassword']);
          } else {
              //old password is wrong
              throw $this->createAccessDeniedException("The old password is incorrect");
          }
          $this->getDoctrine()->getManager()->persist($admin);
          $this->getDoctrine()->getManager()->fluch();
+
          return View::create(null, Codes::HTTP_OK);
 
 
@@ -229,12 +224,13 @@ use Core\EntityBundle\Entity\User;
       * @return \Symfony\Component\HttpFoundation\Response
       * @Rest\View()
       */
-     public function postSendPasswordForgotEmailAction($email){
+     public function postSendPasswordForgotEmailAction($email)
+     {
          /** @var $user User */
          $user = $this->get('fos_user.user_manager')->findUserByUsernameOrEmail($email);
 
          if (null === $user) {
-            $this->createNotFoundException("Username not found");
+             $this->createNotFoundException("Username not found");
          }
 
          if ($user->isPasswordRequestNonExpired($this->container->getParameter('fos_user.resetting.token_ttl'))) {
@@ -252,11 +248,42 @@ use Core\EntityBundle\Entity\User;
           * */
          $user->setPasswordRequestedAt(new \DateTime());
          $this->get('fos_user.user_manager')->updateUser($user);
+
          return View::create(null, Codes::HTTP_OK);
 
      }
-     //Passwort reset
-     
-     
-     
+
+     /**
+      * @ApiDoc(
+      *  resource=true,
+      *  description="Action to reset the password",
+      *  output = "Core\EntityBundle\Entity\Admin",
+      *  statusCodes = {
+      *      200 = "Returned when successful",
+      *      404 = "Returned when the data is not found"
+      *  },requirements={
+      *        "name"="email",
+      *        "dataType"="string",
+      *        "requirement"=".*",
+      *        "description"="email of the admin"
+      * }
+      * )
+      *
+      * @return \Symfony\Component\HttpFoundation\Response
+      * @Rest\View()
+      */
+     public function PostResetPasswordAction($token, $password)
+     {
+         $UserManager = $this->get('fos_user.user_manager');
+         $admin = $UserManager->findUserByConfirmationToken($token);
+         if(!$admin){
+             throw $this->createNotFoundException("Admin not found");
+         } else {
+             $admin->setPlainPassword($password);
+         }
+         $this->getDoctrine()->getManager()->persist($admin);
+         $this->getDoctrine()->getManager()->flush();
+
      }
+ }
+
