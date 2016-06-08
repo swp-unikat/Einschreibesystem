@@ -136,8 +136,8 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
             /* Sending E-Mail with Confirmation Link - NOT INCLUDED?*/
             $message = \Swift_Message::newInstance()
                 ->setSubject($template->getEmailSubject())
-                ->setFrom('send@example.com')
-                ->setTo($participant['email'])
+                ->setFrom("info@sky-lab.de")
+                ->setTo($participant->getEmail())
                 ->setBody($renderTemplate->render(["workshop" => $workshop,"participant" => $participant]),'text/html');
             $this->get('mailer')->send($message);
 
