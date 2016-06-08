@@ -152,7 +152,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
             //über Array iterieren , Workshop laden (get Wokrshop?) Anfangs und Endzeit mit dem Workshop vergleichen
 
             foreach($workshopParticipants as $tupel){
-                $tempWorkshop = $this->getDoctrine()->getRepository("Workshop")->find($tupel["id"]);
+                $tempWorkshop = $this->getDoctrine()->getRepository("Workshop")->find($tupel->getId());
                 if($workshop->getStartAt() >= $tempWorkshop->getStartAt() && $workshop->getEndAt() <= $tempWorkshop->getEndAt()){
                     throw $this->createAccessDeniedException("Already in Workshop at same Time");
                 }
@@ -166,7 +166,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
             $message = \Swift_Message::newInstance()
                 ->setSubject($template->getEmailSubject())
                 ->setFrom('send@example.com')
-                ->setTo($participant['email'])
+                ->setTo($participant->getEmail())
                 ->setBody($renderTemplate->render(["workshop" => $workshop,"participant" => $participant]),'text/html');
             $this->get('mailer')->send($message);
             
