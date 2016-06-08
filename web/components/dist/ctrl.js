@@ -73,6 +73,30 @@ mainAppCtrls.controller('EmailTemplateCtrl',['$scope',
 ]);
 
 
+// Source: web/components/controllers/adminWorkshopDetailsCtrl.js
+/**
+ * Created by Ahmet on 08.06.2016.
+ */
+
+
+mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops', '$stateParams', "$alert",
+    function($scope,Workshops,$stateParams, $alert) {
+        //TODO : replace with workshop details
+        var workshopid;
+        workshopid = $stateParams.id;
+        $scope.loading = true;
+        Workshops.get({id: workshopid}).$promise.then(function(value,httpResponse){
+            $scope.workshop = value;
+
+            $scope.loading = false;
+        },function(httpResponse) {
+            alert(httpResponse.status + '');
+            $scope.loading = false;
+        });
+
+    }
+])
+
 // Source: web/components/controllers/administratorManagementCtrl.js
 /**
  * Created by hunte on 31/05/2016.
