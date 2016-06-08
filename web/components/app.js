@@ -132,7 +132,7 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                 }
                 })
             .state('administrator_workshop_details', {
-                url: '/administrator_workshop_details',
+                url: '/workshop/management/:id',
                 controller: 'adminWorkshopDetailsCtrl',
                 templateUrl: prefix.concat('adminWorkshopDetails.html'),
                 data: {
@@ -148,7 +148,7 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                 }
             })
             .state('workshop_managment',{
-                url: '/workshop_managment',
+                url: '/workshop/managment',
                 controller: 'WorkshopManagmentCtrl',
                 templateUrl: prefix.concat('adminWorkshopManagement.html')
             })
