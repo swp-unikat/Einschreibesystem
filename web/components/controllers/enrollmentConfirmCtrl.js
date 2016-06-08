@@ -5,7 +5,7 @@ var mainAppCtrls = angular.module("mainAppCtrls");
 /**
  *
  */
-mainAppCtrls.controller('EnrollmentConfirmCtrl',['$scope',
+mainAppCtrls.controller('enrollmentConfirmCtrl',['$scope',
     function($scope) {
 
     }
