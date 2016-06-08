@@ -295,3 +295,18 @@ mainApp.directive('compareTo',[function(){
     };
     }
 ]);
+mainApp.config(function($provide){
+    $provide.decorator('taOptions', ['taRegisterTool', '$delegate', function(taRegisterTool, taOptions){
+        // $delegate is the taOptions we are decorating
+        // register the tool with textAngular
+        taRegisterTool('usermail', {
+            iconclass: "fa fa-user black",
+            action: function(){
+                this.$editor()
+            }
+        });
+        // add the button to the default toolbar definition
+        taOptions.toolbar[1].push('colourRed');
+        return taOptions;
+    }]);
+});

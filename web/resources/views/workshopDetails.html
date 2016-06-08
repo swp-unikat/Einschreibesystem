@@ -37,12 +37,25 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="list-group pull-right" ng-repeat="p in participants">
-                    <li class="list-group-item">
+            <div class="col-md-2">
+                <ul class="list-group">
+                    <li class="list-group-item text-center">
+                        <h4 translate>PARTICIPANTS</h4>
+                    </li>
+                    <li class="list-group-item"  ng-repeat="p in participants">
                         {{p.name}} {{p.surname}}
                     </li>
-                </div>
+                </ul>
+            </div>
+            <div class="col-md-2">
+                <ul class="list-group">
+                    <li class="list-group-item text-center">
+                        <h4 translate>WAITINGLIST</h4>
+                    </li>
+                    <li class="list-group-item"  ng-repeat="p in waitingList">
+                        {{p.name}} {{p.surname}}
+                    </li>
+                </ul>
             </div>
         </div>
         <div class="row">
