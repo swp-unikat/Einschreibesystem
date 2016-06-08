@@ -11,7 +11,6 @@
         <div class="row">
             <div class="col-md-10 col-xs-10">
                 <h2><translate>LIST_OF_ADMINISTRATORS</translate></h2>
-                <br><br>
                 <div class="list-group" ng-repeat="admin in administratorList">
                     <a href="#" class="list-group-item active">
                         Cras justo odio
@@ -20,7 +19,11 @@
                         </button>
                     </a>
                 </div>
+                <br>
                 <div class="col-md-6 col-xs-6 ">
+                    <a ui-sref="admininvite">
+                        <button translate type="button" class="btn btn-default">BUTTON_INVITE_AN_ADMINISTRATOR</button>
+                    </a><br><br>
                     <div class="list-group-item">
                         awdwfw@fff.com
                         <button type="button" class="btn btn-default btn-xs pull-right">
@@ -51,9 +54,7 @@
                 </div>
 
                 <div class="col-md-5 col-xs-5 text-right">
-                    <a ui-sref="admininvite">
-                        <button translate type="button" class="btn btn-default">BUTTON_INVITE_AN_ADMINISTRATOR</button>
-                    </a>
+
                 </div>
             </div>
         </div>
