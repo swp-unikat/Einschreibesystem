@@ -9,4 +9,4 @@ Install for production
 
 Licence
 ------------------------
-{{md  '.. LICENSE '}}
+{{md  'LICENSE '}}
