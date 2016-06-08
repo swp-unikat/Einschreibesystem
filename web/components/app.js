@@ -188,7 +188,7 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
 mainApp.config(['jwtInterceptorProvider','$httpProvider','$urlRouterProvider',function(jwtInterceptorProvider,$httpProvider,$urlRouterProvider){
     jwtInterceptorProvider.tokenGetter = function(store) {
         return store.get('jwt');
-    }
+    };
 
     $httpProvider.interceptors.push('jwtInterceptor');
 }])
@@ -292,21 +292,23 @@ mainApp.directive('compareTo',[function(){
                 ngModel.$validate();
             });
         }
-    };
+        };
     }
 ]);
-mainApp.config(function($provide){
-    $provide.decorator('taOptions', ['taRegisterTool', '$delegate', function(taRegisterTool, taOptions){
-        // $delegate is the taOptions we are decorating
-        // register the tool with textAngular
-        taRegisterTool('usermail', {
-            iconclass: "fa fa-user black",
-            action: function(){
-                this.$editor()
+mainApp.directive("myNavscroll", function($window) {
+    return function(scope, element, attrs) {
+        angular.element($window).bind("scroll", function() {
+            if (!scope.scrollPosition) {
+                scope.scrollPosition = 0
             }
+
+            if (this.pageYOffset > scope.scrollPosition) {
+                scope.boolChangeClass = true;
+            } else {
+                scope.boolChangeClass = false;
+            }
+            scope.scrollPosition = this.pageYOffset;
+            scope.$apply();
         });
-        // add the button to the default toolbar definition
-        taOptions.toolbar[1].push('colourRed');
-        return taOptions;
-    }]);
+    };
 });
