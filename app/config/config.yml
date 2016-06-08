@@ -115,6 +115,9 @@ fos_rest:
     default_format: json
     include_format: false
 
+  service:
+    inflector: core_api.util.inflector
+
   view:
     formats:
       rss: false
