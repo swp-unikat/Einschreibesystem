@@ -73,13 +73,16 @@
 "BUTTON_DISCARD_TEMPLATE":"Discard template",
 "CURRENT_WORKSHOPS":"Current workshops",
 "ELAPSED_WORKSHOPS":"Elapsed Workshops",
-
+"BLACKLIST_MANAGEMENT":"Blacklist management",
+"BUTTON_NEW_WORKSHOP":"New workshop",
+"PARTICIPANTS":"Participants",
+"WAITINGLIST":"Waitinglist",
  
 "BUTTON_EMAIL_TEMPLATE":"Email template",
 "AVAILABLE_EMAIL_TEMPLATES":"Available email templates",
 "BUTTON_EDIT_EMAIL_TEMPLATE":"Edit template",
 "EDIT_EMAIL_TEMPLATE":"Edit email template",
-"BUTTON_NEW_EMAIL_TEMPLATE":"New template",
+"BUTTON_NEW_EMAIL_TEMPLATE":"New email template",
 "NEW_EMAIL_TEMPLATE":"New Email template",
 "EMAIL_TEMPLATE_TITLE":"Email template title",
 "EMAIL_SUBJECT":"Email subject",
@@ -91,7 +94,7 @@
 "BUTTON_ALIGN":"Align",
 "NUMBERED_LIST":"Numbered list",
 "BUTTON_DISCARD_DRAFT":"Discard draft",
-"BUTTON_DELETE_EMAIL_TEMPLATE":"Delete email template",
+"BUTTON_REMOVE_EMAIL_TEMPLATE":"Remove template",
 
 "ADMINISTRATOR_MANAGEMENT":"Administrator management",
 "ADMINISTRATOR_DELETE":"Administrator delete",
