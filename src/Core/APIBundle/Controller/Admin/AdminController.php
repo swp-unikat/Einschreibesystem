@@ -176,24 +176,27 @@ use FOS\RestBundle\Request\ParamFetcher;
      */
      public function patchAction (ParamFetcher $paramfetcher)
      {
-        /**
-         * To do: - find Admin in Database
-         *       - delete Password
-         *       - setPasswort ?
-         */
+         //get all params
          $params = $paramfetcher->all();
+         //get current user
          $admin = $this->getUser();
+         //needed for encoding the current password
          $encoder_service = $this->get('security.encoder_factory');
          $encoder = $encoder_service->getEncoder($admin);
+         //check if old password input equals the current password in database
          if($encoder->isPasswordValid($admin->getPassword(), $params['oldpassword'], $admin->getSalt())){
+            //set new password
             $admin->setPlainPassword($params['newpassword']);
          } else {
+             //old password is wrong
              throw $this->createAccessDeniedException("The old password is incorrect");
          }
+         $this->getDoctrine()->getManager()->persist($admin);
+         $this->getDoctrine()->getManager()->fluch();
 
      }
 
-    //Passwort ändern
+    //Passwort reset
      
      
      
