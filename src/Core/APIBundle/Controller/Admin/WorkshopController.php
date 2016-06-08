@@ -263,7 +263,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\View()
      */
-    public function postHasParticipated($workshopId, $participantId)
+    public function postHasParticipatedAction($workshopId, $participantId)
     {
         $workshopParticipant = $this->getDoctrine()->getRepository("CoreEntityBundle:WorkshopParticipants")->findOneBy(["workshop" => $workshopId,"participant" => $participantId]);
 
