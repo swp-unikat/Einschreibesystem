@@ -204,7 +204,13 @@ mainAppCtrls.controller('ContactCtrl',['$scope',
  */
 mainAppCtrls.controller('EditEmailTemplateCtrl',['$scope',
     function($scope) {
-
+        $scope.lnToolbar = [
+            ['h1', 'h2', 'h3', 'p', 'bold', 'italics'],
+            ['ul', 'ol'],
+            ['redo', 'undo', 'clear'],
+            ['html', 'insertImage', 'insertLink'],
+            ['justifyLeft', 'justifyCenter', 'justifyRight', 'indent', 'outdent']
+        ];
     }
 
 ]);
@@ -267,7 +273,13 @@ mainAppCtrls.controller('LoginCtrl',['$scope','$http','store','$state',
  */
 mainAppCtrls.controller('NewEmailTemplateCtrl',['$scope',
     function($scope) {
-
+        $scope.lnToolbar = [
+            ['h1', 'h2', 'h3', 'p', 'bold', 'italics'],
+            ['ul', 'ol'],
+            ['redo', 'undo', 'clear'],
+            ['html', 'insertImage', 'insertLink'],
+            ['justifyLeft', 'justifyCenter', 'justifyRight', 'indent', 'outdent']
+        ];
     }
 
 ]);
