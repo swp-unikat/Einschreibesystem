@@ -346,10 +346,9 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
 	    if (!$participantsList) {
             throw $this->createNotFoundException("No Participant in Workshop found");
          }
-
+        $participants = [];
         foreach($participantsList as $participant){
-            $participants[]['name'] = $participant->getParticipant()->getName();
-            $participants[]['surname'] = $participant->getParticipant()->getSurname();
+            $participants[] = ['name' =>$participant->getParticipant()->getName(),'surname' => $participant->getParticipant()->getSurname()]:
         }
 
         $view = $this->view($participants, 200);
