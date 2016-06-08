@@ -131,6 +131,14 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                     //requiresLogin: true
                 }
                 })
+            .state('administrator_workshop_details', {
+                url: '/administrator_workshop_details',
+                controller: 'adminWorkshopDetailsCtrl',
+                templateUrl: prefix.concat('adminWorkshopDetails.html'),
+                data: {
+                    //requiresLogin: true
+                }
+            })
             .state('settings', {
                 url: '/settings',
                 controller: 'SettingsCtrl',
