@@ -3,7 +3,7 @@
  */
 
 var mainAppCtrls = angular.module("mainAppCtrls");
-mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$stateParams', "$alert",
+mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops', '$stateParams', "$alert",
     function($scope,Workshops,$stateParams, $alert) {
         //TODO : replace with workshop details
         var workshopid;

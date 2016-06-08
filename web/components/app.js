@@ -131,6 +131,7 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                     //requiresLogin: true
                 }
                 })
+
             .state('administrator_workshop_details', {
                 url: '/workshop/management/:id',
                 controller: 'adminWorkshopDetailsCtrl',
@@ -139,6 +140,16 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                     //requiresLogin: true
                 }
             })
+
+            .state('admin_workshop_management',{
+                url: '/workshop/management',
+                controller: 'adminWorkshopManagementCtrl',
+                templateUrl: prefix.concat('adminWorkshopManagement.html'),
+                data: {
+                    //requiresLogin: true
+                }
+            })
+
             .state('settings', {
                 url: '/settings',
                 controller: 'SettingsCtrl',
@@ -147,11 +158,7 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                     //requiresLogin: true
                 }
             })
-            .state('workshop_managment',{
-                url: '/workshop/managment',
-                controller: 'WorkshopManagmentCtrl',
-                templateUrl: prefix.concat('adminWorkshopManagement.html')
-            })
+
             .state('admininvite',{
                 url: '/admin/create/:token',
                 controller: 'AdminCreateCtrl',
