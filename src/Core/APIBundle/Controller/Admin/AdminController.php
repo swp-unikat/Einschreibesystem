@@ -225,6 +225,7 @@ use Core\EntityBundle\Entity\User;
 
          /*
           * @ToDo add Mail
+          * 
           * */
          $user->setPasswordRequestedAt(new \DateTime());
          $this->get('fos_user.user_manager')->updateUser($user);

@@ -172,7 +172,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
             
         }
 
-        return View::create($message, Codes::HTTP_OK);
+        return View::create(NULL, Codes::HTTP_OK);
     }
 
     /**
