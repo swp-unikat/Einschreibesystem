@@ -2,7 +2,7 @@
 /**
  * Created by IntelliJ IDEA.
  * User: Marco Hanisch
- * Authors: Marco Hanisch 
+ * Authors: Marco Hanisch, Andreas Ifland
  * Date: 31.05.2016
  * Time: 13:01
  */
@@ -36,26 +36,11 @@ use Core\EntityBundle\Entity\User;
       *
       *
       * @return \Symfony\Component\HttpFoundation\Response
-      * @Rest\RequestParam(name="email", requirements=".*", description="js object of workshop")
+      * @param $email string email as the username of administrator
       * @Rest\View()
       */
-     public function inviteAdminAction($email) //kein Param
+     public function inviteAdminAction($email)
      {
-         /**
-          * When sending invitation set this value to 'true'
-          *
-          * It prevents sending invitations twice
-          *
-          * protected $sent =false;
-          *
-          * neue Invitation erstellen
-          *Email versenden mit Link
-          *
-          *nächste Funktion: Invite Code überprüfen, falls stimmt, neuen User anlegen und auf enabled setzen
-          *
-          *Funktion Passwort ändern
-          *
-          */
          $invitation = new Invitation();
          //Create Token
          $code = $invitation->getCode();
@@ -118,6 +103,9 @@ use Core\EntityBundle\Entity\User;
          } else {
              throw $this->createAccessDeniedException("No invitation was sended!");
          }
+
+         $this->getDoctrine()->getManager()->persist($admin);
+         $this->getDoctrine()->getManager()->flush();
      }
 
 
@@ -136,7 +124,7 @@ use Core\EntityBundle\Entity\User;
       *        "description"="Admin ID"
      }
       * )
-      *
+      * @param $adminID integer adminID
       * @return \Symfony\Component\HttpFoundation\Response
       * @Rest\View()
       */
@@ -148,6 +136,8 @@ use Core\EntityBundle\Entity\User;
          } else {
              $admin->setEnabled(false);
          }
+         $this->getDoctrine()->getManager()->persist($admin);
+         $this->getDoctrine()->getManager()->flush();
          return View::create(null, Codes::HTTP_OK);
      }
 
