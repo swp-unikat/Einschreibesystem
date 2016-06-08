@@ -11,12 +11,13 @@ vagrant up
 
 Install for production
 -----------------------`
-1) Clone Repository and remove Vagrant
+1) Clone Repository and remove Vagrant files
 ```bash
 git clone https://github.com/swp-unikat/Einschreibesystem.git
 cd Einschreibesystem
-rm Vagrantfile
+rm Vagrantfile`
 rm install.sh
+rm apache.conf
 ```
 2) Create a database
 
