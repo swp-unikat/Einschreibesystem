@@ -1,68 +1,53 @@
-Symfony Standard Edition
-========================
+Einschreibesystem
+================
 
-Welcome to the Symfony Standard Edition - a fully-functional Symfony
-application that you can use as the skeleton for your new applications.
+Install for development
+-----------------------
+```bash
+git clone https://github.com/swp-unikat/Einschreibesystem.git
+cd Einschreibesystem
+vagrant up
+```
 
-For details on how to download and get started with Symfony, see the
-[Installation][1] chapter of the Symfony Documentation.
+Install for production
+-----------------------`
+1) Clone Repository and remove Vagrant files
+```bash
+git clone https://github.com/swp-unikat/Einschreibesystem.git
+cd Einschreibesystem
+rm Vagrantfile`
+rm install.sh
+rm apache.conf
+```
+2) Create a database
 
-What's inside?
---------------
+3) Configure JWT
 
-The Symfony Standard Edition is configured with the following defaults:
+```bash
+cd Einschreibesystem
+mkdir -p app/var/jwt
+openssl genrsa -out app/var/jwt/private.pem -aes256 4096
+openssl rsa -pubout -in app/var/jwt/private.pem -out app/var/jwt/public.pem
+```
+4) Install
+```bash
+php composer install
+```
 
-  * An AppBundle you can use to start coding;
+Licence
+------------------------
 
-  * Twig as the only configured template engine;
+Copyright (c) 2016 Valentin Schaefer, Andreas Ifland, Leon Bergmann (l.bergmann@sky-lab.de), Ahmet Durak, Marco Hanisch,
+Martin Griebel, Mohammad Ahmed Jaafar Hamdar, Stefan Heringklee
 
-  * Doctrine ORM/DBAL;
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation
+files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy,
+modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following conditions:
 
-  * Swiftmailer;
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-  * Annotations enabled for everything.
-
-It comes pre-configured with the following bundles:
-
-  * **FrameworkBundle** - The core Symfony framework bundle
-
-  * [**SensioFrameworkExtraBundle**][6] - Adds several enhancements, including
-    template and routing annotation capability
-
-  * [**DoctrineBundle**][7] - Adds support for the Doctrine ORM
-
-  * [**TwigBundle**][8] - Adds support for the Twig templating engine
-
-  * [**SecurityBundle**][9] - Adds security by integrating Symfony's security
-    component
-
-  * [**SwiftmailerBundle**][10] - Adds support for Swiftmailer, a library for
-    sending emails
-
-  * [**MonologBundle**][11] - Adds support for Monolog, a logging library
-
-  * **WebProfilerBundle** (in dev/test env) - Adds profiling functionality and
-    the web debug toolbar
-
-  * **SensioDistributionBundle** (in dev/test env) - Adds functionality for
-    configuring and working with Symfony distributions
-
-  * [**SensioGeneratorBundle**][13] (in dev/test env) - Adds code generation
-    capabilities
-
-  * **DebugBundle** (in dev/test env) - Adds Debug and VarDumper component
-    integration
-
-All libraries and bundles included in the Symfony Standard Edition are
-released under the MIT or BSD license.
-
-Enjoy!
-
-[1]:  https://symfony.com/doc/2.8/book/installation.html
-[6]:  https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
-[7]:  https://symfony.com/doc/2.8/book/doctrine.html
-[8]:  https://symfony.com/doc/2.8/book/templating.html
-[9]:  https://symfony.com/doc/2.8/book/security.html
-[10]: https://symfony.com/doc/2.8/cookbook/email.html
-[11]: https://symfony.com/doc/2.8/cookbook/logging/monolog.html
-[13]: https://symfony.com/doc/2.8/bundles/SensioGeneratorBundle/index.html
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.

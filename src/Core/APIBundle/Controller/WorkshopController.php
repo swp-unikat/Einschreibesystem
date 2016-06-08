@@ -229,8 +229,8 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
                         $participantWorkshop->setWaiting(true);
                     else
                         $participantWorkshop->setWaiting(false);
-                    // save to database
                     $token->setUsedAt(new \DateTime('now'));
+                    // save to database
                     $this->getDoctrine()->getManager()->persist($token);
                     $this->getDoctrine()->getManager()->persist($participantWorkshop);
                     $this->getDoctrine()->getManager()->flush();
@@ -262,12 +262,10 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
     public function getUnsubscribeAction($id,$token, $participantsID)
     {
         $workshop = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Workshop")->find($id);
-        $token = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Token")->findBy(
-            ['token' => $token]
-        );
-        $participant = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Participants")->find(
-            $participantsID
-        );
+        /*@var $token Core\EntityBundle\Entity\EmailToken */
+        $token = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:EmailToken")->findOneBy(['token' => $token]);
+        $participant = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Participants")->find($participantsID);
+
         $workshopParticipant = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:WorkshopParticipants")->findById($id, $participantsID);
 
         if ($workshop != NULL && $token != NULL && $participant != NULL) {
@@ -275,8 +273,8 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
                 if ($token->getParticipant() != $participant) {
                     throw $this->createAccessDeniedException("User does not match");
                 } else {
-                    $workshopParticipant->getWorkshop($id);
-                    $workshopParticipant->getParticipant($participant);
+                    $workshopParticipant->setWorkshop($id);
+                    $workshopParticipant->setParticipant($participant);
 
                     $token->setUsedAt(new \DateTime('now'));
                     $this->getDoctrine()->getManager()->persist($token);
@@ -314,12 +312,11 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      */
     public function getWaitinglistAction($id)
     {
-        $waitinglist = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:WorkshopParticipants')->findBy(['workshop' => $id,'waiting' => 1],['enrollment' => "DESC"]);
-        if (!$waitinglist) {
+        $waitingList = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:WorkshopParticipants')->findBy(['workshop' => $id,'waiting' => 1],['enrollment' => "DESC"]);
+        if (!$waitingList) {
             throw $this->createNotFoundException("No waitinglist for workshop");
         }
-
-        $view = $this->view($waitinglist, 200);
+        $view = $this->view($waitingList, 200);
         return $this->handleView($view);
     }
     /**
@@ -345,11 +342,16 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      */
      public function getParticipantsAction($id)
     {  
-	    $participantslist = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:Participants')->findBy(['workshop' => $id],['enrollment' => "DESC"]);
-	    if (!$participantslist) {
+	    $participantsList = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:WorkshopParticipants')->findBy(['workshop' => $id],['enrollment' => "DESC"]);
+	    if (!$participantsList) {
             throw $this->createNotFoundException("No Participant in Workshop found");
          }
-        $view = $this->view($participant, 200);
+        $participants = [];
+        foreach($participantsList as $participant){
+            $participants[] = ['name' =>$participant->getParticipant()->getName(),'surname' => $participant->getParticipant()->getSurname()];
+        }
+
+        $view = $this->view($participants, 200);
         return $this->handleView($view);
     }
 }
