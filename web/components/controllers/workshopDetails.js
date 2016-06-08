@@ -27,19 +27,20 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
                     content: 'Enrollment successful. Please check your E-Mail!',
                     container: '#alertEnroll',
                     dismissable: true,
-                    duration: 10,
-                    show: true
+                    duration: 20,
+                    show: true,
+                    animation: 'am-fade-and-slide-top'
                 });
             },function(httpResponse){
                 $alert({
-
                     title: 'Error',
                     type: 'danger',
-                    content: 'success',
+                    content: httpResponse.status + ': '+ httpResponse.statusText,
                     container: '#alertEnroll',
                     dismissable: true,
-                    duration: 10,
-                    show: true
+                    duration: 20,
+                    show: true,
+                    animation: 'am-fade-and-slide-top'
                 });
             });
         };
@@ -59,7 +60,18 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
 
             $scope.loading = false;
         },function(httpResponse) {
-            alert('Participants: ' +httpResponse.status + '');
+            switch(httpResponse.status){
+                case 404:
+                    $alert({
+                        title: '',
+                        type: 'info',
+                        content: 'No participants yet',
+                        container: '#alertParticipant',
+                        dismissable: false,
+                        show: true,
+                        animation: 'am-fade-and-slide-top'
+                    });
+            }
             $scope.loading = false;
         });
 

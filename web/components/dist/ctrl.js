@@ -73,31 +73,6 @@ mainAppCtrls.controller('EmailTemplateCtrl',['$scope',
 ]);
 
 
-// Source: web/components/controllers/LegalNoticeCtrl.js
-/**
- * Created by hunte on 08/06/2016.
- */
-
-/**
- *
- */
-mainAppCtrls.controller('LegalNoticeCtrl',['$scope',
-    function($scope) {
-
-    }
-
-]);
-
-// Source: web/components/controllers/TestPrintServiceCtrl.js
-
-/**
- * @name SettingsCtrl
- * @description Controller for the Settings view
- */
-mainAppCtrls.controller('TestPrintServiceCtrl',function($scope, prntSvcs) {
-    printer.print('resources/views/workshopDetails.html',WORKSHOP_PARTICIPANTS);
-});
-
 // Source: web/components/controllers/adminWorkshopDetailsCtrl.js
 /**
  * Created by Ahmet on 08.06.2016.
@@ -252,7 +227,7 @@ mainAppCtrls.controller('EditEmailTemplateCtrl',['$scope',
  */
 
 
-// Source: web/components/controllers/EnrollmentConfirmCtrl.js
+// Source: web/components/controllers/enrollmentConfirmCtrl.js
 /**
  * Created by hunte on 30/05/2016.
  */
@@ -261,6 +236,21 @@ mainAppCtrls.controller('EditEmailTemplateCtrl',['$scope',
  *
  */
 mainAppCtrls.controller('EnrollmentConfirmCtrl',['$scope',
+    function($scope) {
+
+    }
+
+]);
+
+// Source: web/components/controllers/legalNoticeCtrl.js
+/**
+ * Created by hunte on 08/06/2016.
+ */
+
+/**
+ *
+ */
+mainAppCtrls.controller('LegalNoticeCtrl',['$scope',
     function($scope) {
 
     }
@@ -450,19 +440,20 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
                     content: 'Enrollment successful. Please check your E-Mail!',
                     container: '#alertEnroll',
                     dismissable: true,
-                    duration: 10,
-                    show: true
+                    duration: 20,
+                    show: true,
+                    animation: 'am-fade-and-slide-top'
                 });
             },function(httpResponse){
                 $alert({
-
                     title: 'Error',
                     type: 'danger',
-                    content: 'success',
+                    content: httpResponse.status + ': '+ httpResponse.statusText,
                     container: '#alertEnroll',
                     dismissable: true,
-                    duration: 10,
-                    show: true
+                    duration: 20,
+                    show: true,
+                    animation: 'am-fade-and-slide-top'
                 });
             });
         };
@@ -482,7 +473,18 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
 
             $scope.loading = false;
         },function(httpResponse) {
-            alert('Participants: ' +httpResponse.status + '');
+            switch(httpResponse.status){
+                case 404:
+                    $alert({
+                        title: '',
+                        type: 'info',
+                        content: 'No participants yet',
+                        container: '#alertParticipant',
+                        dismissable: false,
+                        show: true,
+                        animation: 'am-fade-and-slide-top'
+                    });
+            }
             $scope.loading = false;
         });
 
