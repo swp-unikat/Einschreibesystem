@@ -119,9 +119,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
         if (!$workshop) {
             throw $this->createNotFoundException("Workshop not found");
         }
-        
-       
-        
+
         if ($participant == NULL){
             $participant = new Participants();
             $participant->setBlacklisted(false);
@@ -135,6 +133,10 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
 
         } else {
             //alle Workshops an denen der Nutzer noch nicht teilgenommen hat
+            if ($participant->isBlacklisted()) {
+                throw $this->createAccessDeniedException("You ar blacklisted");
+            }
+
             $workshopParticipants = $this->getDoctrine()->getRepository("CoreEntityBundle:WorkshopParticipants")->findBy(["participant" => $participant, "participated" => 0]);
             //über Array iterieren , Workshop laden (get Wokrshop?) Anfangs und Endzeit mit dem Workshop vergleichen
 
@@ -145,7 +147,6 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
                 }
             }
         }
-
 
         $token = new EmailToken();
         $token->setParticipant($participant);
