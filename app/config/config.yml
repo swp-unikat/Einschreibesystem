@@ -114,6 +114,8 @@ fos_rest:
   routing_loader:
     default_format: json
     include_format: false
+  service:
+      inflector: acme.hellobundle.util.inflector
 
   view:
     formats:
@@ -128,7 +130,7 @@ fos_rest:
     failed_validation: HTTP_BAD_REQUEST
     default_engine: twig
     view_response_listener: true
-  exception:
+   exception:
     codes:
         'Symfony\Component\Routing\Exception\ResourceNotFoundException': 404
         'Doctrine\ORM\OptimisticLockException': HTTP_CONFLICT
