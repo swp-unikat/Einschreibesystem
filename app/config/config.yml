@@ -115,7 +115,7 @@ fos_rest:
     default_format: json
     include_format: false
   service:
-      inflector: acme.hellobundle.util.inflector
+    inflector: acme.hellobundle.util.inflector
 
   view:
     formats:
