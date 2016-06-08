@@ -79,6 +79,8 @@
 "BUTTON_NEW_EMAIL_TEMPLATE":"New template",
 "NEW_EMAIL_TEMPLATE":"New Email template",
 "EMAIL_TITLE":"Email title",
+"EMAIL_SUBJECT":"Email subject",
+"EMAIL_BODY":"Email body",
 "EMAIL_RECIPIENTS":"Recipients",
 "EMAIL_CONTENT":"Content",
 "BUTTON_TEXT_SIZE":"Size",
