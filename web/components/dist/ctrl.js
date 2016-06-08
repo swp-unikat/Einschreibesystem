@@ -117,7 +117,7 @@ mainAppCtrls.controller('adminWorkshopManagementCtrl',['$scope','Workshops','$al
             $scope.errorMsg = translations.ERROR_NO_WORKSHOPS;
         });
         $scope.loading = true;
-        Workshops.getAll().$promise.then(function(value){
+        Workshops.gethistory().$promise.then(function(value){
             $scope.workshopList = value;
             $scope.loading = false;
         },function(httpResponse) {
@@ -271,8 +271,8 @@ mainAppCtrls.controller('LoginCtrl',['$scope','$http','store','$state',
 /**
  *
  */
-mainAppCtrls.controller('NewEmailTemplateCtrl',['$scope',
-    function($scope) {
+mainAppCtrls.controller('NewEmailTemplateCtrl', ['$scope',
+    function ($scope) {
         $scope.lnToolbar = [
             ['h1', 'h2', 'h3', 'p', 'bold', 'italics'],
             ['ul', 'ol'],
