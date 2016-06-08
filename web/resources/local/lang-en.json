@@ -81,7 +81,7 @@
 "EDIT_EMAIL_TEMPLATE":"Edit email template",
 "BUTTON_NEW_EMAIL_TEMPLATE":"New template",
 "NEW_EMAIL_TEMPLATE":"New Email template",
-"EMAIL_TITLE":"Email title",
+"EMAIL_TEMPLATE_TITLE":"Email template title",
 "EMAIL_SUBJECT":"Email subject",
 "EMAIL_BODY":"Email body",
 "EMAIL_RECIPIENTS":"Recipients",
