@@ -2,7 +2,7 @@
  * Created by hunte on 06/06/2016.
  */
 
-var prntSvcs = angular.module("prntSvcs",['$rootScope', '$compile','$http','$timeout']);
+var prntSvcs = angular.module("prntSvcs",['$rootScope','$compile','$http','$timeout']);
 
 prntSvcs.factory('printer',['printer', function($rootScope, $compile, $http, $timeout ){
     var printHtml = function (html) {
@@ -29,6 +29,7 @@ prntSvcs.factory('printer',['printer', function($rootScope, $compile, $http, $ti
             waitForRenderAndPrint();
         });
     };
+    return print;
 
 
 }]);
