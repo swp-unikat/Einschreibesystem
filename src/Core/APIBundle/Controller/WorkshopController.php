@@ -348,7 +348,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
          }
         $participants = [];
         foreach($participantsList as $participant){
-            $participants[] = ['name' =>$participant->getParticipant()->getName(),'surname' => $participant->getParticipant()->getSurname()]:
+            $participants[] = ['name' =>$participant->getParticipant()->getName(),'surname' => $participant->getParticipant()->getSurname()];
         }
 
         $view = $this->view($participants, 200);
