@@ -276,10 +276,9 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      *  resource=true,
      *  description="Returns the waitinglist of a workshop",
      *  output = {
-     *     "class"="Core\EntityBundle\Entity\WorkshopParticipants",
-     *     "groups"={"names"}
-     * },
-     * statusCodes = {
+     *      "class"="Core\EntityBundle\Entity\WorkshopParticipant",
+     *      "groups"={"names"}
+     *  },statusCodes = {
      *      200 = "Returned when successful",
      *      404 = "Returned when the data is not found"
      *  },requirements={
