@@ -149,7 +149,7 @@ class EmailTemplateController extends FOSRestController implements ClassResource
     {
     	$params = $paramFetcher->all();
         /** @var EmailTemplate $emailTemplate */
-        $emailTemplate = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:EmailTemplate")->findBy($id);
+        $emailTemplate = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:EmailTemplate")->find($id);
         if (!$emailTemplate) {
         	throw $this->createNotFoundException("No EmailTemplate found");
         }
