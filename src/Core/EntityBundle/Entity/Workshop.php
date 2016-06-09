@@ -268,7 +268,7 @@ class Workshop
     }
 
     /**
-     * @param oolean $notified
+     * @param boolean $notified
      */
     public function setNotified($notified)
     {

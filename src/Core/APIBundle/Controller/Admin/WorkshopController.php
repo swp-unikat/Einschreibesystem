@@ -100,6 +100,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
             $workshop->setEndAt(\DateTime::createFromFormat('Y-m-d H:i:s',$params["end_at"]));
         if($params["max_participants"] != NULL)
             $workshop->setMaxParticipants($params["max_participants"]);
+        $workshop->setNotified(FALSE);
         $this->getDoctrine()->getManager()->persist($workshop);
         $this->getDoctrine()->getManager()->flush();
         $view = $this->view($workshop,200);
