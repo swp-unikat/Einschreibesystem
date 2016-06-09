@@ -12,8 +12,11 @@
             <label>{{ "TEMPLATE_TITLE" | translate}}</label>
             <input type="text" ng-model="template.title" class="form-control">
 
+            <label>{{ "WORKSHOP_TITLE" | translate}}</label>
+            <input type="text" ng-model="workshop.title" class="form-control">
+
             <label>{{ "WORKSHOP_DESCRIPTION" | translate}}</label>
-            <div text-angular  ng-model="newDescription"></div>
+            <div text-angular  ng-model="workshop.description"></div>
 
             <label>{{ "WORKSHOP_COST" | translate}}</label>
             <input type="text" ng-model="workshop.cost" class="form-control ">
@@ -23,6 +26,9 @@
 
             <label>{{ "WORKSHOP_LOCATION" | translate}}</label>
             <input type="text" ng-model=workshop.location class="form-control ">
+
+            <label>{{ "WORKSHOP_MAXIMUM_NUMBER_OF_PARTICIPANTS" | translate}}</label>
+            <input type="text" ng-model=workshop.max.participants class="form-control ">
 
             <div class="form-group">
             <label>{{ "WORKSHOP_START_TIME" | translate}}</label>
@@ -37,8 +43,10 @@
 
 
         <div class="form-group row text-center">
-
-                <button type="Confirm" class="btn btn-default">{{ "BUTTON_SAVE" | translate }}</button>
+            <div class="btn-group">
+                <button type="reset" class="btn btn-info" ng-click="discard()">{{ "BUTTON_DISCARD" | translate }}</button>
+                <button type="Confirm" class="btn btn-info" ng-click="sendInfo()">{{ "BUTTON_SAVE" | translate }}</button>
+            </div>
         </div>
     </form>
     </body>
