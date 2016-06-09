@@ -5,8 +5,23 @@ var mainAppCtrls = angular.module("mainAppCtrls");
 /**
  *
  */
-mainAppCtrls.controller('EmailTemplateCtrl',['$scope',
-    function($scope) {
+mainAppCtrls.controller('EmailTemplateCtrl',['$scope', "EmailTemplate",
+    function($scope, EmailTemplate) {
+
+
+        EmailTemplate.getAll()
+            .$promise.then(function(value){
+            $scope.data=value;
+        },function(httpResponse){
+            alert('Error'+httpResponse.statusText);
+        });
+
+
+
+
+
+
+
 
     }
 
