@@ -64,7 +64,7 @@ class EmailToken{
     {
         $this->created = new \DateTime("now");
         $this->valid_until = $this->created;
-        $this->valid_until->add(new \DateInterval('P30i'));
+        $this->valid_until->add(new \DateInterval('PT30M'));
         $this->token = openssl_random_pseudo_bytes(255);
     }
 
