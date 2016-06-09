@@ -114,7 +114,6 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
 
         $workshop = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Workshop")->find($id);
         $participant = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Participants")->findOneBy(["email" => $params["email"]]);
-
         
         if (!$workshop) {
             throw $this->createNotFoundException("Workshop not found");
@@ -134,7 +133,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
         } else {
             //alle Workshops an denen der Nutzer noch nicht teilgenommen hat
             if ($participant->isBlacklisted()) {
-                throw $this->createAccessDeniedException("You ar blacklisted");
+                throw $this->createAccessDeniedException("You are blacklisted");
             }
 
             $workshopParticipants = $this->getDoctrine()->getRepository("CoreEntityBundle:WorkshopParticipants")->findBy(["participant" => $participant, "participated" => 0]);
