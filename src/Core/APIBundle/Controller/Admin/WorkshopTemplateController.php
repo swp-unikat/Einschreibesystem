@@ -312,7 +312,6 @@ class WorkshopTemplateController extends FOSRestController implements ClassResou
     }
 
     /**
-
      * @ApiDoc(
      *  resource=true,
      *  description="Delete a template",
