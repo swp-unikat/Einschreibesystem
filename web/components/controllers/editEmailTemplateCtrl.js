@@ -7,13 +7,9 @@ var mainAppCtrls = angular.module("mainAppCtrls");
  */
 mainAppCtrls.controller('EditEmailTemplateCtrl',['$scope',
     function($scope) {
-        $scope.lnToolbar = [
-            ['h1', 'h2', 'h3', 'p', 'bold', 'italics'],
-            ['ul', 'ol'],
-            ['redo', 'undo', 'clear'],
-            ['html', 'insertImage', 'insertLink'],
-            ['justifyLeft', 'justifyCenter', 'justifyRight', 'indent', 'outdent']
-        ];
+
+
+        
     }
 
 ]);
