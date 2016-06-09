@@ -97,9 +97,9 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
         if($params["location"] != NULL)
             $workshop->setLocation($params["location"]);
         if($params["start_at"] != NULL)
-            $workshop->setStartAt($params["start_at"]);
+            $workshop->setStartAt(\DateTime::createFromFormat('Y-m-d H:i:s',$params["start_at"]));
         if($params["end_at"] != NULL)
-            $workshop->setEndAt($params["end_at"]);
+            $workshop->setEndAt(\DateTime::createFromFormat('Y-m-d H:i:s',$params["end_at"]));
         if($params["max_participants"] != NULL)
             $workshop->setMaxParticipants($params["max_participants"]);
         $this->getDoctrine()->getManager()->persist($workshop);
@@ -150,9 +150,9 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
         if($params["location"] != NULL)
             $workshop->setLocation($params["location"]);
         if($params["start_at"] != NULL)
-            $workshop->setStartAt($params["start_at"]);
+            $workshop->setStartAt(\DateTime::createFromFormat('Y-m-d H:i:s',$params["start_at"]));
         if($params["end_at"] != NULL)
-            $workshop->setEndAt($params["end_at"]);
+            $workshop->setEndAt(\DateTime::createFromFormat('Y-m-d H:i:s',$params["end_at"]));
         if($params["max_participants"] != NULL)
             $workshop->setMaxParticipants($params["max_participants"]);
         $this->getDoctrine()->getManager()->persist($workshop);
