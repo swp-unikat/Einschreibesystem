@@ -275,7 +275,9 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      * @ApiDoc(
      *  resource=true,
      *  description="Returns the waitinglist of a workshop",
-     *  output = "Core\EntityBundle\Entity\WorkshopParticipants",
+     *  output = {
+     *     "class"="Core\EntityBundle\Entity\WorkshopParticipants",
+     *     "groups"={"names"}
      *  statusCodes = {
      *      200 = "Returned when successful",
      *      404 = "Returned when the data is not found"
@@ -298,7 +300,16 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
         if (!$waitingList) {
             throw $this->createNotFoundException("No waitinglist for workshop");
         }
-        $view = $this->view($waitingList, 200);
+
+        $waiting = [];
+        foreach ($waitingList as $participant) {
+            $waiting[] = [
+                'name' => $participant->getParticipant()->getName(),
+                'surname' => $participant->getParticipant()->getSurname()
+            ];
+        }
+
+        $view = $this->view($waiting, 200);
         return $this->handleView($view);
     }
     /**

@@ -31,6 +31,7 @@ class WorkshopParticipants
      * @ORM\JoinColumn(name="participant", referencedColumnName="id", onDelete="CASCADE")
      * @Serializer\Expose
      * @Serializer\SerializedName("participants")
+     * @Serializer\Groups({"names"})
      */
     protected $participant;
     /**
