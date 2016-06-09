@@ -139,15 +139,15 @@ class WorkshopTemplateController extends FOSRestController implements ClassResou
      *  },requirements={
      *      {
      *          "name"="start_at",
-     *          "dataType"="date",
+     *          "dataType"="DateTime",
      *          "requirement"=".*",
      *          "description"="starttime of the Workshop"
      *      }
      *  },requirements={
      *      {
      *          "name"="end_at",
-     *          "dataType"="date",
-     *          "requirement"=".*",
+     *          "dataType"="DateTime",
+     *          "requirement"="",
      *          "description"="endtime of the Workshop"
      *      }
      *  },requirements={
@@ -195,9 +195,9 @@ class WorkshopTemplateController extends FOSRestController implements ClassResou
         if($params["location"] != NULL)
             $workshopTemplate->setLocation($params["location"]);
         if($params["start_at"] != NULL)
-            $workshopTemplate->setStartAt($params["start_at"]);
+            $workshopTemplate->setStartAt(\DateTime::createFromFormat('Y-m-d H:i:s',$params["start_at"]));
         if($params["end_at"] != NULL)
-            $workshopTemplate->setEndAt($params["end_at"]);
+            $workshopTemplate->setEndAt(\DateTime::createFromFormat('Y-m-d H:i:s',$params["end_at"]));
         if($params["max_participants"] != NULL)
             $workshopTemplate->setMaxParticipants($params["max_participants"]);
         /* save the edited template to the database*/
@@ -208,7 +208,6 @@ class WorkshopTemplateController extends FOSRestController implements ClassResou
     }
 
     /**
-
      * @ApiDoc(
      *  resource=true,
      *  description="Create new template",
