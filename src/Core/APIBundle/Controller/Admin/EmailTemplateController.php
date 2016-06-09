@@ -143,6 +143,10 @@ class EmailTemplateController extends FOSRestController implements ClassResource
      * @Rest\RequestParam(name="template_name", requirements=".*", description="name of the emailtemplate",default=null,nullable=true)
      * @Rest\RequestParam(name="email_subject", requirements=".*", description="subject of the emailtemplate",default=null,nullable=true)
      * @Rest\RequestParam(name="email_body", requirements=".*", description="content of the emailtemplate",default=null,nullable=true)
+     * @param integer [] $id id of the emailtemplate
+     * @param string [] $template_name name of the emailtemplate
+     * @param string [] $email_subject subject of the emailtemplate
+     * @param string [] §email_body content of the emailtemplate
      * @Rest\View()
      */
     public function patchAction(ParamFetcher $paramFetcher,$id)
