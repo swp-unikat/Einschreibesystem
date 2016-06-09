@@ -475,7 +475,11 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
               surname: last_name,
               email:   _email
             };
-            Workshops.enroll({id: workshopid},_data).$promise.then(function(value,httpResponse){
+            //parameters for url
+            var _params = {
+              id: workshopid
+            };
+            Workshops.enroll(_params,_data).$promise.then(function(value,httpResponse){
                 $alert({
                     title: 'Success',
                     type: 'success',
