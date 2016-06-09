@@ -17,14 +17,29 @@ mainAppCtrls.controller('NewWorkshopTemplateCtrl',['$scope',"WorkshopTemplate",
                 location:$scope.workshop.location,
                 start_at:$scope.sharedDate,
                 end_at:JSON.stringify(new Date(2016,10,10,10,10,0,0)),
-                max_participants: 15
+                max_participants:$scope.workshop.max.participants
             }
             WorkshopTemplate.putWorkshopTemplate(data).$promise.then(function(value){
                 alert('Success!');
             },function(httpResponse){
                 alert('Error'+httpResponse.statusText);
             });
+        };
+        $scope.discard = function(){
+            $scope.workshop.title= "";
+            $scope.workshop.description= "";
+            $scope.workshop.cost= "";
+            $scope.workshop.requirement= "";
+            $scope.workshop.location= "";
+            $scope.workshop.sharedDate= "";
+            $scope.workshop.start_at= "";
+            $scope.workshop.end_at= "";
+            $scope.workshop.max.participants= "";
+
+
+
         }
+
 
 
     }
