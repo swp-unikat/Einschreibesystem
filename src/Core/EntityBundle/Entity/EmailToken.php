@@ -25,7 +25,7 @@ class EmailToken{
     public $id;
     /**
      * @var \Core\EntityBundle\Entity\Participants
-     * @ORM\OneToOne(targetEntity="\Core\EntityBundle\Entity\Participants", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="\Core\EntityBundle\Entity\Participants", cascade={"persist"})
      * @ORM\JoinColumn(name="participant", referencedColumnName="id", onDelete="CASCADE")
      * @Serializer\Expose
      * @Serializer\SerializedName("participant")
@@ -54,7 +54,7 @@ class EmailToken{
     public $valid_until;
     /**
      * @var \DateTime
-     * @ORM\Column(name="used_at", type="datetime", nullable=false)
+     * @ORM\Column(name="used_at", type="datetime", nullable=true)
      * @Serializer\Expose
      * @Serializer\SerializedName("used_at")
      */
@@ -64,8 +64,8 @@ class EmailToken{
     {
         $this->created = new \DateTime("now");
         $this->valid_until = $this->created;
-        $this->valid_until->add(new \DateInterval('P30i'));
-        $this->token = openssl_random_pseudo_bytes(255);
+        $this->valid_until->add(new \DateInterval('PT30M'));
+        $this->token = hash("sha512",bin2hex(openssl_random_pseudo_bytes(255)));
     }
 
     /**

@@ -61,14 +61,14 @@ class WorkshopTemplates{
     protected $location;
     /**
      * @var \DateTime
-     * @ORM\Column(name="start_at", type="datetime", nullable=false)
+     * @ORM\Column(name="start_at", type="datetime", nullable=true)
      * @Serializer\Expose
      * @Serializer\SerializedName("start_at")
      */
     protected $start_at;
     /**
      * @var \DateTime
-     * @ORM\Column(name="end_at", type="datetime", nullable=false)
+     * @ORM\Column(name="end_at", type="datetime", nullable=true)
      * @Serializer\Expose
      * @Serializer\SerializedName("end_at")
      */
