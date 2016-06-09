@@ -72,9 +72,6 @@ fos_user:
     registration:
       confirmation:
         enabled: true
-        from_email:
-          address: registration@example.com
-          sender_name: Demo Registration
 
  # API Config
 nelmio_cors:
@@ -114,6 +111,9 @@ fos_rest:
   routing_loader:
     default_format: json
     include_format: false
+
+  service:
+    inflector: core_api.util.inflector
 
   view:
     formats:

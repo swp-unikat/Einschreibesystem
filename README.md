@@ -7,7 +7,7 @@ Install for development
 git clone https://github.com/swp-unikat/Einschreibesystem.git
 cd Einschreibesystem
 vagrant up
-``
+```
 
 Install for production
 -----------------------`

@@ -27,15 +27,16 @@ class WorkshopParticipants
     protected $id;
     /**
      * @var \Core\EntityBundle\Entity\Participants
-     * @ORM\ManyToOne(targetEntity="\Core\EntityBundle\Entity\Participants", cascade={"persist"},fetch = "LAZY")
+     * @ORM\ManyToOne(targetEntity="\Core\EntityBundle\Entity\Participants", cascade={"persist"},fetch="EXTRA_LAZY")
      * @ORM\JoinColumn(name="participant", referencedColumnName="id", onDelete="CASCADE")
      * @Serializer\Expose
      * @Serializer\SerializedName("participants")
+     * @Serializer\Groups({"names"})
      */
     protected $participant;
     /**
      * @var \Core\EntityBundle\Entity\Workshop
-     * @ORM\ManyToOne(targetEntity="\Core\EntityBundle\Entity\Workshop", cascade={"persist"},fetch = "LAZY")
+     * @ORM\ManyToOne(targetEntity="\Core\EntityBundle\Entity\Workshop", cascade={"persist"},fetch="EXTRA_LAZY")
      * @ORM\JoinColumn(name="workshop", referencedColumnName="id", onDelete="CASCADE")
      * @Serializer\Expose
      * @Serializer\SerializedName("workshop")
@@ -101,7 +102,7 @@ class WorkshopParticipants
     }
 
     /**
-     * @return Workshps
+     * @return Workshop
      */
     public function getWorkshop()
     {
@@ -109,7 +110,7 @@ class WorkshopParticipants
     }
 
     /**
-     * @param Workshps $workshop
+     * @param Workshop $workshop
      */
     public function setWorkshop($workshop)
     {

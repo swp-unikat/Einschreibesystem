@@ -40,7 +40,7 @@ class EmailTemplateController extends FOSRestController implements ClassResource
      * @ApiDoc(
      *  resource=true,
      *  description="Returns list of all templates",
-     *  output = "Core\EntityBundle\Entity\",
+     *  output = "Core\EntityBundle\Entity\EmailTemplate",
      *  statusCodes = {
      *      200 = "Returned when successful",
      *      404 = "Returned when the data is not found"
@@ -140,16 +140,16 @@ class EmailTemplateController extends FOSRestController implements ClassResource
      * )
      *
      * @return \Symfony\Component\HttpFoundation\Response
-     * @Rest\RequestParam(name="template_name", requirements=".*", description="name of the emailtemplate")
-     * @Rest\RequestParam(name="email_subject", requirements=".*", description="subject of the emailtemplate")
-     * @Rest\RequestParam(name="email_body", requirements=".*", description="content of the emailtemplate")
+     * @Rest\RequestParam(name="template_name", requirements=".*", description="name of the emailtemplate",default=null,nullable=true)
+     * @Rest\RequestParam(name="email_subject", requirements=".*", description="subject of the emailtemplate",default=null,nullable=true)
+     * @Rest\RequestParam(name="email_body", requirements=".*", description="content of the emailtemplate",default=null,nullable=true)
      * @Rest\View()
      */
     public function patchAction(ParamFetcher $paramFetcher,$id)
     {
     	$params = $paramFetcher->all();
         /** @var EmailTemplate $emailTemplate */
-        $emailTemplate = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:EmailTemplate")->findById($id);
+        $emailTemplate = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:EmailTemplate")->find($id);
         if (!$emailTemplate) {
         	throw $this->createNotFoundException("No EmailTemplate found");
         }
