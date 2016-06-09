@@ -77,7 +77,7 @@ use Core\EntityBundle\Entity\User;
       *        "dataType"="integer",
       *        "requirement"="\d+",
       *        "description"="Admin ID"
-     }
+      * }
       * )
       *
       * @return \Symfony\Component\HttpFoundation\Response
@@ -118,11 +118,11 @@ use Core\EntityBundle\Entity\User;
       *      200 = "Returned when successful",
       *      404 = "Returned when the data is not found"
       *  },requirements={
-     "name"="adminId",
+      *        "name"="adminId",
       *        "dataType"="integer",
       *        "requirement"="\d+",
       *        "description"="Admin ID"
-     }
+      * }
       * )
       * @param $adminID integer adminID
       * @return \Symfony\Component\HttpFoundation\Response
@@ -150,7 +150,7 @@ use Core\EntityBundle\Entity\User;
       *      200 = "Returned when successful",
       *      404 = "Returned when the data is not found"
       *  },requirements={
-     "name"="adminId",
+      *        "name"="adminId",
       *        "dataType"="integer",
       *        "requirement"="\d+",
       *        "description"="Admin ID"
