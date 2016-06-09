@@ -23,6 +23,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Routing\ClassResourceInterface;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
 use Symfony\Component\HttpFoundation\Request;
 /**
@@ -202,6 +203,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
                     $participantWorkshop->setWorkshop($workshop);
                     $participantWorkshop->setParticipant($participant);
                     $participantWorkshop->setEnrollment(new \DateTime('now'));
+                    $participantWorkshop->setParticipated(false);
                     // Get Participants
                     $participants = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Workshop")->getParticipants($workshopId);
                     // Check if a waitinglist ist requiered

@@ -101,7 +101,7 @@ class WorkshopParticipants
     }
 
     /**
-     * @return Workshps
+     * @return Workshop
      */
     public function getWorkshop()
     {
@@ -109,7 +109,7 @@ class WorkshopParticipants
     }
 
     /**
-     * @param Workshps $workshop
+     * @param Workshop $workshop
      */
     public function setWorkshop($workshop)
     {
