@@ -140,9 +140,9 @@ class EmailTemplateController extends FOSRestController implements ClassResource
      * )
      *
      * @return \Symfony\Component\HttpFoundation\Response
-     * @Rest\RequestParam(name="template_name", requirements=".*", description="name of the emailtemplate")
-     * @Rest\RequestParam(name="email_subject", requirements=".*", description="subject of the emailtemplate")
-     * @Rest\RequestParam(name="email_body", requirements=".*", description="content of the emailtemplate")
+     * @Rest\RequestParam(name="template_name", requirements=".*", description="name of the emailtemplate",default=null,nullable=true)
+     * @Rest\RequestParam(name="email_subject", requirements=".*", description="subject of the emailtemplate",default=null,nullable=true)
+     * @Rest\RequestParam(name="email_body", requirements=".*", description="content of the emailtemplate",default=null,nullable=true)
      * @Rest\View()
      */
     public function patchAction(ParamFetcher $paramFetcher,$id)
