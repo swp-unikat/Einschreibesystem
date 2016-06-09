@@ -152,7 +152,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
         $this->getDoctrine()->getManager()->persist($token);
         $this->getDoctrine()->getManager()->flush();
         
-        $url = $this->generateUrl('core_frontend_default_index',[],TRUE)."/#/enrollment/confirm/".$workshop->getId()."/".$participant->getId()."/".$token->getToken();
+        $url = $this->generateUrl('core_frontend_default_index',[],TRUE)."#/enrollment/confirm/".$workshop->getId()."/".$participant->getId()."/".$token->getToken();
 
 
         //load Template for confirment
