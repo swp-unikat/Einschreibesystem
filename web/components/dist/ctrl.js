@@ -65,8 +65,9 @@ mainAppCtrls.controller('AdminCreateCtrl',['$scope', '$stateParams','$alert',
 /**
  *
  */
-mainAppCtrls.controller('EmailTemplateCtrl', ['$scope', "EmailTemplate",
-    function ($scope, EmailTemplate) {
+mainAppCtrls.controller('EmailTemplateCtrl', ['$scope', "EmailTemplate",'$alert',
+    
+    function ($scope, EmailTemplate, $alert) {
 
 
         var loadTemplates = function() {
@@ -75,8 +76,8 @@ mainAppCtrls.controller('EmailTemplateCtrl', ['$scope', "EmailTemplate",
                 .$promise.then(function (value) {
                 $scope.data = value;
                 $scope.loading = false;
+
             }, function (httpResponse) {
-                alert('Error' + httpResponse.statusText);
                 $scope.loading = false;
             });
         };
@@ -84,7 +85,15 @@ mainAppCtrls.controller('EmailTemplateCtrl', ['$scope', "EmailTemplate",
 
         $scope.delete = function (_id) {
             EmailTemplate.deleteEmailTemplate({id:_id}).$promise.then(function(httpresponse){
-                alert('Workshop deleted');
+                    $alert({
+                        title:'Success',
+                        type: 'success',
+                        container:'#alert',
+                        show: true,
+                        dismissable: false,
+                        content: 'Successfully deleted',
+                        duration: 20
+                    });
                 loadTemplates();
             }
                 , function (httpResponse) {
