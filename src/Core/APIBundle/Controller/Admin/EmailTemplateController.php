@@ -40,7 +40,7 @@ class EmailTemplateController extends FOSRestController implements ClassResource
      * @ApiDoc(
      *  resource=true,
      *  description="Returns list of all templates",
-     *  output = "Core\EntityBundle\Entity\",
+     *  output = "Core\EntityBundle\Entity\EmailTemplate",
      *  statusCodes = {
      *      200 = "Returned when successful",
      *      404 = "Returned when the data is not found"
