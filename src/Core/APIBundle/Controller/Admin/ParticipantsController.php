@@ -95,7 +95,7 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
      *          "name"="id",
      *          "dataType"="integer",
      *          "requirement"="\d+",
-     *          "description"="Blacklist ID"
+     *          "description"="Participants ID"
      *      }
      * }
      * )
