@@ -49,13 +49,11 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      */
     public function historyAction()
     {
-        $workshopRepo = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:Workshop');
-        $entits = $workshopRepo->getAllWorkshops();
-        if (!$entits) {
+        $workshops = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:Workshop')->findAll();
+        if (!$workshops) {
             throw $this->createNotFoundException("No Workshops found");
         }
-
-        $view = $this->view($entits, 200);
+        $view = $this->view($workshops, 200);
         return $this->handleView($view);
     }
     
