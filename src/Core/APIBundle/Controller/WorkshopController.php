@@ -278,7 +278,8 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      *  output = {
      *     "class"="Core\EntityBundle\Entity\WorkshopParticipants",
      *     "groups"={"names"}
-     *  statusCodes = {
+     * },
+     * statusCodes = {
      *      200 = "Returned when successful",
      *      404 = "Returned when the data is not found"
      *  },requirements={
