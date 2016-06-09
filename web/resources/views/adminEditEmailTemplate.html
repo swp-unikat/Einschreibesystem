@@ -21,21 +21,20 @@
         <div class="col-md-6">
             <div class="form-group">
 
-                <label>{{ "EMAIL_TITLE" | translate}}</label>
+                <label>{{ "EMAIL_TEMPLATE_TITLE" | translate}}</label>
                 <input type="text" ng-model="email.template.title" class="form-control ">
 
                 <label>{{ "EMAIL_SUBJECT" | translate}}</label>
                 <input type="text" ng-model="email.template.subject" class="form-control ">
 
                 <label>{{ "EMAIL_BODY" | translate}}</label>
-                <div text-angular  ng-model="email.template.body"></div>
-
+                <div text-angular ng-model="email.template.body"></div>
 
 
                 <div class="form-group row text-right">
                     <div class="btn-group">
-                        <button type="Discard" class="btn btn-info">Discard</button>
-                        <button type="Confirm" class="btn btn-info">Confirm</button>
+                        <button type="button" class="btn btn-info">{{ "BUTTON_DISCARD" | translate}}</button>
+                        <button type="button" class="btn btn-info">{{ "BUTTON_CONFIRM" | translate}}</button>
                     </div>
                 </div>
             </div>

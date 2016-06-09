@@ -1,4 +1,4 @@
-<div>
+<div ng-hide="loading">
     <div class="container">
         <div class="row">
             <div class="col-md-8">
@@ -37,12 +37,26 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="list-group pull-right"> <!--ng-repeat="participant in List"-->
-                    <a href="#" translate class="list-group-item">WORKSHOP_PARTICIPANTS</a>
-                    <!-- schauen welche variable um teilnemher zu entnehmen udn wird in diser form nun alle teilnehmer eingetragen -->
-                    <a href="#" class="list-group-item">{{participants}}</a>
-                </div>
+            <div class="col-md-2">
+                <ul class="list-group">
+                    <li class="list-group-item text-center">
+                        <h4 translate>PARTICIPANTS</h4>
+                    </li>
+                    <li class="list-group-item"  ng-repeat="p in participants">
+                        {{p.name}} {{p.surname}}
+                    </li>
+                </ul>
+                <div id="alertParticipant" bs-alert></div>
+            </div>
+            <div class="col-md-2">
+                <ul class="list-group">
+                    <li class="list-group-item text-center">
+                        <h4 translate>WAITINGLIST</h4>
+                    </li>
+                    <li class="list-group-item"  ng-repeat="p in waitingList">
+                        {{p.name}} {{p.surname}}
+                    </li>
+                </ul>
             </div>
         </div>
         <div class="row">
@@ -72,20 +86,17 @@
                             </div>
                             <button type="button" ng-click="sendInfo()" translate class="btn success btn-block">BUTTON_ENROLL</button>
 
-
-
                         </form>
                     </div>
                 </div>
             </div>
+            <div class="col-xs-6 col-sm-4 col-md-4" id="alertEnroll" bs-alert></div>
         </div>
     </div>
     <!-- loading -->
-    <div ng-show="loading">
-        <span class="glyphicon glyphicon-refresh glyphicon-spin centered-form" style="font-size: 5.0em;"></span>
-    </div>
-
-
 </div>
+    <div ng-show="loading" class="container" style="margin-left: 50%;">
+    <span class="glyphicon glyphicon-refresh glyphicon-spin centered-form" style="font-size: 5.0em;"></span>
+    </div>
 </div>
 </div>

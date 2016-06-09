@@ -32,6 +32,7 @@
 
     <script src="{{ asset('components/app.js') }}"></script>
     <script src="{{ asset('components/services/restService.js') }}"></script>
+    <script src="{{ asset('components/services/printService.js') }}"></script>
     <script src="{{ asset('components/dist/ctrl.js') }}"></script>
 
 
@@ -40,7 +41,7 @@
         .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
     </style>
 </head>
-<body>
+<body data-spy="scroll" data-target=".navbar">
 
 <nav class="navbar navbar-default">
     <div class="container-fluid">
@@ -69,7 +70,7 @@
 </nav>
 
 
-<div ui-view=""></div>
+<div style="margin-bottom: 200px;" ui-view=""></div>
 
 <nav class="navbar navbar-inverse navbar-fixed-bottom">
     <div class="row text-center">

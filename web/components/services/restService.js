@@ -35,7 +35,7 @@ restSvcs.factory('Workshops',['$resource',function($resource){
          * @methodOf restSvcs.Workshops
          * @param {integer} id Workshop-ID
          */
-        'getParticipants': {method: 'GET',url:'/api/workshops/:id/participants',params: {id: '@id'},isArray: true}, 
+        'getParticipants': {method: 'GET',url:'/api/workshops/:id/participants',params: {id: '@id'},isArray: true},
         /**
          * @ngdoc funtion
          * @name restSvcs.Workshops#enrollWorkshop
@@ -43,7 +43,7 @@ restSvcs.factory('Workshops',['$resource',function($resource){
          * @methodOf restSvcs.Workshops
          * @param {integer} id Workshop-ID
          */
-        'post': {method: 'POST',url:'/api/workshops/:id/enrolls',params: {id: '@id'},isArray: false},
+        'enroll': {method: 'POST',url:'/api/workshops/:id/enrolls',params: {id: '@id'},isArray: false},
         /**
          * @ngdoc funtion
          * @name restSvcs.Workshops#unsubscribeWorkshop
@@ -66,7 +66,8 @@ restSvcs.factory('Workshops',['$resource',function($resource){
          * @name restSvcs.Workshops#unsubscribeWorkshop
          * @description Confirm Enrollment of the WOrkshop
          * @methodOf restSvcs.Workshops
-         * @param {integer} id Workshop-ID, participantsid Participants-ID
+         * @param {integer} id Workshop-ID
+         * @param {integer} participantsid Participants-ID
          * @param {string} token Confirmtoken
          */
         'getConfirmEnrollment': {method: 'GET',url:'/api/workshops/:id/enrolls/:participantsid/confirms/:token',params: {id: '@id',participantsid: '@participantsid',token: '@token'},isArray: false},
@@ -78,7 +79,7 @@ restSvcs.factory('Workshops',['$resource',function($resource){
  * @description Provides CRUD operations for Workshop-Template-functions provided by the API
  */
 restSvcs.factory('WorkshopTemplate',['$resource',function($resource){
-    return $resource('/api/admin/workshops/templates/:id',{},{
+    return $resource('/api/admin/workshops/template/:id',{},{
         /**
          * @ngdoc funtion
          * @name restSvcs.WorkshopTemplate#getAll
@@ -134,7 +135,7 @@ restSvcs.factory('AdminWorkshop',['$resource',function($resource){
           * @methodOf restSvcs.AdminWorkshop
           * @returns {httpPromise} resolve with fetched data, or fails with error description.
          */
-        'gethistory': {method: 'GET',params: {id: 'all'}, isArray: true},
+        'gethistory': {method: 'GET',params: {id: 'history'}, isArray: true},
          /**
           * @ngdoc function
           * @name restSvcs.AdminWorkshop#put
@@ -223,7 +224,7 @@ restSvcs.factory('Participants',['$resource',function($resource){
  * @description Provides CRUD operations for Emailtemplate-functions provided by the API
  */
 restSvcs.factory('EmailTemplate',['$resource',function($resource){
-    return $resource('/api/email/template/:id',{},{
+    return $resource('/api/admin/email/template/:id',{},{
         /**
           * @ngdoc function
           * @name restSvcs.EmailTemplate#all
@@ -231,7 +232,7 @@ restSvcs.factory('EmailTemplate',['$resource',function($resource){
           * @methodOf restSvcs.EmailTemplate
           * @returns {httpPromise} resolve with fetched data, or fails with error description
          */
-        'getall': {method: 'GET',params: {id: 'all'}, isArray: true},
+        'getAll': {method: 'GET',params: {id: 'list'}, isArray: true},
         /**
          * @ngdoc funtion
          * @name restSvcs.EmailTemplate#get
@@ -262,7 +263,7 @@ restSvcs.factory('EmailTemplate',['$resource',function($resource){
           * @methodOf restSvcs.EmailTemplate
           * @param {integer} id Emailtemplate-ID
           */
-          'deleteEmailTemplate': {method: 'DELETE',params: {id: '@id'}, isArray: false}
+          'deleteEmailTemplate': {url:'/api/admin/email/templates/:id',method: 'DELETE',params: {id: '@id'}, isArray: false}
     });
 }]);
 /**
@@ -271,7 +272,7 @@ restSvcs.factory('EmailTemplate',['$resource',function($resource){
  * @description Provides CRUD operations for Email-functions provided by the API
  */
 restSvcs.factory('Email',['$resource',function($resource){
-    return $resource('/api/admin/emails/:workshopid/send',{},{
+    return $resource('/api/admin/email/:workshopid/send',{},{
         /**
           * @ngdoc function
           * @name restSvcs.Email#send
@@ -279,6 +280,6 @@ restSvcs.factory('Email',['$resource',function($resource){
           * @methodOf restSvcs.Email
           * @param {integer} workshopid Workshop-ID
           */
-        'sendEmail': {method: 'PATCH',params: {id: '@id'}, isArray: false}
+        'sendEmail': {method: 'PATCH',params: {workshopid: '@id'}, isArray: false}
     });
 }]);
