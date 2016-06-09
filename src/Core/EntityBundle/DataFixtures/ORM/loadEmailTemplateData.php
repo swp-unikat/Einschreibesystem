@@ -19,14 +19,14 @@ class loadEmailTemplate implements FixtureInterface
     public function load(ObjectManager $manager){
     $emailtemplate = new EmailTemplate();
     $emailtemplate->setTemplateName("Erinnerungsmail");
-    $emailtemplate->setEmailSubject("Erinnerungsmail für ausstehenden Workshop");
-    $emailtemplate->setEmailBody("Zur Erinnerung: Morgen um 15 Uhr beginnt der Workshop Löten, für den Sie sich eingeschrieben haben!");
+    $emailtemplate->setEmailSubject("Erinnerungsmail für {{workshop.title}}");
+    $emailtemplate->setEmailBody("Hallo {{participant.surname}},<br> morgen um {{workshop.startAt|date('Y-m-d h:i')}} beginnt der Workshop {{workshop.title}}, für den Sie sich eingeschrieben haben!");
     $manager->persist($emailtemplate);
     
     $emailtemplate2 = new EmailTemplate();
-    $emailtemplate2->setTemplateName("Zahlungsaufforderung");
-    $emailtemplate2->setEmailSubject("Zahlungsaufforderung für Workshop");
-    $emailtemplate2->setEmailBody("Sie haben bislang noch keine Zahlung für den Workshop getätigt! Wir bitten Sie dies innerhalb der nächsten 4 Tage zutun.");
+    $emailtemplate2->setTemplateName("Bestätigung");
+    $emailtemplate2->setEmailSubject("Bestätigung der Anmeldung");
+    $emailtemplate2->setEmailBody("Hallo {{participant.surname}},<br> mit folgendem Link <a href='{{url}}'>{{url}} bestätigen Sie ihre Anmeldung.");
     $manager->persist($emailtemplate2);
     
     $emailtemplate3 = new EmailTemplate();

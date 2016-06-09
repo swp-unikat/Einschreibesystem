@@ -150,17 +150,19 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
         $token = new EmailToken();
         $token->setParticipant($participant);
         $this->getDoctrine()->getManager()->persist($token);
+        
+        $url = $this->container->get('router')->getContext()->getBaseUrl()."/#/enrollment/confirm/".$workshop->getId()."/".$participant->getId()."/".$token->getToken();
 
-        //send mail
-        $template = $this->getDoctrine()->getRepository("CoreEntityBundle:EmailTemplate")->find(1);
+        //load Template for confirment
+        $template = $this->getDoctrine()->getRepository("CoreEntityBundle:EmailTemplate")->find(2);
         /* Creating Twig template from Database */
         $renderTemplate = $this->get('twig')->createTemplate($template->getEmailBody());
-        /* Sending E-Mail with Confirmation Link - NOT INCLUDED?*/
+        /* Sending E-Mail with Confirmation Link*/
         $message = \Swift_Message::newInstance()
             ->setSubject($this->get('twig')->createTemplate($template->getEmailSubject())->render(["workshop" => $workshop]))
             ->setFrom("info@sky-lab.de")
             ->setTo($participant->getEmail())
-            ->setBody($renderTemplate->render(["workshop" => $workshop,"participant" => $participant,'token' => $token->getToken()]),'text/html');
+            ->setBody($renderTemplate->render(["workshop" => $workshop,"participant" => $participant,'url' => $url]),'text/html');
         $this->get('mailer')->send($message);
 
         return View::create(NULL, Codes::HTTP_OK);
@@ -187,7 +189,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
         $participant = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Participants")->find($participantsId);
 
         // Workshop & Token & participant are valid
-        if($workshop && $token && $participant){
+        if($workshop != NULL  && $token != NULL && $participant != NULL){
             // Check if Token is not older then 30 min
             if($token->getValidUntil() <= new \DateTime('now')){
                 // Check if this token is dedicated to user
