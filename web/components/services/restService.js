@@ -35,7 +35,7 @@ restSvcs.factory('Workshops',['$resource',function($resource){
          * @methodOf restSvcs.Workshops
          * @param {integer} id Workshop-ID
          */
-        'getParticipants': {method: 'GET',url:'/api/workshops/:id/participants',params: {id: '@id'},isArray: true}, 
+        'getParticipants': {method: 'GET',url:'/api/workshops/:id/participants',params: {id: '@id'},isArray: true},
         /**
          * @ngdoc funtion
          * @name restSvcs.Workshops#enrollWorkshop
@@ -43,7 +43,7 @@ restSvcs.factory('Workshops',['$resource',function($resource){
          * @methodOf restSvcs.Workshops
          * @param {integer} id Workshop-ID
          */
-        'enroll': {method: 'POST',url:'/api/workshops/:id/enroll',params: {id: '@id'},isArray: false},
+        'enroll': {method: 'POST',url:'/api/workshops/:id/enrolls',params: {id: '@id'},isArray: false},
         /**
          * @ngdoc funtion
          * @name restSvcs.Workshops#unsubscribeWorkshop
@@ -232,7 +232,7 @@ restSvcs.factory('EmailTemplate',['$resource',function($resource){
           * @methodOf restSvcs.EmailTemplate
           * @returns {httpPromise} resolve with fetched data, or fails with error description
          */
-        'getall': {method: 'GET',params: {id: 'all'}, isArray: true},
+        'getAll': {method: 'GET',params: {id: 'list'}, isArray: true},
         /**
          * @ngdoc funtion
          * @name restSvcs.EmailTemplate#get

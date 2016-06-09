@@ -470,14 +470,12 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
 
             //check if input is valid
             var _data = {
-              //URL-Params  
-              id: workshopid,
               //Data to be send  
               name: first_name,
               surname: last_name,
               email:   _email
             };
-            Workshops.enroll(_data).$promise.then(function(value,httpResponse){
+            Workshops.enroll({id: workshopid},_data).$promise.then(function(value,httpResponse){
                 $alert({
                     title: 'Success',
                     type: 'success',
