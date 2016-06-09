@@ -263,7 +263,7 @@ restSvcs.factory('EmailTemplate',['$resource',function($resource){
           * @methodOf restSvcs.EmailTemplate
           * @param {integer} id Emailtemplate-ID
           */
-          'deleteEmailTemplate': {method: 'DELETE',params: {id: '@id'}, isArray: false}
+          'deleteEmailTemplate': {url:'/api/admin/email/templates/:id',method: 'DELETE',params: {id: '@id'}, isArray: false}
     });
 }]);
 /**

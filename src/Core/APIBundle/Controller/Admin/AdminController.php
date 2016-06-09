@@ -77,7 +77,7 @@ use Core\EntityBundle\Entity\User;
       *        "dataType"="integer",
       *        "requirement"="\d+",
       *        "description"="Admin ID"
-     }
+      * }
       * )
       *
       * @return \Symfony\Component\HttpFoundation\Response
@@ -99,7 +99,7 @@ use Core\EntityBundle\Entity\User;
              $UserManager = $this->get('fos_user.user_manager');
              $admin = $UserManager->create();
              $admin->setName($params['email']);
-             $admin->setPlainPassword($params["password"])
+             $admin->setPlainPassword($params["password"]);
          } else {
              throw $this->createAccessDeniedException("No invitation was sended!");
          }
@@ -118,11 +118,11 @@ use Core\EntityBundle\Entity\User;
       *      200 = "Returned when successful",
       *      404 = "Returned when the data is not found"
       *  },requirements={
-     "name"="adminId",
+      *        "name"="adminId",
       *        "dataType"="integer",
       *        "requirement"="\d+",
       *        "description"="Admin ID"
-     }
+      * }
       * )
       * @param $adminID integer adminID
       * @return \Symfony\Component\HttpFoundation\Response
@@ -150,7 +150,7 @@ use Core\EntityBundle\Entity\User;
       *      200 = "Returned when successful",
       *      404 = "Returned when the data is not found"
       *  },requirements={
-     "name"="adminId",
+      *        "name"="adminId",
       *        "dataType"="integer",
       *        "requirement"="\d+",
       *        "description"="Admin ID"
