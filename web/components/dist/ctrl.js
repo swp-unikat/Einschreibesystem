@@ -242,6 +242,21 @@ mainAppCtrls.controller('EnrollmentConfirmCtrl',['$scope',
 
 ]);
 
+// Source: web/components/controllers/legalNoticeCtrl.js
+/**
+ * Created by hunte on 08/06/2016.
+ */
+
+/**
+ *
+ */
+mainAppCtrls.controller('LegalNoticeCtrl',['$scope',
+    function($scope) {
+
+    }
+
+]);
+
 // Source: web/components/controllers/loginCtrl.js
 /**
  * Created by hunte on 31/05/2016.
@@ -422,24 +437,47 @@ mainAppCtrls.controller('UnsubscribeCtrl',['$scope',
 mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$stateParams', "$alert",
     function($scope,Workshops,$stateParams, $alert) {
         //TODO : replace with workshop details
-        var workshopid;
+        var workshopid = $stateParams.id;
         $scope.sendInfo= function(){
             var first_name=$scope.first_name;   
             var last_name=$scope.last_name;
-            var email=$scope.e_mail;
+            var _email=$scope.e_mail;
 
-            if(!email.$valid){
-              alert("testiii");
-            }
-            if(!first_name){
-
-            }
-            if(!last_name){
-
-            }
+            //check if input is valid
+            var _data = {
+              //URL-Params  
+              id: workshopid,
+              //Data to be send  
+              name: first_name,
+              surname: last_name,
+              email:   _email
+            };
+            Workshops.enroll(_data).$promise.then(function(value,httpResponse){
+                $alert({
+                    title: 'Success',
+                    type: 'success',
+                    content: 'Enrollment successful. Please check your E-Mail!',
+                    container: '#alertEnroll',
+                    dismissable: true,
+                    duration: 20,
+                    show: true,
+                    animation: 'am-fade-and-slide-top'
+                });
+            },function(httpResponse){
+                $alert({
+                    title: 'Error',
+                    type: 'danger',
+                    content: httpResponse.status + ': '+ httpResponse.statusText,
+                    container: '#alertEnroll',
+                    dismissable: true,
+                    duration: 20,
+                    show: true,
+                    animation: 'am-fade-and-slide-top'
+                });
+            });
         };
 
-        workshopid = $stateParams.id;
+
         $scope.loading = true;
         Workshops.get({id: workshopid}).$promise.then(function(value,httpResponse){
             $scope.workshop = value;
@@ -454,7 +492,18 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
 
             $scope.loading = false;
         },function(httpResponse) {
-            alert('Participants: ' +httpResponse.status + '');
+            switch(httpResponse.status){
+                case 404:
+                    $alert({
+                        title: '',
+                        type: 'info',
+                        content: 'No participants yet',
+                        container: '#alertParticipant',
+                        dismissable: false,
+                        show: true,
+                        animation: 'am-fade-and-slide-top'
+                    });
+            }
             $scope.loading = false;
         });
 

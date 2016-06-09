@@ -43,7 +43,7 @@ restSvcs.factory('Workshops',['$resource',function($resource){
          * @methodOf restSvcs.Workshops
          * @param {integer} id Workshop-ID
          */
-        'post': {method: 'POST',url:'/api/workshops/:id/enrolls',params: {id: '@id'},isArray: false},
+        'enroll': {method: 'POST',url:'/api/workshops/:id/enroll',params: {id: '@id'},isArray: false},
         /**
          * @ngdoc funtion
          * @name restSvcs.Workshops#unsubscribeWorkshop
