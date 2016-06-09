@@ -54,7 +54,7 @@ class EmailToken{
     public $valid_until;
     /**
      * @var \DateTime
-     * @ORM\Column(name="used_at", type="datetime", nullable=false)
+     * @ORM\Column(name="used_at", type="datetime", nullable=true)
      * @Serializer\Expose
      * @Serializer\SerializedName("used_at")
      */
