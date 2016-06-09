@@ -150,6 +150,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
         $token = new EmailToken();
         $token->setParticipant($participant);
         $this->getDoctrine()->getManager()->persist($token);
+        $this->getDoctrine()->getManager()->flush();
         
         $url = $this->container->get('router')->getContext()->getBaseUrl()."/#/enrollment/confirm/".$workshop->getId()."/".$participant->getId()."/".$token->getToken();
 
