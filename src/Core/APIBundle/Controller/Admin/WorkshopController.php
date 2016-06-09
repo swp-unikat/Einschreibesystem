@@ -71,14 +71,14 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      * )
      * @param $paramFetcher ParamFetcher
      * @return \Symfony\Component\HttpFoundation\Response
-     * @Rest\RequestParam(name="title", requirements=".*", description="json object of workshop")
-     * @Rest\RequestParam(name="description", requirements=".*", description="json object of workshop")
-     * @Rest\RequestParam(name="cost", requirements=".*", description="json object of workshop")
-     * @Rest\RequestParam(name="requirements", requirements=".*", description="json object of workshop")
-     * @Rest\RequestParam(name="location", requirements=".*", description="json object of workshop")
-     * @Rest\RequestParam(name="start_at", requirements=".*", description="json object of workshop")
-     * @Rest\RequestParam(name="end_at", requirements=".*", description="json object of workshop")
-     * @Rest\RequestParam(name="max_participants", requirements=".*", description="json object of workshop")
+     * @Rest\RequestParam(name="title", requirements=".*", description="title of the workshop")
+     * @Rest\RequestParam(name="description", requirements=".*", description="description of the workshop")
+     * @Rest\RequestParam(name="cost", requirements=".*", description="cost of the workshop")
+     * @Rest\RequestParam(name="requirements", requirements=".*", description="requirements of the workshop")
+     * @Rest\RequestParam(name="location", requirements=".*", description="location of the workshop")
+     * @Rest\RequestParam(name="start_at", requirements=".*", description="startime of the workshop")
+     * @Rest\RequestParam(name="end_at", requirements=".*", description="endtime of the workshop")
+     * @Rest\RequestParam(name="max_participants", requirements=".*", description="maximum number of participants")
      * @Rest\View()
      */
     public function putAction(ParamFetcher $paramFetcher)
@@ -122,14 +122,14 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      * @param $id int
      * @param $paramFetcher ParamFetcher
      * @return \Symfony\Component\HttpFoundation\Response
-     * @Rest\RequestParam(name="title", requirements=".*", description="json object of workshop",default=null,nullable=true)
-     * @Rest\RequestParam(name="description", requirements=".*", description="json object of workshop",default=null,nullable=true)
-     * @Rest\RequestParam(name="cost", requirements=".*", description="json object of workshop",default=null,nullable=true)
-     * @Rest\RequestParam(name="requirements", requirements=".*", description="json object of workshop",default=null,nullable=true)
-     * @Rest\RequestParam(name="location", requirements=".*", description="json object of workshop",default=null,nullable=true)
-     * @Rest\RequestParam(name="start_at", requirements=".*", description="json object of workshop",default=null,nullable=true)
-     * @Rest\RequestParam(name="end_at", requirements=".*", description="json object of workshop",default=null,nullable=true)
-     * @Rest\RequestParam(name="max_participants", requirements=".*", description="json object of workshop",default=null,nullable=true )
+     * @Rest\RequestParam(name="title", requirements=".*", description="title of the workshop",default=null,nullable=true)
+     * @Rest\RequestParam(name="description", requirements=".*", description="description of the workshop",default=null,nullable=true)
+     * @Rest\RequestParam(name="cost", requirements=".*", description="cost of the workshop",default=null,nullable=true)
+     * @Rest\RequestParam(name="requirements", requirements=".*", description="requirements of the workshop",default=null,nullable=true)
+     * @Rest\RequestParam(name="location", requirements=".*", description="location of the workshop",default=null,nullable=true)
+     * @Rest\RequestParam(name="start_at", requirements=".*", description="starttime of the workshop",default=null,nullable=true)
+     * @Rest\RequestParam(name="end_at", requirements=".*", description="endtime of the workshop",default=null,nullable=true)
+     * @Rest\RequestParam(name="max_participants", requirements=".*", description="maximum number of participants",default=null,nullable=true )
      * @Rest\View()
      */
     public function patchAction($id, ParamFetcher $paramFetcher)
