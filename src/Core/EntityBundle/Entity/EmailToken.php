@@ -25,7 +25,7 @@ class EmailToken{
     public $id;
     /**
      * @var \Core\EntityBundle\Entity\Participants
-     * @ORM\OneToOne(targetEntity="\Core\EntityBundle\Entity\Participants", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="\Core\EntityBundle\Entity\Participants", cascade={"persist"})
      * @ORM\JoinColumn(name="participant", referencedColumnName="id", onDelete="CASCADE")
      * @Serializer\Expose
      * @Serializer\SerializedName("participant")
