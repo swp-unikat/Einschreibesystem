@@ -210,13 +210,9 @@ mainAppCtrls.controller('ContactCtrl',['$scope',
  */
 mainAppCtrls.controller('EditEmailTemplateCtrl',['$scope',
     function($scope) {
-        $scope.lnToolbar = [
-            ['h1', 'h2', 'h3', 'p', 'bold', 'italics'],
-            ['ul', 'ol'],
-            ['redo', 'undo', 'clear'],
-            ['html', 'insertImage', 'insertLink'],
-            ['justifyLeft', 'justifyCenter', 'justifyRight', 'indent', 'outdent']
-        ];
+
+
+        
     }
 
 ]);
@@ -292,16 +288,30 @@ mainAppCtrls.controller('LoginCtrl',['$scope','$http','store','$state',
 /**
  *
  */
-mainAppCtrls.controller('NewEmailTemplateCtrl',['$scope',
-    function($scope) {
+mainAppCtrls.controller('NewEmailTemplateCtrl',['$scope',"EmailTemplate",
+    function($scope, EmailTemplate) {
+
+        $scope.sendInfo = function(){
+            var data={
+                template_name:$scope.email.template.title,
+                email_subject:$scope.email.template.subject,
+                email_body:$scope.email.template.body
+            }
+            EmailTemplate.putEmailTemplate(data).$promise.then(function(value){
+                alert('Success!');
+            },function(httpResponse){
+                alert('Error'+httpResponse.statusText);
+            });
+        }
+
+        $scope.discard = function(){
+            $scope.email.template.title= "";
+            $scope.email.template.subject= "";
+            $scope.email.template.body= "";
+            
+        }
+
         
-        $scope.lnToolbar = [
-            ['h1', 'h2', 'h3', 'p', 'bold', 'italics'],
-            ['ul', 'ol'],
-            ['redo', 'undo', 'clear'],
-            ['html', 'insertImage', 'insertLink'],
-            ['justifyLeft', 'justifyCenter', 'justifyRight', 'indent', 'outdent']
-        ];
     }
 
 ]);

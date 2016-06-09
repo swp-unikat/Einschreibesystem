@@ -12,9 +12,7 @@ mainAppCtrls.controller('NewEmailTemplateCtrl',['$scope',"EmailTemplate",
             var data={
                 template_name:$scope.email.template.title,
                 email_subject:$scope.email.template.subject,
-                email_body:$scope.email.template.body,
-                
-
+                email_body:$scope.email.template.body
             }
             EmailTemplate.putEmailTemplate(data).$promise.then(function(value){
                 alert('Success!');
@@ -23,7 +21,12 @@ mainAppCtrls.controller('NewEmailTemplateCtrl',['$scope',"EmailTemplate",
             });
         }
 
-
+        $scope.discard = function(){
+            $scope.email.template.title= "";
+            $scope.email.template.subject= "";
+            $scope.email.template.body= "";
+            
+        }
 
         
     }
