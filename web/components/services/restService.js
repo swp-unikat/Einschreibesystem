@@ -255,7 +255,7 @@ restSvcs.factory('EmailTemplate',['$resource',function($resource){
           * @description create a new Emailtemplate
           * @methodOf restSvcs.EmailTemplate
           */
-        'putEmailTemplate': {url:'/api/admin/email/templates/:id',method: 'PUT', isArray:false},
+        'putEmailTemplate': {method: 'PUT', isArray:false},
         /**
           * @ngdoc function
           * @name restSvcs.EmailTemplate#delete

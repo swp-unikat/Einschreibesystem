@@ -70,11 +70,14 @@ mainAppCtrls.controller('EmailTemplateCtrl', ['$scope', "EmailTemplate",
 
 
         var loadTemplates = function() {
+            $scope.loading = true;
             EmailTemplate.getAll()
                 .$promise.then(function (value) {
                 $scope.data = value;
+                $scope.loading = false;
             }, function (httpResponse) {
                 alert('Error' + httpResponse.statusText);
+                $scope.loading = false;
             });
         };
         loadTemplates();
