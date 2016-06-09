@@ -99,7 +99,7 @@ use Core\EntityBundle\Entity\User;
              $UserManager = $this->get('fos_user.user_manager');
              $admin = $UserManager->create();
              $admin->setName($params['email']);
-             $admin->setPlainPassword($params["password"])
+             $admin->setPlainPassword($params["password"]);
          } else {
              throw $this->createAccessDeniedException("No invitation was sended!");
          }
