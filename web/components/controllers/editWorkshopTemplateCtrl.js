@@ -5,7 +5,7 @@ var mainAppCtrls = angular.module("mainAppCtrls");
 /**
  *
  */
-mainAppCtrls.controller('EditEmailTemplateCtrl',['$scope',
+mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope',
     function($scope) {
 
 
