@@ -31,6 +31,7 @@ class WorkshopParticipants
      * @ORM\JoinColumn(name="participant", referencedColumnName="id", onDelete="CASCADE")
      * @Serializer\Expose
      * @Serializer\SerializedName("participants")
+     * @Serializer\Groups({"names"})
      */
     protected $participant;
     /**
@@ -101,7 +102,7 @@ class WorkshopParticipants
     }
 
     /**
-     * @return Workshps
+     * @return Workshop
      */
     public function getWorkshop()
     {
@@ -109,7 +110,7 @@ class WorkshopParticipants
     }
 
     /**
-     * @param Workshps $workshop
+     * @param Workshop $workshop
      */
     public function setWorkshop($workshop)
     {

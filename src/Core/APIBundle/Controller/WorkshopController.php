@@ -23,6 +23,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Routing\ClassResourceInterface;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
 use Symfony\Component\HttpFoundation\Request;
 /**
@@ -202,6 +203,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
                     $participantWorkshop->setWorkshop($workshop);
                     $participantWorkshop->setParticipant($participant);
                     $participantWorkshop->setEnrollment(new \DateTime('now'));
+                    $participantWorkshop->setParticipated(false);
                     // Get Participants
                     $participants = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Workshop")->getParticipants($workshopId);
                     // Check if a waitinglist ist requiered
@@ -273,8 +275,10 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      * @ApiDoc(
      *  resource=true,
      *  description="Returns the waitinglist of a workshop",
-     *  output = "Core\EntityBundle\Entity\WorkshopParticipants",
-     *  statusCodes = {
+     *  output = {
+     *      "class"="Core\EntityBundle\Entity\WorkshopParticipants",
+     *      "groups"={"names"}
+     *  },statusCodes = {
      *      200 = "Returned when successful",
      *      404 = "Returned when the data is not found"
      *  },requirements={
@@ -296,7 +300,16 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
         if (!$waitingList) {
             throw $this->createNotFoundException("No waitinglist for workshop");
         }
-        $view = $this->view($waitingList, 200);
+
+        $waiting = [];
+        foreach ($waitingList as $participant) {
+            $waiting[] = [
+                'name' => $participant->getParticipant()->getName(),
+                'surname' => $participant->getParticipant()->getSurname()
+            ];
+        }
+
+        $view = $this->view($waiting, 200);
         return $this->handleView($view);
     }
     /**
