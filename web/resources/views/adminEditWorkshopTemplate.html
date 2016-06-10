@@ -38,8 +38,8 @@
 
         <div class="form-group row text-center">
 
-            <button type="Confirm" class="btn btn-info">{{ "BUTTON_SAVE" | translate }}</button>
-            <button type="Discard" class="btn btn-info">{{ "BUTTON_DISCARD" | translate }}</button>
+            <button type="Confirm" class="btn btn-info" ng-click="confirmChanges">{{ "BUTTON_CONFIRM" | translate }}</button>
+            <button type="Discard" class="btn btn-info" ng-click="discardChanges" >{{ "BUTTON_DISCARD" | translate }}</button>
         </div>
     </form>
     </body>
