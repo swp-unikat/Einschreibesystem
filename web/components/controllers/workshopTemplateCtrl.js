@@ -25,7 +25,7 @@ mainAppCtrls.controller('WorkshopTemplateCtrl', ['$scope', "WorkshopTemplate",'$
         loadTemplates();
 
         $scope.delete = function (_id) {
-            WorkshopTemplate.deleteWorkshopTemplate({id:_id}).$promise.then(function(httpresponse){
+            WorkshopTemplate.delete({id:_id}).$promise.then(function(httpresponse){
                     $alert({
                         title:'Success',
                         type: 'success',
