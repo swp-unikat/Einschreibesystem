@@ -500,8 +500,8 @@ mainAppCtrls.controller('NewWorkshopTemplateCtrl',['$scope',"WorkshopTemplate",
                 end_at:JSON.stringify(new Date(2016,10,10,10,10,0,0)),
                 max_participants:$scope.workshop.max.participants
             }
-            WorkshopTemplate.putWorkshopTemplate(data).$promise.then(function(value){
-                alert('Success!');
+            WorkshopTemplate.put(data).$promise.then(function(httpResponse){
+                alert('Success!' + httpResponse.status);
             },function(httpResponse){
                 alert('Error'+httpResponse.statusText);
             });
