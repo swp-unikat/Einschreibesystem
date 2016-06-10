@@ -73,7 +73,7 @@ mainAppCtrls.controller('EditEmailTemplateCtrl',['$scope','EmailTemplate','$stat
                 $alert({
                     title: '',
                     type: 'success',
-                    content: _translations.ALERT_EMAILTEMPLATE_EDIT_SUCCESS + _originalData.title,
+                    content: _translations.ALERT_EMAILTEMPLATE_EDIT_SUCCESS + ' \"' + _originalData.title +'\"',
                     container: '#alert',
                     dismissable: true,
                     show: true,
