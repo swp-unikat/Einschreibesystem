@@ -5,9 +5,9 @@ var mainAppCtrls = angular.module("mainAppCtrls");
 /**
  *
  */
-mainAppCtrls.controller('EmailTemplateCtrl', ['$scope', "EmailTemplate",'$alert',
+mainAppCtrls.controller('EmailTemplateCtrl', ['$scope', "EmailTemplate",'$alert','$modal',
     
-    function ($scope, EmailTemplate, $alert) {
+    function ($scope, EmailTemplate, $alert,$modal) {
 
 
         var loadTemplates = function() {
