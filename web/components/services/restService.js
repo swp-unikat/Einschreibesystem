@@ -224,7 +224,7 @@ restSvcs.factory('Participants',['$resource',function($resource){
  * @description Provides CRUD operations for Emailtemplate-functions provided by the API
  */
 restSvcs.factory('EmailTemplate',['$resource',function($resource){
-    return $resource('/api/admin/email/template/:id',{},{
+    return $resource('/api/admin/email/templates/:id',{},{
         /**
           * @ngdoc function
           * @name restSvcs.EmailTemplate#all
@@ -232,7 +232,7 @@ restSvcs.factory('EmailTemplate',['$resource',function($resource){
           * @methodOf restSvcs.EmailTemplate
           * @returns {httpPromise} resolve with fetched data, or fails with error description
          */
-        'getAll': {method: 'GET',params: {id: 'list'}, isArray: true},
+        'getAll': {url: '/api/admin/email/template/list',method: 'GET', isArray: true},
         /**
          * @ngdoc funtion
          * @name restSvcs.EmailTemplate#get
