@@ -1,7 +1,5 @@
 /**
  * @name mainApp
- * @requieres
- * @type {angular.Module}
  * @description Main module of the application
  */
 var mainApp = angular.module('mainApp',[
@@ -274,7 +272,8 @@ mainApp.factory('UIHelper',['$rootScope','store','jwtHelper',function($rootScope
 }]);
 /**
  * @ngdoc directive
- * @name mainApp.compare-to
+ * @name mainApp.directive:compare-to
+ * @description
  */
 mainApp.directive('compareTo',[function(){
     return {

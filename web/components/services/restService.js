@@ -1,6 +1,6 @@
 /**
  * @name restSvcs
- * @type {angular.Module}
+ * @requires ngResource
  * @description Module containing the REST services
  */
 var restSvcs = angular.module('restSvcs',['ngResource']);
@@ -263,7 +263,7 @@ restSvcs.factory('EmailTemplate',['$resource',function($resource){
           * @methodOf restSvcs.EmailTemplate
           * @param {integer} id Emailtemplate-ID
           */
-          'deleteEmailTemplate': {method: 'DELETE',params: {id: '@id'}, isArray: false}
+          'delete': {method: 'DELETE',params: {id: '@id'}, isArray: false}
     });
 }]);
 /**
