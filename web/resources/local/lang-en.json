@@ -119,5 +119,5 @@
   "ALERT_EMAILTEMPLATE_EDIT_SUCCESS": "Successfully edited E-Mail template",
   "ALERT_EMAILTEMPLATE_EDIT_FAIL": "Failed to edit E-Mail template. Error code",
   "ALERT_EMAILTEMPLATE_NEW_SUCCESS":"Successfully created new E-mail template",
-  "ALERT_EMAILTEMPLATE_NEW_FAIL":"Failed to create E-Mail template. Error code",
+  "ALERT_EMAILTEMPLATE_NEW_FAIL":"Failed to create E-Mail template. Error code"
 }
