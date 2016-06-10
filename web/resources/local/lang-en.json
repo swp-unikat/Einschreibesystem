@@ -117,5 +117,8 @@
   "C": "Euro",
   "ALERT_EMAILTEMPLATE_NOT_FOUND": "The requested E-Mail template couldn't be found",
   "ALERT_EMAILTEMPLATE_EDIT_SUCCESS": "Successfully edited E-Mail template",
-  "ALERT_EMAILTEMPLATE_EDIT_FAIL": "Failed to edit E-Mail template. Error code"
+  "ALERT_EMAILTEMPLATE_EDIT_FAIL": "Failed to edit E-Mail template. Error code",
+  "ALERT_WORKSHOPTEMPLATE_NOT_FOUND": "The requested workshop template couldn't be found",
+  "ALERT_WORKSHOPTEMPLATE_NOT_SUCCESS": "Successfully edited workshop template",
+  "ALERT_WORKSHOPTEMPLATE_NOT_FAIL": "Failed to edit workshop template. Error code"
 }
