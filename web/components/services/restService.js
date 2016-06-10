@@ -240,7 +240,7 @@ restSvcs.factory('EmailTemplate',['$resource',function($resource){
          * @methodOf restSvcs.EmailTemplate
          * @param {integer} id Emailtemplate-ID
          */
-        'getEmailTemplate': {method: 'GET',params: {id: '@id'}, isArray: false},
+        'get': {method: 'GET',params: {id: '@id'}, isArray: false},
         /**
          * @ngdoc function
          * @name restSvcs.EmailTemplate#patch
@@ -248,14 +248,14 @@ restSvcs.factory('EmailTemplate',['$resource',function($resource){
          * @methodOf restSvcs.EmailTemplate
          * @param {integer} id Emailtemplate-ID
          */
-        'patchEmailTemplate': {method: 'PATCH',params: {id: '@id'}, isArray: false},
+        'edit': {method: 'PATCH',params: {id: '@id'}, isArray: false},
         /**
           * @ngdoc function
           * @name restSvcs.EmailTemplate#put
           * @description create a new Emailtemplate
           * @methodOf restSvcs.EmailTemplate
           */
-        'putEmailTemplate': {method: 'PUT', isArray:false},
+        'put': {method: 'PUT', isArray:false},
         /**
           * @ngdoc function
           * @name restSvcs.EmailTemplate#delete
@@ -263,7 +263,7 @@ restSvcs.factory('EmailTemplate',['$resource',function($resource){
           * @methodOf restSvcs.EmailTemplate
           * @param {integer} id Emailtemplate-ID
           */
-          'deleteEmailTemplate': {url:'/api/admin/email/templates/:id',method: 'DELETE',params: {id: '@id'}, isArray: false}
+          'deleteEmailTemplate': {method: 'DELETE',params: {id: '@id'}, isArray: false}
     });
 }]);
 /**
