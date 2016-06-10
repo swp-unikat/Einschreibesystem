@@ -14,35 +14,37 @@
 </div>
 
 <div>
-    <body data-spy="scroll" data-target=".navbar">
     <form role="search">
 
 
-        <div class="col-md-6">
+        <div class="col-md-6" ng-hide="loading">
             <div class="form-group">
 
-                <label>{{ "EMAIL_TITLE" | translate}}</label>
-                <input type="text" ng-model="email.template.title" class="form-control ">
+                <label>{{ "EMAIL_TEMPLATE_TITLE" | translate}}</label>
+                <input type="text" ng-model="title" class="form-control ">
 
                 <label>{{ "EMAIL_SUBJECT" | translate}}</label>
-                <input type="text" ng-model="email.template.subject" class="form-control ">
+                <input type="text" ng-model="email.subject" class="form-control">
 
                 <label>{{ "EMAIL_BODY" | translate}}</label>
-                <div text-angular  ng-model="email.template.body"></div>
-
-
+                <div text-angular ng-model="email.body"></div>
 
                 <div class="form-group row text-right">
                     <div class="btn-group">
-                        <button type="Discard" class="btn btn-info">Discard</button>
-                        <button type="Confirm" class="btn btn-info">Confirm</button>
+                        <button type="button" class="btn btn-info" ng-click="discardChanges()">{{ "BUTTON_DISCARD" | translate}}</button>
+                        <button type="button" class="btn btn-info" ng-click="confirmChanges()">{{ "BUTTON_CONFIRM" | translate}}</button>
                     </div>
                 </div>
             </div>
             <br>
             <br>
 
+        </div>
+        <div class="col-md-6" id="alert" bs-alert></div>
+
 
     </form>
-    </body>
+    <div ng-show="loading" class="container" style="margin-left: 50%;">
+        <span class="glyphicon glyphicon-refresh glyphicon-spin centered-form" style="font-size: 5.0em;"></span>
+    </div>
 </div>

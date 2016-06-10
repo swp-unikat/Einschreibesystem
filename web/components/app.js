@@ -1,7 +1,5 @@
 /**
  * @name mainApp
- * @requieres
- * @type {angular.Module}
  * @description Main module of the application
  */
 var mainApp = angular.module('mainApp',[
@@ -13,7 +11,8 @@ var mainApp = angular.module('mainApp',[
     'restSvcs',
     'angular-storage',
     'pascalprecht.translate',
-    'textAngular'
+    'textAngular',
+    'prntSvcs'
 ]);
 /**
  * @name mainAppCtrls
@@ -38,15 +37,16 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                 controller: 'WorkshopDetailsCtrl',
                 templateUrl: prefix.concat('workshopDetails.html')
             })
+
             .state('login',{
                 url: '/login',
                 controller: 'LoginCtrl',
                 templateUrl: prefix.concat('login.html')
             })
             .state('enrollment_confirm',{
-                url: '/enrollment_confirm/:id/:token',
+                url: '/enrollment/confirm/:workshopid/:userid/:token',
                 templateUrl: prefix.concat('enrollmentConfirm.html'),
-                controller: 'EnrollmentConfirm'
+                controller: 'EnrollmentConfirmCtrl'
             })
             .state('unsubscribe',{
                 url: '/unsubscribe/:id/:workshopid/:token',
@@ -71,7 +71,7 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                 controller:'WorkshopTemplateCtrl',
                 templateUrl: prefix.concat('adminWorkshopTemplate.html'),
                 data: {
-                    //requiresLogin: true
+                    requiresLogin: true
                 }
             })
             .state('workshop_template_new', {
@@ -79,7 +79,7 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                 controller: 'NewWorkshopTemplateCtrl',
                 templateUrl: prefix.concat('adminNewWorkshopTemplate.html'),
                 data: {
-                    //requiresLogin: true
+                    requiresLogin: true
                 }
             })
           
@@ -88,7 +88,7 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                 controller: 'EditWorkshopTemplateCtrl',
                 templateUrl: prefix.concat('workshopTemplateNew.html'),
                 data: {
-                    //requiresLogin: true
+                    requiresLogin: true
                 }
             })
             .state('email_template', {
@@ -96,7 +96,7 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                 controller: 'EmailTemplateCtrl',
                 templateUrl: prefix.concat('adminEmailTemplate.html'),
                 data: {
-                    //requiresLogin: true
+                    requiresLogin: true
                 }
             })
             .state('email_template_new', {
@@ -104,15 +104,15 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                 controller: 'NewEmailTemplateCtrl',
                 templateUrl: prefix.concat('adminNewEmailTemplate.html'),
                 data: {
-                    //requiresLogin: true
+                    requiresLogin: true
                 }
             })
             .state('email_template_edit', {
-                url: 'email/template/edit/:id',
+                url: '/email/template/edit/:id',
                 controller: 'EditEmailTemplateCtrl',
                 templateUrl: prefix.concat('adminEditEmailTemplate.html'),
                 data: {
-                    //requiresLogin: true
+                    requiresLogin: true
                 }
             })
             .state('blacklist',{
@@ -120,7 +120,7 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                 controller: 'BlacklistCtrl',
                 templateUrl: prefix.concat('adminBlacklist.html'),
                 data: {
-                    //requiresLogin: true
+                    requiresLogin: true
                 }
             })
             .state('administrator_management', {
@@ -128,7 +128,7 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                     controller: 'AdministratorManagementCtrl',
                     templateUrl: prefix.concat('administratorManagement.html'),
                 data: {
-                    //requiresLogin: true
+                    requiresLogin: true
                 }
                 })
 
@@ -137,7 +137,7 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                 controller: 'adminWorkshopDetailsCtrl',
                 templateUrl: prefix.concat('adminWorkshopDetails.html'),
                 data: {
-                    //requiresLogin: true
+                    requiresLogin: true
                 }
             })
 
@@ -146,7 +146,7 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                 controller: 'adminWorkshopManagementCtrl',
                 templateUrl: prefix.concat('adminWorkshopManagement.html'),
                 data: {
-                    //requiresLogin: true
+                    requiresLogin: true
                 }
             })
 
@@ -155,7 +155,7 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                 controller: 'SettingsCtrl',
                 templateUrl: prefix.concat('adminSettings.html'),
                 data: {
-                    //requiresLogin: true
+                    requiresLogin: true
                 }
             })
 
@@ -163,6 +163,7 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                 url: '/admin/create/:token',
                 controller: 'AdminCreateCtrl',
                 templateUrl: prefix.concat('adminInvite.html')
+
             })
             .state('legalnotice',{
                 url: '/legalnotice',
@@ -185,7 +186,7 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
 mainApp.config(['jwtInterceptorProvider','$httpProvider','$urlRouterProvider',function(jwtInterceptorProvider,$httpProvider,$urlRouterProvider){
     jwtInterceptorProvider.tokenGetter = function(store) {
         return store.get('jwt');
-    }
+    };
 
     $httpProvider.interceptors.push('jwtInterceptor');
 }])
@@ -271,7 +272,8 @@ mainApp.factory('UIHelper',['$rootScope','store','jwtHelper',function($rootScope
 }]);
 /**
  * @ngdoc directive
- * @name mainApp.compare-to
+ * @name mainApp.directive:compare-to
+ * @description
  */
 mainApp.directive('compareTo',[function(){
     return {
@@ -289,6 +291,23 @@ mainApp.directive('compareTo',[function(){
                 ngModel.$validate();
             });
         }
-    };
+        };
     }
 ]);
+mainApp.directive("myNavscroll", function($window) {
+    return function(scope, element, attrs) {
+        angular.element($window).bind("scroll", function() {
+            if (!scope.scrollPosition) {
+                scope.scrollPosition = 0
+            }
+
+            if (this.pageYOffset > scope.scrollPosition) {
+                scope.boolChangeClass = true;
+            } else {
+                scope.boolChangeClass = false;
+            }
+            scope.scrollPosition = this.pageYOffset;
+            scope.$apply();
+        });
+    };
+});
