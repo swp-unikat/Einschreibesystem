@@ -43,21 +43,25 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                 controller: 'LoginCtrl',
                 templateUrl: prefix.concat('login.html')
             })
+
             .state('enrollment_confirm',{
                 url: '/enrollment/confirm/:workshopid/:userid/:token',
                 templateUrl: prefix.concat('enrollmentConfirm.html'),
                 controller: 'EnrollmentConfirmCtrl'
             })
+
             .state('unsubscribe',{
                 url: '/unsubscribe/:id/:workshopid/:token',
                 templateUrl: prefix.concat('unsubscribemessage.html'),
                 controller: 'UnsubscribeController'
             })
+
             .state('password_reset',{
                 url: '/password_reset/:token',
                 templateUrl: prefix.concat('passwordReset.html'),
                 controller: 'PasswordRestCtrl'
             })
+
             .state('dashboard',{
                 url: '/dashboard',
                 controller: 'DashboardCtrl',
@@ -66,8 +70,9 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                     requiresLogin: true
                 }
             })
+
             .state('workshop_template',{
-                url:'/workshop_template',
+                url:'/workshop/template',
                 controller:'WorkshopTemplateCtrl',
                 templateUrl: prefix.concat('adminWorkshopTemplate.html'),
                 data: {
@@ -82,17 +87,17 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                     requiresLogin: true
                 }
             })
-          
-            .state('workshop_template.edit', {
-                url: '/edit/:id',
+            .state('workshop_template_edit', {
+                url: '/workshop/template/edit/:id',
                 controller: 'EditWorkshopTemplateCtrl',
-                templateUrl: prefix.concat('workshopTemplateNew.html'),
+                templateUrl: prefix.concat('adminNewWorkshopTemplate.html'),
                 data: {
                     requiresLogin: true
                 }
             })
+
             .state('email_template', {
-                url: '/email_template',
+                url: '/email/template',
                 controller: 'EmailTemplateCtrl',
                 templateUrl: prefix.concat('adminEmailTemplate.html'),
                 data: {
@@ -115,6 +120,7 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                     requiresLogin: true
                 }
             })
+
             .state('blacklist',{
                 url: '/blacklist',
                 controller: 'BlacklistCtrl',
@@ -123,8 +129,9 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                     requiresLogin: true
                 }
             })
+
             .state('administrator_management', {
-                    url: '/administrator_management',
+                    url: '/admins',
                     controller: 'AdministratorManagementCtrl',
                     templateUrl: prefix.concat('administratorManagement.html'),
                 data: {
@@ -133,18 +140,33 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                 })
 
             .state('administrator_workshop_details', {
-                url: '/workshop/management/:id',
+                url: '/workshop/management/details/:id',
                 controller: 'adminWorkshopDetailsCtrl',
                 templateUrl: prefix.concat('adminWorkshopDetails.html'),
                 data: {
                     requiresLogin: true
                 }
             })
-
             .state('admin_workshop_management',{
                 url: '/workshop/management',
                 controller: 'adminWorkshopManagementCtrl',
                 templateUrl: prefix.concat('adminWorkshopManagement.html'),
+                data: {
+                    requiresLogin: true
+                }
+            })
+            .state('admin_workshop_new',{
+                url: '/workshop/management/new',
+                controller: 'WorkshopNewCtrl',
+                templateUrl: prefix.concat('adminWorkshopNew.html'),
+                data: {
+                    requiresLogin: true
+                }
+            })
+            .state('admin_workshop_edit',{
+                url: '/workshop/managment/edit/:id',
+                controller: 'WorkshopEditCtrl',
+                templateUrl: prefix.concat('adminWorkshopEdit.html'),
                 data: {
                     requiresLogin: true
                 }

@@ -33,7 +33,7 @@ mainAppCtrls.controller('LoginCtrl',['$scope','$http','store','$state','jwtHelpe
                 $scope.loading = false;
                 var token = httpResponse.data.token;
                 store.set('jwt',token);
-                $state.go($scope.fromState);
+                $state.go('dashboard');
                 $scope.show_login = false;
                 $scope.show_logout = true;
             },function(httpResponse){

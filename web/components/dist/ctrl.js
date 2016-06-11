@@ -610,7 +610,7 @@ mainAppCtrls.controller('LoginCtrl',['$scope','$http','store','$state','jwtHelpe
                 $scope.loading = false;
                 var token = httpResponse.data.token;
                 store.set('jwt',token);
-                $state.go($scope.fromState);
+                $state.go('dashboard');
                 $scope.show_login = false;
                 $scope.show_logout = true;
             },function(httpResponse){
@@ -747,11 +747,10 @@ mainAppCtrls.controller('PasswordResetCtrl',['$scope',
  * @name SettingsCtrl
  * @description Controller for the Settings view
  */
-mainAppCtrls.controller('SettingsCtrl',['$scope','UIHelper','$alert',
-    function($scope,UIHelper,$alert) {
+mainAppCtrls.controller('SettingsCtrl',['$scope','$alert',
+    function($scope,$alert) {
 
         $scope.form = {};
-        UIHelper.HideUserUI();
         //TODO: load i18n for Placeholders and Tabnames
         $scope.tabs = [
 

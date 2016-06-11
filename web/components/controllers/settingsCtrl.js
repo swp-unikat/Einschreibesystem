@@ -6,11 +6,10 @@ var mainAppCtrls = angular.module("mainAppCtrls");
  * @name SettingsCtrl
  * @description Controller for the Settings view
  */
-mainAppCtrls.controller('SettingsCtrl',['$scope','UIHelper','$alert',
-    function($scope,UIHelper,$alert) {
+mainAppCtrls.controller('SettingsCtrl',['$scope','$alert',
+    function($scope,$alert) {
 
         $scope.form = {};
-        UIHelper.HideUserUI();
         //TODO: load i18n for Placeholders and Tabnames
         $scope.tabs = [
 
