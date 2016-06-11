@@ -57,7 +57,7 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
             })
 
             .state('password_reset',{
-                url: '/password_reset/:token',
+                url: '/password/reset/:token',
                 templateUrl: prefix.concat('passwordReset.html'),
                 controller: 'PasswordRestCtrl'
             })
@@ -164,7 +164,7 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                 }
             })
             .state('admin_workshop_edit',{
-                url: '/workshop/managment/edit/:id',
+                url: '/workshop/management/edit/:id',
                 controller: 'WorkshopEditCtrl',
                 templateUrl: prefix.concat('adminWorkshopEdit.html'),
                 data: {
