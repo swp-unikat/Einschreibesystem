@@ -26,10 +26,15 @@
             </form>
 
             <div class="login-help">
-                <div>
-                    <button type="button" class="btn btn-link"translate class="col-xs-6 col-sm-6 col-md-6">BUTTON_FORGOT_PASSWORD</button>
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <button type="button" class="btn btn-link"translate >BUTTON_FORGOT_PASSWORD</button>
                 </div>
+                <div ng-show="loading" class=" col-xs-6 col-sm-6 col-md-6" style="margin-top: 10px;">
+                    <span class="glyphicon glyphicon-refresh glyphicon-spin" style="margin-left:90%"></span>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12" id="alert" bs-alert></div>
             </div>
+
         </div>
     </div>
 </div></div></div>

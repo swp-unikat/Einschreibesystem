@@ -6,7 +6,7 @@ var mainAppCtrls = angular.module("mainAppCtrls");
  * @requires restSvcs.EmailTemplate
  * @description Controller for editing a workshop template. Provides
  * @ngdoc controller
- * @name mainAppCtrls.controller:EditEmailTemplateCtrl
+ * @name mainAppCtrls.controller:EditWorkshopTemplateCtrl
  */
 mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate','$stateParams','$translate','$alert',
     function($scope,WorkshopTemplate,$stateParams,$translate,$alert) {

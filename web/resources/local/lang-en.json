@@ -122,5 +122,6 @@
   "ALERT_EMAILTEMPLATE_NEW_FAIL":"Failed to create E-Mail template. Error code",
   "ALERT_WORKSHOPTEMPLATE_NOT_FOUND": "The requested workshop template couldn't be found",
   "ALERT_WORKSHOPTEMPLATE_NOT_SUCCESS": "Successfully edited workshop template",
-  "ALERT_WORKSHOPTEMPLATE_NOT_FAIL": "Failed to edit workshop template. Error code"
+  "ALERT_WORKSHOPTEMPLATE_NOT_FAIL": "Failed to edit workshop template. Error code",
+  "ALERT_LOGIN_FAIL": "Failed to login. Password and/or username invalid"
 }
