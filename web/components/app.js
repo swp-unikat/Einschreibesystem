@@ -59,7 +59,7 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
             .state('password_reset',{
                 url: '/password/reset/:token',
                 templateUrl: prefix.concat('passwordReset.html'),
-                controller: 'PasswordRestCtrl'
+                controller: 'PasswordResetCtrl'
             })
 
             .state('dashboard',{

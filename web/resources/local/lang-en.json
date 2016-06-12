@@ -125,5 +125,8 @@
   "ALERT_WORKSHOPTEMPLATE_NOT_FAIL": "Failed to edit workshop template. Error code",
   "ALERT_LOGIN_FAIL": "Failed to login. Password and/or username invalid",
   "ENTER_MAIL_RESET": "Enter your account's email-address",
-  "RESET_PASSWORD": "Reset password"
+  "RESET_PASSWORD": "Reset password",
+  "PASSWORD": "Password",
+  "PASSWORDS_IDENTICAL_ERROR": "Passwords have to be identical",
+  "PASSWORD_EMPTY_ERROR": "Password cannot be empty"
 }
