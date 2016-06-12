@@ -40,7 +40,7 @@ class EmailTemplateController extends FOSRestController implements ClassResource
      * @ApiDoc(
      *  resource=true,
      *  description="Returns list of all templates",
-     *  output = "Core\EntityBundle\Entity\",
+     *  output = "Core\EntityBundle\Entity\EmailTemplate",
      *  statusCodes = {
      *      200 = "Returned when successful",
      *      404 = "Returned when the data is not found"
@@ -49,6 +49,7 @@ class EmailTemplateController extends FOSRestController implements ClassResource
      * )
      *
      * @return \Symfony\Component\HttpFoundation\Response
+     * @return array give the list of all emailtemplates
      * @Rest\View()
      */
     public function getListAction()
@@ -84,6 +85,9 @@ class EmailTemplateController extends FOSRestController implements ClassResource
      * )
      *
      * @return \Symfony\Component\HttpFoundation\Response
+     * @param integer[] $id id of the emailtemplate
+     * @return array information of a emailtemplate
+     * @var Emailtemplate $emailTemplate 
      * @Rest\View()
      */
     public function getAction($id)
@@ -140,16 +144,20 @@ class EmailTemplateController extends FOSRestController implements ClassResource
      * )
      *
      * @return \Symfony\Component\HttpFoundation\Response
-     * @Rest\RequestParam(name="template_name", requirements=".*", description="name of the emailtemplate")
-     * @Rest\RequestParam(name="email_subject", requirements=".*", description="subject of the emailtemplate")
-     * @Rest\RequestParam(name="email_body", requirements=".*", description="content of the emailtemplate")
+     * @Rest\RequestParam(name="template_name", requirements=".*", description="name of the emailtemplate",default=null,nullable=true)
+     * @Rest\RequestParam(name="email_subject", requirements=".*", description="subject of the emailtemplate",default=null,nullable=true)
+     * @Rest\RequestParam(name="email_body", requirements=".*", description="content of the emailtemplate",default=null,nullable=true)
+     * @param integer [] $id id of the emailtemplate
+     * @param string [] $template_name name of the emailtemplate
+     * @param string [] $email_subject subject of the emailtemplate
+     * @param string [] §email_body content of the emailtemplate
      * @Rest\View()
      */
     public function patchAction(ParamFetcher $paramFetcher,$id)
     {
     	$params = $paramFetcher->all();
         /** @var EmailTemplate $emailTemplate */
-        $emailTemplate = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:EmailTemplate")->findById($id);
+        $emailTemplate = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:EmailTemplate")->find($id);
         if (!$emailTemplate) {
         	throw $this->createNotFoundException("No EmailTemplate found");
         }
@@ -201,9 +209,13 @@ class EmailTemplateController extends FOSRestController implements ClassResource
      * )
      *
      * @return \Symfony\Component\HttpFoundation\Response
+     * @var Emailtemplate $emailTemplate
      * @Rest\RequestParam(name="template_name", requirements=".*", description="name of the emailtemplate")
      * @Rest\RequestParam(name="email_subject", requirements=".*", description="subject of the emailtemplate")
      * @Rest\RequestParam(name="email_body", requirements=".*", description="content of the emailtemplate")
+     * @param string [] $template_name name of the emailtemplate
+     * @param string [] $email_subject subject of the emailtemplate
+     * @param string [] §email_body content of the emailtemplate
      * @Rest\View()
      */
     public function putAction(ParamFetcher $paramFetcher)
@@ -242,6 +254,8 @@ class EmailTemplateController extends FOSRestController implements ClassResource
      * )
      *
      * @return \Symfony\Component\HttpFoundation\Response
+     * @var Emailtemplate $emailTemplate
+     * @param integer[] $id id of a emailtemplate
      * @Rest\View()
      */
     public function deleteAction($id)

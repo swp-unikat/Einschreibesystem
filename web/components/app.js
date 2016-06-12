@@ -1,7 +1,5 @@
 /**
  * @name mainApp
- * @requieres
- * @type {angular.Module}
  * @description Main module of the application
  */
 var mainApp = angular.module('mainApp',[
@@ -45,21 +43,25 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                 controller: 'LoginCtrl',
                 templateUrl: prefix.concat('login.html')
             })
+
             .state('enrollment_confirm',{
                 url: '/enrollment/confirm/:workshopid/:userid/:token',
                 templateUrl: prefix.concat('enrollmentConfirm.html'),
                 controller: 'EnrollmentConfirmCtrl'
             })
+
             .state('unsubscribe',{
                 url: '/unsubscribe/:id/:workshopid/:token',
                 templateUrl: prefix.concat('unsubscribemessage.html'),
                 controller: 'UnsubscribeController'
             })
+
             .state('password_reset',{
-                url: '/password_reset/:token',
+                url: '/password/reset/:token',
                 templateUrl: prefix.concat('passwordReset.html'),
                 controller: 'PasswordRestCtrl'
             })
+
             .state('dashboard',{
                 url: '/dashboard',
                 controller: 'DashboardCtrl',
@@ -68,8 +70,9 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                     requiresLogin: true
                 }
             })
+
             .state('workshop_template',{
-                url:'/workshop_template',
+                url:'/workshop/template',
                 controller:'WorkshopTemplateCtrl',
                 templateUrl: prefix.concat('adminWorkshopTemplate.html'),
                 data: {
@@ -84,17 +87,17 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                     requiresLogin: true
                 }
             })
-          
-            .state('workshop_template.edit', {
-                url: '/edit/:id',
+            .state('workshop_template_edit', {
+                url: '/workshop/template/edit/:id',
                 controller: 'EditWorkshopTemplateCtrl',
-                templateUrl: prefix.concat('workshopTemplateNew.html'),
+                templateUrl: prefix.concat('adminNewWorkshopTemplate.html'),
                 data: {
                     requiresLogin: true
                 }
             })
+
             .state('email_template', {
-                url: '/email_template',
+                url: '/email/template',
                 controller: 'EmailTemplateCtrl',
                 templateUrl: prefix.concat('adminEmailTemplate.html'),
                 data: {
@@ -110,13 +113,14 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                 }
             })
             .state('email_template_edit', {
-                url: '/email/template/edit',
+                url: '/email/template/edit/:id',
                 controller: 'EditEmailTemplateCtrl',
                 templateUrl: prefix.concat('adminEditEmailTemplate.html'),
                 data: {
                     requiresLogin: true
                 }
             })
+
             .state('blacklist',{
                 url: '/blacklist',
                 controller: 'BlacklistCtrl',
@@ -125,8 +129,9 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                     requiresLogin: true
                 }
             })
+
             .state('administrator_management', {
-                    url: '/administrator_management',
+                    url: '/admins',
                     controller: 'AdministratorManagementCtrl',
                     templateUrl: prefix.concat('administratorManagement.html'),
                 data: {
@@ -135,18 +140,33 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                 })
 
             .state('administrator_workshop_details', {
-                url: '/workshop/management/:id',
+                url: '/workshop/management/details/:id',
                 controller: 'adminWorkshopDetailsCtrl',
                 templateUrl: prefix.concat('adminWorkshopDetails.html'),
                 data: {
                     requiresLogin: true
                 }
             })
-
             .state('admin_workshop_management',{
                 url: '/workshop/management',
                 controller: 'adminWorkshopManagementCtrl',
                 templateUrl: prefix.concat('adminWorkshopManagement.html'),
+                data: {
+                    requiresLogin: true
+                }
+            })
+            .state('admin_workshop_new',{
+                url: '/workshop/management/new',
+                controller: 'WorkshopNewCtrl',
+                templateUrl: prefix.concat('adminWorkshopNew.html'),
+                data: {
+                    requiresLogin: true
+                }
+            })
+            .state('admin_workshop_edit',{
+                url: '/workshop/management/edit/:id',
+                controller: 'WorkshopEditCtrl',
+                templateUrl: prefix.concat('adminWorkshopEdit.html'),
                 data: {
                     requiresLogin: true
                 }
@@ -192,16 +212,14 @@ mainApp.config(['jwtInterceptorProvider','$httpProvider','$urlRouterProvider',fu
 
     $httpProvider.interceptors.push('jwtInterceptor');
 }])
-    .run(['$rootScope','$state','store','jwtHelper','UIHelper',function($rootScope, $state, store, jwtHelper,UIHelper) {
-        UIHelper.ToggleLogout();
+    .run(['$rootScope','$state','store','jwtHelper',function($rootScope, $state, store, jwtHelper) {
         $rootScope.$on('$stateChangeStart', function(e, to) {
             if (to.data && to.data.requiresLogin) {
                 if (!store.get('jwt') || jwtHelper.isTokenExpired(store.get('jwt'))) {
                     e.preventDefault();
                     $state.go('login');
                 }
-            }
-
+            };
         });
     }]);
 
@@ -212,69 +230,63 @@ mainApp.config(['$translateProvider', function($translateProvider) {
     });
     $translateProvider.preferredLanguage('en');
 }]);
+
 /**
- * @ngdoc service
- * @descrption Helper service to show or hide User UI elements
- * @name  mainApp.UIHelper
+ * @ngdoc controller
+ * @name mainApp.controller:GlobalCtrl
+ * @description Controller applied to the body HTML-Tag to avoid pollution of the rootScope. Provides Information wether login or logout button are to be shown
+
  */
-mainApp.factory('UIHelper',['$rootScope','store','jwtHelper',function($rootScope,store,jwtHelper){
-    return {
-        /**
-         * @ngdoc function
-         * @name mainApp.UIHelper#HideUserUI
-         * @description hide the user UI
-         * @methodOf mainApp.UIHelper
-         */
-        HideUserUI: function(){
-            $rootScope.hide_user_ui = true;
-        },
-        /**
-         * @ngdoc function
-         * @name mainApp.UIHelper#ShowUserUI
-         * @description show the user UI
-         * @methodOf mainApp.UIHelper
-         */
-        ShowUserUI: function(){
-            $rootScope.hide_user_ui = false;
-        },
-        /**
-         * @ngdoc function
-         * @name mainApp.UIHelper#ToggleUserUI
-         * @description toggle the user UI
-         * @methodOf mainApp.UIHelper
-         */
-        ToggleUserUI: function(){
-            $rootScope.hide_user_ui = ! $rootScope.hide_user_ui;
-        },
-        /**
-         * @ngdoc function
-         * @name mainApp.UIHelper#ToggleLogout
-         * @description Toggles, if the Logout or the Login Button is shown
-         * @methodOf mainApp.UIHelper
-         */
-        ToggleLogout: function(){
-            var jwt  = store.get('jwt');
-            if(!jwt){
-                $rootScope.logged_in = false;
-                return;
+mainApp.controller('GlobalCtrl',['$scope','store','jwtHelper','$state',function($scope,store,jwtHelper,$state) {
+
+    $scope.show_login = true;
+    $scope.show_logout = false;
+    //Function called on every state change. Takes care of the buttons to be shown correctly
+    $scope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
+        var jwt = store.get('jwt');
+        if(toState.name == 'login') {
+            $scope.show_login = false;
+            $scope.fromState = fromState;
+            if(jwt != null && !jwtHelper.isTokenExpired(jwt)) {
+                event.preventDefault();
+                $state.go(fromState);
             }
-            $rootScope.logged_in = !jwtHelper.isTokenExpired(jwt);
-        },
-        /**
-         * @ndoc function
-         * @name mainApp.UIHelper#logout
-         * @description Deletes the saved JWT token from last login
-         * @methodOf mainApp.UIHelper
-         */
-        logout: function(){
-            if(store.get('jwt'))
-                store.delete('jwt');
+        } else {
+            if(jwt != null) {
+                $scope.show_login = jwtHelper.isTokenExpired(jwt);
+                $scope.show_logout = !jwtHelper.isTokenExpired(jwt);
+            } else {
+                $scope.show_login = true;
+                $scope.show_logout = false;
+            }
         }
-    }
-}]);
+    });
+    /**
+     * @ngdoc function
+     * @name mainApp.controller:GlobalCtrl#logout
+     * @methodOf mainApp.controller:GlobalCtrl
+     * @description Function bound to the logout button. Deletets the stored JWT and redirectes to the workhops state, if the current state requieres to be logged in. Also sets the login/-out buttons to be shown accordingly
+     */
+    $scope.logout = function() {
+
+      var jwt =   store.get('jwt');
+      if(jwt != null) {
+          store.remove('jwt');
+          $scope.show_login = true;
+          $scope.show_logout = false;
+          if($state.current.data.requiresLogin)
+              $state.go('workshops');
+      } else {
+          $scope.show_login = true;
+          $scope.show_logout = false;
+      }
+    };
+}
+]);
 /**
  * @ngdoc directive
- * @name mainApp.compare-to
+ * @name mainApp.directive:compare-to
+ * @description
  */
 mainApp.directive('compareTo',[function(){
     return {

@@ -14,8 +14,8 @@ mainAppCtrls.controller('NewEmailTemplateCtrl',['$scope',"EmailTemplate",
                 email_subject:$scope.email.template.subject,
                 email_body:$scope.email.template.body
             }
-            EmailTemplate.putEmailTemplate(data).$promise.then(function(value){
-                alert('Success!');
+            EmailTemplate.put(data).$promise.then(function(httpResponse){
+                alert('Success!' + httpResponse.status);
             },function(httpResponse){
                 alert('Error'+httpResponse.statusText);
             });

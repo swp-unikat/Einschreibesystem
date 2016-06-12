@@ -7,20 +7,28 @@ var mainAppCtrls = angular.module("mainAppCtrls");
  */
 mainAppCtrls.controller('NewWorkshopTemplateCtrl',['$scope',"WorkshopTemplate",
     function($scope, WorkshopTemplate) {
-
+        $scope.workshop = {};
         $scope.sendInfo = function(){
-            var data={
+            //Adjusts the format of the date strings to fit the requirements of the API
+            var reformatDate =  function(_date){
+                if(!_date)
+                    return "";
+                var _dateStr = _date.toJSON();
+                _dateStr =  _dateStr.slice(0,_dateStr.length-5);
+                return _dateStr.replace('T',' ');
+            };
+            var data = {
                 title:$scope.workshop.title,
                 description:$scope.workshop.description,
                 cost:$scope.workshop.cost,
                 requirements:$scope.workshop.requirement,
                 location:$scope.workshop.location,
-                start_at:$scope.sharedDate,
-                end_at:JSON.stringify(new Date(2016,10,10,10,10,0,0)),
-                max_participants:$scope.workshop.max.participants
-            }
-            WorkshopTemplate.putWorkshopTemplate(data).$promise.then(function(value){
-                alert('Success!');
+                start_at:reformatDate($scope.sharedDate),
+                end_at:reformatDate($scope.sharedDate),
+                max_participants:$scope.workshop.max_participants
+            };
+            WorkshopTemplate.put(data).$promise.then(function(httpResponse){
+                alert('Success!' + httpResponse.status);
             },function(httpResponse){
                 alert('Error'+httpResponse.statusText);
             });

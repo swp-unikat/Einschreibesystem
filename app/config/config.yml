@@ -72,9 +72,6 @@ fos_user:
     registration:
       confirmation:
         enabled: true
-        from_email:
-          address: registration@example.com
-          sender_name: Demo Registration
 
  # API Config
 nelmio_cors:

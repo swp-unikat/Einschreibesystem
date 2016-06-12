@@ -3,15 +3,22 @@
  */
 var mainAppCtrls = angular.module("mainAppCtrls");
 /**
- *
+ * @ngdoc controller
+ * @name mainAppCtrls.controller:adminWorkshopManagementCtrl
  */
 mainAppCtrls.controller('adminWorkshopManagementCtrl',['$scope','AdminWorkshop','$alert','$translate',
     function($scope,AdminWorkshop,$alert,$translate) {
 
         //Define object to store the alert in
         $scope.myAlert;
-        //returns true if date is in future
-        //returns false if date is in past
+        /**
+         * @ngdoc function
+         * @name mainAppCtrls.controller:adminWorkshopManagementCtrl#compareToCurrent
+         * @params {Date} a Date to compare to current Date
+         * @methodOf mainAppCtrls.controller:adminWorkshopManagementCtrl
+         * @description Compares the give date to the current date
+         * @returns {boolean} Returns true if passed date lies in the future
+         **/
         var compareToCurrent = function (a){
            var  d1 = Date.now();
            var  d2 = JSON.parse(a);

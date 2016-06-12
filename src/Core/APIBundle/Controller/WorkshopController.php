@@ -23,6 +23,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Routing\ClassResourceInterface;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
 use Symfony\Component\HttpFoundation\Request;
 /**
@@ -114,14 +115,11 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
 
         $workshop = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Workshop")->find($id);
         $participant = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Participants")->findOneBy(["email" => $params["email"]]);
-
         
         if (!$workshop) {
             throw $this->createNotFoundException("Workshop not found");
         }
-        
-       
-        
+
         if ($participant == NULL){
             $participant = new Participants();
             $participant->setBlacklisted(false);
@@ -129,25 +127,16 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
             $participant->setName($params["name"]);
             $participant->setSurname($params["surname"]);
 
+
             $this->getDoctrine()->getManager()->persist($participant);
             $this->getDoctrine()->getManager()->flush();
 
-            
-            //send mail
-            $template = $this->getDoctrine()->getRepository("CoreEntityBundle:EmailTemplate")->find(1);
-            /* Creating Twig template from Database */
-            $renderTemplate = $this->get('twig')->createTemplate($template->getEmailBody());
-            /* Sending E-Mail with Confirmation Link - NOT INCLUDED?*/
-            $message = \Swift_Message::newInstance()
-                ->setSubject($this->get('twig')->createTemplate($template->getEmailSubject())->render(["workshop" => $workshop]))
-                ->setFrom("info@sky-lab.de")
-                ->setTo($participant->getEmail())
-                ->setBody($renderTemplate->render(["workshop" => $workshop,"participant" => $participant]),'text/html');
-            $this->get('mailer')->send($message);
-
-            
         } else {
             //alle Workshops an denen der Nutzer noch nicht teilgenommen hat
+            if ($participant->isBlacklisted()) {
+                throw $this->createAccessDeniedException("You are blacklisted");
+            }
+
             $workshopParticipants = $this->getDoctrine()->getRepository("CoreEntityBundle:WorkshopParticipants")->findBy(["participant" => $participant, "participated" => 0]);
             //über Array iterieren , Workshop laden (get Wokrshop?) Anfangs und Endzeit mit dem Workshop vergleichen
 
@@ -156,21 +145,28 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
                 if($workshop->getStartAt() >= $tempWorkshop->getStartAt() && $workshop->getEndAt() <= $tempWorkshop->getEndAt()){
                     throw $this->createAccessDeniedException("Already in Workshop at same Time");
                 }
-            } //foreach
-            
-            //send mail
-            $template = $this->getDoctrine()->getRepository("CoreEntityBundle:EmailTemplate")->find(1);
-            /* Creating Twig template from Database */
-            $renderTemplate = $this->get('twig')->createTemplate($template->getEmailBody());
-            /* Sending E-Mail with Confirmation Link - NOT INCLUDED?*/
-            $message = \Swift_Message::newInstance()
-                ->setSubject($template->getEmailSubject())
-                ->setFrom('send@example.com')
-                ->setTo($participant->getEmail())
-                ->setBody($renderTemplate->render(["workshop" => $workshop,"participant" => $participant]),'text/html');
-            $this->get('mailer')->send($message);
-            
+            }
         }
+
+        $token = new EmailToken();
+        $token->setParticipant($participant);
+        $this->getDoctrine()->getManager()->persist($token);
+        $this->getDoctrine()->getManager()->flush();
+        
+        $url = $this->generateUrl('core_frontend_default_index',[],TRUE)."#/enrollment/confirm/".$workshop->getId()."/".$participant->getId()."/".$token->getToken();
+
+
+        //load Template for confirment
+        $template = $this->getDoctrine()->getRepository("CoreEntityBundle:EmailTemplate")->find(2);
+        /* Creating Twig template from Database */
+        $renderTemplate = $this->get('twig')->createTemplate($template->getEmailBody());
+        /* Sending E-Mail with Confirmation Link*/
+        $message = \Swift_Message::newInstance()
+            ->setSubject($this->get('twig')->createTemplate($template->getEmailSubject())->render(["workshop" => $workshop]))
+            ->setFrom("info@sky-lab.de")
+            ->setTo($participant->getEmail())
+            ->setBody($renderTemplate->render(["workshop" => $workshop,"participant" => $participant,'url' => $url]),'text/html');
+        $this->get('mailer')->send($message);
 
         return View::create(NULL, Codes::HTTP_OK);
     }
@@ -196,7 +192,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
         $participant = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Participants")->find($participantsId);
 
         // Workshop & Token & participant are valid
-        if($workshop && $token && $participant){
+        if($workshop != NULL  && $token != NULL && $participant != NULL){
             // Check if Token is not older then 30 min
             if($token->getValidUntil() <= new \DateTime('now')){
                 // Check if this token is dedicated to user
@@ -207,6 +203,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
                     $participantWorkshop->setWorkshop($workshop);
                     $participantWorkshop->setParticipant($participant);
                     $participantWorkshop->setEnrollment(new \DateTime('now'));
+                    $participantWorkshop->setParticipated(false);
                     // Get Participants
                     $participants = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Workshop")->getParticipants($workshopId);
                     // Check if a waitinglist ist requiered
@@ -278,8 +275,10 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      * @ApiDoc(
      *  resource=true,
      *  description="Returns the waitinglist of a workshop",
-     *  output = "Core\EntityBundle\Entity\WorkshopParticipants",
-     *  statusCodes = {
+     *  output = {
+     *      "class"="Core\EntityBundle\Entity\WorkshopParticipants",
+     *      "groups"={"names"}
+     *  },statusCodes = {
      *      200 = "Returned when successful",
      *      404 = "Returned when the data is not found"
      *  },requirements={
@@ -301,7 +300,16 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
         if (!$waitingList) {
             throw $this->createNotFoundException("No waitinglist for workshop");
         }
-        $view = $this->view($waitingList, 200);
+
+        $waiting = [];
+        foreach ($waitingList as $participant) {
+            $waiting[] = [
+                'name' => $participant->getParticipant()->getName(),
+                'surname' => $participant->getParticipant()->getSurname()
+            ];
+        }
+
+        $view = $this->view($waiting, 200);
         return $this->handleView($view);
     }
     /**
