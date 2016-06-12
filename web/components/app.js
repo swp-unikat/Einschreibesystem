@@ -324,3 +324,22 @@ mainApp.directive("myNavscroll", function($window) {
         });
     };
 });
+mainApp.service('$confirm', function($modal, $rootScope, $q) {
+    var scope = $rootScope.$new();
+    var deferred;
+    scope.title = 'confirm';
+    scope.content = 'Confirm deletion?';
+    scope.answer = function(res) {
+        deferred.resolve(res);
+        confirm.hide();
+    }
+    var confirm = $modal({templateUrl: 'resources/views/confirm.tpl.html',content: _content,title: _title, scope: scope, show: false,dismissable: false});
+    var parentShow = confirm.show;
+    confirm.show = function() {
+        deferred = $q.defer();
+        parentShow();
+        return deferred.promise;
+    }
+
+    return confirm;
+})
