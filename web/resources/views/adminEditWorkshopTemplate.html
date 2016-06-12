@@ -10,19 +10,19 @@
         <div class="from-group col-md-8 col-md-offset-2">
 
             <label>{{ "WORKSHOP_TITLE" | translate}}</label>
-            <input type="text" ng-model="template.title" class="form-control">
+            <input type="text" ng-model="title" class="form-control">
 
             <label>{{ "WORKSHOP_DESCRIPTION" | translate}}</label>
-            <div text-angular  ng-model="newDescription"></div>
+            <div text-angular  ng-model="description"></div>
 
             <label>{{ "WORKSHOP_COST" | translate}}</label>
-            <input type="text" ng-model="workshop.cost" class="form-control ">
+            <input type="text" ng-model="cost" class="form-control ">
 
             <label>{{ "WORKSHOP_REQUIREMENTS" | translate}}</label>
-            <input type="text" ng-model=workshop.requirement class="form-control ">
+            <input type="text" ng-model="requirements" class="form-control ">
 
             <label>{{ "WORKSHOP_LOCATION" | translate}}</label>
-            <input type="text" ng-model=workshop.location class="form-control ">
+            <input type="text" ng-model="location" class="form-control ">
 
             <div class="form-group">
                 <label>{{ "WORKSHOP_START_TIME" | translate}}</label>
@@ -33,6 +33,8 @@
                     <input type="text" size="8"  ng-model="sharedDate" data-time-format="HH:mm" data-autoclose="1" placeholder="Time" bs-timepicker class="form-control col-md-4">
                 </div>
             </div>
+            <label>{{ "WORKSHOP_DURATION" | translate}}</label>
+            <input type="text" ng-model="duration" class="form-control ">
         </div>
 
 
