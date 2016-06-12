@@ -27,7 +27,7 @@
 
             <div class="login-help">
                 <div class="col-xs-6 col-sm-6 col-md-6">
-                    <button type="button" class="btn btn-link"translate >BUTTON_FORGOT_PASSWORD</button>
+                    <button type="button" class="btn btn-link"translate ng-click="showResetPanel()">BUTTON_FORGOT_PASSWORD</button>
                 </div>
                 <div ng-show="loading" class=" col-xs-6 col-sm-6 col-md-6" style="margin-top: 10px;">
                     <span class="glyphicon glyphicon-refresh glyphicon-spin" style="margin-left:90%"></span>
@@ -37,5 +37,17 @@
 
         </div>
     </div>
-</div></div></div>
+    <div ng-show="reset_panel" class="panel panel-default">
+        <div class="panel-heading text-center">
+            {{ 'ENTER_MAIL_RESET' | translate }}
+        </div>
+        <div class="panel-body">
+            <input ng-model="e_mail_for_reset" type="email" class="form-control" placeholder="Enter your E-Mail"/>
+            <button type="button" class="btn btn-primary" ng-click="resetPassword(e_mail_for_reset)" translate>RESET_PASSWORD</button>
+            <div id="reset_alert" bs-alert></div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
 

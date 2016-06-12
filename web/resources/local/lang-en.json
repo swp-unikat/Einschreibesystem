@@ -90,7 +90,6 @@
   "BUTTON_REMOVE_EMAIL_TEMPLATE": "Remove template",
   "ADMINISTRATOR_MANAGEMENT": "Administrator management",
   "ADMINISTRATOR_DELETE": "Administrator delete",
-  "BUTTON_ADMINISTRATOR_PASSWORD_RESET": "Administrator password reset",
   "ADMINISTRATOR_INVITE": "Administrator invite",
   "ADMINISTRATOR_DASHBOARD": "Administrator dashboard",
   "BUTTON_BACK_TO_DASHBOARD": "Back to Dashboard",
@@ -123,5 +122,7 @@
   "ALERT_WORKSHOPTEMPLATE_NOT_FOUND": "The requested workshop template couldn't be found",
   "ALERT_WORKSHOPTEMPLATE_NOT_SUCCESS": "Successfully edited workshop template",
   "ALERT_WORKSHOPTEMPLATE_NOT_FAIL": "Failed to edit workshop template. Error code",
-  "ALERT_LOGIN_FAIL": "Failed to login. Password and/or username invalid"
+  "ALERT_LOGIN_FAIL": "Failed to login. Password and/or username invalid",
+  "ENTER_MAIL_RESET": "Enter your account's email-address",
+  "RESET_PASSWORD": "Reset password"
 }

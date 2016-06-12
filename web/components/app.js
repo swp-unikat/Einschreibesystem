@@ -233,7 +233,7 @@ mainApp.config(['$translateProvider', function($translateProvider) {
 
 /**
  * @ngdoc controller
- * @name mainApp.controller:GloablCtrl
+ * @name mainApp.controller:GlobalCtrl
  * @description Controller applied to the body HTML-Tag to avoid pollution of the rootScope. Provides Information wether login or logout button are to be shown
 
  */

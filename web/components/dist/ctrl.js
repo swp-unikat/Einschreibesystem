@@ -139,15 +139,22 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops', '$stat
  */
 
 /**
- *
+ * @ngdoc controller
+ * @name mainAppCtrls.controller:adminWorkshopManagementCtrl
  */
 mainAppCtrls.controller('adminWorkshopManagementCtrl',['$scope','AdminWorkshop','$alert','$translate',
     function($scope,AdminWorkshop,$alert,$translate) {
 
         //Define object to store the alert in
         $scope.myAlert;
-        //returns true if date is in future
-        //returns false if date is in past
+        /**
+         * @ngdoc function
+         * @name mainAppCtrls.controller:adminWorkshopManagementCtrl#compareToCurrent
+         * @params {Date} a Date to compare to current Date
+         * @methodOf mainAppCtrls.controller:adminWorkshopManagementCtrl
+         * @description Compares the give date to the current date
+         * @returns {boolean} Returns true if passed date lies in the future
+         **/
         var compareToCurrent = function (a){
            var  d1 = Date.now();
            var  d2 = JSON.parse(a);
@@ -213,10 +220,9 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope',
 /**
  *
  */
-//TODO: When /dashboard/blacklist is called, change hideDashboard to true
 mainAppCtrls.controller('BlacklistCtrl',['$scope',
     function($scope) {
-        $scope.hideDashboard = true;
+        
     }
 
 ]);
@@ -586,16 +592,19 @@ mainAppCtrls.controller('LegalNoticeCtrl',['$scope',
  */
 mainAppCtrls.controller('LoginCtrl',['$scope','$http','store','$state','jwtHelper','$alert','$translate',
     function($scope,$http,store,$state,jwtHelper,$alert,$translate) {
-        //$scope.show_login = false;
+        $scope.reset_panel = false;
         var jwt = store.get('jwt');
+        
         var _translations;
         $translate(['TITLE_ERROR','ALERT_LOGIN_FAIL']).then(function(translation){
             _translations = translation;
         })
+        
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:LoginCtrl#sendInfo
          * @description Sends password and username to the server and checks confirms validation
+         * @methodOf mainAppCtrls.controller:LoginCtrl
          */
         $scope.sendInfo = function(){
             var _data = {
@@ -625,6 +634,29 @@ mainAppCtrls.controller('LoginCtrl',['$scope','$http','store','$state','jwtHelpe
                     show: true
                 });
             });
+        };
+
+        /**
+         *
+         */
+        $scope.showResetPanel = function() {
+            $scope.reset_panel = !$scope.reset_panel;
+            console.log($scope.reset_panel);
+        }
+
+        $scope.resetPassword = function(e_mail_for_reset) {
+            if($scope.alertReset != null)
+                $scope.alertReset.hide();
+            if(!e_mail_for_reset.$valid) {
+                $scope.alertReset = $alert({
+                    title: _translations.TITLE_ERROR,
+                    content: '',
+                    type: 'danger',
+                    dismissable: false,
+                    show: true,
+                    container: '#reset_alert'
+                });
+            }
         }
     }
 ]);
@@ -951,13 +983,20 @@ mainAppCtrls.controller('WorkshopListCtrl',['$scope','Workshops','$alert','$tran
 
 
 /**
- *
+ * @ngdoc controller
+ * @name mainAppCtrls.controller:WorkshopTemplateCtrl
+ * @description Displays the workshop-template list in the associated view
  */
 mainAppCtrls.controller('WorkshopTemplateCtrl', ['$scope', "WorkshopTemplate",'$alert',
 
     function ($scope, WorkshopTemplate, $alert) {
 
-
+        /**
+         * @ngdoc function
+         * @name mainAppCtrls.controller:WorkshopTemplateCtrl#loadTemplates
+         * @methodOf mainAppCtrls.controller:WorkshopTemplateCtrl
+         * @description Loads the list of available Templates from the server
+         */
         var loadTemplates = function() {
             $scope.loading = true;
             WorkshopTemplate.getAll()
@@ -970,7 +1009,13 @@ mainAppCtrls.controller('WorkshopTemplateCtrl', ['$scope', "WorkshopTemplate",'$
             });
         };
         loadTemplates();
-
+        /**
+         * @ngdoc function
+         * @name mainAppCtrls.controller:WorkshopTemplateCtrl#delete
+         * @methodOf mainAppCtrls.controller:WorkshopTemplateCtrl
+         * @param {number} _id
+         * @description Deletes the template with the passed id
+         */
         $scope.delete = function (_id) {
             WorkshopTemplate.delete({id:_id}).$promise.then(function(httpresponse){
                     $alert({
