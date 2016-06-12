@@ -50,6 +50,7 @@
   "BUTTON_DEACTIVATE_ADMINISTRATOR": "Deactivate administrator",
   "BUTTON_ADMINISTRATOR_MANAGEMENT": "Administrator management",
   "BUTTON_WORKSHOP_TEMPLATE": "Workshop template",
+  "AVAILABLE_WORKSHOP":"Available workshops",
   "AVAILABLE_WORKSHOP_TEMPLATES": "Available workshop templates",
   "WORKSHOP_TEMPLATE_NAME": "Workshop template name",
   "NEW_WORKSHOP_TEMPLATE": "Create new workshop template",
