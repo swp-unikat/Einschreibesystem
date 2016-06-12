@@ -4,11 +4,14 @@
         <h1>{{ "CURRENT_WORKSHOPS" | translate}}</h1>
         <div class="btn-group pull-right" role="group">
             <a ui-sref="dashboard"> <button class="btn btn-default">{{ "BUTTON_BACK_TO_DASHBOARD" | translate}}</button></a>
-            <a ui-sref="workshop_template">
+            <a ui-sref="workshop_new">
                 <button type="button" class="btn btn-default">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>{{ "BUTTON_NEW_WORKSHOP" | translate}}</button>
             </a>
-
+            <a ui-sref="workshop_edit">
+                <button type="button" class="btn btn-default">{{ "BUTTON_EDIT_WORKSHOP" | translate}}
+            </button>
+                </a>
         </div>
         <hr>
         <br>

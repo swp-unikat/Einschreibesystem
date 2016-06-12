@@ -8,9 +8,9 @@ var mainAppCtrls = angular.module("mainAppCtrls");
  * @name mainAppCtrls.controller:WorkshopTemplateCtrl
  * @description Displays the workshop-template list in the associated view
  */
-mainAppCtrls.controller('WorkshopTemplateCtrl', ['$scope', "WorkshopTemplate",'$alert',
+mainAppCtrls.controller('WorkshopTemplateCtrl', ['$scope', "WorkshopTemplate",'$alert', "$modal",
 
-    function ($scope, WorkshopTemplate, $alert) {
+    function ($scope, WorkshopTemplate, $alert,$modal) {
 
         /**
          * @ngdoc function

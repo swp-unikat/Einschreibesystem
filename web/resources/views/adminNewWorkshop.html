@@ -1,6 +1,6 @@
 <div class="container">
     <body data-spy="scroll" data-target=".navbar"><!--Wie bekommt man scrollen hin-->
-    <h1>{{ "NEW_WORKSHOP_TEMPLATE" | translate}}</h1>
+    <h1>{{ "NEW_WORKSHOP" | translate}}</h1>
     <div class="col-md-2 col-xs-2 pull-right">
         <a ui-sref="workshop_template"> <button class="btn btn-default">{{ "BUTTON_BACK" | translate}}</button></a>
     </div>
@@ -10,19 +10,22 @@
         <div class="from-group col-md-8 col-md-offset-2">
 
             <label>{{ "WORKSHOP_TITLE" | translate}}</label>
-            <input type="text" ng-model="title" class="form-control">
+            <input type="text" ng-model="workshop.title" class="form-control">
 
             <label>{{ "WORKSHOP_DESCRIPTION" | translate}}</label>
-            <div text-angular  ng-model="description"></div>
+            <div text-angular  ng-model="workshop.description"></div>
 
             <label>{{ "WORKSHOP_COST" | translate}}</label>
-            <input type="text" ng-model="cost" class="form-control ">
+            <input type="text" ng-model="workshop.cost" class="form-control ">
 
             <label>{{ "WORKSHOP_REQUIREMENTS" | translate}}</label>
-            <input type="text" ng-model="requirements" class="form-control ">
+            <input type="text" ng-model=workshop.requirement class="form-control ">
 
             <label>{{ "WORKSHOP_LOCATION" | translate}}</label>
-            <input type="text" ng-model="location" class="form-control ">
+            <input type="text" ng-model=workshop.location class="form-control ">
+
+            <label>{{ "WORKSHOP_MAXIMUM_NUMBER_OF_PARTICIPANTS" | translate}}</label>
+            <input type="text" ng-model=workshop.max.participants class="form-control ">
 
             <div class="form-group">
                 <label>{{ "WORKSHOP_START_TIME" | translate}}</label>
@@ -33,15 +36,14 @@
                     <input type="text" size="8"  ng-model="sharedDate" data-time-format="HH:mm" data-autoclose="1" placeholder="Time" bs-timepicker class="form-control col-md-4">
                 </div>
             </div>
-            <label>{{ "WORKSHOP_DURATION" | translate}}</label>
-            <input type="text" ng-model="duration" class="form-control ">
         </div>
 
 
         <div class="form-group row text-center">
-
-            <button type="Confirm" class="btn btn-info" ng-click="confirmChanges">{{ "BUTTON_CONFIRM" | translate }}</button>
-            <button type="Discard" class="btn btn-info" ng-click="discardChanges" >{{ "BUTTON_DISCARD" | translate }}</button>
+            <div class="btn-group">
+                <button type="reset" class="btn btn-info" ng-click="discard()">{{ "BUTTON_DISCARD" | translate }}</button>
+                <button type="Confirm" class="btn btn-info" ng-click="sendInfo()">{{ "BUTTON_SAVE" | translate }}</button>
+            </div>
         </div>
     </form>
     </body>
