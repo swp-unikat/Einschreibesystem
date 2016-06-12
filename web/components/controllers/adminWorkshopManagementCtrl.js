@@ -11,6 +11,8 @@ mainAppCtrls.controller('adminWorkshopManagementCtrl',['$scope','AdminWorkshop',
 
         //Define object to store the alert in
         $scope.myAlert;
+        $scope.currentList = [];
+        $scope.elapsedList = [];
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:adminWorkshopManagementCtrl#compareToCurrent
@@ -20,8 +22,8 @@ mainAppCtrls.controller('adminWorkshopManagementCtrl',['$scope','AdminWorkshop',
          * @returns {boolean} Returns true if passed date lies in the future
          **/
         var compareToCurrent = function (a){
-           var  d1 = Date.now();
-           var  d2 = JSON.parse(a);
+           var  d1 = new Date();
+           var  d2 = new Date(a);
            return (d2.getTime()>d1.getTime())
         };
         //Get and store translation for alert title.
@@ -33,6 +35,12 @@ mainAppCtrls.controller('adminWorkshopManagementCtrl',['$scope','AdminWorkshop',
         AdminWorkshop.gethistory().$promise.then(function(value){
             var workshopList = value;
             $scope.loading = false;
+            for(var i=0;i<workshopList.length;i++) {
+                if(compareToCurrent(workshopList[i].end_at))
+                    $scope.currentList.push(workshopList[i]);
+                else
+                    $scope.elapsedList.push(workshopList[i]);
+            }
         },function(httpResponse) {
             //switch through all possible errors
             switch(httpResponse.status){
