@@ -804,7 +804,7 @@ mainAppCtrls.controller('EnrollmentConfirmCtrl',['$scope',
  */
 mainAppCtrls.controller('LegalNoticeCtrl',['$scope',
     function($scope) {
-
+ 
     }
 
 ]);

@@ -243,15 +243,15 @@ mainApp.controller('GlobalCtrl',['$scope','store','jwtHelper','$state',function(
     //Function called on every state change. Takes care of the buttons to be shown correctly
     $scope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
         var jwt = store.get('jwt');
-        if(toState.name == 'login') {
+        if (toState.name == 'login') {
             $scope.show_login = false;
-            $scope.fromState = fromState;
-            if(jwt != null && !jwtHelper.isTokenExpired(jwt)) {
+            $scope.previousState = fromState;
+            if (jwt != null && !jwtHelper.isTokenExpired(jwt)) {
                 event.preventDefault();
                 $state.go(fromState);
             }
         } else {
-            if(jwt != null) {
+            if (jwt != null) {
                 $scope.show_login = jwtHelper.isTokenExpired(jwt);
                 $scope.show_logout = !jwtHelper.isTokenExpired(jwt);
             } else {
@@ -266,14 +266,14 @@ mainApp.controller('GlobalCtrl',['$scope','store','jwtHelper','$state',function(
      * @methodOf mainApp.controller:GlobalCtrl
      * @description Function bound to the logout button. Deletets the stored JWT and redirectes to the workhops state, if the current state requieres to be logged in. Also sets the login/-out buttons to be shown accordingly
      */
-    $scope.logout = function() {
+    $scope.logout = function () {
 
-        var jwt =   store.get('jwt');
-        if(jwt != null) {
+        var jwt = store.get('jwt');
+        if (jwt != null) {
             store.remove('jwt');
             $scope.show_login = true;
             $scope.show_logout = false;
-            if($state.current.data.requiresLogin)
+            if ($state.current.data.requiresLogin)
                 $state.go('workshops');
         } else {
             $scope.show_login = true;
