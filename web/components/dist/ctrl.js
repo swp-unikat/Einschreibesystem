@@ -289,8 +289,8 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
 /**
  *
  */
-mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshop",
-    function($scope, Workshop) {
+mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops",
+    function($scope, Workshops) {
         $scope.workshop = {};
         $scope.sendInfo = function(){
             //Adjusts the format of the date strings to fit the requirements of the API
@@ -972,7 +972,7 @@ mainAppCtrls.controller('NewWorkshopTemplateCtrl',['$scope',"WorkshopTemplate",
             $scope.workshop.sharedDate= "";
             $scope.workshop.start_at= "";
             $scope.workshop.end_at= "";
-            $scope.workshop.max.participants= "";
+            $scope.workshop.max_participants= "";
 
 
 

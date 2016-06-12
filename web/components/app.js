@@ -157,8 +157,8 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
             })
             .state('admin_workshop_new',{
                 url: '/workshop/management/new',
-                controller: 'WorkshopNewCtrl',
-                templateUrl: prefix.concat('adminWorkshopNew.html'),
+                controller: 'AdminNewWorkshopCtrl',
+                templateUrl: prefix.concat('adminNewWorkshop.html'),
                 data: {
                     requiresLogin: true
                 }

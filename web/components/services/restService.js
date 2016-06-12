@@ -79,7 +79,7 @@ restSvcs.factory('Workshops',['$resource',function($resource){
  * @description Provides CRUD operations for Workshop-Template-functions provided by the API
  */
 restSvcs.factory('WorkshopTemplate',['$resource',function($resource){
-    return $resource('/api/admin/workshops/templates/:id',{},{
+    return $resource('/api/admin/workshops/template/:id',{},{
         /**
          * @ngdoc funtion
          * @name restSvcs.WorkshopTemplate#getAll
@@ -87,7 +87,7 @@ restSvcs.factory('WorkshopTemplate',['$resource',function($resource){
          * @methodOf restSvcs.WorkshopTemplate
          * @returns {httpPromise} resolve with fetched data, or fails with error description.
          */
-        'getAll': {url:'/api/admin/workshops/template/list',method: 'GET', isArray: true},
+        'getAll': {method: 'GET',params: {id: 'list'}, isArray: true},
         /**
          * @ngdoc funtion
          * @name restSvcs.WorkshopTemplate#get
@@ -110,7 +110,7 @@ restSvcs.factory('WorkshopTemplate',['$resource',function($resource){
          * @description create a new workshoptemplate
          * @methodOf restSvcs.WorkshopTemplate
          */
-         'put': {url:'/api/admin/workshops/template/:id',method: 'PUT', isArray: false},
+         'put':{ method: 'PUT', isArray: false},
          /**
           * @ngdoc function
           * @name restSvcs.WorkshopTemplate#delete

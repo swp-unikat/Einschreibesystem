@@ -5,8 +5,8 @@ var mainAppCtrls = angular.module("mainAppCtrls");
 /**
  *
  */
-mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshop",
-    function($scope, Workshop) {
+mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops",
+    function($scope, Workshops) {
         $scope.workshop = {};
         $scope.sendInfo = function(){
             //Adjusts the format of the date strings to fit the requirements of the API

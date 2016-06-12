@@ -42,7 +42,7 @@ mainAppCtrls.controller('NewWorkshopTemplateCtrl',['$scope',"WorkshopTemplate",
             $scope.workshop.sharedDate= "";
             $scope.workshop.start_at= "";
             $scope.workshop.end_at= "";
-            $scope.workshop.max.participants= "";
+            $scope.workshop.max_participants= "";
 
 
 
