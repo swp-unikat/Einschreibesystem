@@ -86,6 +86,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      * @param DateTime $end_at endtime of the workshop
      * @param integer $max_participants maximum number of participants
      * @return action to create a new Workshop
+     * @var Workshop $workshop
      * @Rest\View()
      */
     public function putAction(ParamFetcher $paramFetcher)
@@ -138,6 +139,17 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      * @Rest\RequestParam(name="start_at", requirements=".*", description="starttime of the workshop",default=null,nullable=true)
      * @Rest\RequestParam(name="end_at", requirements=".*", description="endtime of the workshop",default=null,nullable=true)
      * @Rest\RequestParam(name="max_participants", requirements=".*", description="maximum number of participants",default=null,nullable=true )
+     * @param string $title title of the workshop
+     * @param string $description description of the workshop
+     * @param float $cost cost of the workshop
+     * @param string $requirements requirements of the workshop
+     * @param string $location location of the workshop
+     * @param DateTime $start_at starttime of the workshop
+     * @param DateTime $end_at endtime of the workshop
+     * @param integer $max_participants maximum number of participants
+     * @param integer $id id of the workshop
+     * @return array information of a workshop
+     * @var Workshop $workshop
      * @Rest\View()
      */
     public function patchAction($id, ParamFetcher $paramFetcher)
