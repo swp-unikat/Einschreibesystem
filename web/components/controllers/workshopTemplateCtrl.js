@@ -8,9 +8,9 @@ var mainAppCtrls = angular.module("mainAppCtrls");
  * @name mainAppCtrls.controller:WorkshopTemplateCtrl
  * @description Displays the workshop-template list in the associated view
  */
-mainAppCtrls.controller('WorkshopTemplateCtrl', ['$scope', "WorkshopTemplate",'$alert', "$modal",
+mainAppCtrls.controller('WorkshopTemplateCtrl', ['$scope', "WorkshopTemplate",'$alert',
 
-    function ($scope, WorkshopTemplate, $alert,$modal) {
+    function ($scope, WorkshopTemplate, $alert) {
 
         /**
          * @ngdoc function
@@ -26,6 +26,18 @@ mainAppCtrls.controller('WorkshopTemplateCtrl', ['$scope', "WorkshopTemplate",'$
                 $scope.loading = false;
 
             }, function (httpResponse) {
+                if(httpResponse.status == 404){
+                    $scope.data = {};
+                    $alert({
+                        title:"Warning",
+                        type: 'warning',
+                        container:'#alert',
+                        show: true,
+                        dismissable: false,
+                        content: 'No workshops templates in list',
+                        duration: 20
+                    })
+                }
                 $scope.loading = false;
             });
         };

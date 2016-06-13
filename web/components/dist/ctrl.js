@@ -663,7 +663,7 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
     function($scope,WorkshopTemplate,$stateParams,$translate,$alert) {
 
         var _workshopId = $stateParams.id;
-
+        $scope.template = {};
         //Initialize _originalData
         var _originalData = {};
 
@@ -683,14 +683,14 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
          * @methodOf mainAppCtrls.controller:EditWorkshopTemplateCtrl
          */
         $scope.discardChanges = function () {
-            $scope.title = _originalData.title;
-            $scope.description = _originalData.description;
-            $scope.cost = _originalData.cost;
-            $scope.requirements = _originalData.requirements;
-            $scope.location = _originalData.location;
-            $scope.start_at = _originalData.start_at;
-            $scope.end_at = _originalData.end_at;
-            $scope.max_participants = _originalData.max_participants;
+            $scope.template.title = _originalData.title;
+            $scope.template.description = _originalData.description;
+            $scope.template.cost = _originalData.cost;
+            $scope.template.requirements = _originalData.requirements;
+            $scope.template.location = _originalData.location;
+            $scope.template.start_at = _originalData.start_at;
+            $scope.template.end_at = _originalData.end_at;
+            $scope.template.max_participants = _originalData.max_participants;
 
 
 
@@ -717,14 +717,14 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
             };
             var _changedData = {
                 
-                title: $scope.title,
-                description: $scope.description,
-                cost: $scope.cost,
-                requirements: $scope.requirements,
-                location: $scope.location,
-                start_at: $scope.start_at,
-                end_at: $scope.end_at,
-                max_participants: $scope.max_participants
+                title: $scope.template.title,
+                description: $scope.template.description,
+                cost: $scope.template.cost,
+                requirements: $scope.template.requirements,
+                location: $scope.template.location,
+                start_at: $scope.template.start_at,
+                end_at: $scope.template.end_at,
+                max_participants: $scope.template.max_participants
             };
 
             //compare all properties of both objects
@@ -796,15 +796,18 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
                 max_participants: value.max_participants
 
             };
+            console.log(_originalData);
             //Store original data in ng-model
-            $scope.title = _originalData.title;
-            $scope.description = _originalData.description;
-            $scope.cost = _originalData.cost;
-            $scope.requirements = _originalData.requirements;
-            $scope.location = _originalData.location;
-            $scope.start_at = _originalData.start_at;
-            $scope.end_at = _originalData.end_at;
-            $scope.max_participants = _originalData.max_participants;
+            $scope.template.title = _originalData.title;
+            $scope.template.description = _originalData.description;
+            $scope.template.cost = _originalData.cost;
+            $scope.template.requirements = _originalData.requirements;
+            $scope.template.location = _originalData.location;
+            $scope.template.start_at = _originalData.start_at;
+            $scope.template.end_at = _originalData.end_at;
+            $scope.template.max_participants = _originalData.max_participants;
+
+            console.log($scope.template);
 
 
 
@@ -1320,6 +1323,12 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
         };
 
 
+
+
+
+
+
+
         $scope.loading = true;
         Workshops.get({id: workshopid}).$promise.then(function(value,httpResponse){
             $scope.workshop = value;
@@ -1414,9 +1423,9 @@ mainAppCtrls.controller('WorkshopListCtrl',['$scope','Workshops','$alert','$tran
  * @name mainAppCtrls.controller:WorkshopTemplateCtrl
  * @description Displays the workshop-template list in the associated view
  */
-mainAppCtrls.controller('WorkshopTemplateCtrl', ['$scope', "WorkshopTemplate",'$alert', "$modal",
+mainAppCtrls.controller('WorkshopTemplateCtrl', ['$scope', "WorkshopTemplate",'$alert',
 
-    function ($scope, WorkshopTemplate, $alert,$modal) {
+    function ($scope, WorkshopTemplate, $alert) {
 
         /**
          * @ngdoc function
@@ -1432,6 +1441,18 @@ mainAppCtrls.controller('WorkshopTemplateCtrl', ['$scope', "WorkshopTemplate",'$
                 $scope.loading = false;
 
             }, function (httpResponse) {
+                if(httpResponse.status == 404){
+                    $scope.data = {};
+                    $alert({
+                        title:"Warning",
+                        type: 'warning',
+                        container:'#alert',
+                        show: true,
+                        dismissable: false,
+                        content: 'No workshops templates in list',
+                        duration: 20
+                    })
+                }
                 $scope.loading = false;
             });
         };
