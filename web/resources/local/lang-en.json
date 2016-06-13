@@ -97,6 +97,7 @@
   "ADMINISTRATOR_INVITE": "Administrator invite",
   "ADMINISTRATOR_DASHBOARD": "Administrator dashboard",
   "BUTTON_BACK_TO_DASHBOARD": "Back to Dashboard",
+  "BUTTON_BACK_TO_WORKSHOPLIST":"Back to workshoplist",
   "BUTTON_SETTINGS": "Settings",
   "EDIT_LEGAL_NOTICE": "Edit legal notice",
   "LOGIN": "Login here",
@@ -118,6 +119,7 @@
   "TITLE_ERROR": "Error",
   "ENTER_MAIL": "Enter E-Mail",
   "C": "Euro",
+  "UNSUBSCRIBE_TEXT": "Click here to unsubscribe from the workshop: ",
   "ALERT_EMAILTEMPLATE_NOT_FOUND": "The requested E-Mail template couldn't be found",
   "ALERT_EMAILTEMPLATE_EDIT_SUCCESS": "Successfully edited E-Mail template",
   "ALERT_EMAILTEMPLATE_EDIT_FAIL": "Failed to edit E-Mail template. Error code",
@@ -132,4 +134,5 @@
   "PASSWORD": "Password",
   "PASSWORDS_IDENTICAL_ERROR": "Passwords have to be identical",
   "PASSWORD_EMPTY_ERROR": "Password cannot be empty"
+
 }
