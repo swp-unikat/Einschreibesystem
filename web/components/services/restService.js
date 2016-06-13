@@ -98,7 +98,7 @@ restSvcs.factory('WorkshopTemplate',['$resource',function($resource){
         'get': {method: 'GET',params: {id: '@id'}, isArray: false},
         /**
          * @ngdoc function
-         * @name restSvcs.WorkshopTemplate#patch
+         * @name restSvcs.WorkshopTemplate#edit
          * @description edit a single workshoptemplate
          * @methodOf restSvcs.WorkshopTemplate
          * @param {integer} id Workshop-ID

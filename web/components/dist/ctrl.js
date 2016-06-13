@@ -665,7 +665,7 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
     function($scope,WorkshopTemplate,$stateParams,$translate,$alert) {
 
         var _workshopId = $stateParams.id;
-        $scope.template = {};
+        $scope.workshop = {};
         //Initialize _originalData
         var _originalData = {};
 
@@ -684,19 +684,16 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
          * @description Discards changes and restores the original data
          * @methodOf mainAppCtrls.controller:EditWorkshopTemplateCtrl
          */
-        $scope.discardChanges = function () {
-            $scope.template.title = _originalData.title;
-            $scope.template.description = _originalData.description;
-            $scope.template.cost = _originalData.cost;
-            $scope.template.requirements = _originalData.requirements;
-            $scope.template.location = _originalData.location;
-            $scope.template.start_at = _originalData.start_at;
-            $scope.template.end_at = _originalData.end_at;
-            $scope.template.max_participants = _originalData.max_participants;
+        $scope.discard = function () {
 
-
-
-
+            $scope.workshop.title = _originalData.title;
+            $scope.workshop.description = _originalData.description;
+            $scope.workshop.cost = _originalData.cost;
+            $scope.workshop.requirements = _originalData.requirements;
+            $scope.workshop.location = _originalData.location;
+            $scope.workshop.start_at = _originalData.start_at;
+            $scope.workshop.end_at = _originalData.end_at;
+            $scope.workshop.max_participants = _originalData.max_participants;
         }
 
         /**
@@ -705,7 +702,7 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
          * @description Sends changes to the API and stores them as new original data
          * @methodOf mainAppCtrls.controller:EditWorkshopTemplateCtrl
          */
-        $scope.confirmChanges = function () {
+        $scope.sendInfo = function () {
             var _dataToSend = {
                 title: '',
                 description: '',
@@ -719,14 +716,14 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
             };
             var _changedData = {
                 
-                title: $scope.template.title,
-                description: $scope.template.description,
-                cost: $scope.template.cost,
-                requirements: $scope.template.requirements,
-                location: $scope.template.location,
-                start_at: $scope.template.start_at,
-                end_at: $scope.template.end_at,
-                max_participants: $scope.template.max_participants
+                title: $scope.workshop.title,
+                description: $scope.workshop.description,
+                cost: $scope.workshop.cost,
+                requirements: $scope.workshop.requirements,
+                location: $scope.workshop.location,
+                start_at: $scope.workshop.start_at,
+                end_at: $scope.workshop.end_at,
+                max_participants: $scope.workshop.max_participants
             };
 
             //compare all properties of both objects
@@ -798,18 +795,17 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
                 max_participants: value.max_participants
 
             };
-            console.log(_originalData);
-            //Store original data in ng-model
-            $scope.template.title = _originalData.title;
-            $scope.template.description = _originalData.description;
-            $scope.template.cost = _originalData.cost;
-            $scope.template.requirements = _originalData.requirements;
-            $scope.template.location = _originalData.location;
-            $scope.template.start_at = _originalData.start_at;
-            $scope.template.end_at = _originalData.end_at;
-            $scope.template.max_participants = _originalData.max_participants;
 
-            console.log($scope.template);
+            //Store original data in ng-model
+            $scope.workshop.title = _originalData.title;
+            $scope.workshop.description = _originalData.description;
+            $scope.workshop.cost = _originalData.cost;
+            $scope.workshop.requirements = _originalData.requirements;
+            $scope.workshop.location = _originalData.location;
+            $scope.workshop.start_at = _originalData.start_at;
+            $scope.workshop.end_at = _originalData.end_at;
+            $scope.workshop.max_participants = _originalData.max_participants;
+            
 
 
 
@@ -1373,7 +1369,15 @@ mainAppCtrls.controller('WorkshopListCtrl',['$scope','Workshops','$alert','$tran
         
         //Define object to store the alert in
         $scope.myAlert;
-        
+        var getParticipantsNum = function(_id){
+            var num = 0;
+            Workshops.getParticipants({id: _id}).$promise.then(function(value,httpResponse){
+                num = value.length;
+            },function(httpResponse) {
+               
+            });
+            return num;
+        }
         //Get and store translation for alert title.
         $translate(['TITLE_ERROR', 'ERROR_NO_WORKSHOPS']).then(function (translations) {
             $scope.errorTitle = translations.TITLE_ERROR;
@@ -1382,6 +1386,11 @@ mainAppCtrls.controller('WorkshopListCtrl',['$scope','Workshops','$alert','$tran
         $scope.loading = true;
         Workshops.getAll().$promise.then(function(value){
             $scope.workshopList = value;
+            for(var i=0;i<value.length;i++){
+                var num = getParticipantsNum($scope.workshopList[i].id);
+                $scope.workshopList[i].numParticipants = num;
+                console.log($scope.workshopList[i].numParticipants);
+            }
             $scope.loading = false;
         },function(httpResponse) {
             //switch through all possible errors
