@@ -40,6 +40,8 @@ class WorkshopTemplateController extends FOSRestController implements ClassResou
      * )
      *
      * @return \Symfony\Component\HttpFoundation\Response
+     * @return array give the list of all workshoptemplates
+     * @var WorkshopTemplates $workshopTemplates
      * @Rest\View()
      */
     public function getListAction()
