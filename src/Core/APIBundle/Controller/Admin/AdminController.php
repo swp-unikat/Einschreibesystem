@@ -16,6 +16,7 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\Util\Codes;
 use Core\EntityBundle\Entity\User;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 /**
  * Class RestController.
