@@ -473,9 +473,30 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope',
                     $scope.loading = false;
                 });
             };
+            $scope.delete = function (_id) {
+                console.log('called');
+                Participants.deleteParticipant({id:_id}).$promise.then(function(httpResponse){
+                        $alert({
+                            title:'Success',
+                            type: 'success',
+                            container:'#alert',
+                            show: true,
+                            dismissable: false,
+                            content: 'Successfully deleted',
+                            duration: 20
+                        });
+                        loadBlacklist();
+                    }
+                    , function (httpResponse) {
+                        alert('Error');
+                    }
+                )
+
+            }
             loadBlacklist();
 
 
+            
         }
             
             
