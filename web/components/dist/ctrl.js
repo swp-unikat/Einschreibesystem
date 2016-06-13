@@ -457,12 +457,23 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope',
 /**
  *
  */
+
+/**
+ * @ngdoc controller
+ * @name mainAppCtrls.controller:BlacklistCtrl
+ * @description Controller show you a list of blacklisted users
+ */
     mainAppCtrls.controller('BlacklistCtrl', ['$scope', "Participants",'$alert','$modal',
 
         function ($scope, Participants, $alert,$modal) {
 
-
-            var loadBlacklist = function () {
+                /**
+                 * @ngdoc function
+                 * @name mainAppCtrls.controller:BlacklistCtrl#loadingBlacklist
+                 * @methodOf mainAppCtrls.controller:BlacklistCtrl
+                 * @description Function load a list of persons, which were set on the blacklist
+                 */
+                var loadBlacklist = function (){
                 $scope.loading = true;
                 Participants.getblacklistall()
                     .$promise.then(function (value) {
@@ -473,6 +484,13 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope',
                     $scope.loading = false;
                 });
             };
+            /**
+             * @ngdoc function
+             * @name mainAppCtrls.controller:BlacklistCtrl#delete
+             * @methodOf mainAppCtrls.controller:BlacklistCtrl
+             * @description Function removes a selected person from the blacklist
+             * @params {number} _id user id of the person, which should be removed
+             */
             $scope.delete = function (_id) {
                 $scope.deleting = true;
                 Participants.deleteParticipant({id:_id}).$promise.then(function(httpResponse){
