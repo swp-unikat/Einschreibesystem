@@ -27,7 +27,7 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops",
                 end_at:reformatDate($scope.sharedDate),
                 max_participants:$scope.workshop.max_participants
             };
-            WorkshopTemplate.put(data).$promise.then(function(httpResponse){
+            Workshops.put(data).$promise.then(function(httpResponse){
                 alert('Success!' + httpResponse.status);
             },function(httpResponse){
                 alert('Error'+httpResponse.statusText);

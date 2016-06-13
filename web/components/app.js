@@ -165,8 +165,8 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
             })
             .state('admin_workshop_edit',{
                 url: '/workshop/management/edit/:id',
-                controller: 'WorkshopEditCtrl',
-                templateUrl: prefix.concat('adminWorkshopEdit.html'),
+                controller: 'adminEditWorkshopCtrl',
+                templateUrl: prefix.concat('adminEditWorkshop.html'),
                 data: {
                     requiresLogin: true
                 }
