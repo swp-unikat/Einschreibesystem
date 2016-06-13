@@ -46,6 +46,8 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
      * )
      *
      * @return \Symfony\Component\HttpFoundation\Response
+     * @return give the list of all participants
+     * @var Participants $participants
      * @Rest\View()
      */  
     public function getAllAction()
