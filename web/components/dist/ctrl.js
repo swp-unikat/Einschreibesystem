@@ -961,11 +961,19 @@ mainAppCtrls.controller('LoginCtrl',['$scope','$http','store','$state','jwtHelpe
  */
 
 /**
+ *@ngdoc controller
+ * @name mainAppCtrls.controller:NewEmailTemplateCtrl
+ * @description Controller to create a new email template
  *
  */
 mainAppCtrls.controller('NewEmailTemplateCtrl',['$scope',"EmailTemplate",
     function($scope, EmailTemplate) {
-
+        /**
+         * @ngdoc function
+         * @name mainAppCtrls.controller:NewEmailTemplateCtrl#sendInfo
+         * @description Sends the data of the created email template to the server
+         * @methodOf mainAppCtrls.controller:NewEmailTemplateCtrl
+         */
         $scope.sendInfo = function(){
             var data={
                 template_name:$scope.email.template.title,
@@ -978,7 +986,12 @@ mainAppCtrls.controller('NewEmailTemplateCtrl',['$scope',"EmailTemplate",
                 alert('Error'+httpResponse.statusText);
             });
         }
-
+        /**
+         * @ngdoc function
+         * @name mainAppCtrls.controller:NewEmailTemplateCtrl#discard
+         * @description Discards all data of the document
+         * @methodOf mainAppCtrls.controller:NewEmailTemplateCtrl
+         */
         $scope.discard = function(){
             $scope.email.template.title= "";
             $scope.email.template.subject= "";
