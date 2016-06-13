@@ -72,6 +72,8 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
      * )
      *
      * @return \Symfony\Component\HttpFoundation\Response
+     * @return list of all participants that are blacklisted
+     * @var Participants $participantsBlacklist
      * @Rest\View()
      */
     public function getBlacklistAllAction()
