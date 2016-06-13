@@ -53,7 +53,7 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
             .state('unsubscribe',{
                 url: '/unsubscribe/:id/:workshopid/:token',
                 templateUrl: prefix.concat('unsubscribemessage.html'),
-                controller: 'UnsubscribeController'
+                controller: 'UnsubscribeCtrl'
             })
 
             .state('password_reset',{
