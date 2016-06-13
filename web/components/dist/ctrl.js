@@ -201,7 +201,7 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','$statePar
 
 
 
-            Workshop.edit({id: _workshopId}, _dataToSend).$promise.then(function (value) {
+            Workshops.edit({id: _workshopId}, _dataToSend).$promise.then(function (value) {
                 //Store answer from server
                 _originalData = {
                     title: value.title,
