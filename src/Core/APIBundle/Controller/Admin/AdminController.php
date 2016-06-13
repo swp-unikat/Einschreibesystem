@@ -258,7 +258,7 @@ use Core\EntityBundle\Entity\User;
      {
          $UserManager = $this->get('fos_user.user_manager');
          $admin = $UserManager->findUserByConfirmationToken($token);
-         if(!$admin){
+         if (!$admin) {
              throw $this->createNotFoundException("Admin not found");
          } else {
              $admin->setPlainPassword($password);
@@ -266,26 +266,26 @@ use Core\EntityBundle\Entity\User;
          $this->getDoctrine()->getManager()->persist($admin);
          $this->getDoctrine()->getManager()->flush();
      }
- }
- /**
-     * @ApiDoc(
-     *  resource=true,
-     *  description="Returns list of all admins",
-     *  output = "Core\EntityBundle\Entity\EmailTemplate",
-     *  statusCodes = {
-     *      200 = "Returned when successful",
-     *      404 = "Returned when the data is not found"
-     *  }
-     * )
-     * )
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     * @return array give the list of all admins
-     * @Rest\View()
-     */
-    public function getListAction()
-    {
-    	$admin = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle')->findAll();
+
+     /**
+      * @ApiDoc(
+      *  resource=true,
+      *  description="Returns list of all admins",
+      *  output = "Core\EntityBundle\Entity\EmailTemplate",
+      *  statusCodes = {
+      *      200 = "Returned when successful",
+      *      404 = "Returned when the data is not found"
+      *  }
+      * )
+      * )
+      *
+      * @return \Symfony\Component\HttpFoundation\Response
+      * @return array give the list of all admins
+      * @Rest\View()
+      */
+     public function getListAction()
+     {
+         $admin = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:User")->findAll();
     	if (!$admin) {
             throw $this->createNotFoundException("No admin was found");
         } else {
@@ -295,3 +295,4 @@ use Core\EntityBundle\Entity\User;
 	    
     }
 
+ }
