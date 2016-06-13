@@ -150,7 +150,7 @@ restSvcs.factory('AdminWorkshop',['$resource',function($resource){
          * @methodOf restSvcs.AdminWorkshop
          * @param {integer} id Workshop-ID
          */
-        'patchWorkshop': {method: 'PATCH',params: {id: '@id'}, isArray: false},
+        'edit': {method: 'PATCH',params: {id: '@id'}, isArray: false},
          /**
           * @ngdoc function
           * @name restSvcs.AdminWorkshop#delete
@@ -278,8 +278,44 @@ restSvcs.factory('Email',['$resource',function($resource){
           * @name restSvcs.Email#send
           * @description send Email
           * @methodOf restSvcs.Email
-          * @param {integer} workshopid Workshop-ID
+          * @param {number} workshopid Workshop-ID
           */
         'sendEmail': {method: 'PATCH',params: {workshopid: '@id'}, isArray: false}
+    });
+}]);
+/**
+ * @ngdoc service
+ * @name restSvcs.Admin
+ * @description Provides operations for Admin-Managment
+ */
+restSvcs.factory('Admin',['$resource',function($resource){
+    return $resource('/api/admin',{},{
+        /**
+         * @ngdoc function
+         * @name restSvcs.Admin#list
+         * @description Returns a list of all currentyl active Admins
+         * @methodOf restSvcs.Admin
+         */
+       'list': {url:'/api/admin/admin/list',method: 'GET',isArray: true},
+        /**
+         * @ngdoc function
+         * @name restSvcs.Admin#remove
+         * @description Deactivates an admin account
+         * @methodOf restSvcs.Admin
+         */
+       'remove': {url:'/api/admin/admin/:id',method: 'DELETE',params: {id: '@id'},isArray: false},
+        /**
+         * @ngdoc function
+         * @name restSvcs.Admin#changePassword
+         * @description Changes the admin password
+         * @methodOf restSvcs.Admin
+         */
+        'changePassword': {url:'/api/admin/admin',method: 'PATCH',isArray: false},
+        /**
+         * @ngdoc function
+         * @name rsetSvcs.Admin#invite
+         * @description Sends a link to create an admin account to the passed e-mail
+         * @methodOf restSvcs.Admin
+         */
     });
 }]);
