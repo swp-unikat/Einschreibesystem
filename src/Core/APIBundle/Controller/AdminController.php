@@ -6,7 +6,7 @@
  * Date: 09.06.2016
  * Time: 11:13
  */
-namespace Core\APIBundle\Controller\Admin;
+namespace Core\APIBundle\Controller;
 use Core\EntityBundle\Entity\Invitation;
 use FOS\RestBundle\Request\ParamFetcher;
 use FOS\RestBundle\Routing\ClassResourceInterface;
@@ -15,6 +15,7 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\Util\Codes;
 use Core\EntityBundle\Entity\User;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 /**
  * Class RestController.
  */
