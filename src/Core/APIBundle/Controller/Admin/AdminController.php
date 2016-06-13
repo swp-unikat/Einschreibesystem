@@ -131,7 +131,7 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
       */
      public function deleteAction($adminID)
      {
-         $admin = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle')->findby($adminID);
+         $admin = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle')->find($adminID);
          if (!$admin) {
              throw $this->createNotFoundException("Admin not found");
          } else {
