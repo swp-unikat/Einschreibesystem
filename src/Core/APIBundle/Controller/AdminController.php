@@ -35,12 +35,12 @@ use Symfony\Component\HttpFoundation\Request;
       *  statusCodes = {
       *      200 = "Returned when successful",
       *      404 = "Returned when the data is not found"
-      *  },requirements={
+      *  },requirements={{
       *        "name"="email",
       *        "dataType"="string",
       *        "requirement"=".*",
       *        "description"="email of the admin"
-      * }
+      * }}
       * )
       * @param  $token string
       * @param  $password string
@@ -67,12 +67,12 @@ use Symfony\Component\HttpFoundation\Request;
       *  statusCodes = {
       *      200 = "Returned when successful",
       *      404 = "Returned when the data is not found"
-      *  },requirements={
+      *  },requirements={{
       *        "name"="email",
       *        "dataType"="string",
       *        "requirement"=".*",
       *        "description"="email of the admin"
-      * }
+      * }}
       * )
       * @param $email string E-Mail
       * @return \Symfony\Component\HttpFoundation\Response
