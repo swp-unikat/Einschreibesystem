@@ -201,6 +201,8 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      * )
      *
      * @return \Symfony\Component\HttpFoundation\Response
+     * @param integer $id id of the workshop
+     * @var Workshop $workshop
      * @Rest\View()
      */
     public function deleteAction($id)
