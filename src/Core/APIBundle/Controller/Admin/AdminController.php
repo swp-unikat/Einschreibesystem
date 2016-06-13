@@ -16,6 +16,7 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\Util\Codes;
 use Core\EntityBundle\Entity\User;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 /**
  * Class RestController.
@@ -27,7 +28,7 @@ use Core\EntityBundle\Entity\User;
       * @ApiDoc(
       *  resource=true,
       *  description="Action to create new Admin",
-      *  output = "Core\EntityBundle\Entity\Admin",
+      *  output = "",
       *  statusCodes = {
       *      200 = "Returned when successful",
       *      404 = "Returned when the data is not found"
@@ -68,16 +69,16 @@ use Core\EntityBundle\Entity\User;
       * @ApiDoc(
       *  resource=true,
       *  description="Action to create an Admin",
-      *  output = "Core\EntityBundle\Entity\Admin",
+      *  output = "",
       *  statusCodes = {
       *      200 = "Returned when successful",
       *      404 = "Returned when the data is not found"
-      *  },requirements={
+      *  },requirements={{
       *        "name"="adminId",
       *        "dataType"="integer",
       *        "requirement"="\d+",
       *        "description"="Admin ID"
-      * }
+      * }}
       * )
       *
       * @return \Symfony\Component\HttpFoundation\Response
@@ -113,16 +114,16 @@ use Core\EntityBundle\Entity\User;
       * @ApiDoc(
       *  resource=true,
       *  description="Action to disable an Admin",
-      *  output = "Core\EntityBundle\Entity\Admin",
+      *  output = "",
       *  statusCodes = {
       *      200 = "Returned when successful",
       *      404 = "Returned when the data is not found"
-      *  },requirements={
+      *  },requirements={{
       *        "name"="adminId",
       *        "dataType"="integer",
       *        "requirement"="\d+",
       *        "description"="Admin ID"
-      * }
+      * }}
       * )
       * @param $adminID integer adminID
       * @return \Symfony\Component\HttpFoundation\Response
@@ -145,16 +146,16 @@ use Core\EntityBundle\Entity\User;
       * @ApiDoc(
       *  resource=true,
       *  description="Action to change the password",
-      *  output = "Core\EntityBundle\Entity\Admin",
+      *  output = "",
       *  statusCodes = {
       *      200 = "Returned when successful",
       *      404 = "Returned when the data is not found"
-      *  },requirements={
+      *  },requirements={{
       *        "name"="adminId",
       *        "dataType"="integer",
       *        "requirement"="\d+",
       *        "description"="Admin ID"
-      *}
+      *}}
       * )
       *
       * @return \Symfony\Component\HttpFoundation\Response
@@ -185,86 +186,33 @@ use Core\EntityBundle\Entity\User;
          return View::create(null, Codes::HTTP_OK);
      }
 
-     /**
-      * @ApiDoc(
-      *  resource=true,
-      *  description="Action to change the password",
-      *  output = "Core\EntityBundle\Entity\Admin",
-      *  statusCodes = {
-      *      200 = "Returned when successful",
-      *      404 = "Returned when the data is not found"
-      *  },requirements={
-      *        "name"="email",
-      *        "dataType"="string",
-      *        "requirement"=".*",
-      *        "description"="email of the admin"
-      * }
-      * )
-      * @param $email string E-Mail
-      * @return \Symfony\Component\HttpFoundation\Response
-      * @Rest\View()
-      */
-     public function postSendPasswordForgotEmailAction($email)
-     {
-         /** @var $user User */
-         $user = $this->get('fos_user.user_manager')->findUserByUsernameOrEmail($email);
-
-         if (null === $user) {
-             $this->createNotFoundException("Username not found");
-         }
-
-         if ($user->isPasswordRequestNonExpired($this->container->getParameter('fos_user.resetting.token_ttl'))) {
-             return $this->createAccessDeniedException("Password already requested");
-         }
-
-         if (null === $user->getConfirmationToken()) {
-             /** @var $tokenGenerator \FOS\UserBundle\Util\TokenGeneratorInterface */
-             $tokenGenerator = $this->get('fos_user.util.token_generator');
-             $user->setConfirmationToken($tokenGenerator->generateToken());
-         }
-
-         /*
-          * @ToDo add Mail
-          * 
-          * */
-         $user->setPasswordRequestedAt(new \DateTime());
-         $this->get('fos_user.user_manager')->updateUser($user);
-
-         return View::create(null, Codes::HTTP_OK);
-
-     }
+    
 
      /**
       * @ApiDoc(
       *  resource=true,
-      *  description="Action to reset the password",
-      *  output = "Core\EntityBundle\Entity\Admin",
+      *  description="Returns list of all admins",
+      *  output = "",
       *  statusCodes = {
       *      200 = "Returned when successful",
       *      404 = "Returned when the data is not found"
-      *  },requirements={
-      *        "name"="email",
-      *        "dataType"="string",
-      *        "requirement"=".*",
-      *        "description"="email of the admin"
-      * }
-      * )
-      * @param  $token string
-      * @param  $password string
+      *  }
+      *)
+      *
       * @return \Symfony\Component\HttpFoundation\Response
+      * @return array give the list of all admins
       * @Rest\View()
       */
-     public function PostResetPasswordAction($token, $password)
+     public function getListAction()
      {
-         $UserManager = $this->get('fos_user.user_manager');
-         $admin = $UserManager->findUserByConfirmationToken($token);
-         if(!$admin){
-             throw $this->createNotFoundException("Admin not found");
-         } else {
-             $admin->setPlainPassword($password);
-         }
-         $this->getDoctrine()->getManager()->persist($admin);
-         $this->getDoctrine()->getManager()->flush();
-     }
+         $admin = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:User")->findAll();
+    	if (!$admin) {
+            throw $this->createNotFoundException("No admin was found");
+        } else {
+            $view = $this->view($admin, 200);
+            return $this->handleView($view);
+        }
+	    
+    }
+
  }
-

@@ -3,8 +3,8 @@
  */
 var mainAppCtrls = angular.module("mainAppCtrls");
 
-mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate','$stateParams','$translate','$alert',
-    function($scope,WorkshopTemplate,$stateParams,$translate,$alert) {
+mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','$stateParams','$translate','$alert',
+    function($scope,Workshops,$stateParams,$translate,$alert) {
 
         var _workshopId = $stateParams.id;
 
@@ -14,8 +14,8 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
         //Get translations for errors and store in array
         var _translations = {};
         //Pass all required translation IDs to translate service
-        $translate(['ALERT_WORKSHOPTEMPLATE_EDIT_SUCCESS',
-            'ALERT_WORKSHOPTEMPLATE_EDIT_FAIL','ALERT_WORKSHOPTEMPLATE_NOT_FOUND']).
+        $translate(['ALERT_WORKSHOP_EDIT_SUCCESS',
+            'ALERT_WORKSHOP_EDIT_FAIL','ALERT_WORKSHOP_NOT_FOUND']).
         then(function(translations){
             _translations = translations;
         });
@@ -89,7 +89,7 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
 
 
 
-            WorkshopTemplate.edit({id: _workshopId}, _dataToSend).$promise.then(function (value) {
+            Workshops.edit({id: _workshopId}, _dataToSend).$promise.then(function (value) {
                 //Store answer from server
                 _originalData = {
                     title: value.title,
@@ -105,7 +105,7 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
                 $alert({
                     title: '',
                     type: 'success',
-                    content: _translations.ALERT_WORKSHOPTEMPLATE_EDIT_SUCCESS + ' \"' + _originalData.title +'\"',
+                    content: _translations.ALERT_WORKSHOP_EDIT_SUCCESS + ' \"' + _originalData.title +'\"',
                     container: '#alert',
                     dismissable: true,
                     show: true,
@@ -115,7 +115,7 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
                 $alert({
                     title: '',
                     type: 'danger',
-                    content: _translations.ALERT_WORKSHOPTEMPLATE_EDIT_FAIL + '(' + httpReponse.status +')',
+                    content: _translations.ALERT_WORKSHOP_EDIT_FAIL + '(' + httpReponse.status +')',
                     container: '#alert',
                     dismissable: true,
                     show: true,
@@ -126,7 +126,7 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
 
         //Fetch data from API
         $scope.loading = true;
-        WorkshopTemplate.get({id: _workshopId}).$promise.then(function (value) {
+        Workshops.get({id: _workshopId}).$promise.then(function (value) {
 
             //Store original data in case of discard
             _originalData = {
@@ -158,7 +158,7 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
                 $alert({
                     title: '',
                     type: 'danger',
-                    content: _translations.ALERT_WORKSHOPTEMPLATE_NOT_FOUND,
+                    content: _translations.ALERT_WORKSHOP_NOT_FOUND,
                     container: '#alert',
                     dismissable: false,
                     show: true
