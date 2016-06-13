@@ -74,9 +74,18 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      * @Rest\RequestParam(name="cost", requirements=".*", description="cost of the workshop")
      * @Rest\RequestParam(name="requirements", requirements=".*", description="requirements of the workshop")
      * @Rest\RequestParam(name="location", requirements=".*", description="location of the workshop")
-     * @Rest\RequestParam(name="start_at", requirements=".*", description="startime of the workshop")
+     * @Rest\RequestParam(name="start_at", requirements=".*", description="starttime of the workshop")
      * @Rest\RequestParam(name="end_at", requirements=".*", description="endtime of the workshop")
      * @Rest\RequestParam(name="max_participants", requirements=".*", description="maximum number of participants")
+     * @param string $title title of the workshop
+     * @param string $description description of the workshop
+     * @param float $cost cost of the workshop
+     * @param string $requirements requirements of the workshop
+     * @param string $location location of the workshop
+     * @param DateTime $start_at starttime of the workshop
+     * @param DateTime $end_at endtime of the workshop
+     * @param integer $max_participants maximum number of participants
+     * @return action to create a new Workshop
      * @Rest\View()
      */
     public function putAction(ParamFetcher $paramFetcher)
