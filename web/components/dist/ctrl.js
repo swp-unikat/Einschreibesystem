@@ -474,8 +474,9 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope',
                 });
             };
             $scope.delete = function (_id) {
-                console.log('called');
+                $scope.deleting = true;
                 Participants.deleteParticipant({id:_id}).$promise.then(function(httpResponse){
+                       $scope.deleting = false;
                         $alert({
                             title:'Success',
                             type: 'success',
@@ -488,6 +489,7 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope',
                         loadBlacklist();
                     }
                     , function (httpResponse) {
+                        $scope.deleting = false;
                         alert('Error');
                     }
                 )
