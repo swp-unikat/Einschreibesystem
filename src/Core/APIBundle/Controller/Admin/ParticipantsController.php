@@ -104,7 +104,9 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
      * )
      * )
      *
+     * @param $id int id of the participants
      * @return \Symfony\Component\HttpFoundation\Response
+     * @var Participants $participant
      * @Rest\View()
      */
     public function putBlacklistAction($id)
