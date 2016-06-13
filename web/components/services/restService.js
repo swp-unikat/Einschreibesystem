@@ -313,7 +313,7 @@ restSvcs.factory('Admin',['$resource',function($resource){
         'changePassword': {url:'/api/admin/admin',method: 'PATCH',isArray: false},
         /**
          * @ngdoc function
-         * @name rsetSvcs.Admin#invite
+         * @name restSvcs.Admin#invite
          * @description Sends a link to create an admin account to the passed e-mail
          * @methodOf restSvcs.Admin
          */

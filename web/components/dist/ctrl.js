@@ -115,8 +115,8 @@ mainAppCtrls.controller('EmailTemplateCtrl', ['$scope', "EmailTemplate",'$alert'
  */
 
 
-mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','$stateParams','$translate','$alert',
-    function($scope,Workshops,$stateParams,$translate,$alert) {
+mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWorkshop','$stateParams','$translate','$alert',
+    function($scope,Workshops,AdminWokshop,$stateParams,$translate,$alert) {
 
         var _workshopId = $stateParams.id;
 
@@ -134,9 +134,9 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','$statePar
 
         /**
          * @ngdoc function
-         * @name mainAppCtrls.controller:EditWorkshopTemplateCtrl#discardChanges
+         * @name mainAppCtrls.controller:EditWorkshopCtrl#discardChanges
          * @description Discards changes and restores the original data
-         * @methodOf mainAppCtrls.controller:EditWorkshopTemplateCtrl
+         * @methodOf mainAppCtrls.controller:EditWorkshopCtrl
          */
         $scope.discardChanges = function () {
             $scope.title = _originalData.title;
@@ -155,9 +155,9 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','$statePar
 
         /**
          * @ngdoc function
-         * @name mainAppCtrls.controller:EditWorkshopTemplateCtrl#confirmChanges
+         * @name mainAppCtrls.controller:EditWorkshopCtrl#confirmChanges
          * @description Sends changes to the API and stores them as new original data
-         * @methodOf mainAppCtrls.controller:EditWorkshopTemplateCtrl
+         * @methodOf mainAppCtrls.controller:EditWorkshopCtrl
          */
         $scope.confirmChanges = function () {
             var _dataToSend = {
@@ -445,9 +445,20 @@ mainAppCtrls.controller('adminWorkshopManagementCtrl',['$scope','AdminWorkshop',
 /**
  *
  */
-mainAppCtrls.controller('AdministratorManagementCtrl',['$scope',
-    function($scope) {
-
+mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin',
+    function($scope,Admin) {
+        Admin.list().$promise.then(function(value){
+            $scope.admins = value;
+        },function(httpResponse){
+            alert(httpResponse.status);
+        });
+        $scope.delete = function(_id) {
+            Admin.remove({id: _id}).$promise.then(function(value){
+                
+            },function(httpResponse){
+                
+            });
+        }
     }
 
 ]);
