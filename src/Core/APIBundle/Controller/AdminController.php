@@ -7,6 +7,8 @@
  * Time: 11:13
  */
 namespace Core\APIBundle\Controller;
+
+
 use Core\EntityBundle\Entity\Invitation;
 use FOS\RestBundle\Request\ParamFetcher;
 use FOS\RestBundle\Routing\ClassResourceInterface;
@@ -16,6 +18,10 @@ use FOS\RestBundle\View\View;
 use FOS\RestBundle\Util\Codes;
 use Core\EntityBundle\Entity\User;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use FOS\RestBundle\Controller\Annotations\RouteResource;
+use Symfony\Component\HttpFoundation\Request;
+
+
 /**
  * Class RestController.
  */
@@ -25,23 +31,23 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
       * @ApiDoc(
       *  resource=true,
       *  description="Action to reset the password",
-      *  output = "Core\EntityBundle\Entity\Admin",
+      *  output = "",
       *  statusCodes = {
       *      200 = "Returned when successful",
       *      404 = "Returned when the data is not found"
-      *  },requirements={
+      *  },requirements={{
       *        "name"="email",
       *        "dataType"="string",
       *        "requirement"=".*",
       *        "description"="email of the admin"
-      * }
+      * }}
       * )
       * @param  $token string
       * @param  $password string
       * @return \Symfony\Component\HttpFoundation\Response
       * @Rest\View()
       */
-     public function PostResetPasswordAction($token, $password)
+     public function postResetPasswordAction($token, $password)
      {
          $UserManager = $this->get('fos_user.user_manager');
          $admin = $UserManager->findUserByConfirmationToken($token);
@@ -57,16 +63,16 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
       * @ApiDoc(
       *  resource=true,
       *  description="Action to change the password",
-      *  output = "Core\EntityBundle\Entity\Admin",
+      *  output = "",
       *  statusCodes = {
       *      200 = "Returned when successful",
       *      404 = "Returned when the data is not found"
-      *  },requirements={
+      *  },requirements={{
       *        "name"="email",
       *        "dataType"="string",
       *        "requirement"=".*",
       *        "description"="email of the admin"
-      * }
+      * }}
       * )
       * @param $email string E-Mail
       * @return \Symfony\Component\HttpFoundation\Response

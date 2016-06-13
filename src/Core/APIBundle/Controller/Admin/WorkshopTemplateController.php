@@ -74,6 +74,8 @@ class WorkshopTemplateController extends FOSRestController implements ClassResou
      *    }
      * )
      * @param $id int Id of the Workshop Template
+     * @return action to load a template
+     * @var WorkshopTemplates $workshopTemplate
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\View()
      */
