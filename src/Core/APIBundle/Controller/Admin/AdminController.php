@@ -15,8 +15,8 @@ use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\Util\Codes;
-use Core\EntityBundle\Entity\User;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Core\EntityBundle\Entity\User;
 
 /**
  * Class RestController.
@@ -28,7 +28,7 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
       * @ApiDoc(
       *  resource=true,
       *  description="Action to create new Admin",
-      *  output = "Core\EntityBundle\Entity\Admin",
+      *  output = "",
       *  statusCodes = {
       *      200 = "Returned when successful",
       *      404 = "Returned when the data is not found"
@@ -69,16 +69,16 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
       * @ApiDoc(
       *  resource=true,
       *  description="Action to create an Admin",
-      *  output = "Core\EntityBundle\Entity\Admin",
+      *  output = "",
       *  statusCodes = {
       *      200 = "Returned when successful",
       *      404 = "Returned when the data is not found"
-      *  },requirements={
+      *  },requirements={{
       *        "name"="adminId",
       *        "dataType"="integer",
       *        "requirement"="\d+",
       *        "description"="Admin ID"
-      * }
+      * }}
       * )
       *
       * @return \Symfony\Component\HttpFoundation\Response
@@ -114,16 +114,16 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
       * @ApiDoc(
       *  resource=true,
       *  description="Action to disable an Admin",
-      *  output = "Core\EntityBundle\Entity\Admin",
+      *  output = "",
       *  statusCodes = {
       *      200 = "Returned when successful",
       *      404 = "Returned when the data is not found"
-      *  },requirements={
+      *  },requirements={{
       *        "name"="adminId",
       *        "dataType"="integer",
       *        "requirement"="\d+",
       *        "description"="Admin ID"
-      * }
+      * }}
       * )
       * @param $adminID integer adminID
       * @return \Symfony\Component\HttpFoundation\Response
@@ -146,16 +146,16 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
       * @ApiDoc(
       *  resource=true,
       *  description="Action to change the password",
-      *  output = "Core\EntityBundle\Entity\Admin",
+      *  output = "",
       *  statusCodes = {
       *      200 = "Returned when successful",
       *      404 = "Returned when the data is not found"
-      *  },requirements={
+      *  },requirements={{
       *        "name"="adminId",
       *        "dataType"="integer",
       *        "requirement"="\d+",
       *        "description"="Admin ID"
-      *}
+      *}}
       * )
       *
       * @return \Symfony\Component\HttpFoundation\Response
@@ -192,13 +192,12 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
       * @ApiDoc(
       *  resource=true,
       *  description="Returns list of all admins",
-      *  output = "Core\EntityBundle\Entity\EmailTemplate",
+      *  output = "",
       *  statusCodes = {
       *      200 = "Returned when successful",
       *      404 = "Returned when the data is not found"
       *  }
-      * )
-      * )
+      *)
       *
       * @return \Symfony\Component\HttpFoundation\Response
       * @return array give the list of all admins

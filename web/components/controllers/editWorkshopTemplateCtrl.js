@@ -3,8 +3,8 @@
  */
 var mainAppCtrls = angular.module("mainAppCtrls");
 /**
- * @requires restSvcs.EmailTemplate
- * @description Controller for editing a workshop template. Provides
+ * @requires restSvcs.WorkshopTemplate
+ * @description Controller for editing a workshop template.
  * @ngdoc controller
  * @name mainAppCtrls.controller:EditWorkshopTemplateCtrl
  */
@@ -27,7 +27,7 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
 
         /**
          * @ngdoc function
-         * @name mainAppCtrls.controller:EditWorkshopTemplateCtrl#discardChanges
+         * @name mainAppCtrls.controller:EditWorkshopTemplateCtrl#discard
          * @description Discards changes and restores the original data
          * @methodOf mainAppCtrls.controller:EditWorkshopTemplateCtrl
          */
@@ -45,7 +45,7 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
 
         /**
          * @ngdoc function
-         * @name mainAppCtrls.controller:EditWorkshopTemplateCtrl#confirmChanges
+         * @name mainAppCtrls.controller:EditWorkshopTemplateCtrl#sendInfo
          * @description Sends changes to the API and stores them as new original data
          * @methodOf mainAppCtrls.controller:EditWorkshopTemplateCtrl
          */

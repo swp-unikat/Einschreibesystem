@@ -93,6 +93,8 @@
                             <div class="btn pull-right">
 
                                 <a ui-sref="administrator_workshop_details({id: workshop.id})"><button type="button" translate class="btn btn-secondary span4">BUTTON_DETAILS</button></a>
+                                <button ng-click="delete(workshop.id)" type="button" translate class="btn btn-danger span4">{{ "BUTTON_DELETE_WORKSHOP" | translate}}
+                                </button>
                             </div>
                         </div>
                         <!-- /.box-body -->

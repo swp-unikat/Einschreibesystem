@@ -115,8 +115,8 @@ mainAppCtrls.controller('EmailTemplateCtrl', ['$scope', "EmailTemplate",'$alert'
  */
 
 
-mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','$stateParams','$translate','$alert',
-    function($scope,Workshops,$stateParams,$translate,$alert) {
+mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWorkshop','$stateParams','$translate','$alert',
+    function($scope,Workshops,AdminWokshop,$stateParams,$translate,$alert) {
 
         var _workshopId = $stateParams.id;
 
@@ -134,9 +134,9 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','$statePar
 
         /**
          * @ngdoc function
-         * @name mainAppCtrls.controller:EditWorkshopTemplateCtrl#discardChanges
+         * @name mainAppCtrls.controller:EditWorkshopCtrl#discardChanges
          * @description Discards changes and restores the original data
-         * @methodOf mainAppCtrls.controller:EditWorkshopTemplateCtrl
+         * @methodOf mainAppCtrls.controller:EditWorkshopCtrl
          */
         $scope.discardChanges = function () {
             $scope.title = _originalData.title;
@@ -155,9 +155,9 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','$statePar
 
         /**
          * @ngdoc function
-         * @name mainAppCtrls.controller:EditWorkshopTemplateCtrl#confirmChanges
+         * @name mainAppCtrls.controller:EditWorkshopCtrl#confirmChanges
          * @description Sends changes to the API and stores them as new original data
-         * @methodOf mainAppCtrls.controller:EditWorkshopTemplateCtrl
+         * @methodOf mainAppCtrls.controller:EditWorkshopCtrl
          */
         $scope.confirmChanges = function () {
             var _dataToSend = {
@@ -201,7 +201,7 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','$statePar
 
 
 
-            Workshop.edit({id: _workshopId}, _dataToSend).$promise.then(function (value) {
+            Workshops.edit({id: _workshopId}, _dataToSend).$promise.then(function (value) {
                 //Store answer from server
                 _originalData = {
                     title: value.title,
@@ -445,9 +445,20 @@ mainAppCtrls.controller('adminWorkshopManagementCtrl',['$scope','AdminWorkshop',
 /**
  *
  */
-mainAppCtrls.controller('AdministratorManagementCtrl',['$scope',
-    function($scope) {
-
+mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin',
+    function($scope,Admin) {
+        Admin.list().$promise.then(function(value){
+            $scope.admins = value;
+        },function(httpResponse){
+            alert(httpResponse.status);
+        });
+        $scope.delete = function(_id) {
+            Admin.remove({id: _id}).$promise.then(function(value){
+                
+            },function(httpResponse){
+                
+            });
+        }
     }
 
 ]);
@@ -457,12 +468,23 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope',
 /**
  *
  */
+
+/**
+ * @ngdoc controller
+ * @name mainAppCtrls.controller:BlacklistCtrl
+ * @description Controller show you a list of blacklisted users
+ */
     mainAppCtrls.controller('BlacklistCtrl', ['$scope', "Participants",'$alert','$modal',
 
         function ($scope, Participants, $alert,$modal) {
 
-
-            var loadBlacklist = function () {
+                /**
+                 * @ngdoc function
+                 * @name mainAppCtrls.controller:BlacklistCtrl#loadingBlacklist
+                 * @methodOf mainAppCtrls.controller:BlacklistCtrl
+                 * @description Function load a list of persons, which were set on the blacklist
+                 */
+                var loadBlacklist = function (){
                 $scope.loading = true;
                 Participants.getblacklistall()
                     .$promise.then(function (value) {
@@ -473,6 +495,13 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope',
                     $scope.loading = false;
                 });
             };
+            /**
+             * @ngdoc function
+             * @name mainAppCtrls.controller:BlacklistCtrl#delete
+             * @methodOf mainAppCtrls.controller:BlacklistCtrl
+             * @description Function removes a selected person from the blacklist
+             * @params {number} _id user id of the person, which should be removed
+             */
             $scope.delete = function (_id) {
                 $scope.deleting = true;
                 Participants.deleteParticipant({id:_id}).$promise.then(function(httpResponse){
@@ -656,8 +685,8 @@ mainAppCtrls.controller('EditEmailTemplateCtrl',['$scope','EmailTemplate','$stat
  */
 
 /**
- * @requires restSvcs.EmailTemplate
- * @description Controller for editing a workshop template. Provides
+ * @requires restSvcs.WorkshopTemplate
+ * @description Controller for editing a workshop template.
  * @ngdoc controller
  * @name mainAppCtrls.controller:EditWorkshopTemplateCtrl
  */
@@ -680,7 +709,7 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
 
         /**
          * @ngdoc function
-         * @name mainAppCtrls.controller:EditWorkshopTemplateCtrl#discardChanges
+         * @name mainAppCtrls.controller:EditWorkshopTemplateCtrl#discard
          * @description Discards changes and restores the original data
          * @methodOf mainAppCtrls.controller:EditWorkshopTemplateCtrl
          */
@@ -698,7 +727,7 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
 
         /**
          * @ngdoc function
-         * @name mainAppCtrls.controller:EditWorkshopTemplateCtrl#confirmChanges
+         * @name mainAppCtrls.controller:EditWorkshopTemplateCtrl#sendInfo
          * @description Sends changes to the API and stores them as new original data
          * @methodOf mainAppCtrls.controller:EditWorkshopTemplateCtrl
          */
@@ -943,11 +972,19 @@ mainAppCtrls.controller('LoginCtrl',['$scope','$http','store','$state','jwtHelpe
  */
 
 /**
+ *@ngdoc controller
+ * @name mainAppCtrls.controller:NewEmailTemplateCtrl
+ * @description Controller to create a new email template
  *
  */
 mainAppCtrls.controller('NewEmailTemplateCtrl',['$scope',"EmailTemplate",
     function($scope, EmailTemplate) {
-
+        /**
+         * @ngdoc function
+         * @name mainAppCtrls.controller:NewEmailTemplateCtrl#sendInfo
+         * @description Sends the data of the created email template to the server
+         * @methodOf mainAppCtrls.controller:NewEmailTemplateCtrl
+         */
         $scope.sendInfo = function(){
             var data={
                 template_name:$scope.email.template.title,
@@ -960,7 +997,12 @@ mainAppCtrls.controller('NewEmailTemplateCtrl',['$scope',"EmailTemplate",
                 alert('Error'+httpResponse.statusText);
             });
         }
-
+        /**
+         * @ngdoc function
+         * @name mainAppCtrls.controller:NewEmailTemplateCtrl#discard
+         * @description Discards all data of the document
+         * @methodOf mainAppCtrls.controller:NewEmailTemplateCtrl
+         */
         $scope.discard = function(){
             $scope.email.template.title= "";
             $scope.email.template.subject= "";

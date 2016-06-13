@@ -24,30 +24,9 @@
                     <a ui-sref="admininvite">
                         <button translate type="button" class="btn btn-default">BUTTON_INVITE_AN_ADMINISTRATOR</button>
                     </a><br><br>
-                    <div class="list-group-item">
-                        awdwfw@fff.com
-                        <button type="button" class="btn btn-default btn-xs pull-right">
-                            <span class="glyphicon glyphicon-remove"></span>
-                        </button>
-                    </div>
-
-                    <div class="list-group-item">
-                        awssasadwfw@fsasasaff.com
-                        <button type="button" class="btn btn-default btn-xs pull-right">
-                            <span class="glyphicon glyphicon-remove"></span>
-                        </button>
-                    </div>
-
-                    <div class="list-group-item">
-                        awssqqqqqasadwfw@fsqqas.com
-                        <button type="button" class="btn btn-default btn-xs pull-right">
-                            <span class="glyphicon glyphicon-remove"></span>
-                        </button>
-                    </div>
-
-                    <div class="list-group-item">
-                        aasasasasdwfw@fsasasqqaff.com
-                        <button type="button" class="btn btn-default btn-xs pull-right">
+                    <div class="list-group-item" ng-repeat="a in admins">
+                        {{a.email}}
+                        <button type="button" class="btn btn-default btn-xs pull-right" ng-click="delete(a.id)">
                             <span class="glyphicon glyphicon-remove"></span>
                         </button>
                     </div>
