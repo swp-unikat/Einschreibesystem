@@ -36,7 +36,7 @@ mainAppCtrls.controller('adminWorkshopManagementCtrl',['$scope','AdminWorkshop',
             var workshopList = value;
             $scope.loading = false;
             for(var i=0;i<workshopList.length;i++) {
-                if(compareToCurrent(workshopList[i].end_at))
+                if(compareToCurrent(workshopList[i].start_at))
                     $scope.currentList.push(workshopList[i]);
                 else
                     $scope.elapsedList.push(workshopList[i]);

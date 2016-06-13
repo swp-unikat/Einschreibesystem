@@ -207,7 +207,7 @@ restSvcs.factory('Participants',['$resource',function($resource){
           * @methodOf restSvcs.Participants
           * @param {integer} id Participants-ID
           */
-          'deleteParticipant': {method: 'DELETE',params: {id: '@id'}, isArray: false},
+          'deleteParticipant': {url: '/api/admin/participants/:id/blacklist',method: 'DELETE',params: {id: '@id'}, isArray: false},
         /**
          * @ngdoc funtion
          * @name restSvcs.Participants#get

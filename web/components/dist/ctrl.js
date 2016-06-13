@@ -401,7 +401,7 @@ mainAppCtrls.controller('adminWorkshopManagementCtrl',['$scope','AdminWorkshop',
             var workshopList = value;
             $scope.loading = false;
             for(var i=0;i<workshopList.length;i++) {
-                if(compareToCurrent(workshopList[i].end_at))
+                if(compareToCurrent(workshopList[i].start_at))
                     $scope.currentList.push(workshopList[i]);
                 else
                     $scope.elapsedList.push(workshopList[i]);
@@ -473,9 +473,30 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope',
                     $scope.loading = false;
                 });
             };
+            $scope.delete = function (_id) {
+                console.log('called');
+                Participants.deleteParticipant({id:_id}).$promise.then(function(httpResponse){
+                        $alert({
+                            title:'Success',
+                            type: 'success',
+                            container:'#alert',
+                            show: true,
+                            dismissable: false,
+                            content: 'Successfully deleted',
+                            duration: 20
+                        });
+                        loadBlacklist();
+                    }
+                    , function (httpResponse) {
+                        alert('Error');
+                    }
+                )
+
+            }
             loadBlacklist();
 
 
+            
         }
             
             
@@ -1191,14 +1212,14 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm',
          * @description checks validity of email and sends request to change it to the server
          */
         $scope.changeEmail = function() {
-            if(!$scope.form.personal_email.$valid){
-                //TODO Error message
+            var _personal_email = $scope.form.personal_email;
+            if(_personal_email == null || _personal_email == '') {
+
             }
-            $confirm.show().then(function(res) {
+            //TODO confirm
+            $confirm().show().then(function(res) {
                 console.log(res);
             });
-            var _personal_email = $scope.form.personal_email;
-            //TODO confirm
             //TODO Send to server, handle response ( Missing API function )
         }
         /**
