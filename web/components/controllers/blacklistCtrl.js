@@ -19,8 +19,9 @@ var mainAppCtrls = angular.module("mainAppCtrls");
                 });
             };
             $scope.delete = function (_id) {
-                console.log('called');
+                $scope.deleting = true;
                 Participants.deleteParticipant({id:_id}).$promise.then(function(httpResponse){
+                       $scope.deleting = false;
                         $alert({
                             title:'Success',
                             type: 'success',
@@ -33,6 +34,7 @@ var mainAppCtrls = angular.module("mainAppCtrls");
                         loadBlacklist();
                     }
                     , function (httpResponse) {
+                        $scope.deleting = false;
                         alert('Error');
                     }
                 )
