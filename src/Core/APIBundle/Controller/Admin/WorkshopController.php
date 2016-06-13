@@ -242,6 +242,9 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      * )
      *
      * @return \Symfony\Component\HttpFoundation\Response
+     * @param integer $id id of the Workshop
+     * @param integer $participantID id of the WorkshopParticipants
+     * @var WorkshopParticipants $workshopParticipant
      * @Rest\View()
      */
     public function patchWaitinglistAction($id, $participantId) /**Workshop ID!, Workshopüberbuchung: von der Warteliste auf die Nichtwarteliste*/

@@ -4,6 +4,12 @@ service_workshop:
     resource: "@CoreAPIBundle/Controller/WorkshopController.php"
     name_prefix:  api_workshop_ # naming collision
 
+service_admin:
+    type: rest
+    prefix: /api/
+    resource: "@CoreAPIBundle/Controller/AdminController.php.php"
+    name_prefix:  api_admin_ # naming collision
+
 
 # Admin API
 
@@ -19,6 +25,11 @@ service_admin_participants:
     resource: "@CoreAPIBundle/Controller/Admin/ParticipantsController.php"
     name_prefix:  api_admin_participants_ # naming collision
 
+service_admin_secure:
+    type: rest
+    prefix: /api/admin
+    resource: "@CoreAPIBundle/Controller/Admin/AdminController.php.php"
+    name_prefix:  api_admin_ # naming collision
 
 service_workshop_template:
     type: rest
