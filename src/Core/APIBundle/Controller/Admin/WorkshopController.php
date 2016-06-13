@@ -147,7 +147,6 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      * @param DateTime $start_at starttime of the workshop
      * @param DateTime $end_at endtime of the workshop
      * @param integer $max_participants maximum number of participants
-     * @param integer $id id of the workshop
      * @return array information of a workshop
      * @var Workshop $workshop
      * @Rest\View()
@@ -200,8 +199,8 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      *  }
      * )
      *
+     * @param id int
      * @return \Symfony\Component\HttpFoundation\Response
-     * @param integer $id id of the workshop
      * @var Workshop $workshop
      * @Rest\View()
      */
@@ -241,9 +240,9 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      *  }
      * )
      *
+     * @param $id int
+     * @param $participantID int
      * @return \Symfony\Component\HttpFoundation\Response
-     * @param integer $id id of the Workshop
-     * @param integer $participantID id of the WorkshopParticipants
      * @var WorkshopParticipants $workshopParticipant
      * @Rest\View()
      */
@@ -285,6 +284,8 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      * @param $workshopId int
      * @param $participantId int
      * @return \Symfony\Component\HttpFoundation\Response
+
+     * 
      * @Rest\View()
      */
     public function postParticipatedAction($workshopId, $participantId)
