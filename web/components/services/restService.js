@@ -192,7 +192,7 @@ restSvcs.factory('Participants',['$resource',function($resource){
           * @methodOf restSvcs.Participants
           * @returns {httpPromise} resolve with fetched data, or fails with error description
           */
-        'getblacklistall': {method: 'GET',url: '/api/admin/participants/blacklist/all', params: {id: 'all'}, isArray: true},
+        'getblacklistall': {method: 'GET',url: '/api/admin/participants/blacklist/all', isArray: true},
          /**
           * @ngdoc function
           * @name restSvcs.Participants#put
