@@ -267,4 +267,31 @@ use Core\EntityBundle\Entity\User;
          $this->getDoctrine()->getManager()->flush();
      }
  }
+ /**
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Returns list of all admins",
+     *  output = "Core\EntityBundle\Entity\EmailTemplate",
+     *  statusCodes = {
+     *      200 = "Returned when successful",
+     *      404 = "Returned when the data is not found"
+     *  }
+     * )
+     * )
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @return array give the list of all admins
+     * @Rest\View()
+     */
+    public function getListAction()
+    {
+    	$admin = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle')->findAll();
+    	if (!$admin) {
+            throw $this->createNotFoundException("No admin was found");
+        } else {
+            $view = $this->view($admin, 200);
+            return $this->handleView($view);
+        }
+	    
+    }
 
