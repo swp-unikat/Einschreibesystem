@@ -6,7 +6,7 @@
  * Date: 09.06.2016
  * Time: 11:13
  */
-namespace Core\APIBundle\Controller\Admin;
+namespace Core\APIBundle\Controller;
 use Core\EntityBundle\Entity\Invitation;
 use FOS\RestBundle\Request\ParamFetcher;
 use FOS\RestBundle\Routing\ClassResourceInterface;
