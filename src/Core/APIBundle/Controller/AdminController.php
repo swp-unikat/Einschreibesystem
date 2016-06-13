@@ -7,6 +7,8 @@
  * Time: 11:13
  */
 namespace Core\APIBundle\Controller;
+
+
 use Core\EntityBundle\Entity\Invitation;
 use FOS\RestBundle\Request\ParamFetcher;
 use FOS\RestBundle\Routing\ClassResourceInterface;
@@ -16,6 +18,10 @@ use FOS\RestBundle\View\View;
 use FOS\RestBundle\Util\Codes;
 use Core\EntityBundle\Entity\User;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use FOS\RestBundle\Controller\Annotations\RouteResource;
+use Symfony\Component\HttpFoundation\Request;
+
+
 /**
  * Class RestController.
  */
@@ -41,7 +47,7 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
       * @return \Symfony\Component\HttpFoundation\Response
       * @Rest\View()
       */
-     public function PostResetPasswordAction($token, $password)
+     public function postResetPasswordAction($token, $password)
      {
          $UserManager = $this->get('fos_user.user_manager');
          $admin = $UserManager->findUserByConfirmationToken($token);
