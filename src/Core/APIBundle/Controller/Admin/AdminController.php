@@ -28,7 +28,7 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
       * @ApiDoc(
       *  resource=true,
       *  description="Action to create new Admin",
-      *  output = "Core\EntityBundle\Entity\Admin",
+      *  output = "",
       *  statusCodes = {
       *      200 = "Returned when successful",
       *      404 = "Returned when the data is not found"
@@ -69,7 +69,7 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
       * @ApiDoc(
       *  resource=true,
       *  description="Action to create an Admin",
-      *  output = "Core\EntityBundle\Entity\Admin",
+      *  output = "",
       *  statusCodes = {
       *      200 = "Returned when successful",
       *      404 = "Returned when the data is not found"
@@ -114,7 +114,7 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
       * @ApiDoc(
       *  resource=true,
       *  description="Action to disable an Admin",
-      *  output = "Core\EntityBundle\Entity\Admin",
+      *  output = "",
       *  statusCodes = {
       *      200 = "Returned when successful",
       *      404 = "Returned when the data is not found"
@@ -146,7 +146,7 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
       * @ApiDoc(
       *  resource=true,
       *  description="Action to change the password",
-      *  output = "Core\EntityBundle\Entity\Admin",
+      *  output = "",
       *  statusCodes = {
       *      200 = "Returned when successful",
       *      404 = "Returned when the data is not found"
@@ -192,7 +192,7 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
       * @ApiDoc(
       *  resource=true,
       *  description="Returns list of all admins",
-      *  output = "Core\EntityBundle\Entity\EmailTemplate",
+      *  output = "",
       *  statusCodes = {
       *      200 = "Returned when successful",
       *      404 = "Returned when the data is not found"

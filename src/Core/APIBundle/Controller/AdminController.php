@@ -31,7 +31,7 @@ use Symfony\Component\HttpFoundation\Request;
       * @ApiDoc(
       *  resource=true,
       *  description="Action to reset the password",
-      *  output = "Core\EntityBundle\Entity\Admin",
+      *  output = "",
       *  statusCodes = {
       *      200 = "Returned when successful",
       *      404 = "Returned when the data is not found"
@@ -63,7 +63,7 @@ use Symfony\Component\HttpFoundation\Request;
       * @ApiDoc(
       *  resource=true,
       *  description="Action to change the password",
-      *  output = "Core\EntityBundle\Entity\Admin",
+      *  output = "",
       *  statusCodes = {
       *      200 = "Returned when successful",
       *      404 = "Returned when the data is not found"
