@@ -353,6 +353,7 @@ class WorkshopTemplateController extends FOSRestController implements ClassResou
      * )
      * @param $id int id of the workshop template
      * @return \Symfony\Component\HttpFoundation\Response
+     * @var workshopTemplate $workshopTemplate
      * @Rest\View()
      */
     public function deleteAction($id)
