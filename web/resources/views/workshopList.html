@@ -25,9 +25,8 @@
                                 <label translate class="col-lg-2 col-sm-12 control-label">WORKSHOP_COST</label>
                                 <div class="col-sm-10 col-sm-12"><label>{{workshop.cost}}</label></div>
                             </div>
-                            <div class="btn-group pull-right" role="group">
-                                <button type="button" translate class="btn success btn-secondary span4">BUTTON_ENROLL</button>
-                                <a ui-sref="workshopsdetails({id: workshop.id})"><button type="button" translate class="btn btn-secondary span4">BUTTON_DETAILS</button></a>
+                            <div class="pull-right">
+                                <a ui-sref="workshopsdetails({id: workshop.id})"><button type="button" translate class="btn btn-secondary span4">BUTTON_DETAILS_AND_ENROLL</button></a>
                             </div>
                         </div>
                         <!-- /.box-body -->
