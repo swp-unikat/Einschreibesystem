@@ -150,7 +150,7 @@ restSvcs.factory('AdminWorkshop',['$resource',function($resource){
          * @methodOf restSvcs.AdminWorkshop
          * @param {integer} id Workshop-ID
          */
-        'patchWorkshop': {method: 'PATCH',params: {id: '@id'}, isArray: false},
+        'edit': {method: 'PATCH',params: {id: '@id'}, isArray: false},
          /**
           * @ngdoc function
           * @name restSvcs.AdminWorkshop#delete
