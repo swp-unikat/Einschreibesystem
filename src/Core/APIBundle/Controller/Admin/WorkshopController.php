@@ -128,7 +128,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      *      404 = "Returned when the data is not found"
      *  }
      * )
-     * @param $id int
+     * @param $id int id of the workshop
      * @param $paramFetcher ParamFetcher
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\RequestParam(name="title", requirements=".*", description="title of the workshop",default=null,nullable=true)
@@ -199,7 +199,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      *  }
      * )
      *
-     * @param id int
+     * @param $id int id of the workshop
      * @return \Symfony\Component\HttpFoundation\Response
      * @var Workshop $workshop
      * @Rest\View()
@@ -240,8 +240,8 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      *  }
      * )
      *
-     * @param $id int
-     * @param $participantID int
+     * @param $id int id of the workshop
+     * @param $participantID int id of the workshopparticipants
      * @return \Symfony\Component\HttpFoundation\Response
      * @var WorkshopParticipants $workshopParticipant
      * @Rest\View()
@@ -281,16 +281,16 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      *     }
      *  }
      * )
-     * @param $workshopId int
-     * @param $participantId int
+     * @param $workshopId int id of the workshop
+     * @param $participantId int id of the workshopparticipants
      * @return \Symfony\Component\HttpFoundation\Response
 
      * 
      * @Rest\View()
      */
-    public function postParticipatedAction($workshopId, $participantId)
+    public function postParticipatedAction($id, $participantId)
     {
-        $workshopParticipant = $this->getDoctrine()->getRepository("CoreEntityBundle:WorkshopParticipants")->findOneBy(["workshop" => $workshopId,"participant" => $participantId]);
+        $workshopParticipant = $this->getDoctrine()->getRepository("CoreEntityBundle:WorkshopParticipants")->findOneBy(["workshop" => $id,"participant" => $participantId]);
 
         if(!$workshopParticipant){
             throw $this->createNotFoundException("User not found in this Workshop");
