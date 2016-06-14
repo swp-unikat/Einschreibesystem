@@ -32,7 +32,7 @@ mainAppCtrls.controller('NewWorkshopTemplateCtrl',['$scope',"WorkshopTemplate",'
             //Initialize start_at to calculate duration with end_at 
             var _sa = new Date(0);
             var _duration = $scope.workshop.duration;
-            var _ea = new Date(_duration + 1000*60*60);
+            var _ea = new Date(_duration);
 
             var data = {
                 title:$scope.workshop.title,

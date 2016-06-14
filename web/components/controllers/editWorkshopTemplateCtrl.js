@@ -61,6 +61,9 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
                 max_participants: ''
                 
             };
+            var _sa = new Date(_originalData.start_at);
+            var _duration = $scope.workshop.duration;
+            var _ea = new Date(_duration + 1000*60*60);
             var _changedData = {
                 
                 title: $scope.workshop.title,
@@ -130,6 +133,10 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
         $scope.loading = true;
         WorkshopTemplate.get({id: _workshopId}).$promise.then(function (value) {
 
+            //calculate duration
+            var _ea = Date.parse(value.end_at);
+            var _sa = Date.parse(value.start_at);
+            var _duration = _ea - _sa;
             //Store original data in case of discard
             _originalData = {
                 title: value.title,
@@ -137,8 +144,7 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
                 cost: value.cost,
                 requirements: value.requirements,
                 location: value.location,
-                start_at: value.start_at,
-                end_at: value.end_at,
+                duration: _duration,
                 max_participants: value.max_participants
 
             };
@@ -149,8 +155,7 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
             $scope.workshop.cost = _originalData.cost;
             $scope.workshop.requirements = _originalData.requirements;
             $scope.workshop.location = _originalData.location;
-            $scope.workshop.start_at = _originalData.start_at;
-            $scope.workshop.end_at = _originalData.end_at;
+            $scope.workshop.duration = _originalData.duration;
             $scope.workshop.max_participants = _originalData.max_participants;
             
 
