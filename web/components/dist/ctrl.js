@@ -63,13 +63,19 @@ mainAppCtrls.controller('AdminCreateCtrl',['$scope', '$stateParams','$alert',
  */
 
 /**
- *
- */
+* @name mainAppCtrls
+* @type {angular.Module}
+* @description Module containing all email templates
+*/
 mainAppCtrls.controller('EmailTemplateCtrl', ['$scope', "EmailTemplate",'$alert','$modal',
     
     function ($scope, EmailTemplate, $alert,$modal) {
-
-
+        /**
+         * @ngdoc function
+         * @name mainApp.controller:EmailTemplateCtrl#loadTemplates
+         * @methodOf mainApp.controller:EmailTemplateCtrl
+         * @description Function loads the actual list of all email templates
+         */
         var loadTemplates = function() {
             $scope.loading = true;
             EmailTemplate.getAll()
@@ -82,7 +88,12 @@ mainAppCtrls.controller('EmailTemplateCtrl', ['$scope', "EmailTemplate",'$alert'
             });
         };
         loadTemplates();
-
+        /**
+         * @ngdoc function
+         * @name mainApp.controller:EmailTemplateCtrl#delete
+         * @methodOf mainApp.controller:EmailTemplateCtrl
+         * @description Function removes a single email template from the list
+         */
         $scope.delete = function (_id) {
             EmailTemplate.delete({id:_id}).$promise.then(function(httpResponse){
                     $alert({
@@ -122,12 +133,12 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
 
         //Initialize _originalData
         var _originalData = {};
-
+        $scope.workshop ={};
         //Get translations for errors and store in array
         var _translations = {};
         //Pass all required translation IDs to translate service
         $translate(['ALERT_WORKSHOP_EDIT_SUCCESS',
-            'ALERT_WORKSHOP_EDIT_FAIL','ALERT_WORKSHOP_NOT_FOUND']).
+            'ALERT_WORKSHOP_EDIT_FAIL','ALER$scope.titleT_WORKSHOP_NOT_FOUND']).
         then(function(translations){
             _translations = translations;
         });
@@ -139,14 +150,14 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
          * @methodOf mainAppCtrls.controller:EditWorkshopCtrl
          */
         $scope.discardChanges = function () {
-            $scope.title = _originalData.title;
-            $scope.description = _originalData.description;
-            $scope.cost = _originalData.cost;
-            $scope.requirements = _originalData.requirements;
-            $scope.location = _originalData.location;
-            $scope.start_at = _originalData.start_at;
-            $scope.end_at = _originalData.end_at;
-            $scope.max_participants = _originalData.max_participants;
+            $scope.workshop.title = _originalData.title;
+            $scope.workshop.description = _originalData.description;
+            $scope.workshop.cost = _originalData.cost;
+            $scope.workshop.requirements = _originalData.requirements;
+            $scope.workshop.location = _originalData.location;
+            $scope.workshop.start_at = _originalData.start_at;
+            $scope.workshop.end_at = _originalData.end_at;
+            $scope.workshop.max_participants = _originalData.max_participants;
 
 
 
@@ -173,14 +184,14 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
             };
             var _changedData = {
 
-                title: $scope.title,
-                description: $scope.description,
-                cost: $scope.cost,
-                requirements: $scope.requirements,
-                location: $scope.location,
-                start_at: $scope.start_at,
-                end_at: $scope.end_at,
-                max_participants: $scope.max_participants
+                title: $scope.workshop.title,
+                description: $scope.workshop.description,
+                cost: $scope.workshop.cost,
+                requirements: $scope.workshop.requirements,
+                location: $scope.workshop.location,
+                start_at: $scope.workshop.start_at,
+                end_at: $scope.workshop.end_at,
+                max_participants: $scope.workshop.max_participants
             };
 
             //compare all properties of both objects
@@ -189,7 +200,6 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
             if (_changedData.description != _originalData.description)
                 _dataToSend.description = _changedData.description;
             if (_changedData.cost != _originalData.cost)
-                _dataToSend.cost = _changedData.cost;
             if (_changedData.location != _originalData.location)
                 _dataToSend.location = _changedData.location;
             if (_changedData.start_at != _originalData.start_at)
@@ -253,14 +263,14 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
 
             };
             //Store original data in ng-model
-            $scope.title = _originalData.title;
-            $scope.description = _originalData.description;
-            $scope.cost = _originalData.cost;
-            $scope.requirements = _originalData.requirements;
-            $scope.location = _originalData.location;
-            $scope.start_at = _originalData.start_at;
-            $scope.end_at = _originalData.end_at;
-            $scope.max_participants = _originalData.max_participants;
+            $scope.workshop.title = _originalData.title;
+            $scope.workshop.description = _originalData.description;
+            $scope.workshop.cost = _originalData.cost;
+            $scope.workshop.requirements = _originalData.requirements;
+            $scope.workshop.location = _originalData.location;
+            $scope.workshop.start_at = _originalData.start_at;
+            $scope.workshop.end_at = _originalData.end_at;
+            $scope.workshop.max_participants = _originalData.max_participants;
 
 
 
@@ -291,8 +301,8 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
  * @name mainAppCtrls.controller:AdminNewWorkshopCtrl
  * @description Controller initializing the creation of a new workshop 
  */
-mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops",
-    function($scope, Workshops) {
+mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorkshop",
+    function($scope, Workshops, AdminWorkshop) {
         $scope.workshop = {};
         /**
          * @ngdoc function
@@ -307,17 +317,21 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops",
                 _dateStr =  _dateStr.slice(0,_dateStr.length-5);
                 return _dateStr.replace('T',' ');
             };
+            var _sa = Date.parse($scope.workshop.start_at);
+            var _duration = $scope.workshop.duration;
+            var _ea = new Date(_sa+_duration + 1000*60*60) ;
+
             var data = {
                 title:$scope.workshop.title,
                 description:$scope.workshop.description,
                 cost:$scope.workshop.cost,
                 requirements:$scope.workshop.requirement,
                 location:$scope.workshop.location,
-                start_at:reformatDate($scope.sharedDate),
-                end_at:reformatDate($scope.sharedDate),
+                start_at:reformatDate($scope.workshop.start_at),
+                end_at:reformatDate(_ea),
                 max_participants:$scope.workshop.max_participants
             };
-            Workshops.put(data).$promise.then(function(httpResponse){
+            AdminWorkshop.putWorkshop(data).$promise.then(function(httpResponse){
                 alert('Success!' + httpResponse.status);
             },function(httpResponse){
                 alert('Error'+httpResponse.statusText);
@@ -331,7 +345,7 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops",
             $scope.workshop.location= "";
             $scope.workshop.sharedDate= "";
             $scope.workshop.start_at= "";
-            $scope.workshop.end_at= "";
+            $scope.workshop.duration= "";
             $scope.workshop.max.participants= "";
 
 
@@ -1138,14 +1152,15 @@ mainAppCtrls.controller('NewWorkshopTemplateCtrl',['$scope',"WorkshopTemplate",'
  * @name mainAppCtrls.controller:PasswordResetCtrl
  * @description
  */
-mainAppCtrls.controller('PasswordResetCtrl',['$scope','$alert','$translate',
-    function($scope,$alert,$translate) {
+mainAppCtrls.controller('PasswordResetCtrl',['$scope','$alert','$translate','Admin','$stateParams',
+    function($scope,$alert,$translate,Admin,$stateParams) {
 
         var _translations;
         $translate(['TITLE_ERROR','PASSWORDS_IDENTICAL_ERROR','PASSWORD_EMPTY_ERROR']).then(function(translations){
            _translations = translations;
         });
         var pwAlert;
+        var _token = $stateParams.token;
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:PasswordResetCtrl#validatePW
@@ -1181,6 +1196,7 @@ mainAppCtrls.controller('PasswordResetCtrl',['$scope','$alert','$translate',
          * @ngdoc function
          * @name mainAppCtrls.controller:PasswordResetCtrl#sendInfo
          * @methodOf mainAppCtrls.controller:PasswordResetCtrl
+         * @description checks validity and sends a request to change the password to the server
          */
         $scope.sendInfo = function () {
             if(!$scope.validatePW())
@@ -1196,9 +1212,40 @@ mainAppCtrls.controller('PasswordResetCtrl',['$scope','$alert','$translate',
                     dismissable: false,
                     type: 'danger'
                 });
+                return;
             }
+            var _msg = "";
+            var _type = "";
+            var _title = "";
+            Admin.resetPassword({token: _token}).$promise.then(function(httpResponse){
+                pwAlert = $alert({
+                    container: '#alert',
+                    title: "Success",
+                    content: _msg,
+                    type: "success",
+                    show: true,
+                    dismissable: false
+                });
+            },function(httpResponse){
+                switch(httpResponse.status){
+                    case 404:
+                        _msg = "Invalid token";
+                        break;
+                    case 500:
+                        _msg = "Internal server error. Please contact your system admin";
+                        break;
+                }
+                pwAlert = $alert({
+                    container: '#alert',
+                    title: "Error",
+                    content: _msg,
+                    type: "danger",
+                    show: true,
+                    dismissable: false
+                });
 
-            //TODO send to server
+            });
+
         };
     }
 
@@ -1375,7 +1422,7 @@ mainAppCtrls.controller('UnsubscribeCtrl',['$scope',
 /**
  * @ngdoc controller
  * @name mainAppCtrls.controller:WorkshopDetailsCtrl
- * @description Shows details for a workshop and provides subscribe / unsubscribe to a workshop
+ * @description Loads workshop details
  */
 mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$stateParams', "$alert",
     function($scope,Workshops,$stateParams, $alert) {
@@ -1384,8 +1431,7 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:WorkshopDetailsCtrl#sendInfo
-         * @description sends a request to enroll to the server
-         * @methodOf mainAppCtrls.controller:WorkshopDetailsCtrl
+         * @description Sends the info entered for enrollment to the server 
          */
         $scope.sendInfo= function(){
             var first_name=$scope.first_name;   
