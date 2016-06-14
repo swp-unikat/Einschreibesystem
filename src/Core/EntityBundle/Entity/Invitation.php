@@ -36,7 +36,7 @@ class Invitation
     public function __construct()
     {
         //generate identifier only once, here a 6 characters length code
-        $this->code = substr(bin2hex(openssl_random_pseudo_bytes(64)), 0, 6);
+        $this->code = substr(hash('sha512',bin2hex(openssl_random_pseudo_bytes(64))), 0, 6);
     }
     /**
      * function to get code of an invitaion
