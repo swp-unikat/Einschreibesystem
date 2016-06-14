@@ -27,19 +27,21 @@
             <div class="form-group">
                 <label>{{ "WORKSHOP_START_TIME" | translate}}</label>
                 <div class="form-group">
-                    <input type="text"  size="10" data-date-format="dd-MM-yyyy" ng-model="sharedDate"  bs-datepicker placeholder="Date" class="form-control col-md-4" >
+                    <input type="text"  size="10" data-date-format="dd-MM-yyyy" ng-model="workshop.start_at"  bs-datepicker placeholder="Date" class="form-control col-md-4" >
                 </div>
                 <div class="form-group">
-                    <input type="text" size="8"  ng-model="sharedDate" data-time-format="HH:mm" data-autoclose="1" placeholder="Time" bs-timepicker class="form-control col-md-4">
+                    <input type="text" size="8"  ng-model="workshop.start_at" data-time-format="HH:mm" data-autoclose="1" placeholder="Time" bs-timepicker class="form-control col-md-4">
                 </div>
             </div>
+            <label>{{ "WORKSHOP_DURATION" | translate}}</label>
+            <input type="text" type="text" size="8"  ng-model="workshop.duration" data-time-format="HH:mm" data-time-type="number" data-autoclose="1" placeholder="Time" bs-timepicker class="form-control col-md-4">
         </div>
 
 
         <div class="form-group row text-center">
 
-            <button type="Confirm" class="btn btn-info" ng-click="confirmChanges">{{ "BUTTON_CONFIRM" | translate }}</button>
-            <button type="Discard" class="btn btn-info" ng-click="discardChanges" >{{ "BUTTON_DISCARD" | translate }}</button>
+            <button type="button" class="btn btn-info" ng-click="confirmChanges">{{ "BUTTON_CONFIRM" | translate }}</button>
+            <button type="button" class="btn btn-info" ng-click="discardChanges">{{ "BUTTON_DISCARD" | translate }}</button>
         </div>
     </form>
     </body>
