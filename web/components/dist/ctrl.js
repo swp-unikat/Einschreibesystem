@@ -970,7 +970,10 @@ mainAppCtrls.controller('LoginCtrl',['$scope','$http','store','$state','jwtHelpe
         };
 
         /**
-         *
+         * @ngdoc function
+         * @name mainAppCtrls.controller:LoginCtrl#showResetPanel
+         * @description shows the button to reset the password
+         * @methodOf mainAppCtrls.controller:LoginCtrl
          */
         $scope.showResetPanel = function() {
             $scope.reset_panel = !$scope.reset_panel;
@@ -1118,7 +1121,7 @@ mainAppCtrls.controller('NewWorkshopTemplateCtrl',['$scope',"WorkshopTemplate",'
         };
         /**
          * @ngdoc controller
-         * @name mainAppCtrls.controller:AdminNewWorkshopCtrl#discar
+         * @name mainAppCtrls.controller:AdminNewWorkshopCtrl#discard
          * @methodOf mainAppCtrls.controller:AdminNewWorkshopCtrl
          * @description Discards the input
          *

@@ -71,7 +71,7 @@ mainAppCtrls.controller('NewWorkshopTemplateCtrl',['$scope',"WorkshopTemplate",'
         };
         /**
          * @ngdoc controller
-         * @name mainAppCtrls.controller:AdminNewWorkshopCtrl#discar
+         * @name mainAppCtrls.controller:AdminNewWorkshopCtrl#discard
          * @methodOf mainAppCtrls.controller:AdminNewWorkshopCtrl
          * @description Discards the input
          *
