@@ -13,12 +13,14 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 
 /**
+ * Class with methods from the entity workshop
  * @ORM\Entity(repositoryClass="Core\EntityBundle\Repository\WorkshopRepository")
  * @ORM\Table(name="Workshop")
  */
 class Workshop
 {
     /**
+     * id of a workshop
      * @var int
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -26,6 +28,7 @@ class Workshop
      */
     protected $id;
     /**
+     * title of a workshop
      * @var string
      * @ORM\Column(name="title", type="string", nullable=false)
      * @Serializer\Expose
@@ -33,6 +36,7 @@ class Workshop
      */
     protected $title;
     /**
+     * cost of a workshop
      * @var int
      * @ORM\Column(name="cost", type="decimal",precision=4, scale=2, nullable=false)
      * @Serializer\Expose
@@ -40,6 +44,7 @@ class Workshop
      */
     protected $cost;
     /**
+     * requirements of a workshop
      * @var string
      * @ORM\Column(name="requirement", type="string", nullable=false)
      * @Serializer\Expose
@@ -47,6 +52,7 @@ class Workshop
      */
     protected $requirements;
     /**
+     * description of a workshop
      * @var string
      * @ORM\Column(name="description", type="text", nullable=false)
      * @Serializer\Expose
@@ -54,6 +60,7 @@ class Workshop
      */
     protected $description;
     /**
+     * location of a workshop
      * @var string
      * @ORM\Column(name="location", type="string", nullable=false)
      * @Serializer\Expose
@@ -61,6 +68,7 @@ class Workshop
      */
     protected $location;
     /**
+     * starttime and date of a workshop
      * @var \DateTime
      * @ORM\Column(name="start_at", type="datetime", nullable=false)
      * @Serializer\Expose
@@ -68,6 +76,7 @@ class Workshop
      */
     protected $start_at;
     /**
+     * endtime and date of a workshop
      * @var \DateTime
      * @ORM\Column(name="end_at", type="datetime", nullable=false)
      * @Serializer\Expose
@@ -75,6 +84,7 @@ class Workshop
      */
     protected $end_at;
     /**
+     * maximum participants of a workshop
      * @var int
      * @ORM\Column(name="max_participants", type="integer", nullable=false)
      * @Serializer\Expose
@@ -82,6 +92,7 @@ class Workshop
      */
     protected $max_participants;
     /**
+     * date and time when workshop created
      * @var \DateTime
      * @ORM\Column(name="created", type="datetime", nullable=false)
      * @Serializer\Expose
@@ -89,17 +100,22 @@ class Workshop
      */
     protected $created;
     /**
+     * state of workshop
      * @var boolean
      * @ORM\Column(name="notified", type="boolean", nullable=false)
      */
     protected $notified;
-
+    
+    /**
+     * function to create 
+     */
     public function __construct()
     {
         $this->created = new \DateTime("now");
     }
 
     /**
+     * function to get the id of a workshop
      * @return int
      */
     public function getId()
@@ -108,6 +124,7 @@ class Workshop
     }
 
     /**
+     * function to set an id to a workshop
      * @param int $id
      */
     public function setId($id)
@@ -116,6 +133,7 @@ class Workshop
     }
 
     /**
+     * function to get the title of a workshop
      * @return string
      */
     public function getTitle()
@@ -124,6 +142,7 @@ class Workshop
     }
 
     /**
+     * function to est a title to a workshop
      * @param string $title
      */
     public function setTitle($title)
@@ -132,6 +151,7 @@ class Workshop
     }
 
     /**
+     * function to get the cost of a workshop
      * @return int
      */
     public function getCost()
@@ -140,6 +160,7 @@ class Workshop
     }
 
     /**
+     * function to set the cost of a workshop
      * @param int $cost
      */
     public function setCost($cost)
@@ -148,6 +169,7 @@ class Workshop
     }
 
     /**
+     * function to get the requirements of a workshop
      * @return string
      */
     public function getRequirements()
@@ -156,6 +178,7 @@ class Workshop
     }
 
     /**
+     * function to set the requirements of a workshop
      * @param string $requirements
      */
     public function setRequirements($requirements)
@@ -164,6 +187,7 @@ class Workshop
     }
 
     /**
+     * function to get the location of a workshop
      * @return string
      */
     public function getLocation()
@@ -172,6 +196,7 @@ class Workshop
     }
 
     /**
+     * function to set the location of a workshop
      * @param string $location
      */
     public function setLocation($location)
@@ -180,6 +205,7 @@ class Workshop
     }
 
     /**
+     * function to get the starttime and date of a workshop
      * @return \DateTime
      */
     public function getStartAt()
@@ -188,6 +214,7 @@ class Workshop
     }
 
     /**
+     * function to set the starttime and date of a workshop
      * @param \DateTime $start_at
      */
     public function setStartAt($start_at)
@@ -196,6 +223,7 @@ class Workshop
     }
 
     /**
+     * function to get the endtime and date of a workshop
      * @return \DateTime
      */
     public function getEndAt()
@@ -204,6 +232,7 @@ class Workshop
     }
 
     /**
+     * function to set the endtime and date of a workshop
      * @param \DateTime $end_at
      */
     public function setEndAt($end_at)
@@ -212,6 +241,7 @@ class Workshop
     }
 
     /**
+     * fucntion to get the maximum participants of a workshop
      * @return int
      */
     public function getMaxParticipants()
@@ -220,6 +250,7 @@ class Workshop
     }
 
     /**
+     * function to set the maximum participants of a workshop
      * @param int $max_participants
      */
     public function setMaxParticipants($max_participants)
@@ -228,6 +259,7 @@ class Workshop
     }
 
     /**
+     * function to get the createdtime of a workshop
      * @return \DateTime
      */
     public function getCreated()
@@ -236,6 +268,7 @@ class Workshop
     }
 
     /**
+     * function to set the createdtime of a workshop
      * @param \DateTime $created
      */
     public function setCreated($created)
@@ -244,6 +277,7 @@ class Workshop
     }
 
     /**
+     * function to get the description of a workshop
      * @return string
      */
     public function getDescription()
@@ -252,6 +286,7 @@ class Workshop
     }
 
     /**
+     * function to set the description of a workshop
      * @param string $description
      */
     public function setDescription($description)
@@ -260,6 +295,7 @@ class Workshop
     }
 
     /**
+     * function to get notifiedstate of a workshop
      * @return boolean
      */
     public function getNotified()
@@ -268,6 +304,7 @@ class Workshop
     }
 
     /**
+     * function to set notifiedstate of a workshop
      * @param boolean $notified
      */
     public function setNotified($notified)
