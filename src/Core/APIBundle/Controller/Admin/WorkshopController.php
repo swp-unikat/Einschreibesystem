@@ -26,7 +26,7 @@ use FOS\RestBundle\Controller\Annotations\RouteResource;
 use Symfony\Component\HttpFoundation\Request;
 /**
  * Class RestController.
- *
+ * This class provides the private actions of a workshop.
  * @Rest\RouteResource("Workshops")
  */
 
@@ -34,6 +34,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
 {
 
     /**
+     * returns list of all workshops
      * @ApiDoc(
      *  resource=true,
      *  description="Returns list of all Workshops ",
@@ -58,6 +59,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
     }
     
     /**
+     * action to create a new workshop
      * @ApiDoc(
      *  resource=true,
      *  description="Action to create a new Workshop",
@@ -119,6 +121,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
     }
     
 	/**
+	 * action to edit a workshop
      * @ApiDoc(
      *  resource=true,
      *  description="Action to edit a Workshop",
@@ -181,7 +184,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
     }
 
     /**
-
+     * action to delete a workshop
      * @ApiDoc(
      *  resource=true,
      *  description="Action to delete a Workshop",
@@ -218,6 +221,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
     
     
 	/**
+	 * action to overbook a workshop with participant from waitinglist
      * @ApiDoc(
      *  resource=true,
      *  description="overbook a workshop",
@@ -260,6 +264,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
     }
 
     /**
+     * action to overbook a workshop
      * @ApiDoc(
      *  resource=true,
      *  description="overbook a workshop",
