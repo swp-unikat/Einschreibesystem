@@ -11,10 +11,14 @@ namespace Core\EntityBundle\Repository;
 use Core\EntityBundle\Entity\Workshop;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
-
+/**
+ * this class provides get functions of the workshops
+ */
 class WorkshopRepository extends EntityRepository
 {
-
+    /**
+     * function to get all activ workshops
+     */
     public function getAllActiveWorkshops()
     {
         $em = $this->getEntityManager();
@@ -35,7 +39,9 @@ class WorkshopRepository extends EntityRepository
             return $result;
         }
     }
-
+    /**
+     * function to get all workshops
+     */
     public function getAllWorkshops()
     {
         $em = $this->getEntityManager();
@@ -53,7 +59,10 @@ class WorkshopRepository extends EntityRepository
             return $result;
         }
     }
-
+    /**
+     * function to get participants of a workshop
+     * @param int $workshopID id of a workshop
+     */
     public function getParticipants($workshopId){
         $em = $this->getEntityManager();
         $qb = $em->createQueryBuilder();
@@ -63,7 +72,9 @@ class WorkshopRepository extends EntityRepository
         return $result;
 
     }
-
+    /**
+     * function to find workshops where a notification e-mail is needed
+     */
     public function getWorkshopsForNotificationEmail(){
         $now = new \DateTime("now");
         $qb = $this->getEntityManager()->createQueryBuilder();
