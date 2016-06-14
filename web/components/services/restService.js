@@ -314,9 +314,37 @@ restSvcs.factory('Admin',['$resource',function($resource){
         /**
          * @ngdoc function
          * @name restSvcs.Admin#resetPassword
-         * @description Resets the passwords, if the provided token is valid
+         * @description Resets the password, if the provided token is valid
          * @methodOf restSvcs.Admin
          */
-        'resetPassword': {url:'/api/admin/:token/reset/password',params:{token: '@token'},method: 'POST',isArray: false}
+        'resetPassword': {url:'/api/admin/:token/reset/password',params:{token: '@token'},method: 'POST',isArray: false},
+        /**
+         * @ngdoc function
+         * @name restSvcs.Admin#requestReset
+         * @description Creates a request for a email with password-reset link at the server
+         * @methodOf restSvcs.Admin
+         */
+        'requestReset': {url: '/api/admin/:email/send/password/forgot/email',params:{email: '@email'},method: 'POST',isArray: false},
+        /**
+         * @ngdoc function
+         * @name restSvcs.Admin#invite
+         * @description Sends an invite link to the passed e-mail
+         * @methodOF restSvcs.Admin
+         */
+        'invite': {url:'/api/admin/admin/:email/admin/invite',params:{email: '@email'},method: 'GET',isArray: false},
+        /**
+         * @ngdoc function
+         * @name restSvcs.Admin#editContact
+         * @description Edits the contact data saved on the server
+         * @methodOf restSvcs.Admin
+         */
+        'editContact': {url: '/api/admin/admin/contact/data',method: 'PUT',isArray: false},
+        /**
+         * @ngdoc function
+         * @name restSvcs.Admin#editLegalNotice
+         * @description Edits the legal Notice saved on the server
+         * @methodOf restSvcs.Admin
+         */
+        'editLegalNotice': {url: '/api/admin/admin/legal/notice',method: 'PUT',isArray: false}
     });
 }]);
