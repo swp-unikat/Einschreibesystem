@@ -63,13 +63,19 @@ mainAppCtrls.controller('AdminCreateCtrl',['$scope', '$stateParams','$alert',
  */
 
 /**
- *
- */
+* @name mainAppCtrls
+* @type {angular.Module}
+* @description Module containing all email templates
+*/
 mainAppCtrls.controller('EmailTemplateCtrl', ['$scope', "EmailTemplate",'$alert','$modal',
     
     function ($scope, EmailTemplate, $alert,$modal) {
-
-
+        /**
+         * @ngdoc function
+         * @name mainApp.controller:EmailTemplateCtrl#loadTemplates
+         * @methodOf mainApp.controller:EmailTemplateCtrl
+         * @description Function loads the actual list of all email templates
+         */
         var loadTemplates = function() {
             $scope.loading = true;
             EmailTemplate.getAll()
@@ -82,7 +88,13 @@ mainAppCtrls.controller('EmailTemplateCtrl', ['$scope', "EmailTemplate",'$alert'
             });
         };
         loadTemplates();
-
+        /**
+         * @ngdoc function
+         * @name mainApp.controller:EmailTemplateCtrl#delete
+         * @methodOf mainApp.controller:EmailTemplateCtrl
+         * @description Function removes a single email template from the list
+         * @params {number} _id email template id, which should be removed
+         */
         $scope.delete = function (_id) {
             EmailTemplate.delete({id:_id}).$promise.then(function(httpResponse){
                     $alert({
@@ -1511,22 +1523,6 @@ mainAppCtrls.controller('WorkshopListCtrl',['$scope','Workshops','$alert','$tran
         
         //Define object to store the alert in
         $scope.myAlert;
-        /**
-         * @ngdoc function
-         * @name mainAppCtrls.controller:WorkshopListCtrl#getParticipantsNum
-         * @methodOf mainAppCtrls.controller:WorkshopListCtrl
-         * @param _id Workshop-ID
-         * @returns {number} Number of participants subscribed to a workshop
-         */
-        var getParticipantsNum = function(_id){
-            var num = 0;
-            Workshops.getParticipants({id: _id}).$promise.then(function(value,httpResponse){
-                num = value.length;
-            },function(httpResponse) {
-               
-            });
-            return num;
-        }
         //Get and store translation for alert title.
         $translate(['TITLE_ERROR', 'ERROR_NO_WORKSHOPS']).then(function (translations) {
             $scope.errorTitle = translations.TITLE_ERROR;
@@ -1536,9 +1532,11 @@ mainAppCtrls.controller('WorkshopListCtrl',['$scope','Workshops','$alert','$tran
         Workshops.getAll().$promise.then(function(value){
             $scope.workshopList = value;
             for(var i=0;i<value.length;i++){
-                var num = getParticipantsNum($scope.workshopList[i].id);
-                $scope.workshopList[i].numParticipants = num;
-                console.log($scope.workshopList[i].numParticipants);
+                Workshops.getParticipants({id: $scope.workshopList[i].id}).$promise.then(function(value){
+                    $scope.workshopList[i].numParticipants = value.length;
+                },function(httpResponse) {
+                    $scope.workshopList[i].numParticipants = 0;
+                });
             }
             $scope.loading = false;
         },function(httpResponse) {
@@ -1621,7 +1619,7 @@ mainAppCtrls.controller('WorkshopTemplateCtrl', ['$scope', "WorkshopTemplate",'$
          * @ngdoc function
          * @name mainAppCtrls.controller:WorkshopTemplateCtrl#delete
          * @methodOf mainAppCtrls.controller:WorkshopTemplateCtrl
-         * @param {number} _id
+         * @param {number} _id id of the workshop, which should be deleted
          * @description Deletes the template with the passed id
          */
         $scope.delete = function (_id) {
