@@ -10,7 +10,7 @@ vagrant up
 ```
 
 Install for production
------------------------`
+-----------------------
 1) Clone Repository and remove Vagrant files
 ```bash
 git clone https://github.com/swp-unikat/Einschreibesystem.git
