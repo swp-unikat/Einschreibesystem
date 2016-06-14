@@ -21,6 +21,7 @@ use JMS\Serializer\Annotation as Serializer;
 class WorkshopParticipants
 {
     /**
+     * id of the workshopparticipant
      * @var int
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -28,6 +29,7 @@ class WorkshopParticipants
      */
     protected $id;
     /**
+     * id of a participant
      * @var \Core\EntityBundle\Entity\Participants
      * @ORM\ManyToOne(targetEntity="\Core\EntityBundle\Entity\Participants", cascade={"persist"},fetch="EXTRA_LAZY")
      * @ORM\JoinColumn(name="participant", referencedColumnName="id", onDelete="CASCADE")
@@ -37,6 +39,7 @@ class WorkshopParticipants
      */
     protected $participant;
     /**
+     * id of the workshop
      * @var \Core\EntityBundle\Entity\Workshop
      * @ORM\ManyToOne(targetEntity="\Core\EntityBundle\Entity\Workshop", cascade={"persist"},fetch="EXTRA_LAZY")
      * @ORM\JoinColumn(name="workshop", referencedColumnName="id", onDelete="CASCADE")
@@ -45,6 +48,7 @@ class WorkshopParticipants
      */
     protected $workshop;
     /**
+     * date of enrollment
      * @var \DateTime
      * @ORM\Column(name="$enrollment", type="datetime", nullable=false)
      * @Serializer\Expose
@@ -52,6 +56,7 @@ class WorkshopParticipants
      */
     protected $enrollment;
     /**
+     * state of participant if he is an the waitinglist
      * @var boolean
      * @ORM\Column(name="waiting", type="boolean", nullable=false)
      * @Serializer\Expose
@@ -59,6 +64,7 @@ class WorkshopParticipants
      */
     protected $waiting;
     /**
+     * state of participant if he is succesfull enroll
      * @var boolean
      * @ORM\Column(name="participated", type="boolean", nullable=false)
      * @Serializer\Expose
