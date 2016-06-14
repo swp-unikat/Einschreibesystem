@@ -63,19 +63,13 @@ mainAppCtrls.controller('AdminCreateCtrl',['$scope', '$stateParams','$alert',
  */
 
 /**
-* @name mainAppCtrls
-* @type {angular.Module}
-* @description Module containing all email templates
-*/
+ *
+ */
 mainAppCtrls.controller('EmailTemplateCtrl', ['$scope', "EmailTemplate",'$alert','$modal',
     
     function ($scope, EmailTemplate, $alert,$modal) {
-        /**
-         * @ngdoc function
-         * @name mainApp.controller:EmailTemplateCtrl#loadTemplates
-         * @methodOf mainApp.controller:EmailTemplateCtrl
-         * @description Function loads the actual list of all email templates
-         */
+
+
         var loadTemplates = function() {
             $scope.loading = true;
             EmailTemplate.getAll()
@@ -88,12 +82,7 @@ mainAppCtrls.controller('EmailTemplateCtrl', ['$scope', "EmailTemplate",'$alert'
             });
         };
         loadTemplates();
-        /**
-         * @ngdoc function
-         * @name mainApp.controller:EmailTemplateCtrl#delete
-         * @methodOf mainApp.controller:EmailTemplateCtrl
-         * @description Function removes a single email template from the list
-         */
+
         $scope.delete = function (_id) {
             EmailTemplate.delete({id:_id}).$promise.then(function(httpResponse){
                     $alert({
@@ -1217,7 +1206,7 @@ mainAppCtrls.controller('PasswordResetCtrl',['$scope','$alert','$translate','Adm
             var _msg = "";
             var _type = "";
             var _title = "";
-            Admin.resetPassword({token: _token}).$promise.then(function(httpResponse){
+            Admin.resetPassword({token: _token},{password: $scope.form.password}).$promise.then(function(httpResponse){
                 pwAlert = $alert({
                     container: '#alert',
                     title: "Success",
