@@ -74,9 +74,19 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      * @Rest\RequestParam(name="cost", requirements=".*", description="cost of the workshop")
      * @Rest\RequestParam(name="requirements", requirements=".*", description="requirements of the workshop")
      * @Rest\RequestParam(name="location", requirements=".*", description="location of the workshop")
-     * @Rest\RequestParam(name="start_at", requirements=".*", description="startime of the workshop")
+     * @Rest\RequestParam(name="start_at", requirements=".*", description="starttime of the workshop")
      * @Rest\RequestParam(name="end_at", requirements=".*", description="endtime of the workshop")
      * @Rest\RequestParam(name="max_participants", requirements=".*", description="maximum number of participants")
+     * @param string $title title of the workshop
+     * @param string $description description of the workshop
+     * @param float $cost cost of the workshop
+     * @param string $requirements requirements of the workshop
+     * @param string $location location of the workshop
+     * @param DateTime $start_at starttime of the workshop
+     * @param DateTime $end_at endtime of the workshop
+     * @param integer $max_participants maximum number of participants
+     * @return action to create a new Workshop
+     * @var Workshop $workshop
      * @Rest\View()
      */
     public function putAction(ParamFetcher $paramFetcher)
@@ -118,7 +128,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      *      404 = "Returned when the data is not found"
      *  }
      * )
-     * @param $id int
+     * @param $id int id of the workshop
      * @param $paramFetcher ParamFetcher
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\RequestParam(name="title", requirements=".*", description="title of the workshop",default=null,nullable=true)
@@ -129,6 +139,16 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      * @Rest\RequestParam(name="start_at", requirements=".*", description="starttime of the workshop",default=null,nullable=true)
      * @Rest\RequestParam(name="end_at", requirements=".*", description="endtime of the workshop",default=null,nullable=true)
      * @Rest\RequestParam(name="max_participants", requirements=".*", description="maximum number of participants",default=null,nullable=true )
+     * @param string $title title of the workshop
+     * @param string $description description of the workshop
+     * @param float $cost cost of the workshop
+     * @param string $requirements requirements of the workshop
+     * @param string $location location of the workshop
+     * @param DateTime $start_at starttime of the workshop
+     * @param DateTime $end_at endtime of the workshop
+     * @param integer $max_participants maximum number of participants
+     * @return array information of a workshop
+     * @var Workshop $workshop
      * @Rest\View()
      */
     public function patchAction($id, ParamFetcher $paramFetcher)
@@ -179,7 +199,9 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      *  }
      * )
      *
+     * @param $id int id of the workshop
      * @return \Symfony\Component\HttpFoundation\Response
+     * @var Workshop $workshop
      * @Rest\View()
      */
     public function deleteAction($id)
@@ -218,12 +240,15 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      *  }
      * )
      *
+     * @param $id int id of the workshop
+     * @param $participantID int id of the workshopparticipants
      * @return \Symfony\Component\HttpFoundation\Response
+     * @var WorkshopParticipants $workshopParticipant
      * @Rest\View()
      */
     public function patchWaitinglistAction($id, $participantId) /**Workshop ID!, Workshopüberbuchung: von der Warteliste auf die Nichtwarteliste*/
     {
-        //Relation Workshop <-> Participant
+        //relation between workshop and participant
         $workshopParticipant = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:WorkshopParticipants")->findOneBy([ "workshop"=>$id,"participant"=>$participantId]);
         if (!$workshopParticipant) {
             throw $this->createNotFoundException("No participant on waiting list found");
@@ -256,14 +281,16 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      *     }
      *  }
      * )
-     * @param $workshopId int
-     * @param $participantId int
+     * @param $workshopId int id of the workshop
+     * @param $participantId int id of the workshopparticipants
      * @return \Symfony\Component\HttpFoundation\Response
+
+     * 
      * @Rest\View()
      */
-    public function postParticipatedAction($workshopId, $participantId)
+    public function postParticipatedAction($id, $participantId)
     {
-        $workshopParticipant = $this->getDoctrine()->getRepository("CoreEntityBundle:WorkshopParticipants")->findOneBy(["workshop" => $workshopId,"participant" => $participantId]);
+        $workshopParticipant = $this->getDoctrine()->getRepository("CoreEntityBundle:WorkshopParticipants")->findOneBy(["workshop" => $id,"participant" => $participantId]);
 
         if(!$workshopParticipant){
             throw $this->createNotFoundException("User not found in this Workshop");

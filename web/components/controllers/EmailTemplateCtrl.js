@@ -24,7 +24,7 @@ mainAppCtrls.controller('EmailTemplateCtrl', ['$scope', "EmailTemplate",'$alert'
         loadTemplates();
 
         $scope.delete = function (_id) {
-            EmailTemplate.deleteEmailTemplate({id:_id}).$promise.then(function(httpresponse){
+            EmailTemplate.delete({id:_id}).$promise.then(function(httpResponse){
                     $alert({
                         title:'Success',
                         type: 'success',
