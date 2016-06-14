@@ -11,9 +11,6 @@
     <button type="button" class="btn btn-lg btn-default" data-animation="am-flip-x" bs-dropdown aria-haspopup="true"
             aria-expanded="false">{{ "AVAILABLE_WORKSHOP" | translate}}
     </button>
-    <ul class="dropdown-menu" role="menu">
-        <li ng-repeat="x in data">{{x.title}}<a ng-href="#action{{i}}"><i class="fa fa-chevron-right"></i>&nbsp;{{i}}</a></li>
-    </ul>
 
     <!--dropdown end-->
 
@@ -37,20 +34,20 @@
             <input type="text" ng-model="workshop.location" class="form-control " placeholder="{{workshop.location}}">
 
             <label>{{ "WORKSHOP_MAXIMUM_NUMBER_OF_PARTICIPANTS" | translate}}</label>
-            <input type="text" ng-model="workshop.max.participants" class="form-control" placeholder="{{workshop.max_participants}}">
+            <input type="text" ng-model="workshop.max_participants" class="form-control" placeholder="{{workshop.max_participants}}">
 
             <div class="form-group">
                 <label>{{ "WORKSHOP_START_TIME" | translate}}</label>
                 <div class="form-group">
-                    <input type="text"  size="10" data-date-format="dd-MM-yyyy" ng-model="sharedDate"  bs-datepicker placeholder="Date" class="form-control col-md-4" >
+                    <input type="text"  size="10" data-date-format="dd-MM-yyyy" ng-model="workshop.start_at"  bs-datepicker placeholder="Date" class="form-control col-md-4" >
                 </div>
                 <div class="form-group">
-                    <input type="text" size="8"  ng-model="sharedDate" data-time-format="HH:mm" data-autoclose="1" placeholder="Time" bs-timepicker class="form-control col-md-4">
+                    <input type="text" size="8"  ng-model="workshop.start_at" data-time-format="HH:mm" data-autoclose="1" placeholder="Time" bs-timepicker class="form-control col-md-4">
                 </div>
             </div>
 
             <label>{{ "WORKSHOP_DURATION" | translate}}</label>
-            <input type="text" type="text" size="8"  ng-model="sharedDate" data-time-format="HH:mm" data-autoclose="1" placeholder="Time" bs-timepicker class="form-control col-md-4">
+            <input type="text" type="text" size="8"  ng-model="workshop.duration" data-time-format="HH:mm" data-time-type="number" data-autoclose="1" placeholder="Time" bs-timepicker class="form-control col-md-4">
 
         </div>
 
