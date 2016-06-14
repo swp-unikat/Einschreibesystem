@@ -22,13 +22,15 @@ use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 
 /**
  * Class RestController.
+ * This Controller provides methods for the private part. The functions to invite, create, delete and patch an administrator, to get a list of all administrator and to put and patch the legalnotice and the contactdata are provided.
  */
 class AdminController extends FOSRestController implements ClassResourceInterface
 {
     /**
+     * Action to invite new Admin
      * @ApiDoc(
      *  resource=true,
-     *  description="Action to create new Admin",
+     *  description="Action to invite new Admin",
      *  output = "",
      *  statusCodes = {
      *      200 = "Returned when successful",
@@ -67,6 +69,7 @@ class AdminController extends FOSRestController implements ClassResourceInterfac
     }
 
     /**
+     * Action to create an Admin
      * @ApiDoc(
      *  resource=true,
      *  description="Action to create an Admin",
@@ -113,6 +116,7 @@ class AdminController extends FOSRestController implements ClassResourceInterfac
 
 
     /**
+     * Action to disable an Admin
      * @ApiDoc(
      *  resource=true,
      *  description="Action to disable an Admin",
@@ -145,6 +149,7 @@ class AdminController extends FOSRestController implements ClassResourceInterfac
     }
 
     /**
+     * Action to change the password
      * @ApiDoc(
      *  resource=true,
      *  description="Action to change the password",
@@ -159,7 +164,7 @@ class AdminController extends FOSRestController implements ClassResourceInterfac
      *        "description"="Admin ID"
      *}}
      * )
-     *
+     * @param $paramfetcher params of admin
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\RequestParam(name="oldpassword", requirements=".*", description="json object of workshop")
      * @Rest\RequestParam(name="newpassword", requirements=".*", description="json object of workshop")
@@ -190,6 +195,7 @@ class AdminController extends FOSRestController implements ClassResourceInterfac
 
 
     /**
+     * Returns list of all admins
      * @ApiDoc(
      *  resource=true,
      *  description="Returns list of all admins",
@@ -218,6 +224,7 @@ class AdminController extends FOSRestController implements ClassResourceInterfac
 
 
     /**
+     * load the content of legal notice
      * @ApiDoc(
      *  resource=true,
      *  description="load the content of legal notice",
@@ -238,6 +245,7 @@ class AdminController extends FOSRestController implements ClassResourceInterfac
     }
 
     /**
+     * modify legal notice
      * @ApiDoc(
      *  resource=true,
      *  description="modify legal notice",
@@ -258,9 +266,10 @@ class AdminController extends FOSRestController implements ClassResourceInterfac
     }
 
     /**
+     * load the content of contact data
      * @ApiDoc(
      *  resource=true,
-     *  description="load the content of legal notice",
+     *  description="load the content of contact data",
      *  output = "",
      *  statusCodes = {
      *      200 = "Returned when successful",
@@ -278,6 +287,7 @@ class AdminController extends FOSRestController implements ClassResourceInterfac
     }
 
     /**
+     * modify contact data
      * @ApiDoc(
      *  resource=true,
      *  description="modify contact",
