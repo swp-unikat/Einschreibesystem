@@ -12,7 +12,9 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
         $scope.workshop = {};
         /**
          * @ngdoc function
-         * @name mainAppCtrls.controller:AdminNewWorkshopCtrl
+         * @name mainAppCtrls.controller:AdminNewWorkshopCtrl#sendInfo
+         * @methodOf mainAppCtrls.controller:AdminNewWorkshopCtrl
+         * @description Sends the newly created workshop to the server
          */
         $scope.sendInfo = function(){
             //Adjusts the format of the date strings to fit the requirements of the API
@@ -43,6 +45,12 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
                 alert('Error'+httpResponse.statusText);
             });
         };
+        /**
+         * @ngdoc function
+         * @name mainAppCtrls.controller:AdminNewWorkshopCtrl#discard
+         * @methodOf mainAppCtrls.controller:AdminNewWorkshopCtrl
+         * @description
+         */
         $scope.discard = function(){
             $scope.workshop.title= "";
             $scope.workshop.description= "";

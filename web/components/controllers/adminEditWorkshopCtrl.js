@@ -3,10 +3,10 @@
  */
 var mainAppCtrls = angular.module("mainAppCtrls");
 /**
+ * @ngdoc controller
  * @requires restSvcs.AdminWorkshop
  * @requires restSvcs.Workshops
  * @description Controller for editing a workshop . Provides
- * @ngdoc controller
  * @name mainAppCtrls.controller:AdminEditWorkshopCtrl
  */
 mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWorkshop','$stateParams','$translate','$alert',

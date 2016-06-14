@@ -1,10 +1,7 @@
-/**
- * Created by hunte on 31/05/2016.
- */
 var mainAppCtrls = angular.module("mainAppCtrls");
 /**
  * @ngdoc controller
- * @name SettingsCtrl
+ * @name mainAppCtrls.controller:SettingsCtrl
  * @description Controller for the Settings view
  */
 mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm',
@@ -43,8 +40,8 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm',
             show: false
         });
         /**
-         * @name mainAppCtrls.controller:SettingsCtrl#loadContact
          * @ngdoc function
+         * @name mainAppCtrls.controller:SettingsCtrl#loadContact
          * @methodOf mainAppCtrls.controller:SettingsCtrl
          * @description Loads the current contact data
          */
@@ -52,18 +49,18 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm',
 
         };
         /**
-         * @name mainAppCtrls.controller:SettingsCtrl
          * @ngdoc function
-         * @methodOf mainAppCtrls.controller:SettingsCtrl#loadLegalNotice
+         * @name mainAppCtrls.controller:SettingsCtrl#loadLegalNotice
+         * @methodOf mainAppCtrls.controller:SettingsCtrl
          * @description Loads the current legalnotice
          */
         $scope.loadLegalNotice = function() {
 
         };
         /**
-         * @name mainAppCtrls.controller:SettingsCtrl
          * @ngdoc function
-         * @methodOf mainAppCtrls.controller:SettingsCtrl#validatePW
+         * @name mainAppCtrls.controller:SettingsCtrl#validatePW
+         * @methodOf mainAppCtrls.controller:SettingsCtrl
          * @returns {boolean} True when valid, false when not. Used internally
          */
         $scope.validatePW = function() {
@@ -78,9 +75,9 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm',
             }
         };
         /**
-         * @name mainAppCtrls.controller:SettingsCtrl
          * @ngdoc function
-         * @methodOf mainAppCtrls.controller:SettingsCtrl#changePassword
+         * @name mainAppCtrls.controller:SettingsCtrl#changePassword
+         * @methodOf mainAppCtrls.controller:SettingsCtrl
          * @description Checks validity of password and sends request to change it to the servers
          */
         $scope.changePassword = function() {
@@ -98,8 +95,8 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm',
             //TODO Send to server, handle response ( Missing API Function )
         }
         /**
-         * @name  mainAppCtrls.controller:SettingsCtrl#changeEmail
          * @ngdoc function
+         * @name  mainAppCtrls.controller:SettingsCtrl#changeEmail
          * @methodOf mainAppCtrls.controller:SettingsCtrl
          * @description checks validity of email and sends request to change it to the server
          */
@@ -115,8 +112,8 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm',
             //TODO Send to server, handle response ( Missing API function )
         }
         /**
-         * @name  mainAppCtrls.controller:SettingsCtrl#discardContact
          * @ngdoc function
+         * @name  mainAppCtrls.controller:SettingsCtrl#discardContact
          * @methodOf mainAppCtrls.controller:SettingsCtrl
          * @description discards changes made to the contact data
          */
@@ -128,8 +125,8 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm',
             $scope.form.email = _originalData.email;
         }
         /**
-         * @name  mainAppCtrls.controller:SettingsCtrl#saveContactChange
          * @ngdoc function
+         * @name  mainAppCtrls.controller:SettingsCtrl#saveContactChange
          * @methodOf mainAppCtrls.controller:SettingsCtrl
          * @description checks validity of changes made to input and sends change request to server
          */

@@ -5,7 +5,7 @@ var mainAppCtrls = angular.module("mainAppCtrls");
 /**
  * @ngdoc controller
  * @name mainAppCtrls.controller:ContactCtrl
- * @descirption Controller for showing contacts
+ * @description Controller for showing contacts
  */
 mainAppCtrls.controller('ContactCtrl',['$scope',
     function($scope) {

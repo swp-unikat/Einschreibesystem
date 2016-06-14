@@ -5,7 +5,7 @@ var mainAppCtrls = angular.module("mainAppCtrls");
 /**
  * @ngdoc controller
  * @name mainAppCtrls.controller:DashboardCtrl
- * @descirption Controller for showing administrator functions
+ * @description Controller for showing administrator functions
  */
 //TODO: if /dashboard is called, change hideDashboard to false
 mainAppCtrls.controller('DashboardCtrl',['$scope',
@@ -129,10 +129,10 @@ mainAppCtrls.controller('EmailTemplateCtrl', ['$scope', "EmailTemplate",'$alert'
  */
 
 /**
+ * @ngdoc controller
  * @requires restSvcs.AdminWorkshop
  * @requires restSvcs.Workshops
  * @description Controller for editing a workshop . Provides
- * @ngdoc controller
  * @name mainAppCtrls.controller:AdminEditWorkshopCtrl
  */
 mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWorkshop','$stateParams','$translate','$alert',
@@ -318,7 +318,9 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
         $scope.workshop = {};
         /**
          * @ngdoc function
-         * @name mainAppCtrls.controller:AdminNewWorkshopCtrl
+         * @name mainAppCtrls.controller:AdminNewWorkshopCtrl#sendInfo
+         * @methodOf mainAppCtrls.controller:AdminNewWorkshopCtrl
+         * @description Sends the newly created workshop to the server
          */
         $scope.sendInfo = function(){
             //Adjusts the format of the date strings to fit the requirements of the API
@@ -349,6 +351,12 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
                 alert('Error'+httpResponse.statusText);
             });
         };
+        /**
+         * @ngdoc function
+         * @name mainAppCtrls.controller:AdminNewWorkshopCtrl#discard
+         * @methodOf mainAppCtrls.controller:AdminNewWorkshopCtrl
+         * @description
+         */
         $scope.discard = function(){
             $scope.workshop.title= "";
             $scope.workshop.description= "";
@@ -380,7 +388,7 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
  * @ngdoc controller
  * @name mainAppCtrls.controller:adminWorkshopDetailsCtrl
  * @requires restSvcs.Workshops
- * @descirption Controller for showing administrator functions
+ * @description Controller for showing administrator functions
  */
 mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops', '$stateParams', "$alert",
     function($scope,Workshops,$stateParams, $alert) {
@@ -408,6 +416,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops', '$stat
 /**
  * @ngdoc controller
  * @name mainAppCtrls.controller:adminWorkshopManagementCtrl
+ * @description Initilazing data for the Workshop Management View
  */
 mainAppCtrls.controller('adminWorkshopManagementCtrl',['$scope','AdminWorkshop','$alert','$translate',
     function($scope,AdminWorkshop,$alert,$translate) {
@@ -512,9 +521,6 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin',
 
 // Source: web/components/controllers/blacklistCtrl.js
 
-/**
- *
- */
 
 /**
  * @ngdoc controller
@@ -588,7 +594,7 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin',
 /**
  * @ngdoc controller
  * @name mainAppCtrls.controller:ContactCtrl
- * @descirption Controller for showing contacts
+ * @description Controller for showing contacts
  */
 mainAppCtrls.controller('ContactCtrl',['$scope',
     function($scope) {
@@ -598,14 +604,11 @@ mainAppCtrls.controller('ContactCtrl',['$scope',
 ]);
 
 // Source: web/components/controllers/editEmailTemplateCtrl.js
-/**
- * Created by hunte on 31/05/2016.
-*/
 
 /**
- * @requires restSvcs.EmailTemplate
- * @description Controller for editing a workshop template. Provides
  * @ngdoc controller
+ * @requires restSvcs.EmailTemplate
+ * @description Controller for editing a workshop template. Provide
  * @name mainAppCtrls.controller:EditEmailTemplateCtrl
  */
 mainAppCtrls.controller('EditEmailTemplateCtrl',['$scope','EmailTemplate','$stateParams','$translate','$alert',
@@ -729,14 +732,11 @@ mainAppCtrls.controller('EditEmailTemplateCtrl',['$scope','EmailTemplate','$stat
 ]);
 
 // Source: web/components/controllers/editWorkshopTemplateCtrl.js
-/**
- * Created by hunte on 31/05/2016.
- */
 
 /**
+ * @ngdoc controller
  * @requires restSvcs.WorkshopTemplate
  * @description Controller for editing a workshop template.
- * @ngdoc controller
  * @name mainAppCtrls.controller:EditWorkshopTemplateCtrl
  */
 mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate','$stateParams','$translate','$alert',
@@ -917,7 +917,7 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
 /**
  * @ngdoc controller
  * @name mainAppCtrls.controller:EnrollmentConfirmCtrl
- * @descirption Controller for showing enrollment confirm
+ * @description Controller for showing enrollment confirm
  */
 mainAppCtrls.controller('EnrollmentConfirmCtrl',['$scope',
     function($scope) {
@@ -934,7 +934,7 @@ mainAppCtrls.controller('EnrollmentConfirmCtrl',['$scope',
 /**
  * @ngdoc controller
  * @name mainAppCtrls.controller:LegalNoticeCtrl
- * @descirption Controller for showing legal notice
+ * @description Controller for showing legal notice
  */
 mainAppCtrls.controller('LegalNoticeCtrl',['$scope',
     function($scope) {
@@ -1030,7 +1030,7 @@ mainAppCtrls.controller('LoginCtrl',['$scope','$http','store','$state','jwtHelpe
  */
 
 /**
- *@ngdoc controller
+ * @ngdoc controller
  * @name mainAppCtrls.controller:NewEmailTemplateCtrl
  * @description Controller to create a new email template
  *
@@ -1089,7 +1089,7 @@ mainAppCtrls.controller('NewWorkshopTemplateCtrl',['$scope',"WorkshopTemplate",'
         $scope.workshop = {};
         $scope.myAlert;
         /**
-         * @ngdoc controller
+         * @ngdoc function
          * @name mainAppCtrls.controller:AdminNewWorkshopCtrl#sendInfo
          * @methodOf mainAppCtrls.controller:AdminNewWorkshopCtrl
          * @description Validates the input data and sends a request to create a new Template to the server
@@ -1147,8 +1147,8 @@ mainAppCtrls.controller('NewWorkshopTemplateCtrl',['$scope',"WorkshopTemplate",'
             });
         };
         /**
-         * @ngdoc controller
-         * @name mainAppCtrls.controller:AdminNewWorkshopCtrl#discar
+         * @ngdoc function
+         * @name mainAppCtrls.controller:AdminNewWorkshopCtrl#discard
          * @methodOf mainAppCtrls.controller:AdminNewWorkshopCtrl
          * @description Discards the input
          *
@@ -1283,13 +1283,10 @@ mainAppCtrls.controller('PasswordResetCtrl',['$scope','$alert','$translate','Adm
 ]);
 
 // Source: web/components/controllers/settingsCtrl.js
-/**
- * Created by hunte on 31/05/2016.
- */
 
 /**
  * @ngdoc controller
- * @name SettingsCtrl
+ * @name mainAppCtrls.controller:SettingsCtrl
  * @description Controller for the Settings view
  */
 mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm',
@@ -1328,27 +1325,27 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm',
             show: false
         });
         /**
-         * @name mainAppCtrls.controller:SettingsCtrl
          * @ngdoc function
-         * @methodOf mainAppCtrls.controller:SettingsCtrl#loadContact
+         * @name mainAppCtrls.controller:SettingsCtrl#loadContact
+         * @methodOf mainAppCtrls.controller:SettingsCtrl
          * @description Loads the current contact data
          */
         $scope.loadContact = function() {
 
         };
         /**
-         * @name mainAppCtrls.controller:SettingsCtrl
          * @ngdoc function
-         * @methodOf mainAppCtrls.controller:SettingsCtrl#loadLegalNotice
+         * @name mainAppCtrls.controller:SettingsCtrl#loadLegalNotice
+         * @methodOf mainAppCtrls.controller:SettingsCtrl
          * @description Loads the current legalnotice
          */
         $scope.loadLegalNotice = function() {
 
         };
         /**
-         * @name mainAppCtrls.controller:SettingsCtrl
          * @ngdoc function
-         * @methodOf mainAppCtrls.controller:SettingsCtrl#validatePW
+         * @name mainAppCtrls.controller:SettingsCtrl#validatePW
+         * @methodOf mainAppCtrls.controller:SettingsCtrl
          * @returns {boolean} True when valid, false when not. Used internally
          */
         $scope.validatePW = function() {
@@ -1363,9 +1360,9 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm',
             }
         };
         /**
-         * @name mainAppCtrls.controller:SettingsCtrl
          * @ngdoc function
-         * @methodOf mainAppCtrls.controller:SettingsCtrl#changePassword
+         * @name mainAppCtrls.controller:SettingsCtrl#changePassword
+         * @methodOf mainAppCtrls.controller:SettingsCtrl
          * @description Checks validity of password and sends request to change it to the servers
          */
         $scope.changePassword = function() {
@@ -1383,8 +1380,8 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm',
             //TODO Send to server, handle response ( Missing API Function )
         }
         /**
-         * @name  mainAppCtrls.controller:SettingsCtrl#changeEmail
          * @ngdoc function
+         * @name  mainAppCtrls.controller:SettingsCtrl#changeEmail
          * @methodOf mainAppCtrls.controller:SettingsCtrl
          * @description checks validity of email and sends request to change it to the server
          */
@@ -1400,8 +1397,8 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm',
             //TODO Send to server, handle response ( Missing API function )
         }
         /**
-         * @name  mainAppCtrls.controller:SettingsCtrl#discardContact
          * @ngdoc function
+         * @name  mainAppCtrls.controller:SettingsCtrl#discardContact
          * @methodOf mainAppCtrls.controller:SettingsCtrl
          * @description discards changes made to the contact data
          */
@@ -1413,8 +1410,8 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm',
             $scope.form.email = _originalData.email;
         }
         /**
-         * @name  mainAppCtrls.controller:SettingsCtrl#saveContactChange
          * @ngdoc function
+         * @name  mainAppCtrls.controller:SettingsCtrl#saveContactChange
          * @methodOf mainAppCtrls.controller:SettingsCtrl
          * @description checks validity of changes made to input and sends change request to server
          */
@@ -1463,7 +1460,8 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:WorkshopDetailsCtrl#sendInfo
-         * @description Sends the info entered for enrollment to the server 
+         * @description Sends the info entered for enrollment to the server
+         * @methodOf mainAppCtrls.controller:WorkshopDetailsCtrl
          */
         $scope.sendInfo= function(){
             var first_name=$scope.first_name;   

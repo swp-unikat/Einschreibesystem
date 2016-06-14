@@ -16,8 +16,8 @@ var mainApp = angular.module('mainApp',[
 ]);
 /**
  * @name mainAppCtrls
- * @type {angular.Module}
- * @description Module containg all controller of the application
+ * @ngdoc overview
+ * @description Module containing all controller of the application
  */
 var mainAppCtrls = angular.module('mainAppCtrls',["pascalprecht.translate"]);
 

@@ -12,7 +12,7 @@ mainAppCtrls.controller('NewWorkshopTemplateCtrl',['$scope',"WorkshopTemplate",'
         $scope.workshop = {};
         $scope.myAlert;
         /**
-         * @ngdoc controller
+         * @ngdoc function
          * @name mainAppCtrls.controller:AdminNewWorkshopCtrl#sendInfo
          * @methodOf mainAppCtrls.controller:AdminNewWorkshopCtrl
          * @description Validates the input data and sends a request to create a new Template to the server
@@ -70,8 +70,8 @@ mainAppCtrls.controller('NewWorkshopTemplateCtrl',['$scope',"WorkshopTemplate",'
             });
         };
         /**
-         * @ngdoc controller
-         * @name mainAppCtrls.controller:AdminNewWorkshopCtrl#discar
+         * @ngdoc function
+         * @name mainAppCtrls.controller:AdminNewWorkshopCtrl#discard
          * @methodOf mainAppCtrls.controller:AdminNewWorkshopCtrl
          * @description Discards the input
          *

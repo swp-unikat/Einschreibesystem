@@ -1,7 +1,4 @@
 var mainAppCtrls = angular.module("mainAppCtrls");
-/**
- *
- */
 
 /**
  * @ngdoc controller
