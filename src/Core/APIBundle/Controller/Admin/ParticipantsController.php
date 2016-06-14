@@ -27,13 +27,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\Query;
 /**
  * Class RestController.
- *
+ * this class provides the actions to get the participants and to get the blacklisted participants, to put a participant to the blacklist and to remove a participant from the blacklist
  * @Rest\RouteResource("Participants")
  */
 
 class ParticipantsController extends FOSRestController implements ClassResourceInterface
 {
 	/**
+	 * returns list of all participants
      * @ApiDoc(
      *  resource=true,
      *  description="Returns list of all participants",
@@ -60,6 +61,7 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
         return $this->handleView($view);	    
     }
     	/**
+    	 * returns list of all participants that are blacklisted
      * @ApiDoc(
      *  resource=true,
      *  description="Returns list of all participants that are blacklisted",
@@ -86,6 +88,7 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
         return $this->handleView($view);
     }
     	/**
+    	 * add participant to blacklist
      * @ApiDoc(
      *  resource=true,
      *  description="Add participants to blacklist ",
@@ -127,6 +130,7 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
     }
     
     /**
+     * remove participant from blacklist
      * @ApiDoc(
      *  resource=true,
      *  description="Remove participants from Blacklist",
@@ -164,6 +168,7 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
     }
     
     /**
+     * get detail view of blacklisted user
      * @ApiDoc(
      *  resource=true,
      *  description="Get detail view of blacklisted user",
