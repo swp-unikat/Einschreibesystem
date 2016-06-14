@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * This is the default controller which renders the base template an delivers the angularJS app.
+ */
 namespace Core\FrontendBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -8,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 class DefaultController extends Controller
 {
     /**
+     * Default funktion to render the base template
      * @Route("/")
      */
     public function indexAction()
