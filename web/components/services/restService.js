@@ -313,9 +313,10 @@ restSvcs.factory('Admin',['$resource',function($resource){
         'changePassword': {url:'/api/admin/admin',method: 'PATCH',isArray: false},
         /**
          * @ngdoc function
-         * @name restSvcs.Admin#invite
-         * @description Sends a link to create an admin account to the passed e-mail
+         * @name restSvcs.Admin#resetPassword
+         * @description Resets the passwords, if the provided token is valid
          * @methodOf restSvcs.Admin
          */
+        'resetPassword': {url:'/api/admin/:token/reset/password',params:{token: '@token'},method: 'POST',isArray: false}
     });
 }]);

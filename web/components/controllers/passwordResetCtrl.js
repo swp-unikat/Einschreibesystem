@@ -7,14 +7,15 @@ var mainAppCtrls = angular.module("mainAppCtrls");
  * @name mainAppCtrls.controller:PasswordResetCtrl
  * @description
  */
-mainAppCtrls.controller('PasswordResetCtrl',['$scope','$alert','$translate',
-    function($scope,$alert,$translate) {
+mainAppCtrls.controller('PasswordResetCtrl',['$scope','$alert','$translate','Admin','$stateParams',
+    function($scope,$alert,$translate,Admin,$stateParams) {
 
         var _translations;
         $translate(['TITLE_ERROR','PASSWORDS_IDENTICAL_ERROR','PASSWORD_EMPTY_ERROR']).then(function(translations){
            _translations = translations;
         });
         var pwAlert;
+        var _token = $stateParams.token;
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:PasswordResetCtrl#validatePW
@@ -50,6 +51,7 @@ mainAppCtrls.controller('PasswordResetCtrl',['$scope','$alert','$translate',
          * @ngdoc function
          * @name mainAppCtrls.controller:PasswordResetCtrl#sendInfo
          * @methodOf mainAppCtrls.controller:PasswordResetCtrl
+         * @description checks validity and sends a request to change the password to the server
          */
         $scope.sendInfo = function () {
             if(!$scope.validatePW())
@@ -65,9 +67,40 @@ mainAppCtrls.controller('PasswordResetCtrl',['$scope','$alert','$translate',
                     dismissable: false,
                     type: 'danger'
                 });
+                return;
             }
+            var _msg = "";
+            var _type = "";
+            var _title = "";
+            Admin.resetPassword({token: _token}).$promise.then(function(httpResponse){
+                pwAlert = $alert({
+                    container: '#alert',
+                    title: "Success",
+                    content: _msg,
+                    type: "success",
+                    show: true,
+                    dismissable: false
+                });
+            },function(httpResponse){
+                switch(httpResponse.status){
+                    case 404:
+                        _msg = "Invalid token";
+                        break;
+                    case 500:
+                        _msg = "Internal server error. Please contact your system admin";
+                        break;
+                }
+                pwAlert = $alert({
+                    container: '#alert',
+                    title: "Error",
+                    content: _msg,
+                    type: "danger",
+                    show: true,
+                    dismissable: false
+                });
 
-            //TODO send to server
+            });
+
         };
     }
 
