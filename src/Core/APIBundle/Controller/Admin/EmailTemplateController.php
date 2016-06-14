@@ -29,14 +29,14 @@ use Doctrine\ORM\Query;
 use Core\EntityBundle\Entity\EmailTemplate;
 /**
  * Class RestController.
- *
+ * This class provides get, patch, create and delete actions for e-mailtemplates
  * @Rest\RouteResource("Template")
  */
 
 class EmailTemplateController extends FOSRestController implements ClassResourceInterface
 {
 	/**
-	 
+	 * returns list of all e-mailtemplates
      * @ApiDoc(
      *  resource=true,
      *  description="Returns list of all templates",
@@ -65,7 +65,7 @@ class EmailTemplateController extends FOSRestController implements ClassResource
     }
     
     	/**
-	 
+    	 * load a e-mailtemplate
      * @ApiDoc(
      *  resource=true,
      *  description="Load a template",
@@ -85,7 +85,7 @@ class EmailTemplateController extends FOSRestController implements ClassResource
      * )
      *
      * @return \Symfony\Component\HttpFoundation\Response
-     * @param integer[] $id id of the emailtemplate
+     * @param integer $id id of the emailtemplate
      * @return array information of a emailtemplate
      * @var Emailtemplate $emailTemplate 
      * @Rest\View()
@@ -103,7 +103,7 @@ class EmailTemplateController extends FOSRestController implements ClassResource
     }
     
     /**
-	 
+     * edit a e-mailtemplate
      * @ApiDoc(
      *  resource=true,
      *  description="Edit a template",
@@ -147,10 +147,10 @@ class EmailTemplateController extends FOSRestController implements ClassResource
      * @Rest\RequestParam(name="template_name", requirements=".*", description="name of the emailtemplate",default=null,nullable=true)
      * @Rest\RequestParam(name="email_subject", requirements=".*", description="subject of the emailtemplate",default=null,nullable=true)
      * @Rest\RequestParam(name="email_body", requirements=".*", description="content of the emailtemplate",default=null,nullable=true)
-     * @param integer [] $id id of the emailtemplate
-     * @param string [] $template_name name of the emailtemplate
-     * @param string [] $email_subject subject of the emailtemplate
-     * @param string [] §email_body content of the emailtemplate
+     * @param integer  $id id of the emailtemplate
+     * @param string  $template_name name of the emailtemplate
+     * @param string  $email_subject subject of the emailtemplate
+     * @param string  $email_body content of the emailtemplate
      * @Rest\View()
      */
     public function patchAction(ParamFetcher $paramFetcher,$id)
@@ -175,7 +175,7 @@ class EmailTemplateController extends FOSRestController implements ClassResource
     }
     
     /**  
-	 
+     * create a email-template
      * @ApiDoc(
      *  resource=true,
      *  description="Create a template",
@@ -213,9 +213,9 @@ class EmailTemplateController extends FOSRestController implements ClassResource
      * @Rest\RequestParam(name="template_name", requirements=".*", description="name of the emailtemplate")
      * @Rest\RequestParam(name="email_subject", requirements=".*", description="subject of the emailtemplate")
      * @Rest\RequestParam(name="email_body", requirements=".*", description="content of the emailtemplate")
-     * @param string [] $template_name name of the emailtemplate
-     * @param string [] $email_subject subject of the emailtemplate
-     * @param string [] §email_body content of the emailtemplate
+     * @param string  $template_name name of the emailtemplate
+     * @param string  $email_subject subject of the emailtemplate
+     * @param string  $email_body content of the emailtemplate
      * @Rest\View()
      */
     public function putAction(ParamFetcher $paramFetcher)
@@ -235,6 +235,7 @@ class EmailTemplateController extends FOSRestController implements ClassResource
     }
     
     /**	 
+     * delete a e-mailtemplate
      * @ApiDoc(
      *  resource=true,
      *  description="Delete a template",

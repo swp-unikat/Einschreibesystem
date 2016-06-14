@@ -21,14 +21,14 @@ use FOS\RestBundle\Controller\Annotations\RouteResource;
 use Doctrine\ORM\Query;
 /**
  * Class RestController.
- *
+ * The WorkshopTemplateController provides functions to get a list of Templates, to get a Template, to patch, create and delete a Template of a workshop. 
  * @Rest\RouteResource("Template")
  */
 
 class WorkshopTemplateController extends FOSRestController implements ClassResourceInterface
 {
     /**
-
+     * Returns list of all workshoptemplates
      * @ApiDoc(
      *  resource=true,
      *  description="Returns list of all templates",
@@ -56,7 +56,7 @@ class WorkshopTemplateController extends FOSRestController implements ClassResou
     }
 
     /**
-     
+     * laod a workshoptemplate
      * @ApiDoc(
      *  resource=true,
      *  description="Load a template",
@@ -91,6 +91,7 @@ class WorkshopTemplateController extends FOSRestController implements ClassResou
     }
 
     /**
+     * edit a workshoptemplate
      * @ApiDoc(
      *  resource=true,
      *  description="Edit a template",
@@ -174,6 +175,15 @@ class WorkshopTemplateController extends FOSRestController implements ClassResou
      * @REST\RequestParam(name="start_at", requirements=".*", description="starttime of the Workshop",default=null,nullable=true)
      * @REST\RequestParam(name="end_at", requirements=".*", description="endtime of the Workshop",default=null,nullable=true)
      * @REST\RequestParam(name="max_participants", requirements=".*", description="maximum number of participants",default=null,nullable=true)
+     * @param string $title title of the workshop
+     * @param string $description description of the workshop
+     * @param float $cost cost of the workshop
+     * @param string $requirements requirements of the workshop
+     * @param string $location location of the workshop
+     * @param DateTime $start_at starttime of the workshop
+     * @param DateTime $end_at endtime of the workshop
+     * @param integer $max_participants maximum number of participants
+     * @var WorkshopTemplate $workshopTemplate
      * @Rest\View()
      */
     public function patchAction(ParamFetcher $paramFetcher,$id)
@@ -212,6 +222,7 @@ class WorkshopTemplateController extends FOSRestController implements ClassResou
     }
 
     /**
+     * create a new workshoptemplate
      * @ApiDoc(
      *  resource=true,
      *  description="Create new template",
@@ -288,6 +299,16 @@ class WorkshopTemplateController extends FOSRestController implements ClassResou
      * @REST\RequestParam(name="start_at", requirements=".*", description="starttime of the Workshop",default=null,nullable=true)
      * @REST\RequestParam(name="end_at", requirements=".*", description="endtime of the Workshop",default=null,nullable=true)
      * @REST\RequestParam(name="max_participants", requirements="\d+", description="maximum number of participants")
+     * @param string $title title of the workshop
+     * @param string $description description of the workshop
+     * @param float $cost cost of the workshop
+     * @param string $requirements requirements of the workshop
+     * @param string $location location of the workshop
+     * @param DateTime $start_at starttime of the workshop
+     * @param DateTime $end_at endtime of the workshop
+     * @param integer $max_participants maximum number of participants
+     * @return action to create new templates
+     * @var WorkshopTemplates §workshopTemplate
      * @Rest\View()
      */
     public function putAction(ParamFetcher $paramFetcher)  {
@@ -316,6 +337,7 @@ class WorkshopTemplateController extends FOSRestController implements ClassResou
     }
 
     /**
+     * delete a workshoptemplate
      * @ApiDoc(
      *  resource=true,
      *  description="Delete a template",
@@ -334,6 +356,7 @@ class WorkshopTemplateController extends FOSRestController implements ClassResou
      * )
      * @param $id int id of the workshop template
      * @return \Symfony\Component\HttpFoundation\Response
+     * @var workshopTemplate $workshopTemplate
      * @Rest\View()
      */
     public function deleteAction($id)
