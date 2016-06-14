@@ -38,19 +38,20 @@ class AdminController extends FOSRestController implements ClassResourceInterfac
       *      200 = "Returned when successful",
       *      404 = "Returned when the data is not found"
       *  },requirements={{
-      *        "name"="email",
+      *        "name"="token",
       *        "dataType"="string",
       *        "requirement"=".*",
       *        "description"="email of the admin"
       * }}
       * )
       * @param  $token string the token identifies the user
-      * @param  $password string new password of the user
+      * @param $request Request
       * @return \Symfony\Component\HttpFoundation\Response
       * @Rest\View()
       */
-     public function postResetPasswordAction($token, $password)
+     public function postResetPasswordAction($token,Request $request)
      {
+         $password = $request->get("password");
          $UserManager = $this->get('fos_user.user_manager');
          $admin = $UserManager->findUserByConfirmationToken($token);
          if(!$admin){
