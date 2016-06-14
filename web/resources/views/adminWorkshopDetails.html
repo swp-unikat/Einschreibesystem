@@ -54,12 +54,10 @@
                     </li>
                     <li class="list-group-item"  ng-repeat="p in participants">
                         {{p.name}} {{p.surname}} {{p.email}}
-                        <button type="button" class="btn btn-default btn-xs pull-right" ng-click="">
-                            <span class="glyphicon glyphicon-check"></span>
-                        </button>
-                        <button type="button" class="btn btn-default btn-xs pull-right" ng-click="">
-                            <span class="glyphicon glyphicon-check"></span>
-                        </button>
+                        <label>
+                            <input type="checkbox" value="">
+                            <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+                        </label>
                     </li>
                 </ul>
             </div>
@@ -70,8 +68,8 @@
                     </li>
                     <li class="list-group-item"  ng-repeat="p in waitingList">
                         {{p.name}} {{p.surname}} {{p.email}}
-                        <button type="button" class="btn btn-default btn-xs pull-right" ng-click="delete(a.id)">
-                            <span class="glyphicon glyphicon-ok"></span>
+                        <button type="button" class="btn btn-default btn-xs pull-right" ng-click="overbook()">
+                            <span class="glyphicon glyphicon-transfer"></span>
                         </button>
                     </li>
                 </ul>
