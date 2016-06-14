@@ -3,11 +3,17 @@
  */
 var mainAppCtrls = angular.module("mainAppCtrls");
 /**
- *
+ * @ngdoc controller
+ * @name mainAppCtrls.controller:AdminNewWorkshopCtrl
+ * @description Controller initializing the creation of a new workshop 
  */
 mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops",
     function($scope, Workshops) {
         $scope.workshop = {};
+        /**
+         * @ngdoc function
+         * @name mainAppCtrls.controller:AdminNewWorkshopCtrl
+         */
         $scope.sendInfo = function(){
             //Adjusts the format of the date strings to fit the requirements of the API
             var reformatDate =  function(_date){
