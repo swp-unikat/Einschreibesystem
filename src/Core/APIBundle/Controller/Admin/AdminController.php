@@ -86,10 +86,11 @@ class AdminController extends FOSRestController implements ClassResourceInterfac
      * @Rest\RequestParam(name="email", requirements=".*", description="json object of workshop")
      * @Rest\RequestParam(name="password", requirements=".*", description="json object of workshop")
      * @Rest\RequestParam(name="code", requirements=".*", description="json object of workshop")
+     * @param $paramFetcher ParamFetcher 
      * @Rest\View()
      */
 
-    public function createAdmin(ParamFetcher $paramFetcher)
+    public function createAdminAction(ParamFetcher $paramFetcher)
     {
         //$params is array with E-Mail Password and Token (Code)
         $params = $paramFetcher->all();
