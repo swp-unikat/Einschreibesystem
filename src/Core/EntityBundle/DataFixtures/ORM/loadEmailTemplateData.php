@@ -9,13 +9,20 @@ namespace Core\EntityBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Core\EntityBundle\Entity\EmailTemplate;
-
+/**
+ * Class to load Emailtemplate
+ */
 class loadEmailTemplate implements FixtureInterface
 {
- /**
+    /**
+     * 
      * @var ObjectManager
+     * @param $manager
      */
     protected $manager;
+    /**
+     * function to load emailtemplate
+     */
     public function load(ObjectManager $manager){
     $emailtemplate = new EmailTemplate();
     $emailtemplate->setTemplateName("Erinnerungsmail");
