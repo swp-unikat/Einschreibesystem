@@ -3,7 +3,9 @@ var mainAppCtrls = angular.module("mainAppCtrls");
 // Source: web/components/controllers/dashboardCtrl.js
 
 /**
- *
+ * @ngdoc controller
+ * @name mainAppCtrls.controller:DashboardCtrl
+ * @descirption Controller for showing administrator functions
  */
 //TODO: if /dashboard is called, change hideDashboard to false
 mainAppCtrls.controller('DashboardCtrl',['$scope',
@@ -63,8 +65,8 @@ mainAppCtrls.controller('AdminCreateCtrl',['$scope', '$stateParams','$alert',
  */
 
 /**
-* @name mainAppCtrls
-* @type {angular.Module}
+ * @ngdoc controller
+* @name mainAppCtrls.controller:EmailTemplateCtrl
 * @description Module containing all email templates
 */
 mainAppCtrls.controller('EmailTemplateCtrl', ['$scope', "EmailTemplate",'$alert','$modal',
@@ -72,8 +74,8 @@ mainAppCtrls.controller('EmailTemplateCtrl', ['$scope', "EmailTemplate",'$alert'
     function ($scope, EmailTemplate, $alert,$modal) {
         /**
          * @ngdoc function
-         * @name mainApp.controller:EmailTemplateCtrl#loadTemplates
-         * @methodOf mainApp.controller:EmailTemplateCtrl
+         * @name mainAppCtrls.controller:EmailTemplateCtrl#loadTemplates
+         * @methodOf mainAppCtrls.controller:EmailTemplateCtrl
          * @description Function loads the actual list of all email templates
          */
         var loadTemplates = function() {
@@ -90,8 +92,8 @@ mainAppCtrls.controller('EmailTemplateCtrl', ['$scope', "EmailTemplate",'$alert'
         loadTemplates();
         /**
          * @ngdoc function
-         * @name mainApp.controller:EmailTemplateCtrl#delete
-         * @methodOf mainApp.controller:EmailTemplateCtrl
+         * @name mainAppCtrls.controller:EmailTemplateCtrl#delete
+         * @methodOf mainAppCtrls.controller:EmailTemplateCtrl
          * @description Function removes a single email template from the list
          * @params {number} _id email template id, which should be removed
          */
@@ -126,9 +128,15 @@ mainAppCtrls.controller('EmailTemplateCtrl', ['$scope', "EmailTemplate",'$alert'
  * Created by hunte on 12/06/2016.
  */
 
-
+/**
+ * @requires restSvcs.AdminWorkshop
+ * @requires restSvcs.Workshops
+ * @description Controller for editing a workshop . Provides
+ * @ngdoc controller
+ * @name mainAppCtrls.controller:AdminEditWorkshopCtrl
+ */
 mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWorkshop','$stateParams','$translate','$alert',
-    function($scope,Workshops,AdminWokshop,$stateParams,$translate,$alert) {
+    function($scope,Workshops,AdminWorkshop,$stateParams,$translate,$alert) {
 
         var _workshopId = $stateParams.id;
 
@@ -139,16 +147,16 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
         var _translations = {};
         //Pass all required translation IDs to translate service
         $translate(['ALERT_WORKSHOP_EDIT_SUCCESS',
-            'ALERT_WORKSHOP_EDIT_FAIL','ALER$scope.titleT_WORKSHOP_NOT_FOUND']).
+            'ALERT_WORKSHOP_EDIT_FAIL','ALERT_WORKSHOP_NOT_FOUND']).
         then(function(translations){
             _translations = translations;
         });
 
         /**
          * @ngdoc function
-         * @name mainAppCtrls.controller:EditWorkshopCtrl#discardChanges
+         * @name mainAppCtrls.controller:AdminEditWorkshopCtrl#discardChanges
          * @description Discards changes and restores the original data
-         * @methodOf mainAppCtrls.controller:EditWorkshopCtrl
+         * @methodOf mainAppCtrls.controller:AdminEditWorkshopCtrl
          */
         $scope.discardChanges = function () {
             $scope.workshop.title = _originalData.title;
@@ -167,9 +175,9 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
 
         /**
          * @ngdoc function
-         * @name mainAppCtrls.controller:EditWorkshopCtrl#confirmChanges
+         * @name mainAppCtrls.controller:AdminEditWorkshopCtrl#confirmChanges
          * @description Sends changes to the API and stores them as new original data
-         * @methodOf mainAppCtrls.controller:EditWorkshopCtrl
+         * @methodOf mainAppCtrls.controller:AdminEditWorkshopCtrl
          */
         $scope.confirmChanges = function () {
             var _dataToSend = {
@@ -183,16 +191,19 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
                 max_participants: ''
 
             };
-            var _changedData = {
+            var _sa = Date.parse($scope.workshop.start_at);
+            var _duration = $scope.workshop.duration;
+            var _ea = new Date(_sa+_duration + 1000*60*60) ;
 
-                title: $scope.workshop.title,
-                description: $scope.workshop.description,
-                cost: $scope.workshop.cost,
-                requirements: $scope.workshop.requirements,
-                location: $scope.workshop.location,
-                start_at: $scope.workshop.start_at,
-                end_at: $scope.workshop.end_at,
-                max_participants: $scope.workshop.max_participants
+            var data = {
+                title:$scope.workshop.title,
+                description:$scope.workshop.description,
+                cost:$scope.workshop.cost,
+                requirements:$scope.workshop.requirement,
+                location:$scope.workshop.location,
+                start_at:reformatDate($scope.workshop.start_at),
+                end_at:reformatDate(_ea),
+                max_participants:$scope.workshop.max_participants
             };
 
             //compare all properties of both objects
@@ -365,6 +376,12 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
  */
 
 
+/**
+ * @ngdoc controller
+ * @name mainAppCtrls.controller:adminWorkshopDetailsCtrl
+ * @requires restSvcs.Workshops
+ * @descirption Controller for showing administrator functions
+ */
 mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops', '$stateParams', "$alert",
     function($scope,Workshops,$stateParams, $alert) {
         //TODO : replace with workshop details
@@ -466,7 +483,7 @@ mainAppCtrls.controller('adminWorkshopManagementCtrl',['$scope','AdminWorkshop',
 /**
  * @ngdoc controller
  * @name mainAppCtrls.controller:AdministratorManagementCtrl
- * @descirption 
+ * @descirption Controller for managing administrator list
  */
 mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin',
     function($scope,Admin) {
@@ -475,6 +492,13 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin',
         },function(httpResponse){
             alert(httpResponse.status);
         });
+        /**
+         * @ngdoc function
+         * @name mainAppCtrls.controller:AdministratorManagementCtrl#delete
+         * @description Deletes the admin who has the selected id
+         * @param {number} _id ID of the admin to delete
+         * @methodOf mainAppCtrls.controller:AdministratorManagementCtrl
+         */
         $scope.delete = function(_id) {
             Admin.delete({id: _id}).$promise.then(function(value){
                 
@@ -562,7 +586,9 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin',
  */
 
 /**
- *
+ * @ngdoc controller
+ * @name mainAppCtrls.controller:ContactCtrl
+ * @descirption Controller for showing contacts
  */
 mainAppCtrls.controller('ContactCtrl',['$scope',
     function($scope) {
@@ -889,7 +915,9 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
  */
 
 /**
- *
+ * @ngdoc controller
+ * @name mainAppCtrls.controller:EnrollmentConfirmCtrl
+ * @descirption Controller for showing enrollment confirm
  */
 mainAppCtrls.controller('EnrollmentConfirmCtrl',['$scope',
     function($scope) {
@@ -904,7 +932,9 @@ mainAppCtrls.controller('EnrollmentConfirmCtrl',['$scope',
  */
 
 /**
- *
+ * @ngdoc controller
+ * @name mainAppCtrls.controller:LegalNoticeCtrl
+ * @descirption Controller for showing legal notice
  */
 mainAppCtrls.controller('LegalNoticeCtrl',['$scope',
     function($scope) {
@@ -1261,6 +1291,7 @@ mainAppCtrls.controller('PasswordResetCtrl',['$scope','$alert','$translate','Adm
  */
 
 /**
+ * @ngdoc controller
  * @name SettingsCtrl
  * @description Controller for the Settings view
  */
@@ -1523,22 +1554,6 @@ mainAppCtrls.controller('WorkshopListCtrl',['$scope','Workshops','$alert','$tran
         
         //Define object to store the alert in
         $scope.myAlert;
-        /**
-         * @ngdoc function
-         * @name mainAppCtrls.controller:WorkshopListCtrl#getParticipantsNum
-         * @methodOf mainAppCtrls.controller:WorkshopListCtrl
-         * @param _id Workshop-ID
-         * @returns {number} Number of participants subscribed to a workshop
-         */
-        var getParticipantsNum = function(_id){
-            var num = 0;
-            Workshops.getParticipants({id: _id}).$promise.then(function(value,httpResponse){
-                num = value.length;
-            },function(httpResponse) {
-               
-            });
-            return num;
-        }
         //Get and store translation for alert title.
         $translate(['TITLE_ERROR', 'ERROR_NO_WORKSHOPS']).then(function (translations) {
             $scope.errorTitle = translations.TITLE_ERROR;
@@ -1548,9 +1563,11 @@ mainAppCtrls.controller('WorkshopListCtrl',['$scope','Workshops','$alert','$tran
         Workshops.getAll().$promise.then(function(value){
             $scope.workshopList = value;
             for(var i=0;i<value.length;i++){
-                var num = getParticipantsNum($scope.workshopList[i].id);
-                $scope.workshopList[i].numParticipants = num;
-                console.log($scope.workshopList[i].numParticipants);
+                Workshops.getParticipants({id: $scope.workshopList[i].id}).$promise.then(function(value){
+                    $scope.workshopList[i].numParticipants = value.length;
+                },function(httpResponse) {
+                    $scope.workshopList[i].numParticipants = 0;
+                });
             }
             $scope.loading = false;
         },function(httpResponse) {
