@@ -12,6 +12,7 @@ namespace Core\EntityBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 /**
+ * this class provides entitys and methods for workshoptemplates
  * @ORM\Entity()
  * @ORM\Table(name="workshop_templates")
  * this class provides the entitys of the workshoptemplates and the methods of the workshoptemplates
