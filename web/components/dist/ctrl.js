@@ -3,7 +3,9 @@ var mainAppCtrls = angular.module("mainAppCtrls");
 // Source: web/components/controllers/dashboardCtrl.js
 
 /**
- *
+ * @ngdoc controller
+ * @name mainAppCtrls.controller:DashboardCtrl
+ * @descirption Controller for showing administrator functions
  */
 //TODO: if /dashboard is called, change hideDashboard to false
 mainAppCtrls.controller('DashboardCtrl',['$scope',
@@ -126,7 +128,13 @@ mainAppCtrls.controller('EmailTemplateCtrl', ['$scope', "EmailTemplate",'$alert'
  * Created by hunte on 12/06/2016.
  */
 
-
+/**
+ * @requires restSvcs.AdminWorkshop
+ * @requires restSvcs.Workshops
+ * @description Controller for editing a workshop . Provides
+ * @ngdoc controller
+ * @name mainAppCtrls.controller:AdminEditWorkshopCtrlCtrl
+ */
 mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWorkshop','$stateParams','$translate','$alert',
     function($scope,Workshops,AdminWorkshop,$stateParams,$translate,$alert) {
 
@@ -368,6 +376,12 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
  */
 
 
+/**
+ * @ngdoc controller
+ * @name mainAppCtrls.controller:adminWorkshopDetailsCtrl
+ * @requires restSvcs.Workshops
+ * @descirption Controller for showing administrator functions
+ */
 mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops', '$stateParams', "$alert",
     function($scope,Workshops,$stateParams, $alert) {
         //TODO : replace with workshop details
@@ -469,7 +483,7 @@ mainAppCtrls.controller('adminWorkshopManagementCtrl',['$scope','AdminWorkshop',
 /**
  * @ngdoc controller
  * @name mainAppCtrls.controller:AdministratorManagementCtrl
- * @descirption 
+ * @descirption Controller for managing administrator list
  */
 mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin',
     function($scope,Admin) {
@@ -478,6 +492,13 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin',
         },function(httpResponse){
             alert(httpResponse.status);
         });
+        /**
+         * @ngdoc function
+         * @name mainAppCtrls.controller:AdministratorManagementCtrl#delete
+         * @description Deletes the admin who has the selected id
+         * @param {number} _id
+         * @methodOf mainAppCtrls.controller:AdministratorManagementCtrl
+         */
         $scope.delete = function(_id) {
             Admin.delete({id: _id}).$promise.then(function(value){
                 
@@ -565,7 +586,9 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin',
  */
 
 /**
- *
+ * @ngdoc controller
+ * @name mainAppCtrls.controller:ContactCtrl
+ * @descirption Controller for showing contacts
  */
 mainAppCtrls.controller('ContactCtrl',['$scope',
     function($scope) {
@@ -1221,7 +1244,7 @@ mainAppCtrls.controller('PasswordResetCtrl',['$scope','$alert','$translate','Adm
             var _msg = "";
             var _type = "";
             var _title = "";
-            Admin.resetPassword({token: _token}).$promise.then(function(httpResponse){
+            Admin.resetPassword({token: _token},{password: $scope.form.password}).$promise.then(function(httpResponse){
                 pwAlert = $alert({
                     container: '#alert',
                     title: "Success",

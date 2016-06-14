@@ -2,7 +2,13 @@
  * Created by hunte on 12/06/2016.
  */
 var mainAppCtrls = angular.module("mainAppCtrls");
-
+/**
+ * @requires restSvcs.AdminWorkshop
+ * @requires restSvcs.Workshops
+ * @description Controller for editing a workshop . Provides
+ * @ngdoc controller
+ * @name mainAppCtrls.controller:AdminEditWorkshopCtrlCtrl
+ */
 mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWorkshop','$stateParams','$translate','$alert',
     function($scope,Workshops,AdminWorkshop,$stateParams,$translate,$alert) {
 
