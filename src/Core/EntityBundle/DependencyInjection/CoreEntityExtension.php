@@ -1,4 +1,11 @@
 <?php
+/**
+ * Created by IntelliJ IDEA.
+ * User: Leon Bergmann
+ * Authors: Leon Bergmann
+ * Date: 11.05.2016
+ * Time: 13:01
+ */
 
 namespace Core\EntityBundle\DependencyInjection;
 
@@ -16,6 +23,7 @@ class CoreEntityExtension extends Extension
 {
     /**
      * {@inheritdoc}
+     * @param [] $configs array for configurations
      */
     public function load(array $configs, ContainerBuilder $container)
     {
