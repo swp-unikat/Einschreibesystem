@@ -18,7 +18,6 @@ class AppKernel extends Kernel
             new Core\FrontendBundle\CoreFrontendBundle(),
             new Core\EntityBundle\CoreEntityBundle(),
             new Core\APIBundle\CoreAPIBundle(),
-            new Core\MailBundle\CoreMailBundle(),
             new Core\CronBundle\CoreCronBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
             new FOS\RestBundle\FOSRestBundle(),
