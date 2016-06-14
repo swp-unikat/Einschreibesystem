@@ -13,8 +13,8 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:AdminNewWorkshopCtrl#sendInfo
+         * @description Sends the data of the created workshop to the server
          * @methodOf mainAppCtrls.controller:AdminNewWorkshopCtrl
-         * @description Sends the newly created workshop to the server
          */
         $scope.sendInfo = function(){
             //Adjusts the format of the date strings to fit the requirements of the API
@@ -48,8 +48,8 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:AdminNewWorkshopCtrl#discard
+         * @description Discards the data of the created workshop
          * @methodOf mainAppCtrls.controller:AdminNewWorkshopCtrl
-         * @description
          */
         $scope.discard = function(){
             $scope.workshop.title= "";
