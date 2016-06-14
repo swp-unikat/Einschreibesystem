@@ -5,7 +5,7 @@ var mainAppCtrls = angular.module("mainAppCtrls");
 /**
  * @ngdoc controller
  * @name mainAppCtrls.controller:PasswordResetCtrl
- * @description
+ * @description To reset your password and create a new password
  */
 mainAppCtrls.controller('PasswordResetCtrl',['$scope','$alert','$translate','Admin','$stateParams',
     function($scope,$alert,$translate,Admin,$stateParams) {
