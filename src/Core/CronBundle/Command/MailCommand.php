@@ -15,15 +15,24 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\LockHandler;
 
-
+/**
+ * this class provides a new function for the cli to easily implement a cron witch is checks if e-mails notifications are necessary
+ */
 
 class MailCommand extends ContainerAwareCommand
 {
+    /**
+     * function to change the description
+     */
     protected function configure()
     {
         $this->setName("cron:email")->setDescription("sending a notification to all participants");
 
     }
+    /**
+     * function which check if e-mails notifications are already sended or are needed
+     *
+     */
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {

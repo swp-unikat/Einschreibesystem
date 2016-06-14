@@ -1,4 +1,11 @@
 <?php
+/**
+ * Created by IntelliJ IDEA.
+ * User: Leon Bergmann
+ * Authors: Leon Bergmann
+ * Date: 09.05.2016
+ * Time: 11:15
+ */
 
 namespace Core\APIBundle\DependencyInjection;
 

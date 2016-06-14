@@ -13,10 +13,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Core\EntityBundle\Entity\Workshop;
 use Core\EntityBundle\Repository\WorkshopRepository;
 use Core\EntityBundle\Entity\EmailTemplate;
-
+/**
+ * Class to load E-Mail Template and send E-Mail
+ */
 class MailController extends Controller{
     /**
-     *
+     * function to load participants of a workshop 
      */
     public function run(){
         $count = 0;
@@ -33,7 +35,11 @@ class MailController extends Controller{
 
         return $count;
     }
-
+    /**
+     * function to send a E-Mail to participants of a workshop
+     * @param $participants participant
+     * @param $workshop workshop
+     */
     protected function sendMail($participants,$workshop){
         $counter = 0;
         /* Loading the default E-Mail template*/
