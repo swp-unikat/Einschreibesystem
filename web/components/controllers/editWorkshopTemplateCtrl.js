@@ -4,6 +4,7 @@ var mainAppCtrls = angular.module("mainAppCtrls");
  * @requires restSvcs.WorkshopTemplate
  * @description Controller for editing a workshop template.
  * @name mainAppCtrls.controller:EditWorkshopTemplateCtrl
+ * @requires restSvcs.WorkshopTemplate
  */
 mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate','$stateParams','$translate','$alert',
     function($scope,WorkshopTemplate,$stateParams,$translate,$alert) {

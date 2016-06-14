@@ -6,7 +6,7 @@ var mainAppCtrls = angular.module("mainAppCtrls");
  * @ngdoc controller
  * @name mainAppCtrls.controller:NewEmailTemplateCtrl
  * @description Controller to create a new email template
- *
+ * @requires restSvcs.EmailTemplate
  */
 mainAppCtrls.controller('NewEmailTemplateCtrl',['$scope',"EmailTemplate",
     function($scope, EmailTemplate) {

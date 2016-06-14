@@ -319,8 +319,8 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:AdminNewWorkshopCtrl#sendInfo
+         * @description Sends the data of the created workshop to the server
          * @methodOf mainAppCtrls.controller:AdminNewWorkshopCtrl
-         * @description Sends the newly created workshop to the server
          */
         $scope.sendInfo = function(){
             //Adjusts the format of the date strings to fit the requirements of the API
@@ -354,8 +354,8 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:AdminNewWorkshopCtrl#discard
+         * @description Discards the data of the created workshop
          * @methodOf mainAppCtrls.controller:AdminNewWorkshopCtrl
-         * @description
          */
         $scope.discard = function(){
             $scope.workshop.title= "";
@@ -416,7 +416,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops', '$stat
 /**
  * @ngdoc controller
  * @name mainAppCtrls.controller:adminWorkshopManagementCtrl
- * @description Initilazing data for the Workshop Management View
+ * @description Shows a list of past and future workshops
  */
 mainAppCtrls.controller('adminWorkshopManagementCtrl',['$scope','AdminWorkshop','$alert','$translate',
     function($scope,AdminWorkshop,$alert,$translate) {
@@ -1000,7 +1000,10 @@ mainAppCtrls.controller('LoginCtrl',['$scope','$http','store','$state','jwtHelpe
         };
 
         /**
-         *
+         * @ngdoc function
+         * @name mainAppCtrls.controller:LoginCtrl#showResetPanel
+         * @description shows the button to reset the password
+         * @methodOf mainAppCtrls.controller:LoginCtrl
          */
         $scope.showResetPanel = function() {
             $scope.reset_panel = !$scope.reset_panel;
@@ -1181,7 +1184,7 @@ mainAppCtrls.controller('NewWorkshopTemplateCtrl',['$scope',"WorkshopTemplate",'
 /**
  * @ngdoc controller
  * @name mainAppCtrls.controller:PasswordResetCtrl
- * @description
+ * @description To reset your password and create a new password
  */
 mainAppCtrls.controller('PasswordResetCtrl',['$scope','$alert','$translate','Admin','$stateParams',
     function($scope,$alert,$translate,Admin,$stateParams) {

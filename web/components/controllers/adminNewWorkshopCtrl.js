@@ -5,7 +5,9 @@ var mainAppCtrls = angular.module("mainAppCtrls");
 /**
  * @ngdoc controller
  * @name mainAppCtrls.controller:AdminNewWorkshopCtrl
- * @description Controller initializing the creation of a new workshop 
+ * @description Controller initializing the creation of a new workshop
+ * @requires restSvcs.Workshops
+ * @requires restSvcs.AdminWorkshop
  */
 mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorkshop",
     function($scope, Workshops, AdminWorkshop) {

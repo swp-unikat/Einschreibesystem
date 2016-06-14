@@ -2,7 +2,8 @@ var mainAppCtrls = angular.module("mainAppCtrls");
 /**
  * @ngdoc controller
  * @name mainAppCtrls.controller:WorkshopListCtrl
- * @description
+ * @description Controller initilasing the workshopList view
+ * @requires restSvcs.Workshops
  */
 mainAppCtrls.controller('WorkshopListCtrl',['$scope','Workshops','$alert','$translate',
     function($scope,Workshops,$alert,$translate) {

@@ -54,10 +54,20 @@ module.exports = function(grunt) {
             options: {
                 title: "UNIKAT Einschreibesystem Documentation",
                 inlinePartials: true,
+                html5Mode: false,
                 bestMatch: true,
-                html5Mode: false
+                scripts: [
+                    'web/vendor/a0-angular-storage/dist/angular-storage.js',
+                    'web/vendor/angular/angular.js',
+                    'web/vendor/angular-jwt/dist/angular-jwt.js',
+                    'web/vendor/angular-resource/angular-resource.js',
+                    'web/vendor/angular-translate/angular-translate.js',
+                    'web/vendor/angular-ui-router/release/angular-ui-router.js',
+                    'web/vendor/textAngular/dist/textAngular.js',
+                    'web/vendor/angular-strap/dist/angular-strap.js'
+             ]
             },
-            all: ['web/components/app.js','web/components/dist/ctrl.js','web/components/services/*.js']
+            all: ['web/components/app.js','web/components/controllers/*.js','web/components/services/*.js']
         }
     });
     //Loading and registering tasks

@@ -6,6 +6,7 @@ var mainAppCtrls = angular.module("mainAppCtrls");
  * @ngdoc controller
  * @name mainAppCtrls.controller:adminWorkshopManagementCtrl
  * @description Shows a list of past and future workshops
+ * @requires restSvcs.AdminWorkshop
  */
 mainAppCtrls.controller('adminWorkshopManagementCtrl',['$scope','AdminWorkshop','$alert','$translate',
     function($scope,AdminWorkshop,$alert,$translate) {

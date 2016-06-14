@@ -7,6 +7,7 @@ var mainAppCtrls = angular.module("mainAppCtrls");
  * @ngdoc controller
  * @name mainAppCtrls.controller:WorkshopTemplateCtrl
  * @description Displays the workshop-template list in the associated view
+ * @requires restSvcs.WorkshopTemplate
  */
 mainAppCtrls.controller('WorkshopTemplateCtrl', ['$scope', "WorkshopTemplate",'$alert',
 

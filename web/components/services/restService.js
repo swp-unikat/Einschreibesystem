@@ -1,14 +1,14 @@
 /**
  * @name restSvcs
  * @requires ngResource
- * @description Module containing the REST services
+ * @description Module containing the REST services. The received objects properties can be taken from the REST-Api documentation
  */
 var restSvcs = angular.module('restSvcs',['ngResource']);
 
 /**
  * @ngdoc service
  * @name restSvcs.Workshops
- * @description Provides CRUD operations for Workshop-functions provided by the API
+ * @description Provides CRUD operations for Workshop-functions provided by the API. All functions return a $promise object resolved with the requested data
  */
 restSvcs.factory('Workshops',['$resource',function($resource){
     return $resource('/api/workshops/:id',{},{
@@ -25,7 +25,7 @@ restSvcs.factory('Workshops',['$resource',function($resource){
          * @name restSvcs.Workshops#get
          * @description get a single workshops
          * @methodOf restSvcs.Workshops
-         * @param {integer} id Workshop-ID
+         * @param {number} id Workshop-ID
          */
         'getWorkshop': {method: 'GET',params: {id: '@id'}, isArray: false},
         /**
@@ -33,7 +33,7 @@ restSvcs.factory('Workshops',['$resource',function($resource){
          * @name restSvcs.Workshops#getParticipants
          * @description get list of enrolled participants to a workshop
          * @methodOf restSvcs.Workshops
-         * @param {integer} id Workshop-ID
+         * @param {number} id Workshop-ID
          */
         'getParticipants': {method: 'GET',url:'/api/workshops/:id/participants',params: {id: '@id'},isArray: true},
         /**
@@ -41,7 +41,7 @@ restSvcs.factory('Workshops',['$resource',function($resource){
          * @name restSvcs.Workshops#enrollWorkshop
          * @description Action to enroll a Workshop
          * @methodOf restSvcs.Workshops
-         * @param {integer} id Workshop-ID
+         * @param {number} id Workshop-ID
          */
         'enroll': {method: 'POST',url:'/api/workshops/:id/enroll',params: {id: '@id'},isArray: false},
         /**
@@ -49,7 +49,7 @@ restSvcs.factory('Workshops',['$resource',function($resource){
          * @name restSvcs.Workshops#unsubscribeWorkshop
          * @description Action to unsubscribe a Workshop
          * @methodOf restSvcs.Workshops
-         * @param {integer} id Workshop-ID
+         * @param {number} id Workshop-ID
          * @param {string} token Unsubscribetoken
          */
         'getUnsubscribes': {method: 'GET',url:'/api/workshops/:id/unsubscribes/:token',params: {id: '@id', token: '@token'},isArray: false},
@@ -58,7 +58,7 @@ restSvcs.factory('Workshops',['$resource',function($resource){
          * @name restSvcs.Workshops#unsubscribeWorkshop
          * @description Get Waitinglist of a Workshop
          * @methodOf restSvcs.Workshops
-         * @param {integer} id Workshop-ID
+         * @param {number} id Workshop-ID
          */
         'getWaitinglist': {method: 'GET',url:'/api/workshops/:id/waitinglist',params: {id: '@id'},isArray: true},
         /**
@@ -66,8 +66,8 @@ restSvcs.factory('Workshops',['$resource',function($resource){
          * @name restSvcs.Workshops#unsubscribeWorkshop
          * @description Confirm Enrollment of the WOrkshop
          * @methodOf restSvcs.Workshops
-         * @param {integer} id Workshop-ID
-         * @param {integer} participantsid Participants-ID
+         * @param {number} id Workshop-ID
+         * @param {number} participantsid Participants-ID
          * @param {string} token Confirmtoken
          */
         'getConfirmEnrollment': {method: 'GET',url:'/api/workshops/:id/enrolls/:participantsid/confirms/:token',params: {id: '@id',participantsid: '@participantsid',token: '@token'},isArray: false},

@@ -6,6 +6,7 @@ var mainAppCtrls = angular.module("mainAppCtrls");
  * @ngdoc controller
  * @name mainAppCtrls.controller:WorkshopDetailsCtrl
  * @description Loads workshop details
+ * @requires restSvcs.Workshops
  */
 mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$stateParams', "$alert",
     function($scope,Workshops,$stateParams, $alert) {

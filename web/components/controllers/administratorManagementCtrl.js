@@ -6,6 +6,7 @@ var mainAppCtrls = angular.module("mainAppCtrls");
  * @ngdoc controller
  * @name mainAppCtrls.controller:AdministratorManagementCtrl
  * @descirption Controller for managing administrator list
+ * @requires restSvcs.Admin
  */
 mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin',
     function($scope,Admin) {
