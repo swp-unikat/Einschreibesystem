@@ -26,7 +26,7 @@
                     </a><br><br>
                     <div class="list-group-item" ng-repeat="a in admins">
                         {{a.email}}
-                        <button type="button" class="btn btn-default btn-xs pull-right" ng-click="delete(a.id)">
+                        <button type="button"ng-click="delete(a.id)"  class="btn btn-default btn-xs pull-right" >
                             <span class="glyphicon glyphicon-remove"></span>
                         </button>
                     </div>
