@@ -21,14 +21,14 @@ use FOS\RestBundle\Controller\Annotations\RouteResource;
 use Doctrine\ORM\Query;
 /**
  * Class RestController.
- *
+ * The WorkshopTemplateController provides functions to get a list of Templates, to get a Template, to patch, create and delete a Template of a workshop. 
  * @Rest\RouteResource("Template")
  */
 
 class WorkshopTemplateController extends FOSRestController implements ClassResourceInterface
 {
     /**
-
+     * Returns list of all workshoptemplates
      * @ApiDoc(
      *  resource=true,
      *  description="Returns list of all templates",
@@ -56,7 +56,7 @@ class WorkshopTemplateController extends FOSRestController implements ClassResou
     }
 
     /**
-     
+     * laod a workshoptemplate
      * @ApiDoc(
      *  resource=true,
      *  description="Load a template",
@@ -91,6 +91,7 @@ class WorkshopTemplateController extends FOSRestController implements ClassResou
     }
 
     /**
+     * edit a workshoptemplate
      * @ApiDoc(
      *  resource=true,
      *  description="Edit a template",
@@ -221,6 +222,7 @@ class WorkshopTemplateController extends FOSRestController implements ClassResou
     }
 
     /**
+     * create a new workshoptemplate
      * @ApiDoc(
      *  resource=true,
      *  description="Create new template",
@@ -335,6 +337,7 @@ class WorkshopTemplateController extends FOSRestController implements ClassResou
     }
 
     /**
+     * delete a workshoptemplate
      * @ApiDoc(
      *  resource=true,
      *  description="Delete a template",

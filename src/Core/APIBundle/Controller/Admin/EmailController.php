@@ -26,12 +26,14 @@ use FOS\RestBundle\Controller\Annotations\RouteResource;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\Query;
 /**
+ * Class to send E-Mails to participants
  * Class RestController.
  */
 
 class EmailController extends FOSRestController implements ClassResourceInterface
 {
 	/**
+	 * send E-Mail to workshop participants
      * @ApiDoc(
      *  resource=true,
      *  description="Send E-Mail to workshop participants",
@@ -52,13 +54,17 @@ class EmailController extends FOSRestController implements ClassResourceInterfac
      *
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\View()
+     * @param $workshopID id of a workshop
      */
     public function sendAction($workshopId)
     {
 	    $workshopParticipants = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:WorkshopParticipants")->findBy(['workshop'=> $workshopId]);
 
     }
-
+    /**
+     * function to set the state of a workshop on notify
+     * @param $workshopID id of a workshop
+     */
     public function notifyAction($workshopId){
         
     }

@@ -64,6 +64,7 @@ class AdminController extends FOSRestController implements ClassResourceInterfac
      }
 
     /**
+     * Action to send a e-mail to identify the user
       * @ApiDoc(
       *  resource=true,
       *  description="Action to send a e-mail to identify the user",

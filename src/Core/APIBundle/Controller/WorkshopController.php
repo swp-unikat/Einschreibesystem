@@ -78,7 +78,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      *      }
      *  }
      * )
-     *
+     * @param $id id of a workshop
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\View()
      */
@@ -235,6 +235,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
     }
 
     /**
+     * action to unsubscribe a workshop
      * @ApiDoc(
      *  resource=true,
      *  description="Action to unsubscribe a Workshop",
