@@ -16,10 +16,16 @@ use Doctrine\ORM\Mapping as ORM;
 */
 class Invitation
 {
-    /** @ORM\Id @ORM\Column(type="string", length=6) */
+    /** 
+     * invitationcode
+    * @ORM\Id @ORM\Column(type="string", length=6) 
+    */
     protected $code;
 
-    /** @ORM\Column(type="string", length=256) */
+    /**
+     * e-mail of invitation
+     * @ORM\Column(type="string", length=256) 
+    */
     protected $email;
 
     /**
