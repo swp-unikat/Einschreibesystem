@@ -915,7 +915,9 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
  */
 
 /**
- *
+ * @ngdoc controller
+ * @name mainAppCtrls.controller:EnrollmentConfirmCtrl
+ * @descirption Controller for showing enrollment confirm
  */
 mainAppCtrls.controller('EnrollmentConfirmCtrl',['$scope',
     function($scope) {
@@ -930,7 +932,9 @@ mainAppCtrls.controller('EnrollmentConfirmCtrl',['$scope',
  */
 
 /**
- *
+ * @ngdoc controller
+ * @name mainAppCtrls.controller:LegalNoticeCtrl
+ * @descirption Controller for showing legal notice
  */
 mainAppCtrls.controller('LegalNoticeCtrl',['$scope',
     function($scope) {
