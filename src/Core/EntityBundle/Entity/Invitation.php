@@ -16,10 +16,16 @@ use Doctrine\ORM\Mapping as ORM;
 */
 class Invitation
 {
-    /** @ORM\Id @ORM\Column(type="string", length=64) */
+    /** 
+     * token to identify a user
+     *@ORM\Id @ORM\Column(type="string", length=64) 
+     */
     protected $code;
 
-    /** @ORM\Column(type="string", length=256) */
+    /**
+     * e-mail of invitation
+     * @ORM\Column(type="string", length=256) 
+    */
     protected $email;
 
     /**
