@@ -1,12 +1,21 @@
 var mainAppCtrls = angular.module("mainAppCtrls");
 /**
- * 
+ * @ngdoc controller
+ * @name mainAppCtrls.controller:WorkshopListCtrl
+ * @description
  */
 mainAppCtrls.controller('WorkshopListCtrl',['$scope','Workshops','$alert','$translate',
     function($scope,Workshops,$alert,$translate) {
         
         //Define object to store the alert in
         $scope.myAlert;
+        /**
+         * @ngdoc function
+         * @name mainAppCtrls.controller:WorkshopListCtrl#getParticipantsNum
+         * @methodOf mainAppCtrls.controller:WorkshopListCtrl
+         * @param _id Workshop-ID
+         * @returns {number} Number of participants subscribed to a workshop
+         */
         var getParticipantsNum = function(_id){
             var num = 0;
             Workshops.getParticipants({id: _id}).$promise.then(function(value,httpResponse){

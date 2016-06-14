@@ -303,7 +303,7 @@ restSvcs.factory('Admin',['$resource',function($resource){
          * @description Deactivates an admin account
          * @methodOf restSvcs.Admin
          */
-       'remove': {url:'/api/admin/admin/:id',method: 'DELETE',params: {id: '@id'},isArray: false},
+       'delete': {url:'/api/admin/admin/:id',method: 'DELETE',params: {id: '@id'},isArray: false},
         /**
          * @ngdoc function
          * @name restSvcs.Admin#changePassword

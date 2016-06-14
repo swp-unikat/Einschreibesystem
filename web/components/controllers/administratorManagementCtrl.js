@@ -3,7 +3,9 @@
  */
 var mainAppCtrls = angular.module("mainAppCtrls");
 /**
- *
+ * @ngdoc controller
+ * @name mainAppCtrls.controller:AdministratorManagementCtrl
+ * @descirption 
  */
 mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin',
     function($scope,Admin) {
@@ -13,7 +15,7 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin',
             alert(httpResponse.status);
         });
         $scope.delete = function(_id) {
-            Admin.remove({id: _id}).$promise.then(function(value){
+            Admin.delete({id: _id}).$promise.then(function(value){
                 
             },function(httpResponse){
                 

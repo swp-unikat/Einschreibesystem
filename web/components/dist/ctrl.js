@@ -449,7 +449,9 @@ mainAppCtrls.controller('adminWorkshopManagementCtrl',['$scope','AdminWorkshop',
  */
 
 /**
- *
+ * @ngdoc controller
+ * @name mainAppCtrls.controller:AdministratorManagementCtrl
+ * @descirption 
  */
 mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin',
     function($scope,Admin) {
@@ -459,7 +461,7 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin',
             alert(httpResponse.status);
         });
         $scope.delete = function(_id) {
-            Admin.remove({id: _id}).$promise.then(function(value){
+            Admin.delete({id: _id}).$promise.then(function(value){
                 
             },function(httpResponse){
                 
@@ -1370,10 +1372,21 @@ mainAppCtrls.controller('UnsubscribeCtrl',['$scope',
  * Created by Ahmet on 31.05.2016.
  */
 
+/**
+ * @ngdoc controller
+ * @name mainAppCtrls.controller:WorkshopDetailsCtrl
+ * @description Shows details for a workshop and provides subscribe / unsubscribe to a workshop
+ */
 mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$stateParams', "$alert",
     function($scope,Workshops,$stateParams, $alert) {
         //TODO : replace with workshop details
         var workshopid = $stateParams.id;
+        /**
+         * @ngdoc function
+         * @name mainAppCtrls.controller:WorkshopDetailsCtrl#sendInfo
+         * @description sends a request to enroll to the server
+         * @methodOf mainAppCtrls.controller:WorkshopDetailsCtrl
+         */
         $scope.sendInfo= function(){
             var first_name=$scope.first_name;   
             var last_name=$scope.last_name;
@@ -1451,13 +1464,22 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
 // Source: web/components/controllers/workshopListCtrl.js
 
 /**
- * 
+ * @ngdoc controller
+ * @name mainAppCtrls.controller:WorkshopListCtrl
+ * @description
  */
 mainAppCtrls.controller('WorkshopListCtrl',['$scope','Workshops','$alert','$translate',
     function($scope,Workshops,$alert,$translate) {
         
         //Define object to store the alert in
         $scope.myAlert;
+        /**
+         * @ngdoc function
+         * @name mainAppCtrls.controller:WorkshopListCtrl#getParticipantsNum
+         * @methodOf mainAppCtrls.controller:WorkshopListCtrl
+         * @param _id Workshop-ID
+         * @returns {number} Number of participants subscribed to a workshop
+         */
         var getParticipantsNum = function(_id){
             var num = 0;
             Workshops.getParticipants({id: _id}).$promise.then(function(value,httpResponse){
