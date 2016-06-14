@@ -115,7 +115,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
         $workshop->setNotified(FALSE);
         $this->getDoctrine()->getManager()->persist($workshop);
         $this->getDoctrine()->getManager()->flush();
-        $view = $this->view($workshop,200);
+        $view = $this->view($workshop,201);
         return $this->handleView($view);
 
     }
@@ -179,7 +179,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
             $workshop->setMaxParticipants($params["max_participants"]);
         $this->getDoctrine()->getManager()->persist($workshop);
         $this->getDoctrine()->getManager()->flush();
-        $view = $this->view($workshop,200);
+        $view = $this->view($workshop,201);
         return $this->handleView($view);
     }
 
@@ -216,7 +216,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
         $this->getDoctrine()->getManager()->remove($workshop);
         $this->getDoctrine()->getManager()->flush($workshop);
 
-        return View::create(null, Codes::HTTP_NO_CONTENT);
+        return View::create(null, Codes::HTTP_OK);
     }
     
     
@@ -260,7 +260,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
         $workshopParticipant->setWaiting(0); /** 0 -> im Workshop, 1-> Waiting */
         $this->getDoctrine()->getManager()->persist($workshopParticipant);
         $this->getDoctrine()->getManager()->flush();
-        return View::create(null, Codes::HTTP_NO_CONTENT);
+        return View::create(null, Codes::HTTP_CREATED);
     }
 
     /**

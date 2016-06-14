@@ -16,7 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
 */
 class Invitation
 {
-    /** @ORM\Id @ORM\Column(type="string", length=6) */
+    /** @ORM\Id @ORM\Column(type="string", length=64) */
     protected $code;
 
     /** @ORM\Column(type="string", length=256) */
@@ -35,8 +35,8 @@ class Invitation
      */
     public function __construct()
     {
-        //generate identifier only once, here a 6 characters length code
-        $this->code = substr(hash('sha512',bin2hex(openssl_random_pseudo_bytes(64))), 0, 6);
+        //generate identifier only once, here a 64 characters length code
+        $this->code = substr(hash('sha512',bin2hex(openssl_random_pseudo_bytes(64))), 0, 64);
     }
     /**
      * function to get code of an invitaion
