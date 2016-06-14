@@ -33,6 +33,7 @@ mainAppCtrls.controller('EmailTemplateCtrl', ['$scope', "EmailTemplate",'$alert'
          * @name mainApp.controller:EmailTemplateCtrl#delete
          * @methodOf mainApp.controller:EmailTemplateCtrl
          * @description Function removes a single email template from the list
+         * @params {number} _id email template id, which should be removed
          */
         $scope.delete = function (_id) {
             EmailTemplate.delete({id:_id}).$promise.then(function(httpResponse){

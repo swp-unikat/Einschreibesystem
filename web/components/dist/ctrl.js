@@ -63,13 +63,19 @@ mainAppCtrls.controller('AdminCreateCtrl',['$scope', '$stateParams','$alert',
  */
 
 /**
- *
- */
+* @name mainAppCtrls
+* @type {angular.Module}
+* @description Module containing all email templates
+*/
 mainAppCtrls.controller('EmailTemplateCtrl', ['$scope', "EmailTemplate",'$alert','$modal',
     
     function ($scope, EmailTemplate, $alert,$modal) {
-
-
+        /**
+         * @ngdoc function
+         * @name mainApp.controller:EmailTemplateCtrl#loadTemplates
+         * @methodOf mainApp.controller:EmailTemplateCtrl
+         * @description Function loads the actual list of all email templates
+         */
         var loadTemplates = function() {
             $scope.loading = true;
             EmailTemplate.getAll()
@@ -82,7 +88,13 @@ mainAppCtrls.controller('EmailTemplateCtrl', ['$scope', "EmailTemplate",'$alert'
             });
         };
         loadTemplates();
-
+        /**
+         * @ngdoc function
+         * @name mainApp.controller:EmailTemplateCtrl#delete
+         * @methodOf mainApp.controller:EmailTemplateCtrl
+         * @description Function removes a single email template from the list
+         * @params {number} _id email template id of the , which should be removed
+         */
         $scope.delete = function (_id) {
             EmailTemplate.delete({id:_id}).$promise.then(function(httpResponse){
                     $alert({
