@@ -46,6 +46,8 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
      * )
      *
      * @return \Symfony\Component\HttpFoundation\Response
+     * @return give the list of all participants
+     * @var Participants $participants
      * @Rest\View()
      */  
     public function getAllAction()
@@ -70,6 +72,8 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
      * )
      *
      * @return \Symfony\Component\HttpFoundation\Response
+     * @return list of all participants that are blacklisted
+     * @var Participants $participantsBlacklist
      * @Rest\View()
      */
     public function getBlacklistAllAction()
@@ -100,7 +104,9 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
      * )
      * )
      *
+     * @param $id int id of the participants
      * @return \Symfony\Component\HttpFoundation\Response
+     * @var Participants $participant
      * @Rest\View()
      */
     public function putBlacklistAction($id)
@@ -139,7 +145,10 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
      * )
      * )
      *
+     * @param $id int id of the participants
      * @return \Symfony\Component\HttpFoundation\Response
+     * @return Email that the Participants removed from Blacklist
+     * @var Participants $participantsBlacklist
      * @Rest\View()
      */
     public function deleteBlacklistAction($id)
@@ -172,8 +181,10 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
      * }
      * )
      * )
-     *
+     * @param $id int id of the participants
      * @return \Symfony\Component\HttpFoundation\Response
+     * @return detail view of the user that are blacklisted
+     * @var Participants $participantsBlacklist
      * @Rest\View()
      */
     public function getBlacklistAction($id)

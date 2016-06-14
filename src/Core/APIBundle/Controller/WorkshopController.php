@@ -132,13 +132,13 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
             $this->getDoctrine()->getManager()->flush();
 
         } else {
-            //alle Workshops an denen der Nutzer noch nicht teilgenommen hat
+            //all workshops which the user were not participating yet
             if ($participant->isBlacklisted()) {
                 throw $this->createAccessDeniedException("You are blacklisted");
             }
 
             $workshopParticipants = $this->getDoctrine()->getRepository("CoreEntityBundle:WorkshopParticipants")->findBy(["participant" => $participant, "participated" => 0]);
-            //über Array iterieren , Workshop laden (get Wokrshop?) Anfangs und Endzeit mit dem Workshop vergleichen
+            //load workshop with start and endtim, iterate over all
 
             foreach($workshopParticipants as $tupel){
                 $tempWorkshop = $this->getDoctrine()->getRepository("Workshop")->find($tupel->getId());
