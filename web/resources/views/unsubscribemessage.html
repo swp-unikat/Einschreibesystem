@@ -1,23 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>UnsubscribeMessage</title>
-</head>
-<body>
-<div class="col-md-10 col-md-offset-1">
-        <div class="form-group has-feedback">
+<div class="container col-md-10 col-md-offset-1">
+<h1>{{ "UNSUBSCRIBE" | translate}}</h1>
+    <div class="col-md-2 col-xs-2 pull-right">
+        <a ui-sref="workshops"> <button class="btn btn-success">{{ "BUTTON_BACK_TO_WORKSHOPLIST" | translate}}</button></a>
+    </div>
+<hr>
+<br>
 
-
-            <div class="container">
-                <h2> Unsubscribe </h2>
-                <div class="alert alert-success">
-                    <strong>Success</strong> You are succesfully unsubscribed.
-                </div>
-
-                <button type="button" class="btn btn-success">go back to Workshoplist</button>
-
+    <div class="form-group has-feedback">
+        <div class="container">
+            <div class="form-group">
+                <label class="col-lg-10 col-sm-12 control-label">{{ "UNSUBSCRIBE_TEXT" | translate }} {{workshops.title}}</label>
+                <button type="button" ng-click="unsubsricbe()" class="btn btn-default">{{ "BUTTON_UNSUBSCRIBE" | translate }}</button>
             </div>
 
-</body>
-</html>
+
+        </div>
+    </div>
+</div>

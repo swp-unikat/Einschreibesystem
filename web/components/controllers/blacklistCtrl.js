@@ -1,11 +1,66 @@
 var mainAppCtrls = angular.module("mainAppCtrls");
-/**
- *
- */
-//TODO: When /dashboard/blacklist is called, change hideDashboard to true
-mainAppCtrls.controller('BlacklistCtrl',['$scope',
-    function($scope) {
-        $scope.hideDashboard = true;
-    }
 
+/**
+ * @ngdoc controller
+ * @name mainAppCtrls.controller:BlacklistCtrl
+ * @description Controller show you a list of blacklisted users
+ * @requires restSvcs.Participants
+ */
+    mainAppCtrls.controller('BlacklistCtrl', ['$scope', "Participants",'$alert','$modal',
+
+        function ($scope, Participants, $alert,$modal) {
+
+                /**
+                 * @ngdoc function
+                 * @name mainAppCtrls.controller:BlacklistCtrl#loadingBlacklist
+                 * @methodOf mainAppCtrls.controller:BlacklistCtrl
+                 * @description Function to load a list of persons, which were set on the blacklist
+                 */
+                var loadBlacklist = function (){
+                $scope.loading = true;
+                Participants.getblacklistall()
+                    .$promise.then(function (value) {
+                    $scope.userdata = value;
+                    $scope.loading = false;
+
+                }, function (httpResponse) {
+                    $scope.loading = false;
+                });
+            };
+            /**
+             * @ngdoc function
+             * @name mainAppCtrls.controller:BlacklistCtrl#delete
+             * @methodOf mainAppCtrls.controller:BlacklistCtrl
+             * @description Function removes a selected person from the blacklist
+             * @params {number} _id user id of the person, which should be removed
+             */
+            $scope.delete = function (_id) {
+                $scope.deleting = true;
+                Participants.deleteParticipant({id:_id}).$promise.then(function(httpResponse){
+                       $scope.deleting = false;
+                        $alert({
+                            title:'Success',
+                            type: 'success',
+                            container:'#alert',
+                            show: true,
+                            dismissable: false,
+                            content: 'Successfully deleted',
+                            duration: 20
+                        });
+                        loadBlacklist();
+                    }
+                    , function (httpResponse) {
+                        $scope.deleting = false;
+                        alert('Error');
+                    }
+                )
+
+            }
+            loadBlacklist();
+
+
+            
+        }
+            
+            
 ]);

@@ -3,13 +3,20 @@
  */
 var mainAppCtrls = angular.module("mainAppCtrls");
 /**
- *
- */
-mainAppCtrls.controller('EmailTemplateCtrl', ['$scope', "EmailTemplate",'$alert',
+ * @ngdoc controller
+* @name mainAppCtrls.controller:EmailTemplateCtrl
+* @description Module containing all email templates
+ * @requires restSvscs.EmailTemplate
+*/
+mainAppCtrls.controller('EmailTemplateCtrl', ['$scope', "EmailTemplate",'$alert','$modal',
     
-    function ($scope, EmailTemplate, $alert) {
-
-
+    function ($scope, EmailTemplate, $alert,$modal) {
+        /**
+         * @ngdoc function
+         * @name mainAppCtrls.controller:EmailTemplateCtrl#loadTemplates
+         * @methodOf mainAppCtrls.controller:EmailTemplateCtrl
+         * @description Function loads the actual list of all email templates
+         */
         var loadTemplates = function() {
             $scope.loading = true;
             EmailTemplate.getAll()
@@ -22,7 +29,13 @@ mainAppCtrls.controller('EmailTemplateCtrl', ['$scope', "EmailTemplate",'$alert'
             });
         };
         loadTemplates();
-
+        /**
+         * @ngdoc function
+         * @name mainAppCtrls.controller:EmailTemplateCtrl#delete
+         * @methodOf mainAppCtrls.controller:EmailTemplateCtrl
+         * @description Function removes a single email template from the list
+         * @params {number} _id email template id, which should be removed
+         */
         $scope.delete = function (_id) {
             EmailTemplate.delete({id:_id}).$promise.then(function(httpResponse){
                     $alert({

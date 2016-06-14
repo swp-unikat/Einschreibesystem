@@ -3,6 +3,12 @@
  */
 
 var mainAppCtrls = angular.module("mainAppCtrls");
+/**
+ * @ngdoc controller
+ * @name mainAppCtrls.controller:adminWorkshopDetailsCtrl
+ * @requires restSvcs.Workshops
+ * @description Controller for showing administrator functions in a workshop.
+ */
 mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops', '$stateParams', "$alert",
     function($scope,Workshops,$stateParams, $alert) {
         //TODO : replace with workshop details

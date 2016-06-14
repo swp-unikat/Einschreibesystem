@@ -1,16 +1,13 @@
-/**
- * Created by hunte on 31/05/2016.
- */
 var mainAppCtrls = angular.module("mainAppCtrls");
 /**
- * @name SettingsCtrl
+ * @ngdoc controller
+ * @name mainAppCtrls.controller:SettingsCtrl
  * @description Controller for the Settings view
  */
-mainAppCtrls.controller('SettingsCtrl',['$scope','UIHelper','$alert',
-    function($scope,UIHelper,$alert) {
-
+mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm',
+    function($scope,$alert,$confirm) {
+        var _originalData = {};
         $scope.form = {};
-        UIHelper.HideUserUI();
         //TODO: load i18n for Placeholders and Tabnames
         $scope.tabs = [
 
@@ -42,15 +39,106 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','UIHelper','$alert',
             dismissable: false,
             show: false
         });
+        /**
+         * @ngdoc function
+         * @name mainAppCtrls.controller:SettingsCtrl#loadContact
+         * @methodOf mainAppCtrls.controller:SettingsCtrl
+         * @description Loads the current contact data
+         */
+        $scope.loadContact = function() {
+
+        };
+        /**
+         * @ngdoc function
+         * @name mainAppCtrls.controller:SettingsCtrl#loadLegalNotice
+         * @methodOf mainAppCtrls.controller:SettingsCtrl
+         * @description Loads the current legalnotice
+         */
+        $scope.loadLegalNotice = function() {
+
+        };
+        /**
+         * @ngdoc function
+         * @name mainAppCtrls.controller:SettingsCtrl#validatePW
+         * @methodOf mainAppCtrls.controller:SettingsCtrl
+         * @returns {boolean} True when valid, false when not. Used internally
+         */
         $scope.validatePW = function() {
             var pw = $scope.form.password;
             var pwc = $scope.form.password_confirm;
             if(pw != pwc) {
                 $scope.pwAlert.show();
-            }else{
+                return false;
+            }else {
                 $scope.pwAlert.hide();
+                return true;
             }
         };
-        //TODO: Add error handling, alert on successful data change
+        /**
+         * @ngdoc function
+         * @name mainAppCtrls.controller:SettingsCtrl#changePassword
+         * @methodOf mainAppCtrls.controller:SettingsCtrl
+         * @description Checks validity of password and sends request to change it to the servers
+         */
+        $scope.changePassword = function() {
+            if(!$scope.validatePW())
+                return;
+            if($scope.form.password == null || $scope.form.password == '') {
+                $scope.pwAlert.show();
+                return;
+            }
+            var _data = {
+                password: $scope.form.password_old,
+                new_password: $scope.form.password
+            };
+            //TODO add confirm
+            //TODO Send to server, handle response ( Missing API Function )
+        }
+        /**
+         * @ngdoc function
+         * @name  mainAppCtrls.controller:SettingsCtrl#changeEmail
+         * @methodOf mainAppCtrls.controller:SettingsCtrl
+         * @description checks validity of email and sends request to change it to the server
+         */
+        $scope.changeEmail = function() {
+            var _personal_email = $scope.form.personal_email;
+            if(_personal_email == null || _personal_email == '') {
+
+            }
+            //TODO confirm
+            $confirm().show().then(function(res) {
+                console.log(res);
+            });
+            //TODO Send to server, handle response ( Missing API function )
+        }
+        /**
+         * @ngdoc function
+         * @name  mainAppCtrls.controller:SettingsCtrl#discardContact
+         * @methodOf mainAppCtrls.controller:SettingsCtrl
+         * @description discards changes made to the contact data
+         */
+        $scope.discardContact = function() {
+            $scope.form.telephone = _originalData.telephone;
+            $scope.form.website = _originalData.website;
+            $scope.form.address = _originalData.address;
+            $scope.form.facebook = _originalData.facebook;
+            $scope.form.email = _originalData.email;
+        }
+        /**
+         * @ngdoc function
+         * @name  mainAppCtrls.controller:SettingsCtrl#saveContactChange
+         * @methodOf mainAppCtrls.controller:SettingsCtrl
+         * @description checks validity of changes made to input and sends change request to server
+         */
+        $scope.saveContactChange = function() {
+            var _dataToSend = $scope.form;
+            if(!$scope.form.email.$valid) {
+                //TODO error message
+                return;
+            }
+            console.log('Uhm..');
+            //TODO add confirm
+
+        }
     }
 ]);

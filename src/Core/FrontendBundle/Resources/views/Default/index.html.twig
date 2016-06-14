@@ -40,7 +40,7 @@
         .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
     </style>
 </head>
-<body data-spy="scroll" data-target=".navbar">
+<body data-spy="scroll" data-target=".navbar" ng-controller="GlobalCtrl">
 
 <nav class="navbar navbar-default">
     <div class="container-fluid">
@@ -52,18 +52,14 @@
 
 
     <div class="col-sm-offset-5 col-sm-2 text-center">
-        <form class="navbar-form navbar-center" role="search" ng-hide="hide_user_ui">
-             <div class="form-group has-feedback">
-                <input type="text" class="form-control" placeholder="Search" ng-model="query">
-                <i class="glyphicon glyphicon-search form-control-feedback"></i>
-             </div>
-        </form>
+
     </div>
 
     <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav navbar-right">
-            <li  ng-hide="$rootScope.logged_in"><a href="#login"><button type="button" class="btn btn-link">Login</button></a></li>
-            <li ng-show="$rootScope.logged_in"><button type="button" class="btn btn-default" ng-click="$rootScope.logout()">Logout</button></li></ul>
+            <li ng-show="show_login" ><a href="#login"><button type="button" class="btn btn-link">Login</button></a></li>
+            <li ng-show="show_logout" ><button  type="button" class="btn btn-default" ng-click="logout()">Logout</button></li>
+        </ul>
     </div>
 </div>
 </nav>

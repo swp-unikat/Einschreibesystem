@@ -3,18 +3,29 @@
  */
 var mainAppCtrls = angular.module("mainAppCtrls");
 /**
- *
+ * @ngdoc controller
+ * @name mainAppCtrls.controller:adminWorkshopManagementCtrl
+ * @description Shows a list of past and future workshops
+ * @requires restSvcs.AdminWorkshop
  */
 mainAppCtrls.controller('adminWorkshopManagementCtrl',['$scope','AdminWorkshop','$alert','$translate',
     function($scope,AdminWorkshop,$alert,$translate) {
 
         //Define object to store the alert in
         $scope.myAlert;
-        //returns true if date is in future
-        //returns false if date is in past
+        $scope.currentList = [];
+        $scope.elapsedList = [];
+        /**
+         * @ngdoc function
+         * @name mainAppCtrls.controller:adminWorkshopManagementCtrl#compareToCurrent
+         * @params {Date} a Date to compare to current Date
+         * @methodOf mainAppCtrls.controller:adminWorkshopManagementCtrl
+         * @description Compares the give date to the current date
+         * @returns {boolean} Returns true if passed date lies in the future
+         **/
         var compareToCurrent = function (a){
-           var  d1 = Date.now();
-           var  d2 = JSON.parse(a);
+           var  d1 = new Date();
+           var  d2 = new Date(a);
            return (d2.getTime()>d1.getTime())
         };
         //Get and store translation for alert title.
@@ -26,6 +37,12 @@ mainAppCtrls.controller('adminWorkshopManagementCtrl',['$scope','AdminWorkshop',
         AdminWorkshop.gethistory().$promise.then(function(value){
             var workshopList = value;
             $scope.loading = false;
+            for(var i=0;i<workshopList.length;i++) {
+                if(compareToCurrent(workshopList[i].start_at))
+                    $scope.currentList.push(workshopList[i]);
+                else
+                    $scope.elapsedList.push(workshopList[i]);
+            }
         },function(httpResponse) {
             //switch through all possible errors
             switch(httpResponse.status){

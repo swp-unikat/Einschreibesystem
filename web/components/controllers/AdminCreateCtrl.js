@@ -2,6 +2,11 @@
  * Created by Valle on 31.05.2016.
  */
 var mainAppCtrls = angular.module("mainAppCtrls");
+/**
+ * @ngdoc controller
+ * @name mainAppCtrls.controller:AdminCreateCtrl
+ * @description Initializes the data & function that are being used to create an admin account
+ */
 mainAppCtrls.controller('AdminCreateCtrl',['$scope', '$stateParams','$alert',
     function($scope,$stateParams,$alert) {
         //TODO: replace static text with translations
@@ -22,7 +27,12 @@ mainAppCtrls.controller('AdminCreateCtrl',['$scope', '$stateParams','$alert',
         });
         var token = $stateParams.token;
 
-        //compare password and confirm_password and send data through API
+        /**
+         * @ngdoc function
+         * @name mainAppCtrls.controller:AdminCreateCtrl#sendInfo
+         * @methodOf mainAppCtrls.controller:AdminCreateCtrl
+         * @description Sends a request to create an admin account to the server and handles the response
+         */
         $scope.sendInfo = function(){
             var match = ($scope.password_confirm == $scope.password);
             if(!match){

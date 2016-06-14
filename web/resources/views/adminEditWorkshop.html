@@ -1,8 +1,8 @@
 <div class="container">
     <body data-spy="scroll" data-target=".navbar"><!--Wie bekommt man scrollen hin-->
-    <h1>{{ "NEW_WORKSHOP_TEMPLATE" | translate}}</h1>
+    <h1>{{ "EDIT_WORKSHOP" | translate}}</h1>
     <div class="col-md-2 col-xs-2 pull-right">
-        <a ui-sref="workshop_template"> <button class="btn btn-default">{{ "BUTTON_BACK" | translate}}</button></a>
+        <a ui-sref="admin_workshop_management"> <button class="btn btn-default">{{ "BUTTON_BACK" | translate}}</button></a>
     </div>
     <hr>
     <br>
@@ -10,10 +10,10 @@
         <div class="from-group col-md-8 col-md-offset-2">
 
             <label>{{ "WORKSHOP_TITLE" | translate}}</label>
-            <input type="text" ng-model="template.title" class="form-control">
+            <input type="text" ng-model="workshop.title" class="form-control">
 
             <label>{{ "WORKSHOP_DESCRIPTION" | translate}}</label>
-            <div text-angular  ng-model="newDescription"></div>
+            <div text-angular  ng-model="workshop.description"></div>
 
             <label>{{ "WORKSHOP_COST" | translate}}</label>
             <input type="text" ng-model="workshop.cost" class="form-control ">
@@ -27,19 +27,21 @@
             <div class="form-group">
                 <label>{{ "WORKSHOP_START_TIME" | translate}}</label>
                 <div class="form-group">
-                    <input type="text"  size="10" data-date-format="dd-MM-yyyy" ng-model="sharedDate"  bs-datepicker placeholder="Date" class="form-control col-md-4" >
+                    <input type="text"  size="10" data-date-format="dd-MM-yyyy" ng-model="workshop.start_at"  bs-datepicker placeholder="Date" class="form-control col-md-4" >
                 </div>
                 <div class="form-group">
-                    <input type="text" size="8"  ng-model="sharedDate" data-time-format="HH:mm" data-autoclose="1" placeholder="Time" bs-timepicker class="form-control col-md-4">
+                    <input type="text" size="8"  ng-model="workshop.start_at" data-time-format="HH:mm" data-autoclose="1" placeholder="Time" bs-timepicker class="form-control col-md-4">
                 </div>
             </div>
+            <label>{{ "WORKSHOP_DURATION" | translate}}</label>
+            <input type="text" type="text" size="8"  ng-model="workshop.duration" data-time-format="HH:mm" data-time-type="number" data-autoclose="1" placeholder="Time" bs-timepicker class="form-control col-md-4">
         </div>
 
 
         <div class="form-group row text-center">
 
-            <button type="Confirm" class="btn btn-info">{{ "BUTTON_SAVE" | translate }}</button>
-            <button type="Discard" class="btn btn-info">{{ "BUTTON_DISCARD" | translate }}</button>
+            <button type="button" class="btn btn-info" ng-click="confirmChanges">{{ "BUTTON_CONFIRM" | translate }}</button>
+            <button type="button" class="btn btn-info" ng-click="discardChanges">{{ "BUTTON_DISCARD" | translate }}</button>
         </div>
     </form>
     </body>

@@ -3,11 +3,13 @@
  */
 var mainAppCtrls = angular.module("mainAppCtrls");
 /**
- *
+ * @ngdoc controller
+ * @name mainAppCtrls.controller:LegalNoticeCtrl
+ * @description Controller for showing legal notice
  */
 mainAppCtrls.controller('LegalNoticeCtrl',['$scope',
     function($scope) {
-
+ 
     }
 
 ]);

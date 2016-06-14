@@ -3,28 +3,80 @@
  */
 var mainAppCtrls = angular.module("mainAppCtrls");
 /**
- *
+ * @ngdoc controller
+ * @name mainAppCtrls.controller:NewWorkshopTemplateCtrl
+ * @description Controller initializing the creation of a new workshop template
+ * @requires restSvcs.WorkshopTemplate
  */
-mainAppCtrls.controller('NewWorkshopTemplateCtrl',['$scope',"WorkshopTemplate",
-    function($scope, WorkshopTemplate) {
-
+mainAppCtrls.controller('NewWorkshopTemplateCtrl',['$scope',"WorkshopTemplate",'$alert',
+    function($scope, WorkshopTemplate,$alert) {
+        $scope.workshop = {};
+        $scope.myAlert;
+        /**
+         * @ngdoc function
+         * @name mainAppCtrls.controller:NewWorkshopTemplateCtrl#sendInfo
+         * @methodOf mainAppCtrls.controller:NewWorkshopTemplateCtrl
+         * @description Validates the input data and sends a request to create a new Template to the server
+         *
+         */
         $scope.sendInfo = function(){
-            var data={
+            //Adjusts the format of the date strings to fit the requirements of the API
+            var reformatDate =  function(_date){
+                if(!_date || _date == null)
+                    return "";
+                var _dateStr = _date.toJSON();
+                if(_dateStr == null)
+                    return "";
+                _dateStr =  _dateStr.slice(0,_dateStr.length-5);
+                return _dateStr.replace('T',' ');
+            };
+            //Initialize start_at to calculate duration with end_at 
+            var _sa = new Date(0);
+            var _duration = $scope.workshop.duration;
+            var _ea = new Date(_duration);
+
+            var data = {
                 title:$scope.workshop.title,
                 description:$scope.workshop.description,
                 cost:$scope.workshop.cost,
                 requirements:$scope.workshop.requirement,
                 location:$scope.workshop.location,
-                start_at:$scope.sharedDate,
-                end_at:JSON.stringify(new Date(2016,10,10,10,10,0,0)),
-                max_participants:$scope.workshop.max.participants
-            }
-            WorkshopTemplate.putWorkshopTemplate(data).$promise.then(function(value){
-                alert('Success!');
+                start_at:reformatDate(_sa),
+                end_at:reformatDate(_ea),
+                max_participants:$scope.workshop.max_participants
+            };
+
+            if($scope.myAlert != null)
+                $scope.myAlert.hide();
+            WorkshopTemplate.put(data).$promise.then(function(httpResponse){
+                $scope.myAlert = $alert({
+                   container: '#alert',
+                   type: 'success',
+                   title: 'Success',
+                   content: 'Successfully created workshop-template '+$scope.workshop.title,
+                   show: true,
+                   dismissable: false,
+                   duration: 20
+                });
             },function(httpResponse){
-                alert('Error'+httpResponse.statusText);
+                $scope.myAlert = $alert({
+                    container: '#alert',
+                    type: 'danger',
+                    title: 'Error',
+                    content: 'Failed to create template! '+httpResponse.status,
+                    show: true,
+                    dismissable: false,
+                    duration: 20
+                });
             });
         };
+        /**
+         * @ngdoc function
+         * @name mainAppCtrls.controller:NewWorkshopTemplateCtrl#discard
+         * @methodOf mainAppCtrls.controller:NewWorkshopTemplateCtrl
+         * @description Discards the input
+         *
+         */
         $scope.discard = function(){
             $scope.workshop.title= "";
             $scope.workshop.description= "";
@@ -32,9 +84,8 @@ mainAppCtrls.controller('NewWorkshopTemplateCtrl',['$scope',"WorkshopTemplate",
             $scope.workshop.requirement= "";
             $scope.workshop.location= "";
             $scope.workshop.sharedDate= "";
-            $scope.workshop.start_at= "";
-            $scope.workshop.end_at= "";
-            $scope.workshop.max.participants= "";
+            $scope.workshop.duration = "";
+            $scope.workshop.max_participants= "";
 
 
 

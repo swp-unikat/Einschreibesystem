@@ -1,36 +1,38 @@
+/**
+ * Created by hunte on 12/06/2016.
+ */
 var mainAppCtrls = angular.module("mainAppCtrls");
 /**
  * @ngdoc controller
- * @requires restSvcs.WorkshopTemplate
- * @description Controller for editing a workshop template.
- * @name mainAppCtrls.controller:EditWorkshopTemplateCtrl
- * @requires restSvcs.WorkshopTemplate
+ * @requires restSvcs.AdminWorkshop
+ * @requires restSvcs.Workshops
+ * @description Controller for editing a workshop. Initializes resources used to edit a workshop
+ * @name mainAppCtrls.controller:AdminEditWorkshopCtrl
  */
-mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate','$stateParams','$translate','$alert',
-    function($scope,WorkshopTemplate,$stateParams,$translate,$alert) {
+mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWorkshop','$stateParams','$translate','$alert',
+    function($scope,Workshops,AdminWorkshop,$stateParams,$translate,$alert) {
 
         var _workshopId = $stateParams.id;
-        $scope.workshop = {};
+
         //Initialize _originalData
         var _originalData = {};
-
+        $scope.workshop ={};
         //Get translations for errors and store in array
         var _translations = {};
         //Pass all required translation IDs to translate service
-        $translate(['ALERT_WORKSHOPTEMPLATE_EDIT_SUCCESS',
-            'ALERT_WORKSHOPTEMPLATE_EDIT_FAIL','ALERT_WORKSHOPTEMPLATE_NOT_FOUND']).
+        $translate(['ALERT_WORKSHOP_EDIT_SUCCESS',
+            'ALERT_WORKSHOP_EDIT_FAIL','ALERT_WORKSHOP_NOT_FOUND']).
         then(function(translations){
             _translations = translations;
         });
 
         /**
          * @ngdoc function
-         * @name mainAppCtrls.controller:EditWorkshopTemplateCtrl#discard
+         * @name mainAppCtrls.controller:AdminEditWorkshopCtrl#discardChanges
          * @description Discards changes and restores the original data
-         * @methodOf mainAppCtrls.controller:EditWorkshopTemplateCtrl
+         * @methodOf mainAppCtrls.controller:AdminEditWorkshopCtrl
          */
-        $scope.discard = function () {
-
+        $scope.discardChanges = function () {
             $scope.workshop.title = _originalData.title;
             $scope.workshop.description = _originalData.description;
             $scope.workshop.cost = _originalData.cost;
@@ -39,15 +41,19 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
             $scope.workshop.start_at = _originalData.start_at;
             $scope.workshop.end_at = _originalData.end_at;
             $scope.workshop.max_participants = _originalData.max_participants;
+
+
+
+
         }
 
         /**
          * @ngdoc function
-         * @name mainAppCtrls.controller:EditWorkshopTemplateCtrl#sendInfo
+         * @name mainAppCtrls.controller:AdminEditWorkshopCtrl#confirmChanges
          * @description Sends changes to the API and stores them as new original data
-         * @methodOf mainAppCtrls.controller:EditWorkshopTemplateCtrl
+         * @methodOf mainAppCtrls.controller:AdminEditWorkshopCtrl
          */
-        $scope.sendInfo = function () {
+        $scope.confirmChanges = function () {
             var _dataToSend = {
                 title: '',
                 description: '',
@@ -57,21 +63,21 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
                 start_at: '',
                 end_at: '',
                 max_participants: ''
-                
+
             };
-            var _sa = new Date(_originalData.start_at);
+            var _sa = Date.parse($scope.workshop.start_at);
             var _duration = $scope.workshop.duration;
-            var _ea = new Date(_duration + 1000*60*60);
-            var _changedData = {
-                
-                title: $scope.workshop.title,
-                description: $scope.workshop.description,
-                cost: $scope.workshop.cost,
-                requirements: $scope.workshop.requirements,
-                location: $scope.workshop.location,
-                start_at: $scope.workshop.start_at,
-                end_at: $scope.workshop.end_at,
-                max_participants: $scope.workshop.max_participants
+            var _ea = new Date(_sa+_duration + 1000*60*60) ;
+
+            var data = {
+                title:$scope.workshop.title,
+                description:$scope.workshop.description,
+                cost:$scope.workshop.cost,
+                requirements:$scope.workshop.requirement,
+                location:$scope.workshop.location,
+                start_at:reformatDate($scope.workshop.start_at),
+                end_at:reformatDate(_ea),
+                max_participants:$scope.workshop.max_participants
             };
 
             //compare all properties of both objects
@@ -80,7 +86,6 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
             if (_changedData.description != _originalData.description)
                 _dataToSend.description = _changedData.description;
             if (_changedData.cost != _originalData.cost)
-                _dataToSend.cost = _changedData.cost;
             if (_changedData.location != _originalData.location)
                 _dataToSend.location = _changedData.location;
             if (_changedData.start_at != _originalData.start_at)
@@ -92,7 +97,7 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
 
 
 
-            WorkshopTemplate.edit({id: _workshopId}, _dataToSend).$promise.then(function (value) {
+            Workshops.edit({id: _workshopId}, _dataToSend).$promise.then(function (value) {
                 //Store answer from server
                 _originalData = {
                     title: value.title,
@@ -103,12 +108,12 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
                     start_at: value.title,
                     end_at: value.end_at,
                     max_participants: value.max_participants
-                    
+
                 };
                 $alert({
                     title: '',
                     type: 'success',
-                    content: _translations.ALERT_WORKSHOPTEMPLATE_EDIT_SUCCESS + ' \"' + _originalData.title +'\"',
+                    content: _translations.ALERT_WORKSHOP_EDIT_SUCCESS + ' \"' + _originalData.title +'\"',
                     container: '#alert',
                     dismissable: true,
                     show: true,
@@ -118,7 +123,7 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
                 $alert({
                     title: '',
                     type: 'danger',
-                    content: _translations.ALERT_WORKSHOPTEMPLATE_EDIT_FAIL + '(' + httpReponse.status +')',
+                    content: _translations.ALERT_WORKSHOP_EDIT_FAIL + '(' + httpReponse.status +')',
                     container: '#alert',
                     dismissable: true,
                     show: true,
@@ -129,12 +134,8 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
 
         //Fetch data from API
         $scope.loading = true;
-        WorkshopTemplate.get({id: _workshopId}).$promise.then(function (value) {
+        Workshops.get({id: _workshopId}).$promise.then(function (value) {
 
-            //calculate duration
-            var _ea = Date.parse(value.end_at);
-            var _sa = Date.parse(value.start_at);
-            var _duration = _ea - _sa;
             //Store original data in case of discard
             _originalData = {
                 title: value.title,
@@ -142,20 +143,20 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
                 cost: value.cost,
                 requirements: value.requirements,
                 location: value.location,
-                duration: _duration,
+                start_at: value.start_at,
+                end_at: value.end_at,
                 max_participants: value.max_participants
 
             };
-
             //Store original data in ng-model
             $scope.workshop.title = _originalData.title;
             $scope.workshop.description = _originalData.description;
             $scope.workshop.cost = _originalData.cost;
             $scope.workshop.requirements = _originalData.requirements;
             $scope.workshop.location = _originalData.location;
-            $scope.workshop.duration = _originalData.duration;
+            $scope.workshop.start_at = _originalData.start_at;
+            $scope.workshop.end_at = _originalData.end_at;
             $scope.workshop.max_participants = _originalData.max_participants;
-            
 
 
 
@@ -165,7 +166,7 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
                 $alert({
                     title: '',
                     type: 'danger',
-                    content: _translations.ALERT_WORKSHOPTEMPLATE_NOT_FOUND,
+                    content: _translations.ALERT_WORKSHOP_NOT_FOUND,
                     container: '#alert',
                     dismissable: false,
                     show: true

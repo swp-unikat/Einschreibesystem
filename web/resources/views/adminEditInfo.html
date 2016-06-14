@@ -1,28 +1,31 @@
 <div class="container-fluid" style="margin-bottom: 200px;">
     <br>
         <div class="col-md-4 col-xs-4">
-            <label translate for="website">
-                WEBSITE
-            </label>
-            <input id="website" class="form-control" type="text" ng-model="website" placeholder="{{'WEBSITE' | translate}}"/>
-            <label translate for="email">
-                EMAIL
-            </label>
-            <input id="email" class="form-control" type="email" ng-model="email" placeholder="{{'EMAIL' | translate}}"/>
-            <label translate for="telephone">
-                TELEPHONE
-            </label>
-            <input id="telephone" class="form-control" type="text" ng-model="telephone" placeholder="{{'TELEPHONE'| translate}}"/>
-            <label translate for="facebook">
-                FACEBOOK
-            </label>
-            <input id="facebook" class="form-control" type="text" ng-model="facebook" placeholder="{{'FACEBOOK'| translate}}"/>
-            <label translate for="address">
-                ADDRESS
-            </label>
-            <input id="address" class="form-control" type="text" ng-model="address" placeholder="{{'ADDRESS'| translate}}"/>
-            <button translate type="button" class="btn btn-primary">BUTTON_DISCARD</button>
-            <button translate type="button" class="btn btn-primary">BUTTON_SAVE</button>
+            <form novalidate>
+                <label translate for="website">
+                    WEBSITE
+                </label>
+                <input id="website" class="form-control" type="text" ng-model="form.website" placeholder="{{'WEBSITE' | translate}}"/>
+                <label translate for="email">
+                    EMAIL
+                </label>
+                <input id="email" class="form-control" type="email" ng-model="form.email" placeholder="{{'EMAIL' | translate}}"/>
+                <label translate for="telephone">
+                    TELEPHONE
+                </label>
+                <input id="telephone" class="form-control" type="text" ng-model="form.telephone" placeholder="{{'TELEPHONE'| translate}}"/>
+                <label translate for="facebook">
+                    FACEBOOK
+                </label>
+                <input id="facebook" class="form-control" type="text" ng-model="form.facebook" placeholder="{{'FACEBOOK'| translate}}"/>
+                <label translate for="address">
+                    ADDRESS
+                </label>
+                <input id="address" class="form-control" type="text" ng-model="form.address" placeholder="{{'ADDRESS'| translate}}"/>
+            </form>
+
+            <button translate type="button" class="btn btn-primary" ng-click="discardContact()">BUTTON_DISCARD</button>
+            <button translate type="button" class="btn btn-primary" ng-click="saveContactChange()">BUTTON_SAVE</button>
 
         </div>
 
