@@ -286,7 +286,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      *     }
      *  }
      * )
-     * @param $workshopId int id of the workshop
+     * @param $id int id of the workshop
      * @param $participantId int id of the workshopparticipants
      * @return \Symfony\Component\HttpFoundation\Response
 
