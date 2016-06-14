@@ -18,7 +18,7 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin',
          * @ngdoc function
          * @name mainAppCtrls.controller:AdministratorManagementCtrl#delete
          * @description Deletes the admin who has the selected id
-         * @param {number} _id
+         * @param {number} _id ID of the admin to delete
          * @methodOf mainAppCtrls.controller:AdministratorManagementCtrl
          */
         $scope.delete = function(_id) {

@@ -3,6 +3,7 @@
  */
 var mainAppCtrls = angular.module("mainAppCtrls");
 /**
+ * @ngdoc controller
  * @name SettingsCtrl
  * @description Controller for the Settings view
  */
@@ -42,9 +43,9 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm',
             show: false
         });
         /**
-         * @name mainAppCtrls.controller:SettingsCtrl
+         * @name mainAppCtrls.controller:SettingsCtrl#loadContact
          * @ngdoc function
-         * @methodOf mainAppCtrls.controller:SettingsCtrl#loadContact
+         * @methodOf mainAppCtrls.controller:SettingsCtrl
          * @description Loads the current contact data
          */
         $scope.loadContact = function() {

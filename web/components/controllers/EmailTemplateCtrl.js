@@ -3,8 +3,8 @@
  */
 var mainAppCtrls = angular.module("mainAppCtrls");
 /**
-* @name mainAppCtrls
-* @type {angular.Module}
+ * @ngdoc controller
+* @name mainAppCtrls.controller:EmailTemplateCtrl
 * @description Module containing all email templates
 */
 mainAppCtrls.controller('EmailTemplateCtrl', ['$scope', "EmailTemplate",'$alert','$modal',
@@ -12,8 +12,8 @@ mainAppCtrls.controller('EmailTemplateCtrl', ['$scope', "EmailTemplate",'$alert'
     function ($scope, EmailTemplate, $alert,$modal) {
         /**
          * @ngdoc function
-         * @name mainApp.controller:EmailTemplateCtrl#loadTemplates
-         * @methodOf mainApp.controller:EmailTemplateCtrl
+         * @name mainAppCtrls.controller:EmailTemplateCtrl#loadTemplates
+         * @methodOf mainAppCtrls.controller:EmailTemplateCtrl
          * @description Function loads the actual list of all email templates
          */
         var loadTemplates = function() {
@@ -30,8 +30,8 @@ mainAppCtrls.controller('EmailTemplateCtrl', ['$scope', "EmailTemplate",'$alert'
         loadTemplates();
         /**
          * @ngdoc function
-         * @name mainApp.controller:EmailTemplateCtrl#delete
-         * @methodOf mainApp.controller:EmailTemplateCtrl
+         * @name mainAppCtrls.controller:EmailTemplateCtrl#delete
+         * @methodOf mainAppCtrls.controller:EmailTemplateCtrl
          * @description Function removes a single email template from the list
          * @params {number} _id email template id, which should be removed
          */

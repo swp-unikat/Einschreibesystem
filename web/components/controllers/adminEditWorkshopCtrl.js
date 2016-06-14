@@ -7,7 +7,7 @@ var mainAppCtrls = angular.module("mainAppCtrls");
  * @requires restSvcs.Workshops
  * @description Controller for editing a workshop . Provides
  * @ngdoc controller
- * @name mainAppCtrls.controller:AdminEditWorkshopCtrlCtrl
+ * @name mainAppCtrls.controller:AdminEditWorkshopCtrl
  */
 mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWorkshop','$stateParams','$translate','$alert',
     function($scope,Workshops,AdminWorkshop,$stateParams,$translate,$alert) {
@@ -28,9 +28,9 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
 
         /**
          * @ngdoc function
-         * @name mainAppCtrls.controller:EditWorkshopCtrl#discardChanges
+         * @name mainAppCtrls.controller:AdminEditWorkshopCtrl#discardChanges
          * @description Discards changes and restores the original data
-         * @methodOf mainAppCtrls.controller:EditWorkshopCtrl
+         * @methodOf mainAppCtrls.controller:AdminEditWorkshopCtrl
          */
         $scope.discardChanges = function () {
             $scope.workshop.title = _originalData.title;
@@ -49,9 +49,9 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
 
         /**
          * @ngdoc function
-         * @name mainAppCtrls.controller:EditWorkshopCtrl#confirmChanges
+         * @name mainAppCtrls.controller:AdminEditWorkshopCtrl#confirmChanges
          * @description Sends changes to the API and stores them as new original data
-         * @methodOf mainAppCtrls.controller:EditWorkshopCtrl
+         * @methodOf mainAppCtrls.controller:AdminEditWorkshopCtrl
          */
         $scope.confirmChanges = function () {
             var _dataToSend = {

@@ -65,8 +65,8 @@ mainAppCtrls.controller('AdminCreateCtrl',['$scope', '$stateParams','$alert',
  */
 
 /**
-* @name mainAppCtrls
-* @type {angular.Module}
+ * @ngdoc controller
+* @name mainAppCtrls.controller:EmailTemplateCtrl
 * @description Module containing all email templates
 */
 mainAppCtrls.controller('EmailTemplateCtrl', ['$scope', "EmailTemplate",'$alert','$modal',
@@ -74,8 +74,8 @@ mainAppCtrls.controller('EmailTemplateCtrl', ['$scope', "EmailTemplate",'$alert'
     function ($scope, EmailTemplate, $alert,$modal) {
         /**
          * @ngdoc function
-         * @name mainApp.controller:EmailTemplateCtrl#loadTemplates
-         * @methodOf mainApp.controller:EmailTemplateCtrl
+         * @name mainAppCtrls.controller:EmailTemplateCtrl#loadTemplates
+         * @methodOf mainAppCtrls.controller:EmailTemplateCtrl
          * @description Function loads the actual list of all email templates
          */
         var loadTemplates = function() {
@@ -92,8 +92,8 @@ mainAppCtrls.controller('EmailTemplateCtrl', ['$scope', "EmailTemplate",'$alert'
         loadTemplates();
         /**
          * @ngdoc function
-         * @name mainApp.controller:EmailTemplateCtrl#delete
-         * @methodOf mainApp.controller:EmailTemplateCtrl
+         * @name mainAppCtrls.controller:EmailTemplateCtrl#delete
+         * @methodOf mainAppCtrls.controller:EmailTemplateCtrl
          * @description Function removes a single email template from the list
          * @params {number} _id email template id, which should be removed
          */
@@ -133,7 +133,7 @@ mainAppCtrls.controller('EmailTemplateCtrl', ['$scope', "EmailTemplate",'$alert'
  * @requires restSvcs.Workshops
  * @description Controller for editing a workshop . Provides
  * @ngdoc controller
- * @name mainAppCtrls.controller:AdminEditWorkshopCtrlCtrl
+ * @name mainAppCtrls.controller:AdminEditWorkshopCtrl
  */
 mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWorkshop','$stateParams','$translate','$alert',
     function($scope,Workshops,AdminWorkshop,$stateParams,$translate,$alert) {
@@ -154,9 +154,9 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
 
         /**
          * @ngdoc function
-         * @name mainAppCtrls.controller:EditWorkshopCtrl#discardChanges
+         * @name mainAppCtrls.controller:AdminEditWorkshopCtrl#discardChanges
          * @description Discards changes and restores the original data
-         * @methodOf mainAppCtrls.controller:EditWorkshopCtrl
+         * @methodOf mainAppCtrls.controller:AdminEditWorkshopCtrl
          */
         $scope.discardChanges = function () {
             $scope.workshop.title = _originalData.title;
@@ -175,9 +175,9 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
 
         /**
          * @ngdoc function
-         * @name mainAppCtrls.controller:EditWorkshopCtrl#confirmChanges
+         * @name mainAppCtrls.controller:AdminEditWorkshopCtrl#confirmChanges
          * @description Sends changes to the API and stores them as new original data
-         * @methodOf mainAppCtrls.controller:EditWorkshopCtrl
+         * @methodOf mainAppCtrls.controller:AdminEditWorkshopCtrl
          */
         $scope.confirmChanges = function () {
             var _dataToSend = {
@@ -496,7 +496,7 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin',
          * @ngdoc function
          * @name mainAppCtrls.controller:AdministratorManagementCtrl#delete
          * @description Deletes the admin who has the selected id
-         * @param {number} _id
+         * @param {number} _id ID of the admin to delete
          * @methodOf mainAppCtrls.controller:AdministratorManagementCtrl
          */
         $scope.delete = function(_id) {
@@ -1288,6 +1288,7 @@ mainAppCtrls.controller('PasswordResetCtrl',['$scope','$alert','$translate','Adm
  */
 
 /**
+ * @ngdoc controller
  * @name SettingsCtrl
  * @description Controller for the Settings view
  */
