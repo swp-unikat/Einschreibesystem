@@ -248,7 +248,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      */
     public function patchWaitinglistAction($id, $participantId) /**Workshop ID!, Workshopüberbuchung: von der Warteliste auf die Nichtwarteliste*/
     {
-        //Relation Workshop <-> Participant
+        //relation between workshop and participant
         $workshopParticipant = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:WorkshopParticipants")->findOneBy([ "workshop"=>$id,"participant"=>$participantId]);
         if (!$workshopParticipant) {
             throw $this->createNotFoundException("No participant on waiting list found");

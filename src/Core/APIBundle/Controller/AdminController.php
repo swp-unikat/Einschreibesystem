@@ -23,11 +23,13 @@ use Symfony\Component\HttpFoundation\Request;
 
 
 /**
- * Class RestController.
+ * Class AdminController
+ * The AdminController provides functions to iniate a password change. The methods of the controller are accessible with out a login.
  */
- 
- class AdminController extends FOSRestController implements ClassResourceInterface
- {/**
+class AdminController extends FOSRestController implements ClassResourceInterface
+ {
+    /**
+      * Action to reset the password
       * @ApiDoc(
       *  resource=true,
       *  description="Action to reset the password",
@@ -36,19 +38,20 @@ use Symfony\Component\HttpFoundation\Request;
       *      200 = "Returned when successful",
       *      404 = "Returned when the data is not found"
       *  },requirements={{
-      *        "name"="email",
+      *        "name"="token",
       *        "dataType"="string",
       *        "requirement"=".*",
       *        "description"="email of the admin"
       * }}
       * )
-      * @param  $token string
-      * @param  $password string
+      * @param  $token string the token identifies the user
+      * @param $request Request
       * @return \Symfony\Component\HttpFoundation\Response
       * @Rest\View()
       */
-     public function postResetPasswordAction($token, $password)
+     public function postResetPasswordAction($token,Request $request)
      {
+         $password = $request->get("password");
          $UserManager = $this->get('fos_user.user_manager');
          $admin = $UserManager->findUserByConfirmationToken($token);
          if(!$admin){
@@ -59,10 +62,11 @@ use Symfony\Component\HttpFoundation\Request;
          $this->getDoctrine()->getManager()->persist($admin);
          $this->getDoctrine()->getManager()->flush();
      }
-      /**
+
+    /**
       * @ApiDoc(
       *  resource=true,
-      *  description="Action to change the password",
+      *  description="Action to send a e-mail to identify the user",
       *  output = "",
       *  statusCodes = {
       *      200 = "Returned when successful",
@@ -93,5 +97,9 @@ use Symfony\Component\HttpFoundation\Request;
              $tokenGenerator = $this->get('fos_user.util.token_generator');
              $user->setConfirmationToken($tokenGenerator->generateToken());
          }
+
+         /*
+          *@ToDO Send an E-Mail
+          */
      }
  }

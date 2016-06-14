@@ -1,4 +1,11 @@
 <?php
+/**
+ * Created by IntelliJ IDEA.
+ * User: Leon Bergmann
+ * Company: SkyLab UG(haftungsbeschränkt)
+ * Date: 02.05.2016
+ * Time: 10:25
+ */
 
 namespace Core\CronBundle\DependencyInjection;
 

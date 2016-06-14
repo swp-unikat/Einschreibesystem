@@ -58,4 +58,8 @@ class EmailController extends FOSRestController implements ClassResourceInterfac
 	    $workshopParticipants = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:WorkshopParticipants")->findBy(['workshop'=> $workshopId]);
 
     }
+
+    public function notifyAction($workshopId){
+        
+    }
 }

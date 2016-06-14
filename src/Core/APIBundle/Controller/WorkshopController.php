@@ -28,13 +28,14 @@ use FOS\RestBundle\Controller\Annotations\RouteResource;
 use Symfony\Component\HttpFoundation\Request;
 /**
  * Class RestController.
- *
+ * This Controller provides the methods for the public part of the website.
  * @Rest\RouteResource("Workshops")
  */
 
 class WorkshopController extends FOSRestController implements ClassResourceInterface
 {
     /**
+     * Returns list of all Workshops that are active
      * @ApiDoc(
      *  resource=true,
      *  description="Returns list of all Workshops that are active",
@@ -51,15 +52,16 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
     public function getAllAction()
     {
         $workshopRepo = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:Workshop');
-        $entits = $workshopRepo->getAllActiveWorkshops();
-        if (!$entits) {
+        $entity = $workshopRepo->getAllActiveWorkshops();
+        if (!$entity) {
             throw $this->createNotFoundException("No Workshops found");
         }
-        $view = $this->view($entits, 200);
+        $view = $this->view($entity, 200);
         return $this->handleView($view);
     }
     
     /**
+     * Returns Details of a Workshop
      * @ApiDoc(
      *  resource=true,
      *  description="Returns Details of a Workshop",
@@ -92,9 +94,10 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
     }
 
     /**
+     * Action to enroll on a Workshop.
      * @ApiDoc(
      *  resource=true,
-     *  description="Action to enroll a Workshop",
+     *  description="Action to enroll on a Workshop",
      *  output = "",
      *  statusCodes = {
      *      200 = "Returned when successful",
@@ -106,7 +109,8 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      * @Rest\RequestParam(name="name", requirements=".*", description="json object of workshop")
      * @Rest\RequestParam(name="surname", requirements=".*", description="json object of workshop")
      * @Rest\RequestParam(name="email", requirements=".*", description="json object of workshop")
-     *
+     * @param $id int id of the workshop the user wants to enroll
+     * @param $paramFetcher ParamFetcher Helper to get the params from the post request
      * @Rest\View()
      */
     public function postEnrollAction($id, ParamFetcher $paramFetcher)
@@ -132,13 +136,13 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
             $this->getDoctrine()->getManager()->flush();
 
         } else {
-            //alle Workshops an denen der Nutzer noch nicht teilgenommen hat
+            //all workshops which the user were not participating yet
             if ($participant->isBlacklisted()) {
                 throw $this->createAccessDeniedException("You are blacklisted");
             }
 
             $workshopParticipants = $this->getDoctrine()->getRepository("CoreEntityBundle:WorkshopParticipants")->findBy(["participant" => $participant, "participated" => 0]);
-            //über Array iterieren , Workshop laden (get Wokrshop?) Anfangs und Endzeit mit dem Workshop vergleichen
+            //load workshop with start and endtim, iterate over all
 
             foreach($workshopParticipants as $tupel){
                 $tempWorkshop = $this->getDoctrine()->getRepository("Workshop")->find($tupel->getId());
@@ -172,9 +176,10 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
     }
 
     /**
+     * Action to confirm enrollment on a workshop
      * @ApiDoc(
      *  resource=true,
-     *  description="Action to confirm enrollment to a Workshop",
+     *  description="Action to confirm enrollment on a workshop",
      *  output = "",
      *  statusCodes = {
      *      200 = "Returned when successful",
@@ -183,6 +188,9 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      * )
      *
      * @return \Symfony\Component\HttpFoundation\Response
+     * @param  $workshopId int id of the workshop
+     * @param  $participantsId int id of the participant
+     * @param  $token string token to identify the participant
      * @Rest\View()
      */
     public function getEnrollConfirmAction($workshopId,$participantsId,$token)
@@ -216,6 +224,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
                     $this->getDoctrine()->getManager()->persist($token);
                     $this->getDoctrine()->getManager()->persist($participantWorkshop);
                     $this->getDoctrine()->getManager()->flush();
+                    return View::create(null, Codes::HTTP_ACCEPTED);
                 }
             }else{
                 throw $this->createAccessDeniedException("Token ist not valid");
@@ -235,9 +244,9 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      *      404 = "Returned when the data is not found"
      *  }
      * )
-     * @param $id
-     * @param $token
-     * @param $participantsID
+     * @param $id int id of the workshop
+     * @param $token string token to identify the user
+     * @param $participantsID int id of the participant
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\View()
      */
@@ -272,9 +281,10 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
     }
 
     /**
+     * Returns the waiting list of a workshop
      * @ApiDoc(
      *  resource=true,
-     *  description="Returns the waitinglist of a workshop",
+     *  description="Returns the waiting list of a workshop",
      *  output = {
      *      "class"="Core\EntityBundle\Entity\WorkshopParticipants",
      *      "groups"={"names"}
@@ -313,6 +323,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
         return $this->handleView($view);
     }
     /**
+     * Returns the list of participants
      * @ApiDoc(
      *  resource=true,
      *  description="Returns the list of participants",
