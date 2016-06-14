@@ -7,8 +7,8 @@ var mainAppCtrls = angular.module("mainAppCtrls");
  * @name mainAppCtrls.controller:AdminNewWorkshopCtrl
  * @description Controller initializing the creation of a new workshop 
  */
-mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops",
-    function($scope, Workshops) {
+mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorkshop",
+    function($scope, Workshops, AdminWorkshop) {
         $scope.workshop = {};
         /**
          * @ngdoc function
@@ -23,17 +23,21 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops",
                 _dateStr =  _dateStr.slice(0,_dateStr.length-5);
                 return _dateStr.replace('T',' ');
             };
+            var _sa = Date.parse($scope.workshop.start_at);
+            var _duration = $scope.workshop.duration;
+            var _ea = new Date(_sa+_duration + 1000*60*60) ;
+
             var data = {
                 title:$scope.workshop.title,
                 description:$scope.workshop.description,
                 cost:$scope.workshop.cost,
                 requirements:$scope.workshop.requirement,
                 location:$scope.workshop.location,
-                start_at:reformatDate($scope.sharedDate),
-                end_at:reformatDate($scope.sharedDate),
+                start_at:reformatDate($scope.workshop.start_at),
+                end_at:reformatDate(_ea),
                 max_participants:$scope.workshop.max_participants
             };
-            Workshops.put(data).$promise.then(function(httpResponse){
+            AdminWorkshop.putWorkshop(data).$promise.then(function(httpResponse){
                 alert('Success!' + httpResponse.status);
             },function(httpResponse){
                 alert('Error'+httpResponse.statusText);
@@ -47,7 +51,7 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops",
             $scope.workshop.location= "";
             $scope.workshop.sharedDate= "";
             $scope.workshop.start_at= "";
-            $scope.workshop.end_at= "";
+            $scope.workshop.duration= "";
             $scope.workshop.max.participants= "";
 
 
