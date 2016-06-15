@@ -70,7 +70,7 @@ restSvcs.factory('Workshops',['$resource',function($resource){
          * @param {number} participantsid Participants-ID
          * @param {string} token Confirmtoken
          */
-        'getConfirmEnrollment': {method: 'GET',url:'/api/workshops/:id/enrolls/:participantsid/confirms/:token',params: {id: '@id',participantsid: '@participantsid',token: '@token'},isArray: false},
+        'getConfirmEnrollment': {method: 'GET',url:'/api/workshops/:id/enroll/:userid/confirm/:token',params: {id: '@id',userid: '@userid',token: '@token'},isArray: false},
     });
 }]);
 /**

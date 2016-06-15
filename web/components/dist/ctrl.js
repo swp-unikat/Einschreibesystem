@@ -417,6 +417,26 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops', '$stat
             alert(httpResponse.status + '');
             $scope.loading = false;
         });
+        $scope.loading = true;
+        Workshops.getParticipants({id: workshopid}).$promise.then(function(value,httpResponse){
+            $scope.participants = value;
+
+            $scope.loading = false;
+        },function(httpResponse) {
+            switch(httpResponse.status){
+                case 404:
+                    $alert({
+                        title: '',
+                        type: 'info',
+                        content: 'No participants yet',
+                        container: '#alertParticipant',
+                        dismissable: false,
+                        show: true,
+                        animation: 'am-fade-and-slide-top'
+                    });
+            }
+            $scope.loading = false;
+        });
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:adminWorkshopDetailsCtrl#printList
@@ -425,7 +445,6 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops', '$stat
          */
         $scope.printList = function() {
             printer.print('resources/views/participantList.tpl.html',{});
-            //window.print();
         }
 
     }
@@ -947,9 +966,17 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
  * @name mainAppCtrls.controller:EnrollmentConfirmCtrl
  * @description Controller for showing enrollment confirm
  */
-mainAppCtrls.controller('EnrollmentConfirmCtrl',['$scope',
-    function($scope) {
+mainAppCtrls.controller('EnrollmentConfirmCtrl',['$scope','Workshops','$stateParams',
+    function($scope,Workshops,$stateParams) {
+        Workshops.getConfirmEnrollment({
+            id: $stateParams.workshopid,
+            userid: $stateParams.userid,
+            token: $stateParams.token
+        }).$promise.then(function(value){
 
+        },function(httpResponse){
+
+        });
     }
 
 ]);

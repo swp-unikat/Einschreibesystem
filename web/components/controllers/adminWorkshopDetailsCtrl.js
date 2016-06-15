@@ -23,6 +23,26 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops', '$stat
             alert(httpResponse.status + '');
             $scope.loading = false;
         });
+        $scope.loading = true;
+        Workshops.getParticipants({id: workshopid}).$promise.then(function(value,httpResponse){
+            $scope.participants = value;
+
+            $scope.loading = false;
+        },function(httpResponse) {
+            switch(httpResponse.status){
+                case 404:
+                    $alert({
+                        title: '',
+                        type: 'info',
+                        content: 'No participants yet',
+                        container: '#alertParticipant',
+                        dismissable: false,
+                        show: true,
+                        animation: 'am-fade-and-slide-top'
+                    });
+            }
+            $scope.loading = false;
+        });
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:adminWorkshopDetailsCtrl#printList
@@ -31,7 +51,6 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops', '$stat
          */
         $scope.printList = function() {
             printer.print('resources/views/participantList.tpl.html',{});
-            //window.print();
         }
 
     }
