@@ -21,9 +21,14 @@
                 </div>
                 <br>
                 <div class="col-md-6 col-xs-6 ">
-                    <a ui-sref="admininvite">
-                        <button translate type="button" class="btn btn-default">BUTTON_INVITE_AN_ADMINISTRATOR</button>
-                    </a><br><br>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="usr">
+                        <span class="input-group-btn">
+                            <button translate type="button" class="btn btn-default">BUTTON_INVITE_AN_ADMINISTRATOR</button>
+                        </span>
+                    </div>
+
+                    <br><br>
                     <div class="list-group-item" ng-repeat="a in admins">
                         {{a.email}}
                         <button type="button"ng-click="delete(a.id)"  class="btn btn-default btn-xs pull-right" >
