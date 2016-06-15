@@ -12,7 +12,7 @@ var prntSvcs = angular.module("prntSvcs",[]);
  * @name prntSvcs.printer
  * @description Providing a function to print a html-template
  */
-prntSvcs.factory('printer',['$rootScope','$compile','$http','$timeout', function($rootScope, $compile, $http, $timeout ){
+prntSvcs.factory('printer',['$rootScope','$compile','$http','$timeout','$q', function($rootScope, $compile, $http, $timeout ,$q){
     /**
      * @ngdoc function
      * @name prntSvcs.printer#printHtml
@@ -21,14 +21,21 @@ prntSvcs.factory('printer',['$rootScope','$compile','$http','$timeout', function
      * @description Prints the passed html template. Only used internally
      */
     var printHtml = function (html) {
-        var deferred = $q.defer();
-        var hiddenFrame = $('<iframe style="display: none"></iframe>').appendTo('body')[0];
-        hiddenFrame.contentWindow.printAndRemove = function() {
-            hiddenFrame.contentWindow.print();
-            $(hiddenFrame).remove();
-        };
+        var mywindow = window.open();
+        mywindow.document.write('<html>' +
+            '<head>' +
+            '   <title>My App</title>' +
+            '' +
+            '</head>' +
+            '<body>');
+        mywindow.document.write(html);
+        mywindow.document.write('</body></html>');
+        mywindow.print();
+        mywindow.close();
+        return true;
 
     };
+
     /**
      * @ngdoc function
      * @name prntSvcs.printer#print
@@ -39,16 +46,17 @@ prntSvcs.factory('printer',['$rootScope','$compile','$http','$timeout', function
      */
     var print = function (templateUrl, data) {
         $http.get(templateUrl).success(function(template){
-            var printScope = angular.extend($rootScope.$new(), data);
+            var printScope = $rootScope.$new()
+            angular.extend(printScope, data);
             var element = $compile($('<div>' + template + '</div>'))(printScope);
             var waitForRenderAndPrint = function() {
                 if(printScope.$$phase || $http.pendingRequests.length) {
                     $timeout(waitForRenderAndPrint);
                 } else {
                     printHtml(element.html());
-                    printScope.$destroy(); // To avoid memory leaks from scope create by $rootScope.$new()
+                    printScope.$destroy();
                 }
-            }
+            };
             waitForRenderAndPrint();
         });
     };
@@ -79,8 +87,8 @@ prntSvcs.factory('printer',['$rootScope','$compile','$http','$timeout', function
         });
     };
     return {
-        print: print,
-        printFromScope:printFromScope
+        'print': print,
+        'printFromScope':printFromScope
     }
 }]);
 

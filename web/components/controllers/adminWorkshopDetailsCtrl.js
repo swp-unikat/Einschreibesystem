@@ -9,8 +9,8 @@ var mainAppCtrls = angular.module("mainAppCtrls");
  * @requires restSvcs.Workshops
  * @description Controller for showing administrator functions in a workshop.
  */
-mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops', '$stateParams', "$alert",
-    function($scope,Workshops,$stateParams, $alert) {
+mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops', '$stateParams', "$alert",'printer',
+    function($scope,Workshops,$stateParams, $alert,printer) {
         //TODO : replace with workshop details
         var workshopid;
         workshopid = $stateParams.id;
@@ -23,6 +23,16 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops', '$stat
             alert(httpResponse.status + '');
             $scope.loading = false;
         });
+        /**
+         * @ngdoc function
+         * @name mainAppCtrls.controller:adminWorkshopDetailsCtrl#printList
+         * @methodOf mainAppCtrls.controller:adminWorkshopDetailsCtrl
+         * @description Prints the participants list
+         */
+        $scope.printList = function() {
+            printer.print('resources/views/participantList.tpl.html',{});
+            //window.print();
+        }
 
     }
 ])

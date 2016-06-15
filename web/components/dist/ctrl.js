@@ -21,6 +21,11 @@ mainAppCtrls.controller('DashboardCtrl',['$scope',
  * Created by Valle on 31.05.2016.
  */
 
+/**
+ * @ngdoc controller
+ * @name mainAppCtrls.controller:AdminCreateCtrl
+ * @description Initializes the data & function that are being used to create an admin account
+ */
 mainAppCtrls.controller('AdminCreateCtrl',['$scope', '$stateParams','$alert',
     function($scope,$stateParams,$alert) {
         //TODO: replace static text with translations
@@ -41,7 +46,12 @@ mainAppCtrls.controller('AdminCreateCtrl',['$scope', '$stateParams','$alert',
         });
         var token = $stateParams.token;
 
-        //compare password and confirm_password and send data through API
+        /**
+         * @ngdoc function
+         * @name mainAppCtrls.controller:AdminCreateCtrl#sendInfo
+         * @methodOf mainAppCtrls.controller:AdminCreateCtrl
+         * @description Sends a request to create an admin account to the server and handles the response
+         */
         $scope.sendInfo = function(){
             var match = ($scope.password_confirm == $scope.password);
             if(!match){
@@ -68,6 +78,7 @@ mainAppCtrls.controller('AdminCreateCtrl',['$scope', '$stateParams','$alert',
  * @ngdoc controller
 * @name mainAppCtrls.controller:EmailTemplateCtrl
 * @description Module containing all email templates
+ * @requires restSvscs.EmailTemplate
 */
 mainAppCtrls.controller('EmailTemplateCtrl', ['$scope', "EmailTemplate",'$alert','$modal',
     
@@ -132,7 +143,7 @@ mainAppCtrls.controller('EmailTemplateCtrl', ['$scope', "EmailTemplate",'$alert'
  * @ngdoc controller
  * @requires restSvcs.AdminWorkshop
  * @requires restSvcs.Workshops
- * @description Controller for editing a workshop . Provides
+ * @description Controller for editing a workshop. Initializes resources used to edit a workshop
  * @name mainAppCtrls.controller:AdminEditWorkshopCtrl
  */
 mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWorkshop','$stateParams','$translate','$alert',
@@ -311,7 +322,9 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
 /**
  * @ngdoc controller
  * @name mainAppCtrls.controller:AdminNewWorkshopCtrl
- * @description Controller initializing the creation of a new workshop 
+ * @description Controller initializing the creation of a new workshop
+ * @requires restSvcs.Workshops
+ * @requires restSvcs.AdminWorkshop
  */
 mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorkshop",
     function($scope, Workshops, AdminWorkshop) {
@@ -388,10 +401,10 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
  * @ngdoc controller
  * @name mainAppCtrls.controller:adminWorkshopDetailsCtrl
  * @requires restSvcs.Workshops
- * @description Controller for showing administrator functions
+ * @description Controller for showing administrator functions in a workshop.
  */
-mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops', '$stateParams', "$alert",
-    function($scope,Workshops,$stateParams, $alert) {
+mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops', '$stateParams', "$alert",'printer',
+    function($scope,Workshops,$stateParams, $alert,printer) {
         //TODO : replace with workshop details
         var workshopid;
         workshopid = $stateParams.id;
@@ -404,6 +417,16 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops', '$stat
             alert(httpResponse.status + '');
             $scope.loading = false;
         });
+        /**
+         * @ngdoc function
+         * @name mainAppCtrls.controller:adminWorkshopDetailsCtrl#printList
+         * @methodOf mainAppCtrls.controller:adminWorkshopDetailsCtrl
+         * @description Prints the participants list
+         */
+        $scope.printList = function() {
+            printer.print('resources/views/participantList.tpl.html',{});
+            //window.print();
+        }
 
     }
 ])
@@ -417,6 +440,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops', '$stat
  * @ngdoc controller
  * @name mainAppCtrls.controller:adminWorkshopManagementCtrl
  * @description Shows a list of past and future workshops
+ * @requires restSvcs.AdminWorkshop
  */
 mainAppCtrls.controller('adminWorkshopManagementCtrl',['$scope','AdminWorkshop','$alert','$translate',
     function($scope,AdminWorkshop,$alert,$translate) {
@@ -493,6 +517,7 @@ mainAppCtrls.controller('adminWorkshopManagementCtrl',['$scope','AdminWorkshop',
  * @ngdoc controller
  * @name mainAppCtrls.controller:AdministratorManagementCtrl
  * @descirption Controller for managing administrator list
+ * @requires restSvcs.Admin
  */
 mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin',
     function($scope,Admin) {
@@ -526,6 +551,7 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin',
  * @ngdoc controller
  * @name mainAppCtrls.controller:BlacklistCtrl
  * @description Controller show you a list of blacklisted users
+ * @requires restSvcs.Participants
  */
     mainAppCtrls.controller('BlacklistCtrl', ['$scope', "Participants",'$alert','$modal',
 
@@ -535,7 +561,7 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin',
                  * @ngdoc function
                  * @name mainAppCtrls.controller:BlacklistCtrl#loadingBlacklist
                  * @methodOf mainAppCtrls.controller:BlacklistCtrl
-                 * @description Function load a list of persons, which were set on the blacklist
+                 * @description Function to load a list of persons, which were set on the blacklist
                  */
                 var loadBlacklist = function (){
                 $scope.loading = true;
@@ -610,6 +636,7 @@ mainAppCtrls.controller('ContactCtrl',['$scope',
  * @requires restSvcs.EmailTemplate
  * @description Controller for editing a workshop template. Provide
  * @name mainAppCtrls.controller:EditEmailTemplateCtrl
+ * @requires restSvcs.EmailTemplate
  */
 mainAppCtrls.controller('EditEmailTemplateCtrl',['$scope','EmailTemplate','$stateParams','$translate','$alert',
     function($scope,EmailTemplate,$stateParams,$translate,$alert) {
@@ -738,6 +765,7 @@ mainAppCtrls.controller('EditEmailTemplateCtrl',['$scope','EmailTemplate','$stat
  * @requires restSvcs.WorkshopTemplate
  * @description Controller for editing a workshop template.
  * @name mainAppCtrls.controller:EditWorkshopTemplateCtrl
+ * @requires restSvcs.WorkshopTemplate
  */
 mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate','$stateParams','$translate','$alert',
     function($scope,WorkshopTemplate,$stateParams,$translate,$alert) {
@@ -1036,7 +1064,7 @@ mainAppCtrls.controller('LoginCtrl',['$scope','$http','store','$state','jwtHelpe
  * @ngdoc controller
  * @name mainAppCtrls.controller:NewEmailTemplateCtrl
  * @description Controller to create a new email template
- *
+ * @requires restSvcs.EmailTemplate
  */
 mainAppCtrls.controller('NewEmailTemplateCtrl',['$scope',"EmailTemplate",
     function($scope, EmailTemplate) {
@@ -1084,8 +1112,9 @@ mainAppCtrls.controller('NewEmailTemplateCtrl',['$scope',"EmailTemplate",
 
 /**
  * @ngdoc controller
- * @name mainAppCtrls.controller:AdminNewWorkshopCtrl
+ * @name mainAppCtrls.controller:NewWorkshopTemplateCtrl
  * @description Controller initializing the creation of a new workshop template
+ * @requires restSvcs.WorkshopTemplate
  */
 mainAppCtrls.controller('NewWorkshopTemplateCtrl',['$scope',"WorkshopTemplate",'$alert',
     function($scope, WorkshopTemplate,$alert) {
@@ -1093,8 +1122,8 @@ mainAppCtrls.controller('NewWorkshopTemplateCtrl',['$scope',"WorkshopTemplate",'
         $scope.myAlert;
         /**
          * @ngdoc function
-         * @name mainAppCtrls.controller:AdminNewWorkshopCtrl#sendInfo
-         * @methodOf mainAppCtrls.controller:AdminNewWorkshopCtrl
+         * @name mainAppCtrls.controller:NewWorkshopTemplateCtrl#sendInfo
+         * @methodOf mainAppCtrls.controller:NewWorkshopTemplateCtrl
          * @description Validates the input data and sends a request to create a new Template to the server
          *
          */
@@ -1151,8 +1180,8 @@ mainAppCtrls.controller('NewWorkshopTemplateCtrl',['$scope',"WorkshopTemplate",'
         };
         /**
          * @ngdoc function
-         * @name mainAppCtrls.controller:AdminNewWorkshopCtrl#discard
-         * @methodOf mainAppCtrls.controller:AdminNewWorkshopCtrl
+         * @name mainAppCtrls.controller:NewWorkshopTemplateCtrl#discard
+         * @methodOf mainAppCtrls.controller:NewWorkshopTemplateCtrl
          * @description Discards the input
          *
          */
@@ -1185,6 +1214,7 @@ mainAppCtrls.controller('NewWorkshopTemplateCtrl',['$scope',"WorkshopTemplate",'
  * @ngdoc controller
  * @name mainAppCtrls.controller:PasswordResetCtrl
  * @description To reset your password and create a new password
+ * @requires restSvcs.Admin
  */
 mainAppCtrls.controller('PasswordResetCtrl',['$scope','$alert','$translate','Admin','$stateParams',
     function($scope,$alert,$translate,Admin,$stateParams) {
@@ -1437,7 +1467,9 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm',
  */
 
 /**
- *
+ * @ngdoc controller
+ * @name mainAppCtrls.controller:UnsubscribeCtrl
+ * @description Providing resources used to complete unsubscription from a workshop
  */
 mainAppCtrls.controller('UnsubscribeCtrl',['$scope',
     function($scope) {
@@ -1455,6 +1487,7 @@ mainAppCtrls.controller('UnsubscribeCtrl',['$scope',
  * @ngdoc controller
  * @name mainAppCtrls.controller:WorkshopDetailsCtrl
  * @description Loads workshop details
+ * @requires restSvcs.Workshops
  */
 mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$stateParams', "$alert",
     function($scope,Workshops,$stateParams, $alert) {
@@ -1545,7 +1578,8 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
 /**
  * @ngdoc controller
  * @name mainAppCtrls.controller:WorkshopListCtrl
- * @description
+ * @description Controller initilasing the workshopList view
+ * @requires restSvcs.Workshops
  */
 mainAppCtrls.controller('WorkshopListCtrl',['$scope','Workshops','$alert','$translate',
     function($scope,Workshops,$alert,$translate) {
@@ -1609,6 +1643,7 @@ mainAppCtrls.controller('WorkshopListCtrl',['$scope','Workshops','$alert','$tran
  * @ngdoc controller
  * @name mainAppCtrls.controller:WorkshopTemplateCtrl
  * @description Displays the workshop-template list in the associated view
+ * @requires restSvcs.WorkshopTemplate
  */
 mainAppCtrls.controller('WorkshopTemplateCtrl', ['$scope', "WorkshopTemplate",'$alert',
 
