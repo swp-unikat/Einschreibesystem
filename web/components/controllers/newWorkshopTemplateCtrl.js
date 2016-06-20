@@ -4,17 +4,18 @@
 var mainAppCtrls = angular.module("mainAppCtrls");
 /**
  * @ngdoc controller
- * @name mainAppCtrls.controller:AdminNewWorkshopCtrl
+ * @name mainAppCtrls.controller:NewWorkshopTemplateCtrl
  * @description Controller initializing the creation of a new workshop template
+ * @requires restSvcs.WorkshopTemplate
  */
 mainAppCtrls.controller('NewWorkshopTemplateCtrl',['$scope',"WorkshopTemplate",'$alert',
     function($scope, WorkshopTemplate,$alert) {
         $scope.workshop = {};
         $scope.myAlert;
         /**
-         * @ngdoc controller
-         * @name mainAppCtrls.controller:AdminNewWorkshopCtrl#sendInfo
-         * @methodOf mainAppCtrls.controller:AdminNewWorkshopCtrl
+         * @ngdoc function
+         * @name mainAppCtrls.controller:NewWorkshopTemplateCtrl#sendInfo
+         * @methodOf mainAppCtrls.controller:NewWorkshopTemplateCtrl
          * @description Validates the input data and sends a request to create a new Template to the server
          *
          */
@@ -70,9 +71,9 @@ mainAppCtrls.controller('NewWorkshopTemplateCtrl',['$scope',"WorkshopTemplate",'
             });
         };
         /**
-         * @ngdoc controller
-         * @name mainAppCtrls.controller:AdminNewWorkshopCtrl#discar
-         * @methodOf mainAppCtrls.controller:AdminNewWorkshopCtrl
+         * @ngdoc function
+         * @name mainAppCtrls.controller:NewWorkshopTemplateCtrl#discard
+         * @methodOf mainAppCtrls.controller:NewWorkshopTemplateCtrl
          * @description Discards the input
          *
          */

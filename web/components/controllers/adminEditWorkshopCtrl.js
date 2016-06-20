@@ -2,9 +2,15 @@
  * Created by hunte on 12/06/2016.
  */
 var mainAppCtrls = angular.module("mainAppCtrls");
-
+/**
+ * @ngdoc controller
+ * @requires restSvcs.AdminWorkshop
+ * @requires restSvcs.Workshops
+ * @description Controller for editing a workshop. Initializes resources used to edit a workshop
+ * @name mainAppCtrls.controller:AdminEditWorkshopCtrl
+ */
 mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWorkshop','$stateParams','$translate','$alert',
-    function($scope,Workshops,AdminWokshop,$stateParams,$translate,$alert) {
+    function($scope,Workshops,AdminWorkshop,$stateParams,$translate,$alert) {
 
         var _workshopId = $stateParams.id;
 
@@ -15,16 +21,16 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
         var _translations = {};
         //Pass all required translation IDs to translate service
         $translate(['ALERT_WORKSHOP_EDIT_SUCCESS',
-            'ALERT_WORKSHOP_EDIT_FAIL','ALER$scope.titleT_WORKSHOP_NOT_FOUND']).
+            'ALERT_WORKSHOP_EDIT_FAIL','ALERT_WORKSHOP_NOT_FOUND']).
         then(function(translations){
             _translations = translations;
         });
 
         /**
          * @ngdoc function
-         * @name mainAppCtrls.controller:EditWorkshopCtrl#discardChanges
+         * @name mainAppCtrls.controller:AdminEditWorkshopCtrl#discardChanges
          * @description Discards changes and restores the original data
-         * @methodOf mainAppCtrls.controller:EditWorkshopCtrl
+         * @methodOf mainAppCtrls.controller:AdminEditWorkshopCtrl
          */
         $scope.discardChanges = function () {
             $scope.workshop.title = _originalData.title;
@@ -43,9 +49,9 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
 
         /**
          * @ngdoc function
-         * @name mainAppCtrls.controller:EditWorkshopCtrl#confirmChanges
+         * @name mainAppCtrls.controller:AdminEditWorkshopCtrl#confirmChanges
          * @description Sends changes to the API and stores them as new original data
-         * @methodOf mainAppCtrls.controller:EditWorkshopCtrl
+         * @methodOf mainAppCtrls.controller:AdminEditWorkshopCtrl
          */
         $scope.confirmChanges = function () {
             var _dataToSend = {
@@ -59,16 +65,19 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
                 max_participants: ''
 
             };
-            var _changedData = {
+            var _sa = Date.parse($scope.workshop.start_at);
+            var _duration = $scope.workshop.duration;
+            var _ea = new Date(_sa+_duration + 1000*60*60) ;
 
-                title: $scope.workshop.title,
-                description: $scope.workshop.description,
-                cost: $scope.workshop.cost,
-                requirements: $scope.workshop.requirements,
-                location: $scope.workshop.location,
-                start_at: $scope.workshop.start_at,
-                end_at: $scope.workshop.end_at,
-                max_participants: $scope.workshop.max_participants
+            var data = {
+                title:$scope.workshop.title,
+                description:$scope.workshop.description,
+                cost:$scope.workshop.cost,
+                requirements:$scope.workshop.requirement,
+                location:$scope.workshop.location,
+                start_at:reformatDate($scope.workshop.start_at),
+                end_at:reformatDate(_ea),
+                max_participants:$scope.workshop.max_participants
             };
 
             //compare all properties of both objects

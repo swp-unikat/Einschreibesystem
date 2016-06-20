@@ -7,6 +7,7 @@ var mainAppCtrls = angular.module("mainAppCtrls");
  * @ngdoc controller
  * @name mainAppCtrls.controller:WorkshopTemplateCtrl
  * @description Displays the workshop-template list in the associated view
+ * @requires restSvcs.WorkshopTemplate
  */
 mainAppCtrls.controller('WorkshopTemplateCtrl', ['$scope', "WorkshopTemplate",'$alert',
 
@@ -46,7 +47,7 @@ mainAppCtrls.controller('WorkshopTemplateCtrl', ['$scope', "WorkshopTemplate",'$
          * @ngdoc function
          * @name mainAppCtrls.controller:WorkshopTemplateCtrl#delete
          * @methodOf mainAppCtrls.controller:WorkshopTemplateCtrl
-         * @param {number} _id
+         * @param {number} _id id of the workshop, which should be deleted
          * @description Deletes the template with the passed id
          */
         $scope.delete = function (_id) {

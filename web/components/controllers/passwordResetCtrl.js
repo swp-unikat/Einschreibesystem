@@ -5,7 +5,8 @@ var mainAppCtrls = angular.module("mainAppCtrls");
 /**
  * @ngdoc controller
  * @name mainAppCtrls.controller:PasswordResetCtrl
- * @description
+ * @description To reset your password and create a new password
+ * @requires restSvcs.Admin
  */
 mainAppCtrls.controller('PasswordResetCtrl',['$scope','$alert','$translate','Admin','$stateParams',
     function($scope,$alert,$translate,Admin,$stateParams) {
@@ -72,7 +73,7 @@ mainAppCtrls.controller('PasswordResetCtrl',['$scope','$alert','$translate','Adm
             var _msg = "";
             var _type = "";
             var _title = "";
-            Admin.resetPassword({token: _token}).$promise.then(function(httpResponse){
+            Admin.resetPassword({token: _token},{password: $scope.form.password}).$promise.then(function(httpResponse){
                 pwAlert = $alert({
                     container: '#alert',
                     title: "Success",

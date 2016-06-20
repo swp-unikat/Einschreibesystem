@@ -1,14 +1,14 @@
 /**
  * @name restSvcs
  * @requires ngResource
- * @description Module containing the REST services
+ * @description Module containing the REST services. The received objects properties can be taken from the REST-Api documentation
  */
 var restSvcs = angular.module('restSvcs',['ngResource']);
 
 /**
  * @ngdoc service
  * @name restSvcs.Workshops
- * @description Provides CRUD operations for Workshop-functions provided by the API
+ * @description Provides CRUD operations for Workshop-functions provided by the API. All functions return a $promise object resolved with the requested data
  */
 restSvcs.factory('Workshops',['$resource',function($resource){
     return $resource('/api/workshops/:id',{},{
@@ -25,7 +25,7 @@ restSvcs.factory('Workshops',['$resource',function($resource){
          * @name restSvcs.Workshops#get
          * @description get a single workshops
          * @methodOf restSvcs.Workshops
-         * @param {integer} id Workshop-ID
+         * @param {number} id Workshop-ID
          */
         'getWorkshop': {method: 'GET',params: {id: '@id'}, isArray: false},
         /**
@@ -33,7 +33,7 @@ restSvcs.factory('Workshops',['$resource',function($resource){
          * @name restSvcs.Workshops#getParticipants
          * @description get list of enrolled participants to a workshop
          * @methodOf restSvcs.Workshops
-         * @param {integer} id Workshop-ID
+         * @param {number} id Workshop-ID
          */
         'getParticipants': {method: 'GET',url:'/api/workshops/:id/participants',params: {id: '@id'},isArray: true},
         /**
@@ -41,15 +41,15 @@ restSvcs.factory('Workshops',['$resource',function($resource){
          * @name restSvcs.Workshops#enrollWorkshop
          * @description Action to enroll a Workshop
          * @methodOf restSvcs.Workshops
-         * @param {integer} id Workshop-ID
+         * @param {number} id Workshop-ID
          */
-        'enroll': {method: 'POST',url:'/api/workshops/:id/enrolls',params: {id: '@id'},isArray: false},
+        'enroll': {method: 'POST',url:'/api/workshops/:id/enroll',params: {id: '@id'},isArray: false},
         /**
          * @ngdoc funtion
          * @name restSvcs.Workshops#unsubscribeWorkshop
          * @description Action to unsubscribe a Workshop
          * @methodOf restSvcs.Workshops
-         * @param {integer} id Workshop-ID
+         * @param {number} id Workshop-ID
          * @param {string} token Unsubscribetoken
          */
         'getUnsubscribes': {method: 'GET',url:'/api/workshops/:id/unsubscribes/:token',params: {id: '@id', token: '@token'},isArray: false},
@@ -58,7 +58,7 @@ restSvcs.factory('Workshops',['$resource',function($resource){
          * @name restSvcs.Workshops#unsubscribeWorkshop
          * @description Get Waitinglist of a Workshop
          * @methodOf restSvcs.Workshops
-         * @param {integer} id Workshop-ID
+         * @param {number} id Workshop-ID
          */
         'getWaitinglist': {method: 'GET',url:'/api/workshops/:id/waitinglist',params: {id: '@id'},isArray: true},
         /**
@@ -66,11 +66,11 @@ restSvcs.factory('Workshops',['$resource',function($resource){
          * @name restSvcs.Workshops#unsubscribeWorkshop
          * @description Confirm Enrollment of the WOrkshop
          * @methodOf restSvcs.Workshops
-         * @param {integer} id Workshop-ID
-         * @param {integer} participantsid Participants-ID
+         * @param {number} id Workshop-ID
+         * @param {number} participantsid Participants-ID
          * @param {string} token Confirmtoken
          */
-        'getConfirmEnrollment': {method: 'GET',url:'/api/workshops/:id/enrolls/:participantsid/confirms/:token',params: {id: '@id',participantsid: '@participantsid',token: '@token'},isArray: false},
+        'getConfirmEnrollment': {method: 'GET',url:'/api/workshops/:id/enroll/:userid/confirm/:token',params: {id: '@id',userid: '@userid',token: '@token'},isArray: false},
     });
 }]);
 /**
@@ -314,9 +314,37 @@ restSvcs.factory('Admin',['$resource',function($resource){
         /**
          * @ngdoc function
          * @name restSvcs.Admin#resetPassword
-         * @description Resets the passwords, if the provided token is valid
+         * @description Resets the password, if the provided token is valid
          * @methodOf restSvcs.Admin
          */
-        'resetPassword': {url:'/api/admin/:token/reset/password',params:{token: '@token'},method: 'POST',isArray: false}
+        'resetPassword': {url:'/api/admin/:token/reset/password',params:{token: '@token'},method: 'POST',isArray: false},
+        /**
+         * @ngdoc function
+         * @name restSvcs.Admin#requestReset
+         * @description Creates a request for a email with password-reset link at the server
+         * @methodOf restSvcs.Admin
+         */
+        'requestReset': {url: '/api/admin/:email/send/password/forgot/email',params:{email: '@email'},method: 'POST',isArray: false},
+        /**
+         * @ngdoc function
+         * @name restSvcs.Admin#invite
+         * @description Sends an invite link to the passed e-mail
+         * @methodOf restSvcs.Admin
+         */
+        'invite': {url:'/api/admin/admin/:email/admin/invite',params:{email: '@email'},method: 'GET',isArray: false},
+        /**
+         * @ngdoc function
+         * @name restSvcs.Admin#editContact
+         * @description Edits the contact data saved on the server
+         * @methodOf restSvcs.Admin
+         */
+        'editContact': {url: '/api/admin/admin/contact/data',method: 'PUT',isArray: false},
+        /**
+         * @ngdoc function
+         * @name restSvcs.Admin#editLegalNotice
+         * @description Edits the legal Notice saved on the server
+         * @methodOf restSvcs.Admin
+         */
+        'editLegalNotice': {url: '/api/admin/admin/legal/notice',method: 'PUT',isArray: false}
     });
 }]);

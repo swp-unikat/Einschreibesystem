@@ -1,12 +1,10 @@
-/**
- * Created by hunte on 31/05/2016.
- */
 var mainAppCtrls = angular.module("mainAppCtrls");
 /**
+ * @ngdoc controller
  * @requires restSvcs.WorkshopTemplate
  * @description Controller for editing a workshop template.
- * @ngdoc controller
  * @name mainAppCtrls.controller:EditWorkshopTemplateCtrl
+ * @requires restSvcs.WorkshopTemplate
  */
 mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate','$stateParams','$translate','$alert',
     function($scope,WorkshopTemplate,$stateParams,$translate,$alert) {

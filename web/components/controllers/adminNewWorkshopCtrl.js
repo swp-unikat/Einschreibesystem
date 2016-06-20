@@ -5,14 +5,18 @@ var mainAppCtrls = angular.module("mainAppCtrls");
 /**
  * @ngdoc controller
  * @name mainAppCtrls.controller:AdminNewWorkshopCtrl
- * @description Controller initializing the creation of a new workshop 
+ * @description Controller initializing the creation of a new workshop
+ * @requires restSvcs.Workshops
+ * @requires restSvcs.AdminWorkshop
  */
 mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorkshop",
     function($scope, Workshops, AdminWorkshop) {
         $scope.workshop = {};
         /**
          * @ngdoc function
-         * @name mainAppCtrls.controller:AdminNewWorkshopCtrl
+         * @name mainAppCtrls.controller:AdminNewWorkshopCtrl#sendInfo
+         * @description Sends the data of the created workshop to the server
+         * @methodOf mainAppCtrls.controller:AdminNewWorkshopCtrl
          */
         $scope.sendInfo = function(){
             //Adjusts the format of the date strings to fit the requirements of the API
@@ -43,6 +47,12 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
                 alert('Error'+httpResponse.statusText);
             });
         };
+        /**
+         * @ngdoc function
+         * @name mainAppCtrls.controller:AdminNewWorkshopCtrl#discard
+         * @description Discards the data of the created workshop
+         * @methodOf mainAppCtrls.controller:AdminNewWorkshopCtrl
+         */
         $scope.discard = function(){
             $scope.workshop.title= "";
             $scope.workshop.description= "";

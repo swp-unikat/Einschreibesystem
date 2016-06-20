@@ -1,12 +1,10 @@
 var mainAppCtrls = angular.module("mainAppCtrls");
-/**
- *
- */
 
 /**
  * @ngdoc controller
  * @name mainAppCtrls.controller:BlacklistCtrl
  * @description Controller show you a list of blacklisted users
+ * @requires restSvcs.Participants
  */
     mainAppCtrls.controller('BlacklistCtrl', ['$scope', "Participants",'$alert','$modal',
 
@@ -16,7 +14,7 @@ var mainAppCtrls = angular.module("mainAppCtrls");
                  * @ngdoc function
                  * @name mainAppCtrls.controller:BlacklistCtrl#loadingBlacklist
                  * @methodOf mainAppCtrls.controller:BlacklistCtrl
-                 * @description Function load a list of persons, which were set on the blacklist
+                 * @description Function to load a list of persons, which were set on the blacklist
                  */
                 var loadBlacklist = function (){
                 $scope.loading = true;

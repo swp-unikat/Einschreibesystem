@@ -1,6 +1,17 @@
 /**
+ * @ngdoc overview
  * @name mainApp
- * @description Main module of the application
+ * @description Main module of the application. Also loads all external and internal modules that are going to be used in the application and configures routing and JWT
+ * @requires ngRoute
+ * @requires mainAppCtrls
+ * @requires mgcrea.ngStrap
+ * @requires ui.router
+ * @requires angular-jwt
+ * @requires restSvcs
+ * @requires angular-storage
+ * @requires pascalprecht.translate
+ * @requires textAngular
+ * @requires prntSvcs
  */
 var mainApp = angular.module('mainApp',[
     'ngRoute',
@@ -16,8 +27,9 @@ var mainApp = angular.module('mainApp',[
 ]);
 /**
  * @name mainAppCtrls
- * @type {angular.Module}
- * @description Module containg all controller of the application
+ * @ngdoc overview
+ * @description Module containing all controller of the application
+ * @requires pascalprect.translate
  */
 var mainAppCtrls = angular.module('mainAppCtrls',["pascalprecht.translate"]);
 
@@ -285,7 +297,8 @@ mainApp.controller('GlobalCtrl',['$scope','store','jwtHelper','$state',function(
 /**
  * @ngdoc directive
  * @name mainApp.directive:compare-to
- * @description
+ * @restrict 'A'
+ * @description Compares the content of two elements. Sets them as valid, if they both are identical.
  */
 mainApp.directive('compareTo',[function(){
     return {
@@ -306,23 +319,11 @@ mainApp.directive('compareTo',[function(){
     };
 }
 ]);
-mainApp.directive("myNavscroll", function($window) {
-    return function(scope, element, attrs) {
-        angular.element($window).bind("scroll", function() {
-            if (!scope.scrollPosition) {
-                scope.scrollPosition = 0
-            }
-
-            if (this.pageYOffset > scope.scrollPosition) {
-                scope.boolChangeClass = true;
-            } else {
-                scope.boolChangeClass = false;
-            }
-            scope.scrollPosition = this.pageYOffset;
-            scope.$apply();
-        });
-    };
-});
+/**
+ * @ngdoc object
+ * @name mainApp.$confirm
+ * @description Service providing a custom confirm dialog. Extends functionalty from angular-strap's {@link http://mgcrea.github.io/angular-strap/#/modals $modal service}
+ */
 mainApp.service('$confirm', function($modal, $rootScope, $q) {
         var scope = $rootScope.$new();
         var deferred;

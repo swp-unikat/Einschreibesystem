@@ -6,6 +6,7 @@ var mainAppCtrls = angular.module("mainAppCtrls");
  * @ngdoc controller
  * @name mainAppCtrls.controller:WorkshopDetailsCtrl
  * @description Loads workshop details
+ * @requires restSvcs.Workshops
  */
 mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$stateParams', "$alert",
     function($scope,Workshops,$stateParams, $alert) {
@@ -14,7 +15,8 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:WorkshopDetailsCtrl#sendInfo
-         * @description Sends the info entered for enrollment to the server 
+         * @description Sends the info entered for enrollment to the server
+         * @methodOf mainAppCtrls.controller:WorkshopDetailsCtrl
          */
         $scope.sendInfo= function(){
             var first_name=$scope.first_name;   

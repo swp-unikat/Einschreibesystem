@@ -5,7 +5,8 @@ var mainAppCtrls = angular.module("mainAppCtrls");
 /**
  * @ngdoc controller
  * @name mainAppCtrls.controller:AdministratorManagementCtrl
- * @descirption 
+ * @descirption Controller for managing administrator list
+ * @requires restSvcs.Admin
  */
 mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin',
     function($scope,Admin) {
@@ -14,6 +15,13 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin',
         },function(httpResponse){
             alert(httpResponse.status);
         });
+        /**
+         * @ngdoc function
+         * @name mainAppCtrls.controller:AdministratorManagementCtrl#delete
+         * @description Deletes the admin who has the selected id
+         * @param {number} _id ID of the admin to delete
+         * @methodOf mainAppCtrls.controller:AdministratorManagementCtrl
+         */
         $scope.delete = function(_id) {
             Admin.delete({id: _id}).$promise.then(function(value){
                 
