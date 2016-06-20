@@ -47,8 +47,8 @@
   "BUTTON_BLACKLIST_MANAGEMENT": "Blacklist management",
   "BUTTON_ADD_TO_BLACK_LIST": "Add to black list",
   "BUTTON_REMOVE_FROM_BLACKLIST": "Remove from blacklist",
-  "BUTTON_INVITE_AN_ADMINISTRATOR": "Invite an administrator",
-  "BUTTON_INVITED_ADMINISTRATOR_EMAIL": "Invited administrator email",
+  "BUTTON_INVITE_AN_ADMINISTRATOR": "Invite admin",
+  "INVITED_ADMINISTRATOR_EMAIL": "Invited administrator email",
   "LIST_OF_ADMINISTRATORS": "List of administrators",
   "BUTTON_EDIT_ADMINISTRATOR": "Edit administrator",
   "BUTTON_DEACTIVATE_ADMINISTRATOR": "Deactivate administrator",
@@ -138,6 +138,8 @@
   "RESET_PASSWORD": "Reset password",
   "PASSWORD": "Password",
   "PASSWORDS_IDENTICAL_ERROR": "Passwords have to be identical",
-  "PASSWORD_EMPTY_ERROR": "Password cannot be empty"
+  "PASSWORD_EMPTY_ERROR": "Password cannot be empty",
+  "BUTTON_SEND_SUBSCRIBE_CONFIRMATION":"Send confirm email",
+  "BUTTON_PRINT_LIST_OF_PARTICIPANTS":"Print list of Participants"
 
 }
