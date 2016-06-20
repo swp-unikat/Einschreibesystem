@@ -15,13 +15,14 @@ use Core\EntityBundle\Entity\EmailTemplate;
 class loadEmailTemplate implements FixtureInterface
 {
     /**
-     * 
+     * this is the protected property manager 
      * @var ObjectManager
      * @param $manager
      */
     protected $manager;
     /**
      * function to load emailtemplate
+     * @param $manager
      */
     public function load(ObjectManager $manager){
     $emailtemplate = new EmailTemplate();

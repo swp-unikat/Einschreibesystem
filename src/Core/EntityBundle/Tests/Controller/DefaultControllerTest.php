@@ -1,4 +1,11 @@
 <?php
+/**
+ * Created by IntelliJ IDEA.
+ * User: Leon Bergmann
+ * Authors: Leon Bergmann
+ * Date: 02.05.2016
+ * Time: 11:03
+ */
 
 namespace Core\EntityBundle\Tests\Controller;
 

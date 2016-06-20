@@ -11,10 +11,14 @@ namespace Core\EntityBundle\Repository;
 use Core\EntityBundle\Entity\Workshop;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
-
+/**
+ * this class provide the method to get all blacklisted participants
+ */
 class ParticipantsRepository extends EntityRepository
 {
-
+    /**
+     * function to get all blacklisted participants
+     */
     public function getAllBlacklistedParticipants(){
         $em = $this->getEntityManager();
         $qb = $em->createQueryBuilder();
