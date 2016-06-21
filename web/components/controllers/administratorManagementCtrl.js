@@ -10,10 +10,13 @@ var mainAppCtrls = angular.module("mainAppCtrls");
  */
 mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin',
     function($scope,Admin) {
+        $scope.loading = true;
         Admin.list().$promise.then(function(value){
             $scope.admins = value;
+            $scope.loading = false;
         },function(httpResponse){
             alert(httpResponse.status);
+            $scope.loading = false;
         });
         /**
          * @ngdoc function
