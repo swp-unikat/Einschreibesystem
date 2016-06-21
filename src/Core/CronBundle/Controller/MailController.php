@@ -1,8 +1,7 @@
 <?php
 /**
  * Created by IntelliJ IDEA.
- * User: Leon Bergmann
- * Company: SkyLab UG(haftungsbeschränkt)
+ * Authors: Marco Hanisch
  * Date: 25.05.16
  * Time: 09:24
  */
