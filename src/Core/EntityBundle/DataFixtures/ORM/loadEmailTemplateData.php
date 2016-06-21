@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by IntelliJ IDEA.
- * User: Martin Griebel
+ * Authors: Martin Griebel, Leon Bergmann, Marco Hanisch
  * Date: 26/05/16
  * Time: 09:46
  */

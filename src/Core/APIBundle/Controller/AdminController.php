@@ -1,8 +1,7 @@
 <?php
 /**
  * Created by IntelliJ IDEA.
- * User: Marco Hanisch
- * Authors: Marco Hanisch
+ * Authors: Marco Hanisch, Leon Bergmann, Andreas Ifland
  * Date: 09.06.2016
  * Time: 11:13
  */
