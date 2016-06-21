@@ -540,10 +540,13 @@ mainAppCtrls.controller('adminWorkshopManagementCtrl',['$scope','AdminWorkshop',
  */
 mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin',
     function($scope,Admin) {
+        $scope.loading = true;
         Admin.list().$promise.then(function(value){
             $scope.admins = value;
+            $scope.loading = false;
         },function(httpResponse){
             alert(httpResponse.status);
+            $scope.loading = false;
         });
         /**
          * @ngdoc function
@@ -1566,6 +1569,12 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
                 });
             });
         };
+
+
+
+
+
+
 
 
         $scope.loading = true;
