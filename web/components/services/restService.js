@@ -224,7 +224,7 @@ restSvcs.factory('Participants',['$resource',function($resource){
  * @description Provides CRUD operations for Emailtemplate-functions provided by the API
  */
 restSvcs.factory('EmailTemplate',['$resource',function($resource){
-    return $resource('/api/admin/email/templates/:id',{},{
+    return $resource('/api/admin/email/template/:id',{},{
         /**
           * @ngdoc function
           * @name restSvcs.EmailTemplate#all
@@ -255,7 +255,7 @@ restSvcs.factory('EmailTemplate',['$resource',function($resource){
           * @description create a new Emailtemplate
           * @methodOf restSvcs.EmailTemplate
           */
-        'put': {url:'/api/admin/email/template',method: 'PUT', isArray:false},
+        'put': {method: 'PUT', isArray:false},
         /**
           * @ngdoc function
           * @name restSvcs.EmailTemplate#delete
