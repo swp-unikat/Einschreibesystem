@@ -37,8 +37,9 @@ class MailController extends Controller{
     }
     /**
      * function to send a E-Mail to participants of a workshop
-     * @param $participants participant
-     * @param $workshop workshop
+     * @param $participants array participant
+     * @param $workshop int workshop
+     * @return int
      */
     protected function sendMail($participants,$workshop){
         $counter = 0;
