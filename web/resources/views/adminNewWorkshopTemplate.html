@@ -29,7 +29,10 @@
 
             <label>{{ "WORKSHOP_DURATION" | translate}}</label>
             <input type="text" data-length="1" data-minute-step="1" data-arrow-behavior="picker" ng-model="workshop.duration" data-time-format="HH:mm" data-time-type="number" data-autoclose="1" placeholder="Time" bs-timepicker class="form-control col-md-4">
-
+            <!-- loading -->
+            <div ng-show="loading" style="margin-left:50%;">
+                <span class="glyphicon glyphicon-refresh glyphicon-spin" style="font-size: 5.0em;"></span>
+            </div>
         </div>
 
 
