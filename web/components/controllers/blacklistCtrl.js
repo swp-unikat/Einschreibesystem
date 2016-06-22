@@ -15,7 +15,7 @@ var mainAppCtrls = angular.module("mainAppCtrls");
             var _translations = {};
             //Pass all required translation IDs to translate service
             $translate(['ALERT_BLACKLIST_DELETE_PARTICIPANT',
-                'ALERT_BLACKLIST_DELETE_PARTICIPANT','ALERT_WORKSHOPTEMPLATE_DELETED_FAIL']).
+                'ALERT_BLACKLIST_DELETE_PARTICIPANT_FAIL']).
             then(function(translations){
                 _translations = translations;
             });
