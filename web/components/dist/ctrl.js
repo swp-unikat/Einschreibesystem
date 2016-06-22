@@ -1158,19 +1158,19 @@ mainAppCtrls.controller('NewEmailTemplateCtrl',['$scope',"EmailTemplate",'$trans
                 $alert({
                     title: '',
                     type: 'success',
-                    content: _translations.ALERT_EMAILTEMPLATE_NEW_SUCCESS + '\"' + data.template_name +'\"',
+                    content: _translations.ALERT_EMAILTEMPLATE_NEW_SUCCESS + ' \"' + data.template_name +'\"',
                     container: '#alert',
                     dismissable: false,
-                    show: true,
+                    show: true
                 });
             }, function (httpResponse) {
                 $alert({
                     title: '',
                     type: 'danger',
-                    content: _translations.ALERT_EMAILTEMPLATE_NEW_FAIL + '(' + httpReponse.status +')',
+                    content: _translations.ALERT_EMAILTEMPLATE_NEW_FAIL + ' (' + httpReponse.status +')',
                     container: '#alert',
                     dismissable: false,
-                    show: true,
+                    show: true
                 });
             });
         }
@@ -1204,10 +1204,19 @@ mainAppCtrls.controller('NewEmailTemplateCtrl',['$scope',"EmailTemplate",'$trans
  * @description Controller initializing the creation of a new workshop template
  * @requires restSvcs.WorkshopTemplate
  */
-mainAppCtrls.controller('NewWorkshopTemplateCtrl',['$scope',"WorkshopTemplate",'$alert',
-    function($scope, WorkshopTemplate,$alert) {
+mainAppCtrls.controller('NewWorkshopTemplateCtrl',['$scope',"WorkshopTemplate",'$translate','$alert',
+    function($scope, WorkshopTemplate,$translate,$alert) {
         $scope.workshop = {};
         $scope.myAlert;
+        
+        //Get translations for errors and store in array
+        var _translations = {};
+        //Pass all required translation IDs to translate service
+        $translate(['ALERT_WORKSHOPTEMPLATE_NEW_SUCCESS',
+            'ALERT_WORKSHOPTEMPLATE_NEW_FAIL','ALERT_WORKSHOPTEMPLATE_NOT_FOUND']).
+        then(function(translations){
+            _translations = translations;
+        });
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:NewWorkshopTemplateCtrl#sendInfo
@@ -1248,21 +1257,19 @@ mainAppCtrls.controller('NewWorkshopTemplateCtrl',['$scope',"WorkshopTemplate",'
                 $scope.myAlert = $alert({
                    container: '#alert',
                    type: 'success',
-                   title: 'Success',
-                   content: 'Successfully created workshop-template '+$scope.workshop.title,
+                   title: '',
+                   content: _translations.ALERT_WORKSHOPTEMPLATE_NEW_SUCCESS + ' \"' + data.title +'\"',
                    show: true,
-                   dismissable: false,
-                   duration: 20
+                   dismissable: false
                 });
             },function(httpResponse){
                 $scope.myAlert = $alert({
                     container: '#alert',
                     type: 'danger',
-                    title: 'Error',
-                    content: 'Failed to create template! '+httpResponse.status,
+                    title: '',
+                    content:  _translations.ALERT_WORKSHOPTEMPLATE_NEW_FAIL + ' (' + httpReponse.status +')',
                     show: true,
-                    dismissable: false,
-                    duration: 20
+                    dismissable: false
                 });
             });
         };
@@ -1739,10 +1746,20 @@ mainAppCtrls.controller('WorkshopListCtrl',['$scope','Workshops','$alert','$tran
  * @description Displays the workshop-template list in the associated view
  * @requires restSvcs.WorkshopTemplate
  */
-mainAppCtrls.controller('WorkshopTemplateCtrl', ['$scope', "WorkshopTemplate",'$alert',
+mainAppCtrls.controller('WorkshopTemplateCtrl', ['$scope', "WorkshopTemplate",'$translate','$alert',
 
-    function ($scope, WorkshopTemplate, $alert) {
+    function ($scope, WorkshopTemplate,$translate,$alert) {
 
+
+        //Get translations for errors and store in array
+        var _translations = {};
+        //Pass all required translation IDs to translate service
+        $translate(['ALERT_WORKSHOPTEMPLATE_LIST_EMPTY',
+            'ALERT_WORKSHOPTEMPLATE_DELETED_SUCCESS','ALERT_WORKSHOPTEMPLATE_DELETED_FAIL']).
+        then(function(translations){
+            _translations = translations;
+        });
+        
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:WorkshopTemplateCtrl#loadTemplates
@@ -1760,13 +1777,12 @@ mainAppCtrls.controller('WorkshopTemplateCtrl', ['$scope', "WorkshopTemplate",'$
                 if(httpResponse.status == 404){
                     $scope.data = {};
                     $alert({
-                        title:"Warning",
+                        title: '',
                         type: 'warning',
                         container:'#alert',
                         show: true,
                         dismissable: false,
-                        content: 'No workshops templates in list',
-                        duration: 20
+                        content: _translations.ALERT_WORKSHOPTEMPLATE_LIST_EMPTY + ' (' + httpReponse.status +')',
                     })
                 }
                 $scope.loading = false;
@@ -1783,18 +1799,25 @@ mainAppCtrls.controller('WorkshopTemplateCtrl', ['$scope', "WorkshopTemplate",'$
         $scope.delete = function (_id) {
             WorkshopTemplate.delete({id:_id}).$promise.then(function(httpresponse){
                     $alert({
-                        title:'Success',
+                        title:'',
                         type: 'success',
                         container:'#alert',
                         show: true,
                         dismissable: false,
-                        content: 'Successfully deleted',
+                        content: _translations.ALERT_WORKSHOPTEMPLATE_DELETED_SUCCESS,
                         duration: 20
                     });
                     loadTemplates();
                 }
                 , function (httpResponse) {
-                    alert('Error');
+                    $alert({
+                        title: '',
+                        type: 'danger',
+                        content: _translations.ALERT_WORKSHOPTEMPLATE_DELETED_FAIL + ' (' + httpReponse.status +')',
+                        container: '#alert',
+                        dismissable: false,
+                        show: true
+                    });
                 }
             )
 
