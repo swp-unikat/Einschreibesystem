@@ -38,19 +38,19 @@ mainAppCtrls.controller('NewEmailTemplateCtrl',['$scope',"EmailTemplate",'$trans
                 $alert({
                     title: '',
                     type: 'success',
-                    content: _translations.ALERT_EMAILTEMPLATE_NEW_SUCCESS + '\"' + data.template_name +'\"',
+                    content: _translations.ALERT_EMAILTEMPLATE_NEW_SUCCESS + ' \"' + data.template_name +'\"',
                     container: '#alert',
                     dismissable: false,
-                    show: true,
+                    show: true
                 });
             }, function (httpResponse) {
                 $alert({
                     title: '',
                     type: 'danger',
-                    content: _translations.ALERT_EMAILTEMPLATE_NEW_FAIL + '(' + httpReponse.status +')',
+                    content: _translations.ALERT_EMAILTEMPLATE_NEW_FAIL + ' (' + httpReponse.status +')',
                     container: '#alert',
                     dismissable: false,
-                    show: true,
+                    show: true
                 });
             });
         }
