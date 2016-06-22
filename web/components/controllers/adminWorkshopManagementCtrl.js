@@ -33,43 +33,74 @@ mainAppCtrls.controller('adminWorkshopManagementCtrl',['$scope','AdminWorkshop',
             $scope.errorTitle = translations.TITLE_ERROR;
             $scope.errorMsg = translations.ERROR_NO_WORKSHOPS;
         });
-        $scope.loading = true;
-        AdminWorkshop.gethistory().$promise.then(function(value){
-            var workshopList = value;
-            $scope.loading = false;
-            for(var i=0;i<workshopList.length;i++) {
-                if(compareToCurrent(workshopList[i].start_at))
-                    $scope.currentList.push(workshopList[i]);
-                else
-                    $scope.elapsedList.push(workshopList[i]);
-            }
-        },function(httpResponse) {
-            //switch through all possible errors
-            switch(httpResponse.status){
-                //Alert for error 404, no workshops available
-                case 404:
-                    $scope.myAlert = $alert({
+        var loadWorkshops = function() {
+            $scope.loading = true;
+            AdminWorkshop.gethistory().$promise.then(function (value) {
+                var workshopList = value;
+                $scope.currentList = [];
+                $scope.elapsedList = [];
+                $scope.loading = false;
+                for (var i = 0; i < workshopList.length; i++) {
+                    if (compareToCurrent(workshopList[i].start_at))
+                        $scope.currentList.push(workshopList[i]);
+                    else
+                        $scope.elapsedList.push(workshopList[i]);
+                }
+            }, function (httpResponse) {
+                //switch through all possible errors
+                switch (httpResponse.status) {
+                    //Alert for error 404, no workshops available
+                    case 404:
+                        $scope.myAlert = $alert({
 
-                        title: $scope.errorTitle,
-                        type: 'danger',
-                        content: $scope.errorMsg,
-                        container: '#alert',
+                            title: $scope.errorTitle,
+                            type: 'danger',
+                            content: $scope.errorMsg,
+                            container: '#alert',
+                            dismissable: false,
+                            show: true
+                        });
+                    case 500:
+                        $scope.myAlert = $alert({
+                            title: $scope.errorTitle,
+                            type: 'danger',
+                            content: 'Internal server error.',
+                            container: '#alert',
+                            dismissable: false,
+                            show: true
+                        })
+                        break;
+                }
+                $scope.loading = false;
+            });
+        };
+        loadWorkshops();
+        /**
+         * @ngdoc function
+         * @name mainAppCtrls.controller:adminWorkshopManagementCtrl#delete
+         * @methodOf mainAppCtrls.controller:adminWorkshopManagementCtrl
+         * @description Function removes a single Workshop from the list
+         * @params {number} _id workshop id, which should be removed
+         */
+        $scope.delete = function (_id) {
+            AdminWorkshop.delete({id:_id}).$promise.then(function(httpResponse){
+                    $alert({
+                        title:'Success',
+                        type: 'success',
+                        container:'#alert',
+                        show: true,
                         dismissable: false,
-                        show: true
+                        content: 'Successfully deleted',
+                        duration: 20
                     });
-                case 500:
-                    $scope.myAlert = $alert({
-                        title: $scope.errorTitle,
-                        type: 'danger',
-                        content: 'Internal server error.',
-                        container: '#alert',
-                        dismissable: false,
-                        show: true
-                    })
-                    break;
-            }
-            $scope.loading = false;
-        });
+                    loadWorkshops();
+                }
+                , function (httpResponse) {
+                    alert('Error');
+                }
+            )
+
+        }
 
     }
 ]);
