@@ -89,7 +89,7 @@ mainAppCtrls.controller('adminWorkshopManagementCtrl',['$scope','AdminWorkshop',
                         type: 'success',
                         container:'#alert',
                         show: true,
-                        dismissable: false,
+                        dismissable: true,
                         content: 'Successfully deleted',
                         duration: 20
                     });
