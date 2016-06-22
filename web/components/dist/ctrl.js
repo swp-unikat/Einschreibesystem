@@ -1172,10 +1172,19 @@ mainAppCtrls.controller('NewEmailTemplateCtrl',['$scope',"EmailTemplate",'$trans
  * @description Controller initializing the creation of a new workshop template
  * @requires restSvcs.WorkshopTemplate
  */
-mainAppCtrls.controller('NewWorkshopTemplateCtrl',['$scope',"WorkshopTemplate",'$alert',
-    function($scope, WorkshopTemplate,$alert) {
+mainAppCtrls.controller('NewWorkshopTemplateCtrl',['$scope',"WorkshopTemplate",'$translate','$alert',
+    function($scope, WorkshopTemplate,$translate,$alert) {
         $scope.workshop = {};
         $scope.myAlert;
+        
+        //Get translations for errors and store in array
+        var _translations = {};
+        //Pass all required translation IDs to translate service
+        $translate(['ALERT_WORKSHOPTEMPLATE_NEW_SUCCESS',
+            'ALERT_WORKSHOPTEMPLATE_NEW_FAIL','ALERT_WORKSHOPTEMPLATE_NOT_FOUND']).
+        then(function(translations){
+            _translations = translations;
+        });
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:NewWorkshopTemplateCtrl#sendInfo
@@ -1216,21 +1225,19 @@ mainAppCtrls.controller('NewWorkshopTemplateCtrl',['$scope',"WorkshopTemplate",'
                 $scope.myAlert = $alert({
                    container: '#alert',
                    type: 'success',
-                   title: 'Success',
-                   content: 'Successfully created workshop-template '+$scope.workshop.title,
+                   title: '',
+                   content: _translations.ALERT_WORKSHOPTEMPLATE_NEW_SUCCESS + '\"' + data.title +'\"',
                    show: true,
                    dismissable: false,
-                   duration: 20
                 });
             },function(httpResponse){
                 $scope.myAlert = $alert({
                     container: '#alert',
                     type: 'danger',
-                    title: 'Error',
-                    content: 'Failed to create template! '+httpResponse.status,
+                    title: '',
+                    content:  _translations.ALERT_WORKSHOPTEMPLATE_NEW_FAIL + '(' + httpReponse.status +')',
                     show: true,
                     dismissable: false,
-                    duration: 20
                 });
             });
         };
