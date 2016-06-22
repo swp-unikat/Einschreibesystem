@@ -8,8 +8,8 @@ var mainAppCtrls = angular.module("mainAppCtrls");
  * @description Controller to create a new email template
  * @requires restSvcs.EmailTemplate
  */
-mainAppCtrls.controller('NewEmailTemplateCtrl',['$scope',"EmailTemplate",'$translate',
-    function($scope, EmailTemplate,$translate) {
+mainAppCtrls.controller('NewEmailTemplateCtrl',['$scope',"EmailTemplate",'$translate','$alert',
+    function($scope, EmailTemplate,$translate,$alert) {
         
         //Get translations for errors and store in array
         var _translations = {};
@@ -32,10 +32,26 @@ mainAppCtrls.controller('NewEmailTemplateCtrl',['$scope',"EmailTemplate",'$trans
                 email_subject:$scope.email.template.subject,
                 email_body:$scope.email.template.body
             }
-            EmailTemplate.put(data).$promise.then(function(httpResponse){
-                alert('Success!' + httpResponse.status);
-            },function(httpResponse){
-                alert('Error'+httpResponse.statusText);
+            
+            EmailTemplate.put(data).$promise.then(function (httpResponse) {
+                
+                $alert({
+                    title: '',
+                    type: 'success',
+                    content: _translations.ALERT_EMAILTEMPLATE_NEW_SUCCESS + '\"' + data.template_name +'\"',
+                    container: '#alert',
+                    dismissable: false,
+                    show: true,
+                });
+            }, function (httpResponse) {
+                $alert({
+                    title: '',
+                    type: 'danger',
+                    content: _translations.ALERT_EMAILTEMPLATE_NEW_FAIL + '(' + httpReponse.status +')',
+                    container: '#alert',
+                    dismissable: false,
+                    show: true,
+                });
             });
         }
         /**
