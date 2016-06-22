@@ -41,7 +41,7 @@ mainAppCtrls.controller('NewEmailTemplateCtrl',['$scope',"EmailTemplate",'$trans
                     content: _translations.ALERT_EMAILTEMPLATE_NEW_SUCCESS + ' \"' + data.template_name +'\"',
                     container: '#alert',
                     dismissable: false,
-                    show: true,
+                    show: true
                 });
             }, function (httpResponse) {
                 $alert({
@@ -50,7 +50,7 @@ mainAppCtrls.controller('NewEmailTemplateCtrl',['$scope',"EmailTemplate",'$trans
                     content: _translations.ALERT_EMAILTEMPLATE_NEW_FAIL + ' (' + httpReponse.status +')',
                     container: '#alert',
                     dismissable: false,
-                    show: true,
+                    show: true
                 });
             });
         }

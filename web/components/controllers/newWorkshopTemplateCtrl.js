@@ -64,7 +64,7 @@ mainAppCtrls.controller('NewWorkshopTemplateCtrl',['$scope',"WorkshopTemplate",'
                    title: '',
                    content: _translations.ALERT_WORKSHOPTEMPLATE_NEW_SUCCESS + ' \"' + data.title +'\"',
                    show: true,
-                   dismissable: false,
+                   dismissable: false
                 });
             },function(httpResponse){
                 $scope.myAlert = $alert({
@@ -73,7 +73,7 @@ mainAppCtrls.controller('NewWorkshopTemplateCtrl',['$scope',"WorkshopTemplate",'
                     title: '',
                     content:  _translations.ALERT_WORKSHOPTEMPLATE_NEW_FAIL + ' (' + httpReponse.status +')',
                     show: true,
-                    dismissable: false,
+                    dismissable: false
                 });
             });
         };
