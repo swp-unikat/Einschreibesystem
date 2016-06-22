@@ -6,10 +6,19 @@ var mainAppCtrls = angular.module("mainAppCtrls");
  * @description Controller show you a list of blacklisted users
  * @requires restSvcs.Participants
  */
-    mainAppCtrls.controller('BlacklistCtrl', ['$scope', "Participants",'$alert','$modal',
+    mainAppCtrls.controller('BlacklistCtrl', ['$scope', "Participants",'$alert','$modal','$translate',
 
-        function ($scope, Participants, $alert,$modal) {
+        function ($scope, Participants, $alert,$modal,$translate) {
 
+
+            //Get translations for errors and store in array
+            var _translations = {};
+            //Pass all required translation IDs to translate service
+            $translate(['ALERT_BLACKLIST_DELETE_PARTICIPANT',
+                'ALERT_BLACKLIST_DELETE_PARTICIPANT','ALERT_WORKSHOPTEMPLATE_DELETED_FAIL']).
+            then(function(translations){
+                _translations = translations;
+            });
                 /**
                  * @ngdoc function
                  * @name mainAppCtrls.controller:BlacklistCtrl#loadingBlacklist
@@ -39,19 +48,26 @@ var mainAppCtrls = angular.module("mainAppCtrls");
                 Participants.deleteParticipant({id:_id}).$promise.then(function(httpResponse){
                        $scope.deleting = false;
                         $alert({
-                            title:'Success',
+                            title:'',
                             type: 'success',
                             container:'#alert',
                             show: true,
                             dismissable: false,
-                            content: 'Successfully deleted',
+                            content: _translations.ALERT_BLACKLIST_DELETE_PARTICIPANT,
                             duration: 20
                         });
                         loadBlacklist();
                     }
                     , function (httpResponse) {
                         $scope.deleting = false;
-                        alert('Error');
+                        $alert({
+                            title: '',
+                            type: 'danger',
+                            content: _translations.ALERT_BLACKLIST_DELETE_PARTICIPANT_FAIL + ' (' + httpReponse.status +')',
+                            container: '#alert',
+                            dismissable: false,
+                            show: true
+                        });
                     }
                 )
 
