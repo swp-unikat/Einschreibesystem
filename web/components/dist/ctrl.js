@@ -326,9 +326,19 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
  * @requires restSvcs.Workshops
  * @requires restSvcs.AdminWorkshop
  */
-mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorkshop",
-    function($scope, Workshops, AdminWorkshop) {
+mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorkshop",'WorkshopTemplate',
+    function($scope, Workshops, AdminWorkshop,WorkshopTemplate) {
         $scope.workshop = {};
+
+        //load available Workshoptemplates for list
+        WorkshopTemplate.getAll().$promise.then(function(response){
+            $scope.templates = response;
+        },function(response){
+
+        });
+        $scope.loadTemplate = function(){
+            $scope.workshop = JSON.parse(JSON.stringify($scope.selectedTemplate));
+        };
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:AdminNewWorkshopCtrl#sendInfo
@@ -371,6 +381,7 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
          * @methodOf mainAppCtrls.controller:AdminNewWorkshopCtrl
          */
         $scope.discard = function(){
+
             $scope.workshop.title= "";
             $scope.workshop.description= "";
             $scope.workshop.cost= "";
@@ -379,7 +390,10 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
             $scope.workshop.sharedDate= "";
             $scope.workshop.start_at= "";
             $scope.workshop.duration= "";
-            $scope.workshop.max.participants= "";
+            $scope.workshop.max_participants= "";
+            if($scope.selectedTemplate != null){
+                $scope.workshop = JSON.parse(JSON.stringify($scope.selectedTemplate));
+            }
 
 
 
