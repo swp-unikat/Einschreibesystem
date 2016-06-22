@@ -1096,8 +1096,18 @@ mainAppCtrls.controller('LoginCtrl',['$scope','$http','store','$state','jwtHelpe
  * @description Controller to create a new email template
  * @requires restSvcs.EmailTemplate
  */
-mainAppCtrls.controller('NewEmailTemplateCtrl',['$scope',"EmailTemplate",
-    function($scope, EmailTemplate) {
+mainAppCtrls.controller('NewEmailTemplateCtrl',['$scope',"EmailTemplate",'$translate','$alert',
+    function($scope, EmailTemplate,$translate,$alert) {
+        
+        //Get translations for errors and store in array
+        var _translations = {};
+        //Pass all required translation IDs to translate service
+        $translate(['ALERT_EMAILTEMPLATE_NEW_SUCCESS',
+            'ALERT_EMAILTEMPLATE_NEW_FAIL','ALERT_EMAILTEMPLATE_NOT_FOUND']).
+        then(function(translations){
+            _translations = translations;
+        });
+        
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:NewEmailTemplateCtrl#sendInfo
@@ -1110,10 +1120,26 @@ mainAppCtrls.controller('NewEmailTemplateCtrl',['$scope',"EmailTemplate",
                 email_subject:$scope.email.template.subject,
                 email_body:$scope.email.template.body
             }
-            EmailTemplate.put(data).$promise.then(function(httpResponse){
-                alert('Success!' + httpResponse.status);
-            },function(httpResponse){
-                alert('Error'+httpResponse.statusText);
+            
+            EmailTemplate.put(data).$promise.then(function (httpResponse) {
+                
+                $alert({
+                    title: '',
+                    type: 'success',
+                    content: _translations.ALERT_EMAILTEMPLATE_NEW_SUCCESS + '\"' + data.template_name +'\"',
+                    container: '#alert',
+                    dismissable: false,
+                    show: true,
+                });
+            }, function (httpResponse) {
+                $alert({
+                    title: '',
+                    type: 'danger',
+                    content: _translations.ALERT_EMAILTEMPLATE_NEW_FAIL + '(' + httpReponse.status +')',
+                    container: '#alert',
+                    dismissable: false,
+                    show: true,
+                });
             });
         }
         /**
