@@ -35,6 +35,9 @@ class WorkshopRepository extends EntityRepository
         if (!$result) {
             return false;
         } else {
+            foreach ($result as $key=>$workshop){
+                $result[$key]['numParticipants'] = $this->getParticipants($workshop['id']);
+            }
             return $result;
         }
     }
@@ -60,7 +63,7 @@ class WorkshopRepository extends EntityRepository
     }
     /**
      * function to get participants of a workshop
-     * @param int $workshopID id of a workshop
+     * @param $workshopID int id of a workshop
      */
     public function getParticipants($workshopId){
         $em = $this->getEntityManager();

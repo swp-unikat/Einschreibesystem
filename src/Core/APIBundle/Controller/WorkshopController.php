@@ -51,11 +51,11 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
     public function getAllAction()
     {
         $workshopRepo = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:Workshop');
-        $entity = $workshopRepo->getAllActiveWorkshops();
-        if (!$entity) {
+        $workshops = $workshopRepo->getAllActiveWorkshops();
+        if (!$workshops) {
             throw $this->createNotFoundException("No Workshops found");
         }
-        $view = $this->view($entity, 200);
+        $view = $this->view($workshops, 200);
         return $this->handleView($view);
     }
     
@@ -276,7 +276,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
                 throw $this->createAccessDeniedException("Token ist not valid");
             }
         } else {
-            throw $this->createNotFoundException("Workshop or Token not found");
+            return $this->handleView($this->view(['code' => 404,'message' => "Workshop or Token not found"], 404));
         }
     }
 
@@ -308,7 +308,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
     {
         $waitingList = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:WorkshopParticipants')->findBy(['workshop' => $id,'waiting' => 1],['enrollment' => "DESC"]);
         if (!$waitingList) {
-            throw $this->createNotFoundException("No waitinglist for workshop");
+            return $this->handleView($this->view(['code' => 404,'message' => "No waitinglist for workshop"], 404));
         }
 
         $waiting = [];
@@ -348,7 +348,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
     {  
 	    $participantsList = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:WorkshopParticipants')->findBy(['workshop' => $id],['enrollment' => "DESC"]);
 	    if (!$participantsList) {
-            throw $this->createNotFoundException("No Participant in Workshop found");
+            return $this->handleView($this->view(['code' => 404,'message' => "No Participant in Workshop found"], 404));
          }
         $participants = [];
         foreach($participantsList as $participant){
