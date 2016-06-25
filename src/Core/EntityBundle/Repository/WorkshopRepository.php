@@ -9,6 +9,7 @@ namespace Core\EntityBundle\Repository;
 
 use Core\EntityBundle\Entity\Workshop;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Internal\Hydration\ArrayHydrator;
 use Doctrine\ORM\Query\Expr\Join;
 /**
  * this class provides get functions of the workshops
@@ -31,7 +32,7 @@ class WorkshopRepository extends EntityRepository
             )
             ->orderBy('workshop.start_at', 'ASC');
         $q->setParameter('now', $oDate);
-        $result = $q->getQuery()->getResult();
+        $result = $q->getQuery()->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
         if (!$result) {
             return false;
         } else {
