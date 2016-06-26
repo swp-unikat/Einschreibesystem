@@ -150,9 +150,10 @@ class AdminController extends FOSRestController implements ClassResourceInterfac
             $admin->setEmail($params['email']);
             $admin->setUsername($params['username']);
             $admin->setPlainPassword($params["password"]);
+            $admin->setEnabled(true);
             $invitation->setUsed(true);
         } else {
-            throw $this->createAccessDeniedException("No invitation was sended!");
+            throw $this->createAccessDeniedException("No invitation was sended or the invitation was already used");
         }
 
         $this->getDoctrine()->getManager()->persist($admin);
