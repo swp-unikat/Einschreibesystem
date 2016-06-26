@@ -7,7 +7,7 @@ imports:
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
-    email_sender: "%sender%"
+    email_sender: "%mail%"
 
 framework:
     #esi:             ~
