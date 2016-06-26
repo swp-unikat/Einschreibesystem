@@ -166,7 +166,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
         /* Sending E-Mail with Confirmation Link*/
         $message = \Swift_Message::newInstance()
             ->setSubject($this->get('twig')->createTemplate($template->getEmailSubject())->render(["workshop" => $workshop]))
-            ->setFrom("info@sky-lab.de")
+            ->setFrom($this->getParameter('email_sender'))
             ->setTo($participant->getEmail())
             ->setBody($renderTemplate->render(["workshop" => $workshop,"participant" => $participant,'url' => $url]),'text/html');
         $this->get('mailer')->send($message);

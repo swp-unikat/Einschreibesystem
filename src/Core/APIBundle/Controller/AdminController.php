@@ -104,7 +104,7 @@ class AdminController extends FOSRestController implements ClassResourceInterfac
          /* Sending E-Mail */
          $message = \Swift_Message::newInstance()
              ->setSubject($template->getEmailSubject())
-             ->setFrom('send@example.com')//unsure which email!
+             ->setFrom($this->getParameter('email_sender'))
              ->setTo($email)
              ->setBody($renderTemplate->render(['user' => $user]), 'text/html');
          $this->get('mailer')->send($message);
