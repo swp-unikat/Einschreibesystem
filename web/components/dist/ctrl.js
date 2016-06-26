@@ -348,9 +348,11 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
         $scope.sendInfo = function(){
             //Adjusts the format of the date strings to fit the requirements of the API
             var reformatDate =  function(_date){
-                if(!_date)
+                if(!_date || _date == null)
                     return "";
                 var _dateStr = _date.toJSON();
+                if(_dateStr == null)
+                    return "";
                 _dateStr =  _dateStr.slice(0,_dateStr.length-5);
                 return _dateStr.replace('T',' ');
             };
@@ -1022,25 +1024,61 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
 ]);
 
 // Source: web/components/controllers/enrollmentConfirmCtrl.js
-/**
- * Created by hunte on 30/05/2016.
- */
+//TODO Internationaliserung
 
 /**
  * @ngdoc controller
  * @name mainAppCtrls.controller:EnrollmentConfirmCtrl
  * @description Controller for showing enrollment confirm
  */
-mainAppCtrls.controller('EnrollmentConfirmCtrl',['$scope','Workshops','$stateParams',
-    function($scope,Workshops,$stateParams) {
-        Workshops.getConfirmEnrollment({
+mainAppCtrls.controller('EnrollmentConfirmCtrl',['$scope','Workshops','$stateParams','$alert',
+    function($scope,Workshops,$stateParams,$alert) {
+        $scope.workshop = {};
+        $scope.loading = true;
+        Workshops.getWorkshop({id: $stateParams.workshopid}).$promise.then(function(value){
+            $scope.workshop = value;
+            var _ea = Date.parse($scope.workshop.end_at);
+            var _sa = Date.parse($scope.workshop.start_at);
+            $scope.workshop.duration = new Date(_ea - _sa);
+            
+        },function(value){
+            $alert({
+                container: '#alert',
+                dismissable: false,
+                show: true,
+                title: 'Error',
+                content: "Couldn't find the workshop you tried to enrol to.",
+                type: 'danger'
+            });
+        });
+        Workshops.confirmEnroll({
             id: $stateParams.workshopid,
             userid: $stateParams.userid,
             token: $stateParams.token
         }).$promise.then(function(value){
-
+            $alert({
+                container: '#alert',
+                dismissable: false,
+                show: true,
+                title: 'Success',
+                content: 'Successfully enrolled to workshop \"' + $scope.workshop.title + '\"',
+                type: 'success'
+            });
+            $scope.loading = false;
         },function(httpResponse){
-
+            switch(httpResponse.status){
+                case 404:
+                    $alert({
+                       container: '#alert',
+                       dismissable: false,
+                       show: true,
+                       title: 'Error',
+                       content: 'Invalid enrolment link. If you received this link via e-mail, please contact an administrator.',
+                       type: 'danger'
+                    });
+                    break;
+            }
+            $scope.loading = false;
         });
     }
 
@@ -1643,6 +1681,7 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
               id: workshopid
             };
             Workshops.enroll(_params,_data).$promise.then(function(value,httpResponse){
+                //TODO internationalisierung
                 $alert({
                     title: 'Success',
                     type: 'success',
@@ -1654,6 +1693,7 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
                     animation: 'am-fade-and-slide-top'
                 });
             },function(httpResponse){
+                //TODO internationalisierung
                 $alert({
                     title: 'Error',
                     type: 'danger',
@@ -1666,13 +1706,6 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
                 });
             });
         };
-
-
-
-
-
-
-
 
         $scope.loading = true;
         Workshops.get({id: workshopid}).$promise.then(function(value,httpResponse){

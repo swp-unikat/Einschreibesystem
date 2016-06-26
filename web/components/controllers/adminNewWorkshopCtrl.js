@@ -31,9 +31,11 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
         $scope.sendInfo = function(){
             //Adjusts the format of the date strings to fit the requirements of the API
             var reformatDate =  function(_date){
-                if(!_date)
+                if(!_date || _date == null)
                     return "";
                 var _dateStr = _date.toJSON();
+                if(_dateStr == null)
+                    return "";
                 _dateStr =  _dateStr.slice(0,_dateStr.length-5);
                 return _dateStr.replace('T',' ');
             };

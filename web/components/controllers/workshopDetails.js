@@ -35,6 +35,7 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
               id: workshopid
             };
             Workshops.enroll(_params,_data).$promise.then(function(value,httpResponse){
+                //TODO internationalisierung
                 $alert({
                     title: 'Success',
                     type: 'success',
@@ -46,6 +47,7 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
                     animation: 'am-fade-and-slide-top'
                 });
             },function(httpResponse){
+                //TODO internationalisierung
                 $alert({
                     title: 'Error',
                     type: 'danger',
@@ -58,13 +60,6 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
                 });
             });
         };
-
-
-
-
-
-
-
 
         $scope.loading = true;
         Workshops.get({id: workshopid}).$promise.then(function(value,httpResponse){

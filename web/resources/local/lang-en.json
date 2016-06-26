@@ -147,6 +147,7 @@
   "PASSWORDS_IDENTICAL_ERROR": "Passwords have to be identical",
   "PASSWORD_EMPTY_ERROR": "Password cannot be empty",
   "BUTTON_SEND_SUBSCRIBE_CONFIRMATION":"Send confirm email",
-  "BUTTON_PRINT_LIST_OF_PARTICIPANTS":"Print list of Participants"
+  "BUTTON_PRINT_LIST_OF_PARTICIPANTS":"Print list of Participants",
+  "ENROLMENT_CONFIRM": "Enrolment confirm"
 
 }
