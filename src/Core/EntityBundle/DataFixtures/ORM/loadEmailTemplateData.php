@@ -33,9 +33,9 @@ class loadEmailTemplate implements FixtureInterface
         $manager->persist($emailTemplate);
         
         $emailTemplate2 = new EmailTemplate();
-        $emailTemplate2->setTemplateName("Bestätigung");
-        $emailTemplate2->setEmailSubject("Bestätigung der Anmeldung");
-        $emailTemplate2->setEmailBody("Hallo {{participant.surname}},<br> mit folgendem Link <a href='{{url}}'>{{url}} bestätigen Sie ihre Anmeldung.");
+        $emailTemplate2->setTemplateName("Invitation");
+        $emailTemplate2->setEmailSubject("We invite you to be a part of our team");
+        $emailTemplate2->setEmailBody("Hello {{email},<br> we would be pleas it you be a part of our team pleas follow the link below. <br> <a href='{{url}}'>{{url}}</a>");
         $emailTemplate2->setProtected(true);
         $manager->persist($emailTemplate2);
         

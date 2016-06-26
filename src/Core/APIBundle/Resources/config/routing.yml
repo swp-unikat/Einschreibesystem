@@ -7,7 +7,7 @@ service_workshop:
 service_admin:
     type: rest
     prefix: /api
-    resource: "@CoreAPIBundle/Controller/AdminController.php"
+    resource: "@CoreAPIBundle/Controller/UserController.php"
     name_prefix:  api_admin_ # naming collision
 
 
