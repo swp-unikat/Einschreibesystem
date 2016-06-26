@@ -119,12 +119,7 @@ class AdminController extends FOSRestController implements ClassResourceInterfac
      *  statusCodes = {
      *      200 = "Returned when successful",
      *      404 = "Returned when the data is not found"
-     *  },requirements={{
-     *        "name"="adminId",
-     *        "dataType"="integer",
-     *        "requirement"="\d+",
-     *        "description"="Admin ID"
-     * }}
+     *  }
      * )
      *
      * @return \Symfony\Component\HttpFoundation\Response
@@ -140,7 +135,7 @@ class AdminController extends FOSRestController implements ClassResourceInterfac
         //$params is array with E-Mail Password and Token (Code)
         $params = $paramFetcher->all();
         //find invitation in database
-        $invitation = $this->getDoctrine()->getManager()->getRepository("invitation")->findOneBy(['code' => $params['code']]);
+        $invitation = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Invitation")->findOneBy(['code' => $params['code']]);
         //check if invitation parameter sended is true
         if ($invitation->isSend()) {
             //FOSUserBundle
