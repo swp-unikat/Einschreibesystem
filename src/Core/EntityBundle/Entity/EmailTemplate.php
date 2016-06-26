@@ -56,7 +56,12 @@ class EmailTemplate{
      * @Serializer\SerializedName("email_body")
      */
     public $protected;
-    
+
+    public function __construct()
+    {
+        $this->setProtected(false);
+    }
+
     /**
      * function to get id of e-mailtemplate
      * @return mixed
