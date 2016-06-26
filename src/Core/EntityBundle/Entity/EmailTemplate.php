@@ -49,6 +49,15 @@ class EmailTemplate{
     public $email_body;
 
     /**
+     * protection
+     * @var boolean
+     * @ORM\Column(name="protected", type="boolean", nullable=false)
+     * @Serializer\Expose
+     * @Serializer\SerializedName("email_body")
+     */
+    public $protected;
+    
+    /**
      * function to get id of e-mailtemplate
      * @return mixed
      */
@@ -120,5 +129,22 @@ class EmailTemplate{
         $this->email_body = $email_body;
     }
 
+    /**
+     * @return boolean
+     */
+    public function isProtected()
+    {
+        return $this->protected;
+    }
+
+    /**
+     * @param boolean $protected
+     */
+    public function setProtected($protected)
+    {
+        $this->protected = $protected;
+    }
+    
+    
 
 }

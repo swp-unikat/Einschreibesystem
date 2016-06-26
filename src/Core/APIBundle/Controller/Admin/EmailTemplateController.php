@@ -264,9 +264,14 @@ class EmailTemplateController extends FOSRestController implements ClassResource
         if (!$emailTemplate) {
             throw $this->createNotFoundException("EmailTemplate not found");
         }
+
+        if($emailTemplate->isProtected()){
+            return $this->handleView($this->view(['code' => 403,'message' => "This template ist protected."], 403));
+        }
+
         $this->getDoctrine()->getManager()->remove($emailTemplate);
         $this->getDoctrine()->getManager()->flush();
-        return View::create(null, Codes::HTTP_NO_CONTENT);
+        return View::create(null, Codes::HTTP_OK);
 	    
     }
 }
