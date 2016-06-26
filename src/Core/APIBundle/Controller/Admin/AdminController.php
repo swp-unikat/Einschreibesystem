@@ -62,7 +62,7 @@ class AdminController extends FOSRestController implements ClassResourceInterfac
             ->setTo($email)
             ->setBody($renderTemplate->render(["url" => $url, "email" => $email]), 'text/html');
         $this->get('mailer')->send($message);
-        $invitation->send(); //prevents sending invitations twice
+        $invitation->setSent(true); //prevents sending invitations twice
         $this->getDoctrine()->getManager()->persist($invitation);
         $this->getDoctrine()->getManager()->flush();
 
