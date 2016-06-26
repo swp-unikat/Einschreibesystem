@@ -1,9 +1,7 @@
 <?php
 /**
  * Created by IntelliJ IDEA.
- * User: Leon Bergmann
- * Company: SkyLab UG(haftungsbeschränkt)
- * Authors: Leon Bergmann 
+ * Authors: Leon Bergmann, Martin Griebel, Marco Hanisch 
  * Date: 29.04.2016
  * Time: 16:44
  */
@@ -54,18 +52,25 @@ class EmailController extends FOSRestController implements ClassResourceInterfac
      *
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\View()
-     * @param $workshopID id of a workshop
+     * @param $workshopId int id of a workshop
+     * @param $request Request
      */
-    public function sendAction($workshopId)
+    public function postSendAction($workshopId,Request $request)
     {
-	    $workshopParticipants = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:WorkshopParticipants")->findBy(['workshop'=> $workshopId]);
+        $renderTemplate = $this->get('twig')->createTemplate($request->get('content'));
 
-    }
-    /**
-     * function to set the state of a workshop on notify
-     * @param $workshopID id of a workshop
-     */
-    public function notifyAction($workshopId){
+        $workshopParticipants = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:WorkshopParticipants")->findBy(['workshop'=> $workshopId]);
+
+        foreach ($workshopParticipants as $participant)
+        {
+            $message = \Swift_Message::newInstance()
+                ->setSubject($request->get('subject'))
+                ->setFrom('send@example.com')//unsure which email!
+                ->setTo($participant->getParticipant()->getEmail())
+                ->setBody($renderTemplate->render(['participant' => $participant,'workshop' => $participant->getWorkshop()]), 'text/html');
+            $this->get('mailer')->send($message);
+        }
         
     }
+
 }

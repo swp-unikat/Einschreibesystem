@@ -1,8 +1,7 @@
 <?php
 /**
  * Created by IntelliJ IDEA.
- * User: Leon Bergmann
- * Company: SkyLab UG(haftungsbeschränkt)
+ * Authors: Leon Bergmann, Marco Hanisch
  * Date: 02/05/16
  * Time: 18:29
  */
@@ -11,11 +10,13 @@ namespace Core\EntityBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 /**
+ * this class provides entitys of a e-mailtemplate and functions of a e-mailtemplate
  * @ORM\Entity()
  * @ORM\Table(name="email_template")
  */
 class EmailTemplate{
     /**
+     * id of e-mailtemplate
      * @var int
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -23,6 +24,7 @@ class EmailTemplate{
      */
     public $id;
     /**
+     * name of e-mailtemplate
      * @var string
      * @ORM\Column(name="template_name", type="string", nullable=false)
      * @Serializer\Expose
@@ -30,6 +32,7 @@ class EmailTemplate{
      */
     public $template_name;
     /**
+     * subject of e-mailtemplate
      * @var string
      * @ORM\Column(name="email_subject", type="string", nullable=false)
      * @Serializer\Expose
@@ -37,6 +40,7 @@ class EmailTemplate{
      */
     public $email_subject;
     /**
+     * body of e-mailtemplate
      * @var string
      * @ORM\Column(name="email_body", type="string", nullable=false)
      * @Serializer\Expose
@@ -45,6 +49,7 @@ class EmailTemplate{
     public $email_body;
 
     /**
+     * function to get id of e-mailtemplate
      * @return mixed
      */
     public function getId()
@@ -53,6 +58,7 @@ class EmailTemplate{
     }
 
     /**
+     * function to set id of e-mailtemplate
      * @param mixed $id
      */
     public function setId($id)
@@ -61,6 +67,7 @@ class EmailTemplate{
     }
 
     /**
+     * function to get name of e-mailtemplate
      * @return mixed
      */
     public function getTemplateName()
@@ -69,6 +76,7 @@ class EmailTemplate{
     }
 
     /**
+     * function to set name of e-mailtemplate
      * @param mixed $template_name
      */
     public function setTemplateName($template_name)
@@ -77,6 +85,7 @@ class EmailTemplate{
     }
 
     /**
+     * function to get subject of e-mailtemplate
      * @return mixed
      */
     public function getEmailSubject()
@@ -85,6 +94,7 @@ class EmailTemplate{
     }
 
     /**
+     * function to set e-mailtemplate
      * @param mixed $email_subject
      */
     public function setEmailSubject($email_subject)
@@ -93,6 +103,7 @@ class EmailTemplate{
     }
 
     /**
+     * function to get body of e-mailtemplate
      * @return mixed
      */
     public function getEmailBody()
@@ -101,6 +112,7 @@ class EmailTemplate{
     }
 
     /**
+     * function to set body of e-mailtemplate
      * @param mixed $email_body
      */
     public function setEmailBody($email_body)

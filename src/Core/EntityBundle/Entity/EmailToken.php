@@ -1,8 +1,7 @@
 <?php
 /**
  * Created by IntelliJ IDEA.
- * User: Leon Bergmann
- * Company: SkyLab UG(haftungsbeschränkt) 
+ * Authors: Leon Bergmann, Marco Hanisch
  * Date: 02/05/16
  * Time: 18:36
  */
@@ -14,9 +13,11 @@ use JMS\Serializer\Annotation as Serializer;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="email_token")
+ * this class provides all entitys of e-mailtoken and all functions of e-mailtoken
  */
 class EmailToken{
     /**
+     * id of a e-mail
      * @var int
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -24,6 +25,7 @@ class EmailToken{
      */
     public $id;
     /**
+     * id of a participant
      * @var \Core\EntityBundle\Entity\Participants
      * @ORM\ManyToOne(targetEntity="\Core\EntityBundle\Entity\Participants", cascade={"persist"})
      * @ORM\JoinColumn(name="participant", referencedColumnName="id", onDelete="CASCADE")
@@ -32,6 +34,7 @@ class EmailToken{
      */
     public $participant;
     /**
+     * token of a e-mail
      * @var string
      * @ORM\Column(name="token", type="string", nullable=false)
      * @Serializer\Expose
@@ -39,6 +42,7 @@ class EmailToken{
      */
     public $token;
     /**
+     * creattime and date of emailtoken
      * @var \DateTime
      * @ORM\Column(name="created", type="datetime", nullable=false)
      * @Serializer\Expose
@@ -46,6 +50,7 @@ class EmailToken{
      */
     public $created;
     /**
+     * time and date since the token is valid
      * @var \DateTime
      * @ORM\Column(name="valid_until", type="datetime", nullable=false)
      * @Serializer\Expose
@@ -53,13 +58,16 @@ class EmailToken{
      */
     public $valid_until;
     /**
+     * time and date when the token is used
      * @var \DateTime
      * @ORM\Column(name="used_at", type="datetime", nullable=true)
      * @Serializer\Expose
      * @Serializer\SerializedName("used_at")
      */
     public $used_at;
-
+    /**
+     * function to construct a e-mailtoken
+     */
     public function __construct()
     {
         $this->created = new \DateTime("now");
@@ -69,6 +77,7 @@ class EmailToken{
     }
 
     /**
+     * function to get id
      * @return int
      */
     public function getId()
@@ -77,6 +86,7 @@ class EmailToken{
     }
 
     /**
+     * function to set id
      * @param int $id
      */
     public function setId($id)
@@ -85,6 +95,7 @@ class EmailToken{
     }
 
     /**
+     * function to get participant
      * @return Participants
      */
     public function getParticipant()
@@ -93,6 +104,7 @@ class EmailToken{
     }
 
     /**
+     * function to set participant
      * @param Participants $participant
      */
     public function setParticipant($participant)
@@ -101,6 +113,7 @@ class EmailToken{
     }
 
     /**
+     * function to get token
      * @return string
      */
     public function getToken()
@@ -109,6 +122,7 @@ class EmailToken{
     }
 
     /**
+     * function to set token
      * @param string $token
      */
     public function setToken($token)
@@ -117,6 +131,7 @@ class EmailToken{
     }
 
     /**
+     * function to get creattime and date of the token
      * @return \DateTime
      */
     public function getCreated()
@@ -125,6 +140,7 @@ class EmailToken{
     }
 
     /**
+     * function to set creattime and date of a token
      * @param \DateTime $created
      */
     public function setCreated($created)
@@ -133,6 +149,7 @@ class EmailToken{
     }
 
     /**
+     * function to get time and date since the token is valid
      * @return \DateTime
      */
     public function getValidUntil()
@@ -141,6 +158,7 @@ class EmailToken{
     }
 
     /**
+     * function to set time and date since the token is valid
      * @param \DateTime $valid_until
      */
     public function setValidUntil($valid_until)
@@ -149,6 +167,7 @@ class EmailToken{
     }
 
     /**
+     * function to get time and date when the token is used
      * @return \DateTime
      */
     public function getUsedAt()
@@ -157,6 +176,7 @@ class EmailToken{
     }
 
     /**
+     * function to set the time and date when the token is used
      * @param \DateTime $used_at
      */
     public function setUsedAt($used_at)

@@ -1,8 +1,7 @@
 <?php
 /**
  * Created by IntelliJ IDEA.
- * User: Marco Hanisch
- * Authors: Marco Hanisch
+ * Authors: Marco Hanisch, Leon Bergmann, Andreas Ifland
  * Date: 09.06.2016
  * Time: 11:13
  */
@@ -99,8 +98,15 @@ class AdminController extends FOSRestController implements ClassResourceInterfac
              $user->setConfirmationToken($tokenGenerator->generateToken());
          }
 
-         /*
-          *@ToDO Send an E-Mail
-          */
+         $template = $this->getDoctrine()->getRepository("CoreEntityBundle:EmailTemplate")->find(5);
+         /* Creating Twig template from Database */
+         $renderTemplate = $this->get('twig')->createTemplate($template->getEmailBody());
+         /* Sending E-Mail */
+         $message = \Swift_Message::newInstance()
+             ->setSubject($template->getEmailSubject())
+             ->setFrom('send@example.com')//unsure which email!
+             ->setTo($email)
+             ->setBody($renderTemplate->render(['user' => $user]), 'text/html');
+         $this->get('mailer')->send($message);
      }
  }

@@ -1,8 +1,7 @@
 <?php
 /**
  * Created by IntelliJ IDEA.
- * User: Leon Bergmann
- * Company: SkyLab UG(haftungsbeschränkt)
+ * Authors: Leon Bergmann, Marco Hanisch
  * Date: 07.05.16
  * Time: 19:51
  */
@@ -14,7 +13,9 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Core\EntityBundle\Entity\WorkshopParticipants;
 
-
+/**
+ * this class provides entitys and functions to load the datas of the workshop and participants
+ */
 class loadWorkshopParticipantsData extends AbstractFixture implements OrderedFixtureInterface
 {
 
@@ -22,19 +23,23 @@ class loadWorkshopParticipantsData extends AbstractFixture implements OrderedFix
      * @var ObjectManager
      */
     protected $manager;
-
+    /**
+     * function to load data for workshop
+     */
     public function load(ObjectManager $manager){
         $this->loadDataForWorkshop1($manager);
         $this->loadDataForWorkshop2($manager);
     }
-
+    /**
+     * function to get order of loaded workshop
+     */
     public function getOrder()
     {
         // the order in which fixtures will be loaded
         // the lower the number, the sooner that this fixture is loaded
         return 99;
     }
-
+    /** function to load data of a workshop*/
     private function loadDataForWorkshop1(ObjectManager $manager){
         $wp = new WorkshopParticipants();
         $wp->setParticipant($manager->getRepository("CoreEntityBundle:Participants")->find(1));
@@ -61,7 +66,7 @@ class loadWorkshopParticipantsData extends AbstractFixture implements OrderedFix
 
         $manager->flush();
     }
-
+    /** function to load data of a workshop*/
     private function loadDataForWorkshop2(ObjectManager $manager){
         $wp = new WorkshopParticipants();
         $wp->setParticipant($manager->getRepository("CoreEntityBundle:Participants")->find(4));

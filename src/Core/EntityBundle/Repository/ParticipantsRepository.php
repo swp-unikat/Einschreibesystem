@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by IntelliJ IDEA.
- * User: Martin Griebel
+ * Authors: Martin Griebel, Marco Hanisch
  * Date: 23.05.2016
  * Time: 13:54
  */
@@ -11,10 +11,14 @@ namespace Core\EntityBundle\Repository;
 use Core\EntityBundle\Entity\Workshop;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
-
+/**
+ * this class provide the method to get all blacklisted participants
+ */
 class ParticipantsRepository extends EntityRepository
 {
-
+    /**
+     * function to get all blacklisted participants
+     */
     public function getAllBlacklistedParticipants(){
         $em = $this->getEntityManager();
         $qb = $em->createQueryBuilder();

@@ -1,8 +1,7 @@
 <?php
 /**
  * Created by IntelliJ IDEA.
- * User: Leon Bergmann
- * Company: SkyLab UG(haftungsbeschränkt)
+ * Authors: Leon Bergmann, Marco Hanisch
  * Date: 05/05/16
  * Time: 12:23
  */
@@ -12,14 +11,16 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Core\EntityBundle\Entity\Participants;
-
+/**
+ * this class provides functions to load participants
+ */
 class loadParticipantsData extends AbstractFixture implements OrderedFixtureInterface
 {
     /**
      * @var ObjectManager
      */
     protected $manager;
-    
+    /* function to load participants */
     public function load(ObjectManager $manager){
         $participant = new Participants();
         $participant->setName("Bergmann");
@@ -87,7 +88,7 @@ class loadParticipantsData extends AbstractFixture implements OrderedFixtureInte
         $manager->flush();
 
     }
-
+    /* function to get order of loaded participants*/
     public function getOrder()
     {
         // the order in which fixtures will be loaded

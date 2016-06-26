@@ -1,4 +1,10 @@
 <?php
+/**
+ * Created by IntelliJ IDEA.
+ * Authors: Leon Bergmann, Marco Hanisch
+ * Date: 09.05.2016
+ * Time: 11:47
+ */
 
 namespace Core\FrontendBundle\DependencyInjection;
 

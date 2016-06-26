@@ -1,8 +1,7 @@
 <?php
 /**
  * Created by IntelliJ IDEA.
- * User: Leon Bergmann
- * Company: SkyLab UG(haftungsbeschränkt)
+ * Authors: Leon Bergmann, Marco Hanisch
  * Date: 05/05/16
  * Time: 12:22
  */
@@ -13,14 +12,18 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Core\EntityBundle\Entity\Workshop;
-
+/**
+ * this class provides method to load workshopdata
+ */
 class loadWorkshopData extends AbstractFixture implements OrderedFixtureInterface
 {
     /**
      * @var ObjectManager
      */
     protected $manager;
-
+    /**
+     * function to load workshopdata
+     */
     public function load(ObjectManager $manager){
         $workshop = new Workshop();
         $workshop->setTitle("Grundlagen Löten Level 0 - MitarbeiterSpecial ");
@@ -66,7 +69,9 @@ class loadWorkshopData extends AbstractFixture implements OrderedFixtureInterfac
         $manager->flush();
 
     }
-    
+    /**
+     * function to get order to load
+     */
     public function getOrder()
     {
         // the order in which fixtures will be loaded

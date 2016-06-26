@@ -3,14 +3,27 @@ Einschreibesystem
 
 Install for development
 -----------------------
+
+1) Load from git
 ```bash
 git clone https://github.com/swp-unikat/Einschreibesystem.git
 cd Einschreibesystem
 vagrant up
 ```
 
+2) connect to vm
+```bash
+vagrant ssh
+```
+
+3) create User
+```bash
+cd /var/www/
+php app/console fos:user:create
+```
+
 Install for production
------------------------`
+-----------------------
 1) Clone Repository and remove Vagrant files
 ```bash
 git clone https://github.com/swp-unikat/Einschreibesystem.git
