@@ -42,6 +42,7 @@ class MailCommand extends ContainerAwareCommand
 
             return 0;
         }
+        $mail = $this->getContainer()->get('cron_mail');
         $msg = $mail->run();
         $dauer = microtime(true) - $beginn;
         $output->writeln('Verarbeitung von '.$msg." Datensaetzen: $dauer Sek.");
