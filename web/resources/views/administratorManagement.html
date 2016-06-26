@@ -21,9 +21,9 @@
                 <br>
                 <div class="col-md-6 col-xs-6 ">
                     <div class="input-group">
-                        <input type="text" class="form-control" id="usr">
+                        <input type="text" class="form-control" name="email" ng-model="email">
                         <span class="input-group-btn">
-                            <button translate type="button" class="btn btn-default">BUTTON_INVITE_AN_ADMINISTRATOR</button>
+                            <button translate type="button" ng-click="invite()" class="btn btn-default">BUTTON_INVITE_AN_ADMINISTRATOR</button>
                         </span>
                     </div>
 

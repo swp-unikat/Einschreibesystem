@@ -48,6 +48,10 @@ class AdminController extends FOSRestController implements ClassResourceInterfac
     public function postInviteAction(ParamFetcher $paramFetcher)
     {
         $email = $paramFetcher->get("email");
+        if(!$this->get('fos_user.user_manager')->findUserByUsernameOrEmail($email))
+            return $this->handleView($this->view(['code' => 404,'message' => "INVITED_ADMINISTRATOR_EMAIL_ERROR"], 404));
+
+
         $invitation = new Invitation();
         /* Loading the default E-Mail template*/
         $template = $this->getDoctrine()->getRepository("CoreEntityBundle:EmailTemplate")->find(2);
@@ -66,7 +70,7 @@ class AdminController extends FOSRestController implements ClassResourceInterfac
         $this->getDoctrine()->getManager()->persist($invitation);
         $this->getDoctrine()->getManager()->flush();
 
-        return View::create(null, Codes::HTTP_OK);
+        return View::create(null, Codes::HTTP_ACCEPTED);
 
     }
 
