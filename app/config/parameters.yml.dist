@@ -17,7 +17,7 @@ parameters:
 
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt~
-    mail:              Change This
+    mailer_default_mail:  Change This
 
     jwt_private_key_path: %kernel.root_dir%/var/jwt/private.pem   # ssh private key path
     jwt_public_key_path:  %kernel.root_dir%/var/jwt/public.pem    # ssh public key path
