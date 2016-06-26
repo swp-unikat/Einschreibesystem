@@ -127,6 +127,7 @@ class AdminController extends FOSRestController implements ClassResourceInterfac
      * @Rest\RequestParam(name="email", requirements=".*", description="email of the new admin")
      * @Rest\RequestParam(name="password", requirements=".*", description="password of the new admin")
      * @Rest\RequestParam(name="code", requirements=".*", description="token")
+     * @Rest\RequestParam(name="username", requirements=".*", description="username",nullable=true)
      * @param $paramFetcher ParamFetcher
      * @Rest\View()
      */
@@ -136,6 +137,9 @@ class AdminController extends FOSRestController implements ClassResourceInterfac
         //$params is array with E-Mail Password and Token (Code)
         $params = $paramFetcher->all();
         //find invitation in database
+        if($params['username'] == NULL){
+            $params['username'] = uniqid();
+        }
         $invitation = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Invitation")->findOneBy(['code' => $params['code']]);
         //check if invitation parameter sended is true
         if ($invitation->getSent() && $invitation->getUsed() != true) {
@@ -144,6 +148,7 @@ class AdminController extends FOSRestController implements ClassResourceInterfac
             /** @var $admin User */
             $admin = $UserManager->createUser();
             $admin->setEmailCanonical($params['email']);
+            $admin->setUsernameCanonical($params['username'])
             $admin->setPlainPassword($params["password"]);
             $invitation->setUsed(true);
         } else {
