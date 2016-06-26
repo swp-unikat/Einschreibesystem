@@ -67,53 +67,7 @@ class AdminController extends FOSRestController implements ClassResourceInterfac
 
     }
 
-    /**
-     * Action to create an Admin
-     * @ApiDoc(
-     *  resource=true,
-     *  description="Action to create an Admin",
-     *  output = "",
-     *  statusCodes = {
-     *      200 = "Returned when successful",
-     *      404 = "Returned when the data is not found"
-     *  },requirements={{
-     *        "name"="adminId",
-     *        "dataType"="integer",
-     *        "requirement"="\d+",
-     *        "description"="Admin ID"
-     * }}
-     * )
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     * @Rest\RequestParam(name="email", requirements=".*", description="json object of workshop")
-     * @Rest\RequestParam(name="password", requirements=".*", description="json object of workshop")
-     * @Rest\RequestParam(name="code", requirements=".*", description="json object of workshop")
-     * @param $paramFetcher ParamFetcher 
-     * @Rest\View()
-     */
-
-    public function createAdminAction(ParamFetcher $paramFetcher)
-    {
-        //$params is array with E-Mail Password and Token (Code)
-        $params = $paramFetcher->all();
-        //find invitation in database
-        $invitation = $this->getDoctrine()->getManager()->getRepository("invitation")->findOneBy(['code' => $params['code']]);
-        //check if invitation parameter sended is true
-        if ($invitation->isSend()) {
-            //FOSUserBundle
-            $UserManager = $this->get('fos_user.user_manager');
-            $admin = $UserManager->create();
-            $admin->setName($params['email']);
-            $admin->setPlainPassword($params["password"]);
-        } else {
-            throw $this->createAccessDeniedException("No invitation was sended!");
-        }
-
-        $this->getDoctrine()->getManager()->persist($admin);
-        $this->getDoctrine()->getManager()->flush();
-    }
-
-
+    
     /**
      * Action to disable an Admin
      * @ApiDoc(

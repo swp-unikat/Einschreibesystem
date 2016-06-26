@@ -109,4 +109,51 @@ class AdminController extends FOSRestController implements ClassResourceInterfac
              ->setBody($renderTemplate->render(['user' => $user]), 'text/html');
          $this->get('mailer')->send($message);
      }
+
+    /**
+     * Action to create an Admin
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Action to create an Admin",
+     *  output = "",
+     *  statusCodes = {
+     *      200 = "Returned when successful",
+     *      404 = "Returned when the data is not found"
+     *  },requirements={{
+     *        "name"="adminId",
+     *        "dataType"="integer",
+     *        "requirement"="\d+",
+     *        "description"="Admin ID"
+     * }}
+     * )
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Rest\RequestParam(name="email", requirements=".*", description="email of the new admin")
+     * @Rest\RequestParam(name="password", requirements=".*", description="password of the new admin")
+     * @Rest\RequestParam(name="code", requirements=".*", description="token")
+     * @param $paramFetcher ParamFetcher
+     * @Rest\View()
+     */
+
+    public function postCreateAdminAction(ParamFetcher $paramFetcher)
+    {
+        //$params is array with E-Mail Password and Token (Code)
+        $params = $paramFetcher->all();
+        //find invitation in database
+        $invitation = $this->getDoctrine()->getManager()->getRepository("invitation")->findOneBy(['code' => $params['code']]);
+        //check if invitation parameter sended is true
+        if ($invitation->isSend()) {
+            //FOSUserBundle
+            $UserManager = $this->get('fos_user.user_manager');
+            /** @var $admin User */
+            $admin = $UserManager->create();
+            $admin->setEmailCanonical($params['email'])
+            $admin->setPlainPassword($params["password"]);
+        } else {
+            throw $this->createAccessDeniedException("No invitation was sended!");
+        }
+
+        $this->getDoctrine()->getManager()->persist($admin);
+        $this->getDoctrine()->getManager()->flush();
+    }
  }
