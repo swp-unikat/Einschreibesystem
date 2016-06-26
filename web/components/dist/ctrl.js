@@ -1136,10 +1136,11 @@ mainAppCtrls.controller('LegalNoticeCtrl',['$scope',
  * @name mainAppCtrls.controller:LoginCtrl
  * @description Controller handling the login process. Associated with the login view
  */
-mainAppCtrls.controller('LoginCtrl',['$scope','$http','store','$state','jwtHelper','$alert','$translate',
-    function($scope,$http,store,$state,jwtHelper,$alert,$translate) {
+mainAppCtrls.controller('LoginCtrl',['$scope','$http','store','$state','jwtHelper','$alert','$translate','Admin',
+    function($scope,$http,store,$state,jwtHelper,$alert,$translate,Admin) {
         $scope.reset_panel = false;
         var jwt = store.get('jwt');
+        $scope.reset = {};
         
         var _translations;
         $translate(['TITLE_ERROR','ALERT_LOGIN_FAIL']).then(function(translation){
@@ -1190,22 +1191,45 @@ mainAppCtrls.controller('LoginCtrl',['$scope','$http','store','$state','jwtHelpe
          */
         $scope.showResetPanel = function() {
             $scope.reset_panel = !$scope.reset_panel;
-            console.log($scope.reset_panel);
         }
 
-        $scope.resetPassword = function(e_mail_for_reset) {
+        $scope.resetPassword = function() {
+
             if($scope.alertReset != null)
                 $scope.alertReset.hide();
-            if(!e_mail_for_reset.$valid) {
+            if(!$scope.reset.email) {
                 $scope.alertReset = $alert({
                     title: _translations.TITLE_ERROR,
-                    content: '',
+                    content: 'You have to enter a valid Mail-Address',
                     type: 'danger',
                     dismissable: false,
                     show: true,
                     container: '#reset_alert'
                 });
             }
+            if($scope.alertReset != null)
+                $scope.alertReset.hide();
+            Admin.requestReset({email: $scope.reset.email}).$promise.then(function(response){
+                $scope.alertReset.hide();
+                $scope.alertReset = $alert({
+                    title: _translations.TITLE_ERROR,
+                    content: 'A link for password reset was send to the enter e-mail address',
+                    type: 'success',
+                    dismissable: false,
+                    show: true,
+                    container: '#reset_alert'
+                });
+            },function(response){
+                $scope.alertReset.hide();
+                $scope.alertReset = $alert({
+                    title: _translations.TITLE_ERROR,
+                    content: 'An error occurred ( ' + response.status + ' )',
+                    type: 'danger',
+                    dismissable: false,
+                    show: true,
+                    container: '#reset_alert'
+                });
+            });
         }
     }
 ]);
@@ -1409,6 +1433,7 @@ mainAppCtrls.controller('NewWorkshopTemplateCtrl',['$scope',"WorkshopTemplate",'
 mainAppCtrls.controller('PasswordResetCtrl',['$scope','$alert','$translate','Admin','$stateParams',
     function($scope,$alert,$translate,Admin,$stateParams) {
 
+        $scope.form = {};
         var _translations;
         $translate(['TITLE_ERROR','PASSWORDS_IDENTICAL_ERROR','PASSWORD_EMPTY_ERROR']).then(function(translations){
            _translations = translations;

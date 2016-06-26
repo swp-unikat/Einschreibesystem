@@ -318,14 +318,14 @@ restSvcs.factory('Admin',['$resource',function($resource){
          * @description Resets the password, if the provided token is valid
          * @methodOf restSvcs.Admin
          */
-        'resetPassword': {url:'/api/admin/:token/reset/password',params:{token: '@token'},method: 'POST',isArray: false},
+        'resetPassword': {url:'/api/user/reset/password',method: 'POST',isArray: false},
         /**
          * @ngdoc function
          * @name restSvcs.Admin#requestReset
          * @description Creates a request for a email with password-reset link at the server
          * @methodOf restSvcs.Admin
          */
-        'requestReset': {url: '/api/admin/:email/send/password/forgot/email',params:{email: '@email'},method: 'POST',isArray: false},
+        'requestReset': {url: ' /api/user/send/password/forgot/email',method: 'POST',isArray: false},
         /**
          * @ngdoc function
          * @name restSvcs.Admin#invite
