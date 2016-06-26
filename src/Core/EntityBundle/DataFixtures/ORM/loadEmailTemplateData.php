@@ -25,32 +25,36 @@ class loadEmailTemplate implements FixtureInterface
      * @param $manager
      */
     public function load(ObjectManager $manager){
-    $emailtemplate = new EmailTemplate();
-    $emailtemplate->setTemplateName("Erinnerungsmail");
-    $emailtemplate->setEmailSubject("Erinnerungsmail für {{workshop.title}}");
-    $emailtemplate->setEmailBody("Hallo {{participant.surname}},<br> morgen um {{workshop.startAt|date('Y-m-d h:i')}} beginnt der Workshop {{workshop.title}}, für den Sie sich eingeschrieben haben!");
-    $manager->persist($emailtemplate);
-    
-    $emailtemplate2 = new EmailTemplate();
-    $emailtemplate2->setTemplateName("Bestätigung");
-    $emailtemplate2->setEmailSubject("Bestätigung der Anmeldung");
-    $emailtemplate2->setEmailBody("Hallo {{participant.surname}},<br> mit folgendem Link <a href='{{url}}'>{{url}} bestätigen Sie ihre Anmeldung.");
-    $manager->persist($emailtemplate2);
-    
-    $emailtemplate3 = new EmailTemplate();
-    $emailtemplate3->setTemplateName("Ausfall");
-    $emailtemplate3->setEmailSubject("Ausfall eines ausstehenden Workshops");
-    $emailtemplate3->setEmailBody("Der Workshop in 2 Tagen kann aufgrund von Krankheit nicht stattfinden! Die Kosten bekommen Sie selbst verständlich erstattet.");
-    $manager->persist($emailtemplate3);
-    
-    $emailtemplate4 = new EmailTemplate();
-    $emailtemplate4->setTemplateName("Teilnahmebestätigung");
-    $emailtemplate4->setEmailSubject("Teilnahmebestätigung für absolvierten Workshop");
-    $emailtemplate4->setEmailBody("Im Anhang dieser Mail finden Sie eine Teilnahmebestätigung, an dem Sie erfolgreich teilgenommen haben!");
-    $manager->persist($emailtemplate4);
-    /*
-         * Hier weiteres EmailTemplate anlegen
-         */
-        $manager->flush();
+        $emailTemplate = new EmailTemplate();
+        $emailTemplate->setTemplateName("Erinnerungsmail");
+        $emailTemplate->setEmailSubject("Erinnerungsmail für {{workshop.title}}");
+        $emailTemplate->setEmailBody("Hallo {{participant.surname}},<br> morgen um {{workshop.startAt|date('Y-m-d h:i')}} beginnt der Workshop {{workshop.title}}, für den Sie sich eingeschrieben haben!");
+        $emailTemplate->setProtected(true);
+        $manager->persist($emailTemplate);
+        
+        $emailTemplate2 = new EmailTemplate();
+        $emailTemplate2->setTemplateName("Bestätigung");
+        $emailTemplate2->setEmailSubject("Bestätigung der Anmeldung");
+        $emailTemplate2->setEmailBody("Hallo {{participant.surname}},<br> mit folgendem Link <a href='{{url}}'>{{url}} bestätigen Sie ihre Anmeldung.");
+        $emailTemplate2->setProtected(true);
+        $manager->persist($emailTemplate2);
+        
+        $emailTemplate3 = new EmailTemplate();
+        $emailTemplate3->setTemplateName("Ausfall");
+        $emailTemplate3->setEmailSubject("Ausfall eines ausstehenden Workshops");
+        $emailTemplate3->setEmailBody("Der Workshop in 2 Tagen kann aufgrund von Krankheit nicht stattfinden! Die Kosten bekommen Sie selbst verständlich erstattet.");
+        $emailTemplate3->setProtected(true);
+        $manager->persist($emailTemplate3);
+        
+        $emailTemplate4 = new EmailTemplate();
+        $emailTemplate4->setTemplateName("Teilnahmebestätigung");
+        $emailTemplate4->setEmailSubject("Teilnahmebestätigung für absolvierten Workshop");
+        $emailTemplate4->setEmailBody("Im Anhang dieser Mail finden Sie eine Teilnahmebestätigung, an dem Sie erfolgreich teilgenommen haben!");
+        $emailTemplate4->setProtected(true);
+        $manager->persist($emailTemplate4);
+        /*
+             * Hier weiteres EmailTemplate anlegen
+             */
+            $manager->flush();
     }
 }
