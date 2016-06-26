@@ -42,78 +42,39 @@ class AdminController extends FOSRestController implements ClassResourceInterfac
      *
      *
      * @return \Symfony\Component\HttpFoundation\Response
-     * @param $email string email as the username of administrator
+     * @Rest\RequestParam(name="email", requirements=".*", description="email")
      * @Rest\View()
      */
-    public function inviteAdminAction($email)
+    public function postInviteAction(ParamFetcher $paramFetcher)
     {
+        $email = $paramFetcher->get("email");
+        if($this->get('fos_user.user_manager')->findUserByUsernameOrEmail($email))
+            return $this->handleView($this->view(['code' => 404,'message' => "INVITED_ADMINISTRATOR_EMAIL_ERROR"], 404));
+
+
         $invitation = new Invitation();
         /* Loading the default E-Mail template*/
-        $template = $this->getDoctrine()->getRepository("CoreEntityBundle:EmailTemplate")->find(1);
+        $template = $this->getDoctrine()->getRepository("CoreEntityBundle:EmailTemplate")->find(2);
         /* Creating Twig template from Database */
         $renderTemplate = $this->get('twig')->createTemplate($template->getEmailBody());
         /* Sending E-Mail */
+        $invitation->setEmail($email);
+        $url = $this->generateUrl('core_frontend_default_index',[],TRUE)."#/admin/create/".$invitation->getCode();
         $message = \Swift_Message::newInstance()
             ->setSubject($template->getEmailSubject())
-            ->setFrom('send@example.com')//unsure which email!
+            ->setFrom($this->getParameter('email_sender'))
             ->setTo($email)
-            ->setBody($renderTemplate->render(["code" => $invitation->getCode(), "email" => $email]), 'text/html');
+            ->setBody($renderTemplate->render(["url" => $url, "email" => $email]), 'text/html');
         $this->get('mailer')->send($message);
-        $invitation->send(); //prevents sending invitations twice
+        $invitation->setSent(true); //prevents sending invitations twice
         $this->getDoctrine()->getManager()->persist($invitation);
         $this->getDoctrine()->getManager()->flush();
 
-        return View::create(null, Codes::HTTP_OK);
+        return View::create(null, Codes::HTTP_ACCEPTED);
 
     }
 
-    /**
-     * Action to create an Admin
-     * @ApiDoc(
-     *  resource=true,
-     *  description="Action to create an Admin",
-     *  output = "",
-     *  statusCodes = {
-     *      200 = "Returned when successful",
-     *      404 = "Returned when the data is not found"
-     *  },requirements={{
-     *        "name"="adminId",
-     *        "dataType"="integer",
-     *        "requirement"="\d+",
-     *        "description"="Admin ID"
-     * }}
-     * )
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     * @Rest\RequestParam(name="email", requirements=".*", description="json object of workshop")
-     * @Rest\RequestParam(name="password", requirements=".*", description="json object of workshop")
-     * @Rest\RequestParam(name="code", requirements=".*", description="json object of workshop")
-     * @param $paramFetcher ParamFetcher 
-     * @Rest\View()
-     */
-
-    public function createAdminAction(ParamFetcher $paramFetcher)
-    {
-        //$params is array with E-Mail Password and Token (Code)
-        $params = $paramFetcher->all();
-        //find invitation in database
-        $invitation = $this->getDoctrine()->getManager()->getRepository("invitation")->findOneBy(['code' => $params['code']]);
-        //check if invitation parameter sended is true
-        if ($invitation->isSend()) {
-            //FOSUserBundle
-            $UserManager = $this->get('fos_user.user_manager');
-            $admin = $UserManager->create();
-            $admin->setName($params['email']);
-            $admin->setPlainPassword($params["password"]);
-        } else {
-            throw $this->createAccessDeniedException("No invitation was sended!");
-        }
-
-        $this->getDoctrine()->getManager()->persist($admin);
-        $this->getDoctrine()->getManager()->flush();
-    }
-
-
+    
     /**
      * Action to disable an Admin
      * @ApiDoc(

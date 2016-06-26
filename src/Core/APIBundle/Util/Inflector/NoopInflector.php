@@ -7,7 +7,7 @@
  */
 namespace Core\APIBundle\Util\Inflector;
 
-use FOS\RestBundle\Util\Inflector\InflectorInterface as InflectorInterface;
+use FOS\RestBundle\Inflector\InflectorInterface;
 
 /**
  * Inflector class
@@ -15,10 +15,6 @@ use FOS\RestBundle\Util\Inflector\InflectorInterface as InflectorInterface;
  */
 class NoopInflector implements InflectorInterface
 {
-    /**
-     * function to pluralize
-     * @var string $word 
-     */
     public function pluralize($word)
     {
         // Don't pluralize

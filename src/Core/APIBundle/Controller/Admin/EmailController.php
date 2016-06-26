@@ -65,7 +65,7 @@ class EmailController extends FOSRestController implements ClassResourceInterfac
         {
             $message = \Swift_Message::newInstance()
                 ->setSubject($request->get('subject'))
-                ->setFrom('send@example.com')//unsure which email!
+                ->setFrom($this->getParameter('email_sender'))
                 ->setTo($participant->getParticipant()->getEmail())
                 ->setBody($renderTemplate->render(['participant' => $participant,'workshop' => $participant->getWorkshop()]), 'text/html');
             $this->get('mailer')->send($message);

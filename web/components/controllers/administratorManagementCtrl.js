@@ -8,8 +8,15 @@ var mainAppCtrls = angular.module("mainAppCtrls");
  * @descirption Controller for managing administrator list
  * @requires restSvcs.Admin
  */
-mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin','$alert',
-    function($scope,Admin,$alert) {
+mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin','$alert','$translate',
+    function($scope,Admin,$alert,$translate) {
+        $scope.loading = true;
+
+        var _translations = {};
+        //Pass all required translation IDs to translate service
+        $translate(['INVITED_ADMINISTRATOR_EMAIL','INVITED_ADMINISTRATOR_EMAIL_ERROR']).then(function(translations){
+            _translations = translations;
+        });
         var loadList = function(){
             $scope.loading = true;
             Admin.list().$promise.then(function(value){
@@ -35,24 +42,46 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin','$alert'
             },function(httpResponse){
                 $scope.loading = false;
                 $alert({
-                   type: 'danger',
-                   title: 'Error',
-                   content: 'Failed to delete admin',
-                   container: '#alert',
-                   show: true,
-                   dismissable: false,
-                   duration: 30
+                    type: 'danger',
+                    title: 'Error',
+                    content: 'Failed to delete admin',
+                    container: '#alert',
+                    show: true,
+                    dismissable: false,
+                    duration: 30
                 });
             });
         }
+        /**
+         * @ngdoc function
+         * @name mainAppCtrls.controller:AdministratorManagementCtrl#delete
+         * @description invites a new admin
+         * @methodOf mainAppCtrls.controller:AdministratorManagementCtrl
+         */
         $scope.invite = function() {
-            $scope.inviting = true;
             Admin.invite({email: $scope.admin_mail}).$promise.then(function(value){
-                $scope.inviting = false;
-            },function(value){
-                $scope.inviting = false;
+                $alert({
+                    title: '',
+                    type: 'success',
+                    content: _translations.INVITED_ADMINISTRATOR_EMAIL,
+                    container: '#alert',
+                    dismissable: true,
+                    show: true,
+                    duration: 30
+                });
+            },function(httpResponse){
+                $alert({
+                    title: '',
+                    type: 'danger',
+                    content: _translations.INVITED_ADMINISTRATOR_EMAIL_ERROR,
+                    container: '#alert',
+                    dismissable: true,
+                    show: true,
+                    duration: 60
+                })
             });
         }
+    }
     }
 
 ]);

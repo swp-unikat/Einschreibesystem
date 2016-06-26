@@ -34,7 +34,15 @@ class Invitation
      *
      * @ORM\Column(type="boolean")
      */
-    protected $sent =false;
+    protected $sent = false;
+    /**
+     * When received invitation set this value to 'true'
+     *
+     * It prevents by using the invitation twice
+     *
+     * @ORM\Column(type="boolean")
+     */
+    protected $used = false;
     /**
      * function to construct an invitation
      */
@@ -43,27 +51,71 @@ class Invitation
         //generate identifier only once, here a 64 characters length code
         $this->code = substr(hash('sha512',bin2hex(openssl_random_pseudo_bytes(64))), 0, 64);
     }
+
     /**
-     * function to get code of an invitaion
+     * @return mixed
      */
-    public function  getCode()
+    public function getCode()
     {
         return $this->code;
     }
 
     /**
-     * function to get sendstate of invitation
+     * @param mixed $code
      */
-    public function isSent()
+    public function setCode($code)
+    {
+        $this->code = $code;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param mixed $email
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSent()
     {
         return $this->sent;
     }
+
     /**
-     * function to send invitation
+     * @param mixed $sent
      */
-    public function send()
+    public function setSent($sent)
     {
-        $this->sent = true;
+        $this->sent = $sent;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getUsed()
+    {
+        return $this->used;
+    }
+
+    /**
+     * @param mixed $used
+     */
+    public function setUsed($used)
+    {
+        $this->used = $used;
+    }
+
+    
 
 }

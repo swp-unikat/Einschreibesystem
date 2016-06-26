@@ -17,7 +17,6 @@ use Symfony\Component\Filesystem\LockHandler;
 /**
  * this class provides a new function for the cli to easily implement a cron witch is checks if e-mails notifications are necessary
  */
-
 class MailCommand extends ContainerAwareCommand
 {
     /**
@@ -32,23 +31,18 @@ class MailCommand extends ContainerAwareCommand
      * function which check if e-mails notifications are already sended or are needed
      *
      */
-
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $beginn = microtime(true);
         $lock = new LockHandler('cron:email');
         if (!$lock->lock()) {
             $output->writeln('The command is already running in another process.');
-
             return 0;
         }
-
-        $mail = $this->getContainer()->getParameter("mail");
+        $mail = $this->getContainer()->get('cron');
         $msg = $mail->run();
-
         $dauer = microtime(true) - $beginn;
-        $output->writeln('Verarbeitung von '.$msg." Datensaetzen: $dauer Sek.");
-        $output->writeln($msg);
+        $output->writeln('Processing of '.$msg." datasets: $dauer Sek.");
         $lock->release();
     }
 }
