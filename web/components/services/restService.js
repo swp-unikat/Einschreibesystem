@@ -52,7 +52,7 @@ restSvcs.factory('Workshops',['$resource',function($resource){
          * @param {number} id Workshop-ID
          * @param {string} token Unsubscribetoken
          */
-        'getUnsubscribes': {method: 'GET',url:'/api/workshops/:id/unsubscribes/:token',params: {id: '@id', token: '@token'},isArray: false},
+        'unsubscribe': {method: 'GET',url:'/api/workshops/:workshopId/unsubscribe/:token',params: {id: '@id', token: '@token'},isArray: false},
         /**
          * @ngdoc funtion
          * @name restSvcs.Workshops#unsubscribeWorkshop
@@ -70,7 +70,8 @@ restSvcs.factory('Workshops',['$resource',function($resource){
          * @param {number} participantsid Participants-ID
          * @param {string} token Confirmtoken
          */
-        'getConfirmEnrollment': {method: 'GET',url:'/api/workshops/:id/enroll/:userid/confirm/:token',params: {id: '@id',userid: '@userid',token: '@token'},isArray: false},
+        'confirmEnroll': {method: 'GET',url:'/api/workshops/:id/enroll/:userid/confirm/:token',params: {id: '@id',userid: '@userid',token: '@token'},isArray: false},
+        'unsubscribeConfirm': {method: 'GET',url: '/api/workshops/:id/unsubscribe/:token/confirm/:participantId'}
     });
 }]);
 /**
@@ -110,15 +111,15 @@ restSvcs.factory('WorkshopTemplate',['$resource',function($resource){
          * @description create a new workshoptemplate
          * @methodOf restSvcs.WorkshopTemplate
          */
-        'put':{ method: 'PUT', isArray: false},
-        /**
-         * @ngdoc function
-         * @name restSvcs.WorkshopTemplate#delete
-         * @description delete a workshoptemplate
-         * @methodOf restSvcs.WorkshopTemplate
-         * @param {integer} id Workshop-ID
-         */
-        'deleteWorkshopTemplate': {method: 'DELETE',params: {id: '@id'}, isArray: false}
+         'put':{ method: 'PUT', isArray: false},
+         /**
+          * @ngdoc function
+          * @name restSvcs.WorkshopTemplate#delete
+          * @description delete a workshoptemplate
+          * @methodOf restSvcs.WorkshopTemplate
+          * @param {integer} id Workshop-ID
+          */
+          'deleteWorkshopTemplate': {method: 'DELETE',params: {id: '@id'}, isArray: false}
     });
 }]);
 /**
@@ -128,22 +129,22 @@ restSvcs.factory('WorkshopTemplate',['$resource',function($resource){
  */
 restSvcs.factory('AdminWorkshop',['$resource',function($resource){
     return $resource('/api/admin/workshops/:id',{},{
-        /**
-         * @ngdoc function
-         * @name restSvcs.AdminWorkshop#gethistory
-         * @description show all workshops
-         * @methodOf restSvcs.AdminWorkshop
-         * @returns {httpPromise} resolve with fetched data, or fails with error description.
+         /**
+          * @ngdoc function
+          * @name restSvcs.AdminWorkshop#gethistory
+          * @description show all workshops
+          * @methodOf restSvcs.AdminWorkshop
+          * @returns {httpPromise} resolve with fetched data, or fails with error description.
          */
         'gethistory': {method: 'GET',params: {id: 'history'}, isArray: true},
-        /**
-         * @ngdoc function
-         * @name restSvcs.AdminWorkshop#put
-         * @description create a new workshop
-         * @methodOf restSvcs.AdminWorkshop
-         */
-        'putWorkshop': {method: 'PUT', isArray:false},
-        /**
+         /**
+          * @ngdoc function
+          * @name restSvcs.AdminWorkshop#put
+          * @description create a new workshop
+          * @methodOf restSvcs.AdminWorkshop
+          */
+          'putWorkshop': {method: 'PUT', isArray:false},
+         /**
          * @ngdoc function
          * @name restSvcs.AdminWorkshop#patch
          * @description edit a single workshop
@@ -151,23 +152,23 @@ restSvcs.factory('AdminWorkshop',['$resource',function($resource){
          * @param {integer} id Workshop-ID
          */
         'edit': {method: 'PATCH',params: {id: '@id'}, isArray: false},
-        /**
-         * @ngdoc function
-         * @name restSvcs.AdminWorkshop#delete
-         * @description delete a workshop
-         * @methodOf restSvcs.AdminWorkshop
-         * @param {integer} id Workshop-ID
-         */
-        'deleteWorkshop': {method: 'DELETE',params: {id: '@id'}, isArray: false},
-        /**
-         * @ngdoc function
-         * @name restSvcs.AdminWorkshop#patchwaitinglist
-         * @description overbook the workshop
-         * @methodOf restSvcs.AdminWorkshop
-         * @param {integer} id Workshop-ID
-         * @param {integer} participantsid Participants-ID
-         */
-        'patchwaitinglist': {method: 'PATCH',url:'/api/admin/workshops/:id/waitinglists/:participantid' ,params: {id: '@id', participantsid: '@participantsid'}, isArray: false},
+         /**
+          * @ngdoc function
+          * @name restSvcs.AdminWorkshop#delete
+          * @description delete a workshop
+          * @methodOf restSvcs.AdminWorkshop
+          * @param {integer} id Workshop-ID
+          */
+          'deleteWorkshop': {method: 'DELETE',params: {id: '@id'}, isArray: false},
+         /**
+          * @ngdoc function
+          * @name restSvcs.AdminWorkshop#patchwaitinglist
+          * @description overbook the workshop
+          * @methodOf restSvcs.AdminWorkshop
+          * @param {integer} id Workshop-ID
+          * @param {integer} participantsid Participants-ID
+          */
+          'patchwaitinglist': {method: 'PATCH',url:'/api/admin/workshops/:id/waitinglists/:participantid' ,params: {id: '@id', participantsid: '@participantsid'}, isArray: false},
     });
 }]);
 /**
@@ -177,37 +178,37 @@ restSvcs.factory('AdminWorkshop',['$resource',function($resource){
  */
 restSvcs.factory('Participants',['$resource',function($resource){
     return $resource('/api/admin/participants/:id',{},{
-        /**
-         * @ngdoc function
-         * @name restSvcs.Participants#all
-         * @description show all participants
-         * @methodOf restSvcs.Participants
-         * @returns {httpPromise} resolve with fetched data, or fails with error description
+         /**
+          * @ngdoc function
+          * @name restSvcs.Participants#all
+          * @description show all participants
+          * @methodOf restSvcs.Participants
+          * @returns {httpPromise} resolve with fetched data, or fails with error description
          */
         'getall': {method: 'GET',params: {id: 'all'}, isArray: true},
-        /**
-         * @ngdoc function
-         * @name restSvcs.Participants#all
-         * @description show all blacklisted participants
-         * @methodOf restSvcs.Participants
-         * @returns {httpPromise} resolve with fetched data, or fails with error description
-         */
+         /**
+          * @ngdoc function
+          * @name restSvcs.Participants#all
+          * @description show all blacklisted participants
+          * @methodOf restSvcs.Participants
+          * @returns {httpPromise} resolve with fetched data, or fails with error description
+          */
         'getblacklistall': {method: 'GET',url: '/api/admin/participants/blacklist/all', isArray: true},
-        /**
-         * @ngdoc function
-         * @name restSvcs.Participants#put
-         * @description create a new Participants
-         * @methodOf restSvcs.Participants
-         */
+         /**
+          * @ngdoc function
+          * @name restSvcs.Participants#put
+          * @description create a new Participants
+          * @methodOf restSvcs.Participants
+          */
         'putParticipant': {method: 'PUT', isArray:false},
         /**
-         * @ngdoc function
-         * @name restSvcs.Participants#delete
-         * @description remove a participant from blacklist
-         * @methodOf restSvcs.Participants
-         * @param {integer} id Participants-ID
-         */
-        'deleteParticipant': {url: '/api/admin/participants/:id/blacklist',method: 'DELETE',params: {id: '@id'}, isArray: false},
+          * @ngdoc function
+          * @name restSvcs.Participants#delete
+          * @description remove a participant from blacklist
+          * @methodOf restSvcs.Participants
+          * @param {integer} id Participants-ID
+          */
+          'deleteParticipant': {url: '/api/admin/participants/:id/blacklist',method: 'DELETE',params: {id: '@id'}, isArray: false},
         /**
          * @ngdoc funtion
          * @name restSvcs.Participants#get
@@ -226,11 +227,11 @@ restSvcs.factory('Participants',['$resource',function($resource){
 restSvcs.factory('EmailTemplate',['$resource',function($resource){
     return $resource('/api/admin/email/template/:id',{},{
         /**
-         * @ngdoc function
-         * @name restSvcs.EmailTemplate#all
-         * @description show all emailtemplates
-         * @methodOf restSvcs.EmailTemplate
-         * @returns {httpPromise} resolve with fetched data, or fails with error description
+          * @ngdoc function
+          * @name restSvcs.EmailTemplate#all
+          * @description show all emailtemplates
+          * @methodOf restSvcs.EmailTemplate
+          * @returns {httpPromise} resolve with fetched data, or fails with error description
          */
         'getAll': {url: '/api/admin/email/template/list',method: 'GET', isArray: true},
         /**
@@ -250,20 +251,20 @@ restSvcs.factory('EmailTemplate',['$resource',function($resource){
          */
         'edit': {method: 'PATCH',params: {id: '@id'}, isArray: false},
         /**
-         * @ngdoc function
-         * @name restSvcs.EmailTemplate#put
-         * @description create a new Emailtemplate
-         * @methodOf restSvcs.EmailTemplate
-         */
+          * @ngdoc function
+          * @name restSvcs.EmailTemplate#put
+          * @description create a new Emailtemplate
+          * @methodOf restSvcs.EmailTemplate
+          */
         'put': {method: 'PUT', isArray:false},
         /**
-         * @ngdoc function
-         * @name restSvcs.EmailTemplate#delete
-         * @description remove a emailtemplate
-         * @methodOf restSvcs.EmailTemplate
-         * @param {integer} id Emailtemplate-ID
-         */
-        'delete': {method: 'DELETE',params: {id: '@id'}, isArray: false}
+          * @ngdoc function
+          * @name restSvcs.EmailTemplate#delete
+          * @description remove a emailtemplate
+          * @methodOf restSvcs.EmailTemplate
+          * @param {integer} id Emailtemplate-ID
+          */
+          'delete': {method: 'DELETE',params: {id: '@id'}, isArray: false}
     });
 }]);
 /**
@@ -274,12 +275,12 @@ restSvcs.factory('EmailTemplate',['$resource',function($resource){
 restSvcs.factory('Email',['$resource',function($resource){
     return $resource('/api/admin/email/:workshopid/send',{},{
         /**
-         * @ngdoc function
-         * @name restSvcs.Email#send
-         * @description send Email
-         * @methodOf restSvcs.Email
-         * @param {number} workshopid Workshop-ID
-         */
+          * @ngdoc function
+          * @name restSvcs.Email#send
+          * @description send Email
+          * @methodOf restSvcs.Email
+          * @param {number} workshopid Workshop-ID
+          */
         'sendEmail': {method: 'PATCH',params: {workshopid: '@id'}, isArray: false}
     });
 }]);
@@ -296,14 +297,14 @@ restSvcs.factory('Admin',['$resource',function($resource){
          * @description Returns a list of all currentyl active Admins
          * @methodOf restSvcs.Admin
          */
-        'list': {url:'/api/admin/admin/list',method: 'GET',isArray: true},
+       'list': {url:'/api/admin/admin/list',method: 'GET',isArray: true},
         /**
          * @ngdoc function
          * @name restSvcs.Admin#remove
          * @description Deactivates an admin account
          * @methodOf restSvcs.Admin
          */
-        'delete': {url:'/api/admin/admin/:id',method: 'DELETE',params: {id: '@id'},isArray: false},
+       'delete': {url:'/api/admin/admin/:id',method: 'DELETE',params: {id: '@id'},isArray: false},
         /**
          * @ngdoc function
          * @name restSvcs.Admin#changePassword
@@ -324,21 +325,14 @@ restSvcs.factory('Admin',['$resource',function($resource){
          * @description Creates a request for a email with password-reset link at the server
          * @methodOf restSvcs.Admin
          */
-        'requestReset': {url: '/api/user/send/password/forgot/email',method: 'POST',isArray: false},
+        'requestReset': {url: ' /api/user/send/password/forgot/email',method: 'POST',isArray: false},
         /**
          * @ngdoc function
          * @name restSvcs.Admin#invite
          * @description Sends an invite link to the passed e-mail
          * @methodOf restSvcs.Admin
          */
-        'invite': {url:'/api/admin/admin/invite',method: 'POST',isArray: false},
-        /**
-         * @ngdoc function
-         * @name restSvcs.Admin#create
-         * @description Creating the a new admin
-         * @methodOf restSvcs.Admin
-         */
-        'create': {url:'/api/user/admin/create',method: 'POST',isArray: false},
+        'invite': {url:'/api/admin/admin/:email/admin/invite',params:{email: '@email'},method: 'GET',isArray: false},
         /**
          * @ngdoc function
          * @name restSvcs.Admin#editContact

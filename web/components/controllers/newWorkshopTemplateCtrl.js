@@ -39,10 +39,12 @@ mainAppCtrls.controller('NewWorkshopTemplateCtrl',['$scope',"WorkshopTemplate",'
                 _dateStr =  _dateStr.slice(0,_dateStr.length-5);
                 return _dateStr.replace('T',' ');
             };
+
             //Initialize start_at to calculate duration with end_at 
             var _sa = new Date(0);
             var _duration = $scope.workshop.duration;
             var _ea = new Date(_duration);
+
 
             var data = {
                 title:$scope.workshop.title,
@@ -71,7 +73,7 @@ mainAppCtrls.controller('NewWorkshopTemplateCtrl',['$scope',"WorkshopTemplate",'
                     container: '#alert',
                     type: 'danger',
                     title: '',
-                    content:  _translations.ALERT_WORKSHOPTEMPLATE_NEW_FAIL + ' (' + httpReponse.status +')',
+                    content:  _translations.ALERT_WORKSHOPTEMPLATE_NEW_FAIL + ' (' + httpResponse.status +')',
                     show: true,
                     dismissable: false
                 });

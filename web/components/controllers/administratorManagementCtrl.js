@@ -17,14 +17,17 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin','$alert'
         $translate(['INVITED_ADMINISTRATOR_EMAIL','INVITED_ADMINISTRATOR_EMAIL_ERROR']).then(function(translations){
             _translations = translations;
         });
-
-        Admin.list().$promise.then(function(value){
-            $scope.admins = value;
-            $scope.loading = false;
-        },function(httpResponse){
-            alert(httpResponse.status);
-            $scope.loading = false;
-        });
+        var loadList = function(){
+            $scope.loading = true;
+            Admin.list().$promise.then(function(value){
+                $scope.admins = value;
+                $scope.loading = false;
+            },function(httpResponse){
+                alert(httpResponse.status);
+                $scope.loading = false;
+            });
+        };
+        loadList();
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:AdministratorManagementCtrl#delete
@@ -32,15 +35,23 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin','$alert'
          * @param {number} _id ID of the admin to delete
          * @methodOf mainAppCtrls.controller:AdministratorManagementCtrl
          */
-        $scope.delete = function(_id) {
+        $scope.deleteAdmin = function(_id) {
+            $scope.loading = true;
             Admin.delete({id: _id}).$promise.then(function(value){
-
+                loadList();
             },function(httpResponse){
-
-
+                $scope.loading = false;
+                $alert({
+                    type: 'danger',
+                    title: 'Error',
+                    content: 'Failed to delete admin',
+                    container: '#alert',
+                    show: true,
+                    dismissable: false,
+                    duration: 30
+                });
             });
-        };
-
+        }
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:AdministratorManagementCtrl#delete
@@ -48,7 +59,7 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin','$alert'
          * @methodOf mainAppCtrls.controller:AdministratorManagementCtrl
          */
         $scope.invite = function() {
-            Admin.invite({email: $scope.email}).$promise.then(function(value){
+            Admin.invite({email: $scope.admin_mail}).$promise.then(function(value){
                 $alert({
                     title: '',
                     type: 'success',
@@ -70,6 +81,7 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin','$alert'
                 })
             });
         }
+    }
     }
 
 ]);

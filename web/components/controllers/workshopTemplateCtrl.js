@@ -45,7 +45,7 @@ mainAppCtrls.controller('WorkshopTemplateCtrl', ['$scope', "WorkshopTemplate",'$
                         container:'#alert',
                         show: true,
                         dismissable: false,
-                        content: _translations.ALERT_WORKSHOPTEMPLATE_LIST_EMPTY + ' (' + httpReponse.status +')',
+                        content: _translations.ALERT_WORKSHOPTEMPLATE_LIST_EMPTY + ' (' + httpResponse.status +')',
                     })
                 }
                 $scope.loading = false;
