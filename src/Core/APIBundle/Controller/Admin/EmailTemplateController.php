@@ -55,7 +55,7 @@ class EmailTemplateController extends FOSRestController implements ClassResource
     {
     	$emailTemplate = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:EmailTemplate')->findAll();
     	if (!$emailTemplate) {
-            throw $this->createNotFoundException("No emailtemplate was found");
+            return $this->handleView($this->view(['code' => 404,'message' => "No EmailTemplate found"], 404));
         } else {
             $view = $this->view($emailTemplate, 200);
             return $this->handleView($view);
@@ -93,7 +93,7 @@ class EmailTemplateController extends FOSRestController implements ClassResource
     {
         $emailTemplate = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:EmailTemplate')->find($id);
         if (!$emailTemplate) {
-            throw $this->createNotFoundException("This emailtemplate was not found");
+            return $this->handleView($this->view(['code' => 404,'message' => "EmailTemplate not found"], 404));
         } else {
             $view = $this->view($emailTemplate, 200);
             return $this->handleView($view);
@@ -262,7 +262,7 @@ class EmailTemplateController extends FOSRestController implements ClassResource
     {
         $emailTemplate = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:EmailTemplate")->find($id);
         if (!$emailTemplate) {
-            throw $this->createNotFoundException("EmailTemplate not found");
+            return $this->handleView($this->view(['code' => 404,'message' => "EmailTemplate not found"], 404));
         }
 
         if($emailTemplate->isProtected()){
