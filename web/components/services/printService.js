@@ -22,14 +22,7 @@ prntSvcs.factory('printer',['$rootScope','$compile','$http','$timeout','$q', fun
      */
     var printHtml = function (html) {
         var mywindow = window.open();
-        mywindow.document.write('<html>' +
-            '<head>' +
-            '   <title>My App</title>' +
-            '' +
-            '</head>' +
-            '<body>');
         mywindow.document.write(html);
-        mywindow.document.write('</body></html>');
         mywindow.print();
         mywindow.close();
         return true;
