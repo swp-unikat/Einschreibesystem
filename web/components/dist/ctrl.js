@@ -1512,8 +1512,8 @@ mainAppCtrls.controller('PasswordResetCtrl',['$scope','$alert','$translate','Adm
  * @name mainAppCtrls.controller:SettingsCtrl
  * @description Controller for the Settings view
  */
-mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm',
-    function($scope,$alert,$confirm) {
+mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm','Admin',
+    function($scope,$alert,$confirm,Admin) {
         var _originalData = {};
         $scope.form = {};
         //TODO: load i18n for Placeholders and Tabnames
@@ -1539,14 +1539,7 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm',
             ['html', 'insertImage', 'insertLink'],
             ['justifyLeft', 'justifyCenter', 'justifyRight', 'indent', 'outdent']
         ];
-        $scope.pwAlert = $alert({
-            title: "Error",
-            type: 'danger',
-            content: 'Internal server error.',
-            container: '#pwalert',
-            dismissable: false,
-            show: false
-        });
+        $scope.pwAlert = null;
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:SettingsCtrl#loadContact
@@ -1575,10 +1568,20 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm',
             var pw = $scope.form.password;
             var pwc = $scope.form.password_confirm;
             if(pw != pwc) {
-                $scope.pwAlert.show();
+                if($scope.pwAlert != null)
+                    $scope.pwAlert.hide();
+                $scope.pwAlert = $alert({
+                    title: "Error",
+                    type: 'danger',
+                    content: 'Passwords have to be identical',
+                    container: '#pwalert',
+                    dismissable: false,
+                    show: true
+                });
                 return false;
             }else {
-                $scope.pwAlert.hide();
+                if($scope.pwAlert != null)
+                    $scope.pwAlert.hide();
                 return true;
             }
         };
@@ -1592,15 +1595,39 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm',
             if(!$scope.validatePW())
                 return;
             if($scope.form.password == null || $scope.form.password == '') {
-                $scope.pwAlert.show();
+                if($scope.pwAlert != null)
+                    $scope.pwAlert.hide();
+                $scope.pwAlert = $alert({
+                    title: "Error",
+                    type: 'danger',
+                    content: 'Passwords cannot be empty',
+                    container: '#pwalert',
+                    dismissable: false,
+                    show: true
+                });
                 return;
             }
+            //TODO Need to set ID
             var _data = {
-                password: $scope.form.password_old,
-                new_password: $scope.form.password
+                oldpassword: $scope.form.password_old,
+                newpassword: $scope.form.password,
+                adminId: 0
             };
             //TODO add confirm
-            //TODO Send to server, handle response ( Missing API Function )
+            Admin.changePassword(_data).$promise.then(function(value){
+
+            },function(value){
+                if($scope.pwAlert != null)
+                    $scope.pwAlert.hide();
+                $scope.pwAlert = $alert({
+                    title: "Error",
+                    type: 'danger',
+                    content: 'Couldnt change password. Error ( '+value.status+ ' )',
+                    container: '#pwalert',
+                    dismissable: false,
+                    show: true
+                });
+            });
         }
         /**
          * @ngdoc function
@@ -1611,12 +1638,10 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm',
         $scope.changeEmail = function() {
             var _personal_email = $scope.form.personal_email;
             if(_personal_email == null || _personal_email == '') {
-
+                return;
             }
             //TODO confirm
-            $confirm().show().then(function(res) {
-                console.log(res);
-            });
+
             //TODO Send to server, handle response ( Missing API function )
         }
         /**
