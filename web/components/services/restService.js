@@ -52,7 +52,7 @@ restSvcs.factory('Workshops',['$resource',function($resource){
          * @param {number} id Workshop-ID
          * @param {string} token Unsubscribetoken
          */
-        'getUnsubscribes': {method: 'GET',url:'/api/workshops/:id/unsubscribes/:token',params: {id: '@id', token: '@token'},isArray: false},
+        'unsubscribe': {method: 'GET',url:'/api/workshops/:workshopId/unsubscribe/:token',params: {id: '@id', token: '@token'},isArray: false},
         /**
          * @ngdoc funtion
          * @name restSvcs.Workshops#unsubscribeWorkshop
@@ -71,6 +71,7 @@ restSvcs.factory('Workshops',['$resource',function($resource){
          * @param {string} token Confirmtoken
          */
         'confirmEnroll': {method: 'GET',url:'/api/workshops/:id/enroll/:userid/confirm/:token',params: {id: '@id',userid: '@userid',token: '@token'},isArray: false},
+        'unsubscribeConfirm': {method: 'GET',url: '/api/workshops/:id/unsubscribe/:token/confirm/:participantId'}
     });
 }]);
 /**

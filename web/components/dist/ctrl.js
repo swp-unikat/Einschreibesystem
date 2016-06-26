@@ -428,6 +428,10 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops', '$stat
         Workshops.get({id: workshopid}).$promise.then(function(value,httpResponse){
             $scope.workshop = value;
 
+            var _ea = Date.parse($scope.workshop.end_at);
+            var _sa = Date.parse($scope.workshop.start_at);
+            $scope.workshop.duration = new Date(_ea - _sa);
+            
             $scope.loading = false;
         },function(httpResponse) {
             alert(httpResponse.status + '');
@@ -585,16 +589,19 @@ mainAppCtrls.controller('adminWorkshopManagementCtrl',['$scope','AdminWorkshop',
  * @descirption Controller for managing administrator list
  * @requires restSvcs.Admin
  */
-mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin',
-    function($scope,Admin) {
-        $scope.loading = true;
-        Admin.list().$promise.then(function(value){
-            $scope.admins = value;
-            $scope.loading = false;
-        },function(httpResponse){
-            alert(httpResponse.status);
-            $scope.loading = false;
-        });
+mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin','$alert',
+    function($scope,Admin,$alert) {
+        var loadList = function(){
+            $scope.loading = true;
+            Admin.list().$promise.then(function(value){
+                $scope.admins = value;
+                $scope.loading = false;
+            },function(httpResponse){
+                alert(httpResponse.status);
+                $scope.loading = false;
+            });
+        };
+        loadList();
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:AdministratorManagementCtrl#delete
@@ -602,11 +609,29 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin',
          * @param {number} _id ID of the admin to delete
          * @methodOf mainAppCtrls.controller:AdministratorManagementCtrl
          */
-        $scope.delete = function(_id) {
+        $scope.deleteAdmin = function(_id) {
+            $scope.loading = true;
             Admin.delete({id: _id}).$promise.then(function(value){
-                
+                loadList();
             },function(httpResponse){
-                
+                $scope.loading = false;
+                $alert({
+                   type: 'danger',
+                   title: 'Error',
+                   content: 'Failed to delete admin',
+                   container: '#alert',
+                   show: true,
+                   dismissable: false,
+                   duration: 30
+                });
+            });
+        }
+        $scope.invite = function() {
+            $scope.inviting = true;
+            Admin.invite({email: $scope.admin_mail}).$promise.then(function(value){
+                $scope.inviting = false;
+            },function(value){
+                $scope.inviting = false;
             });
         }
     }
@@ -1707,6 +1732,9 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
             });
         };
 
+        $scope.unsubscribe= function(){
+  
+        };
         $scope.loading = true;
         Workshops.get({id: workshopid}).$promise.then(function(value,httpResponse){
             $scope.workshop = value;
