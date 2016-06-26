@@ -142,7 +142,7 @@ class AdminController extends FOSRestController implements ClassResourceInterfac
             //FOSUserBundle
             $UserManager = $this->get('fos_user.user_manager');
             /** @var $admin User */
-            $admin = $UserManager->create();
+            $admin = $UserManager->createUser();
             $admin->setEmailCanonical($params['email']);
             $admin->setPlainPassword($params["password"]);
         } else {
@@ -151,7 +151,7 @@ class AdminController extends FOSRestController implements ClassResourceInterfac
 
         $this->getDoctrine()->getManager()->persist($admin);
         $this->getDoctrine()->getManager()->flush();
-        
+
         return View::create(NULL, Codes::HTTP_OK);
     }
  }
