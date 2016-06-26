@@ -138,18 +138,20 @@ class AdminController extends FOSRestController implements ClassResourceInterfac
         //find invitation in database
         $invitation = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Invitation")->findOneBy(['code' => $params['code']]);
         //check if invitation parameter sended is true
-        if ($invitation->getSent()) {
+        if ($invitation->getSent() && $invitation->getUsed() != true) {
             //FOSUserBundle
             $UserManager = $this->get('fos_user.user_manager');
             /** @var $admin User */
             $admin = $UserManager->createUser();
             $admin->setEmailCanonical($params['email']);
             $admin->setPlainPassword($params["password"]);
+            $invitation->setUsed(true);
         } else {
             throw $this->createAccessDeniedException("No invitation was sended!");
         }
 
         $this->getDoctrine()->getManager()->persist($admin);
+        $this->getDoctrine()->getManager()->persist($invitation);
         $this->getDoctrine()->getManager()->flush();
 
         return View::create(NULL, Codes::HTTP_OK);

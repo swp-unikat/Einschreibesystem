@@ -34,7 +34,15 @@ class Invitation
      *
      * @ORM\Column(type="boolean")
      */
-    protected $sent =false;
+    protected $sent = false;
+    /**
+     * When received invitation set this value to 'true'
+     *
+     * It prevents by using the invitation twice
+     *
+     * @ORM\Column(type="boolean")
+     */
+    protected $used = false;
     /**
      * function to construct an invitation
      */
@@ -92,6 +100,22 @@ class Invitation
         $this->sent = $sent;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getUsed()
+    {
+        return $this->used;
+    }
 
+    /**
+     * @param mixed $used
+     */
+    public function setUsed($used)
+    {
+        $this->used = $used;
+    }
+
+    
 
 }
