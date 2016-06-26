@@ -48,7 +48,7 @@ class AdminController extends FOSRestController implements ClassResourceInterfac
     public function postInviteAction(ParamFetcher $paramFetcher)
     {
         $email = $paramFetcher->get("email");
-        if(!$this->get('fos_user.user_manager')->findUserByUsernameOrEmail($email))
+        if($this->get('fos_user.user_manager')->findUserByUsernameOrEmail($email))
             return $this->handleView($this->view(['code' => 404,'message' => "INVITED_ADMINISTRATOR_EMAIL_ERROR"], 404));
 
 
@@ -59,7 +59,7 @@ class AdminController extends FOSRestController implements ClassResourceInterfac
         $renderTemplate = $this->get('twig')->createTemplate($template->getEmailBody());
         /* Sending E-Mail */
         $invitation->setEmail($email);
-        $url = $this->generateUrl('core_frontend_default_index',[],TRUE)."/#/admin/create/".$invitation->getCode();
+        $url = $this->generateUrl('core_frontend_default_index',[],TRUE)."#/admin/create/".$invitation->getCode();
         $message = \Swift_Message::newInstance()
             ->setSubject($template->getEmailSubject())
             ->setFrom($this->getParameter('email_sender'))

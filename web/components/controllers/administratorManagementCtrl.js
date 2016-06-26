@@ -11,6 +11,13 @@ var mainAppCtrls = angular.module("mainAppCtrls");
 mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin','$alert','$translate',
     function($scope,Admin,$alert,$translate) {
         $scope.loading = true;
+
+        var _translations = {};
+        //Pass all required translation IDs to translate service
+        $translate(['INVITED_ADMINISTRATOR_EMAIL','INVITED_ADMINISTRATOR_EMAIL_ERROR']).then(function(translations){
+            _translations = translations;
+        });
+
         Admin.list().$promise.then(function(value){
             $scope.admins = value;
             $scope.loading = false;
