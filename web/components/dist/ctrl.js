@@ -326,9 +326,19 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
  * @requires restSvcs.Workshops
  * @requires restSvcs.AdminWorkshop
  */
-mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorkshop",
-    function($scope, Workshops, AdminWorkshop) {
+mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorkshop",'WorkshopTemplate',
+    function($scope, Workshops, AdminWorkshop,WorkshopTemplate) {
         $scope.workshop = {};
+
+        //load available Workshoptemplates for list
+        WorkshopTemplate.getAll().$promise.then(function(response){
+            $scope.templates = response;
+        },function(response){
+
+        });
+        $scope.loadTemplate = function(){
+            $scope.workshop = JSON.parse(JSON.stringify($scope.selectedTemplate));
+        };
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:AdminNewWorkshopCtrl#sendInfo
@@ -371,6 +381,7 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
          * @methodOf mainAppCtrls.controller:AdminNewWorkshopCtrl
          */
         $scope.discard = function(){
+
             $scope.workshop.title= "";
             $scope.workshop.description= "";
             $scope.workshop.cost= "";
@@ -379,7 +390,10 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
             $scope.workshop.sharedDate= "";
             $scope.workshop.start_at= "";
             $scope.workshop.duration= "";
-            $scope.workshop.max.participants= "";
+            $scope.workshop.max_participants= "";
+            if($scope.selectedTemplate != null){
+                $scope.workshop = JSON.parse(JSON.stringify($scope.selectedTemplate));
+            }
 
 
 
@@ -486,43 +500,74 @@ mainAppCtrls.controller('adminWorkshopManagementCtrl',['$scope','AdminWorkshop',
             $scope.errorTitle = translations.TITLE_ERROR;
             $scope.errorMsg = translations.ERROR_NO_WORKSHOPS;
         });
-        $scope.loading = true;
-        AdminWorkshop.gethistory().$promise.then(function(value){
-            var workshopList = value;
-            $scope.loading = false;
-            for(var i=0;i<workshopList.length;i++) {
-                if(compareToCurrent(workshopList[i].start_at))
-                    $scope.currentList.push(workshopList[i]);
-                else
-                    $scope.elapsedList.push(workshopList[i]);
-            }
-        },function(httpResponse) {
-            //switch through all possible errors
-            switch(httpResponse.status){
-                //Alert for error 404, no workshops available
-                case 404:
-                    $scope.myAlert = $alert({
+        var loadWorkshops = function() {
+            $scope.loading = true;
+            AdminWorkshop.gethistory().$promise.then(function (value) {
+                var workshopList = value;
+                $scope.currentList = [];
+                $scope.elapsedList = [];
+                $scope.loading = false;
+                for (var i = 0; i < workshopList.length; i++) {
+                    if (compareToCurrent(workshopList[i].start_at))
+                        $scope.currentList.push(workshopList[i]);
+                    else
+                        $scope.elapsedList.push(workshopList[i]);
+                }
+            }, function (httpResponse) {
+                //switch through all possible errors
+                switch (httpResponse.status) {
+                    //Alert for error 404, no workshops available
+                    case 404:
+                        $scope.myAlert = $alert({
 
-                        title: $scope.errorTitle,
-                        type: 'danger',
-                        content: $scope.errorMsg,
-                        container: '#alert',
-                        dismissable: false,
-                        show: true
+                            title: $scope.errorTitle,
+                            type: 'danger',
+                            content: $scope.errorMsg,
+                            container: '#alert',
+                            dismissable: false,
+                            show: true
+                        });
+                    case 500:
+                        $scope.myAlert = $alert({
+                            title: $scope.errorTitle,
+                            type: 'danger',
+                            content: 'Internal server error.',
+                            container: '#alert',
+                            dismissable: false,
+                            show: true
+                        })
+                        break;
+                }
+                $scope.loading = false;
+            });
+        };
+        loadWorkshops();
+        /**
+         * @ngdoc function
+         * @name mainAppCtrls.controller:adminWorkshopManagementCtrl#delete
+         * @methodOf mainAppCtrls.controller:adminWorkshopManagementCtrl
+         * @description Function removes a single Workshop from the list
+         * @params {number} _id workshop id, which should be removed
+         */
+        $scope.delete = function (_id) {
+            AdminWorkshop.delete({id:_id}).$promise.then(function(httpResponse){
+                    $alert({
+                        title:'Success',
+                        type: 'success',
+                        container:'#alert',
+                        show: true,
+                        dismissable: true,
+                        content: 'Successfully deleted',
+                        duration: 20
                     });
-                case 500:
-                    $scope.myAlert = $alert({
-                        title: $scope.errorTitle,
-                        type: 'danger',
-                        content: 'Internal server error.',
-                        container: '#alert',
-                        dismissable: false,
-                        show: true
-                    });
-                    break;
-            }
-            $scope.loading = false;
-        });
+                    loadWorkshops();
+                }
+                , function (httpResponse) {
+                    alert('Error');
+                }
+            )
+
+        }
 
     }
 ]);
@@ -540,10 +585,13 @@ mainAppCtrls.controller('adminWorkshopManagementCtrl',['$scope','AdminWorkshop',
  */
 mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin',
     function($scope,Admin) {
+        $scope.loading = true;
         Admin.list().$promise.then(function(value){
             $scope.admins = value;
+            $scope.loading = false;
         },function(httpResponse){
             alert(httpResponse.status);
+            $scope.loading = false;
         });
         /**
          * @ngdoc function
@@ -810,7 +858,7 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
          * @methodOf mainAppCtrls.controller:EditWorkshopTemplateCtrl
          */
         $scope.discard = function () {
-
+            
             $scope.workshop.title = _originalData.title;
             $scope.workshop.description = _originalData.description;
             $scope.workshop.cost = _originalData.cost;
@@ -820,6 +868,7 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
             $scope.workshop.end_at = _originalData.end_at;
             $scope.workshop.max_participants = _originalData.max_participants;
         };
+
 
         /**
          * @ngdoc function
@@ -1093,8 +1142,18 @@ mainAppCtrls.controller('LoginCtrl',['$scope','$http','store','$state','jwtHelpe
  * @description Controller to create a new email template
  * @requires restSvcs.EmailTemplate
  */
-mainAppCtrls.controller('NewEmailTemplateCtrl',['$scope',"EmailTemplate",
-    function($scope, EmailTemplate) {
+mainAppCtrls.controller('NewEmailTemplateCtrl',['$scope',"EmailTemplate",'$translate','$alert',
+    function($scope, EmailTemplate,$translate,$alert) {
+        
+        //Get translations for errors and store in array
+        var _translations = {};
+        //Pass all required translation IDs to translate service
+        $translate(['ALERT_EMAILTEMPLATE_NEW_SUCCESS',
+            'ALERT_EMAILTEMPLATE_NEW_FAIL','ALERT_EMAILTEMPLATE_NOT_FOUND']).
+        then(function(translations){
+            _translations = translations;
+        });
+        
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:NewEmailTemplateCtrl#sendInfo
@@ -1106,11 +1165,27 @@ mainAppCtrls.controller('NewEmailTemplateCtrl',['$scope',"EmailTemplate",
                 template_name:$scope.email.template.title,
                 email_subject:$scope.email.template.subject,
                 email_body:$scope.email.template.body
-            };
-            EmailTemplate.put(data).$promise.then(function(httpResponse){
-                alert('Success!' + httpResponse.status);
-            },function(httpResponse){
-                alert('Error'+httpResponse.statusText);
+            }
+            
+            EmailTemplate.put(data).$promise.then(function (httpResponse) {
+                
+                $alert({
+                    title: '',
+                    type: 'success',
+                    content: _translations.ALERT_EMAILTEMPLATE_NEW_SUCCESS + ' \"' + data.template_name +'\"',
+                    container: '#alert',
+                    dismissable: false,
+                    show: true
+                });
+            }, function (httpResponse) {
+                $alert({
+                    title: '',
+                    type: 'danger',
+                    content: _translations.ALERT_EMAILTEMPLATE_NEW_FAIL + ' (' + httpReponse.status +')',
+                    container: '#alert',
+                    dismissable: false,
+                    show: true
+                });
             });
         };
         /**
@@ -1143,10 +1218,19 @@ mainAppCtrls.controller('NewEmailTemplateCtrl',['$scope',"EmailTemplate",
  * @description Controller initializing the creation of a new workshop template
  * @requires restSvcs.WorkshopTemplate
  */
-mainAppCtrls.controller('NewWorkshopTemplateCtrl',['$scope',"WorkshopTemplate",'$alert',
-    function($scope, WorkshopTemplate,$alert) {
+mainAppCtrls.controller('NewWorkshopTemplateCtrl',['$scope',"WorkshopTemplate",'$translate','$alert',
+    function($scope, WorkshopTemplate,$translate,$alert) {
         $scope.workshop = {};
         $scope.myAlert;
+        
+        //Get translations for errors and store in array
+        var _translations = {};
+        //Pass all required translation IDs to translate service
+        $translate(['ALERT_WORKSHOPTEMPLATE_NEW_SUCCESS',
+            'ALERT_WORKSHOPTEMPLATE_NEW_FAIL','ALERT_WORKSHOPTEMPLATE_NOT_FOUND']).
+        then(function(translations){
+            _translations = translations;
+        });
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:NewWorkshopTemplateCtrl#sendInfo
@@ -1185,23 +1269,21 @@ mainAppCtrls.controller('NewWorkshopTemplateCtrl',['$scope',"WorkshopTemplate",'
                 $scope.myAlert.hide();
             WorkshopTemplate.put(data).$promise.then(function(httpResponse){
                 $scope.myAlert = $alert({
-                    container: '#alert',
-                    type: 'success',
-                    title: 'Success',
-                    content: 'Successfully created workshop-template '+$scope.workshop.title,
-                    show: true,
-                    dismissable: false,
-                    duration: 20
+                   container: '#alert',
+                   type: 'success',
+                   title: '',
+                   content: _translations.ALERT_WORKSHOPTEMPLATE_NEW_SUCCESS + ' \"' + data.title +'\"',
+                   show: true,
+                   dismissable: false
                 });
             },function(httpResponse){
                 $scope.myAlert = $alert({
                     container: '#alert',
                     type: 'danger',
-                    title: 'Error',
-                    content: 'Failed to create template! '+httpResponse.status,
+                    title: '',
+                    content:  _translations.ALERT_WORKSHOPTEMPLATE_NEW_FAIL + ' (' + httpReponse.status +')',
                     show: true,
-                    dismissable: false,
-                    duration: 20
+                    dismissable: false
                 });
             });
         };
@@ -1568,6 +1650,12 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
         };
 
 
+
+
+
+
+
+
         $scope.loading = true;
         Workshops.get({id: workshopid}).$promise.then(function(value,httpResponse){
             $scope.workshop = value;
@@ -1664,10 +1752,20 @@ mainAppCtrls.controller('WorkshopListCtrl',['$scope','Workshops','$alert','$tran
  * @description Displays the workshop-template list in the associated view
  * @requires restSvcs.WorkshopTemplate
  */
-mainAppCtrls.controller('WorkshopTemplateCtrl', ['$scope', "WorkshopTemplate",'$alert',
+mainAppCtrls.controller('WorkshopTemplateCtrl', ['$scope', "WorkshopTemplate",'$translate','$alert',
 
-    function ($scope, WorkshopTemplate, $alert) {
+    function ($scope, WorkshopTemplate,$translate,$alert) {
 
+
+        //Get translations for errors and store in array
+        var _translations = {};
+        //Pass all required translation IDs to translate service
+        $translate(['ALERT_WORKSHOPTEMPLATE_LIST_EMPTY',
+            'ALERT_WORKSHOPTEMPLATE_DELETED_SUCCESS','ALERT_WORKSHOPTEMPLATE_DELETED_FAIL']).
+        then(function(translations){
+            _translations = translations;
+        });
+        
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:WorkshopTemplateCtrl#loadTemplates
@@ -1685,13 +1783,12 @@ mainAppCtrls.controller('WorkshopTemplateCtrl', ['$scope', "WorkshopTemplate",'$
                 if(httpResponse.status == 404){
                     $scope.data = {};
                     $alert({
-                        title:"Warning",
+                        title: '',
                         type: 'warning',
                         container:'#alert',
                         show: true,
                         dismissable: false,
-                        content: 'No workshops templates in list',
-                        duration: 20
+                        content: _translations.ALERT_WORKSHOPTEMPLATE_LIST_EMPTY + ' (' + httpReponse.status +')',
                     })
                 }
                 $scope.loading = false;
@@ -1708,18 +1805,25 @@ mainAppCtrls.controller('WorkshopTemplateCtrl', ['$scope', "WorkshopTemplate",'$
         $scope.delete = function (_id) {
             WorkshopTemplate.delete({id:_id}).$promise.then(function(httpresponse){
                     $alert({
-                        title:'Success',
+                        title:'',
                         type: 'success',
                         container:'#alert',
                         show: true,
                         dismissable: false,
-                        content: 'Successfully deleted',
+                        content: _translations.ALERT_WORKSHOPTEMPLATE_DELETED_SUCCESS,
                         duration: 20
                     });
                     loadTemplates();
                 }
                 , function (httpResponse) {
-                    alert('Error');
+                    $alert({
+                        title: '',
+                        type: 'danger',
+                        content: _translations.ALERT_WORKSHOPTEMPLATE_DELETED_FAIL + ' (' + httpReponse.status +')',
+                        container: '#alert',
+                        dismissable: false,
+                        show: true
+                    });
                 }
             )
 

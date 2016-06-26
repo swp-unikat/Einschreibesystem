@@ -8,8 +8,11 @@
     <br>
 
     <!--dropdown-->
-    <button type="button" class="btn btn-lg btn-default" data-animation="am-flip-x" bs-dropdown aria-haspopup="true"
-            aria-expanded="false">{{ "AVAILABLE_WORKSHOP" | translate}}
+    <button type="button" class="btn btn-default" ng-model="selectedTemplate" data-html="1" data-toggle="true"
+            data-placeholder="Select a template"
+            ng-change="loadTemplate()" bs-options="template.title for template in templates"
+            bs-select>
+        Action <span class="caret"></span>
     </button>
 
     <!--dropdown end-->
