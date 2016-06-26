@@ -159,8 +159,8 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
         $url = $this->generateUrl('core_frontend_default_index',[],TRUE)."#/enrollment/confirm/".$workshop->getId()."/".$participant->getId()."/".$token->getToken();
 
 
-        //load Template for confirment
-        $template = $this->getDoctrine()->getRepository("CoreEntityBundle:EmailTemplate")->find(2);
+        //load Template for conferment
+        $template = $this->getDoctrine()->getRepository("CoreEntityBundle:EmailTemplate")->find(4);
         /* Creating Twig template from Database */
         $renderTemplate = $this->get('twig')->createTemplate($template->getEmailBody());
         /* Sending E-Mail with Confirmation Link*/
