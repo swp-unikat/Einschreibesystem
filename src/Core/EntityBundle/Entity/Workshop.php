@@ -37,7 +37,7 @@ class Workshop
     /**
      * cost of a workshop
      * @var int
-     * @ORM\Column(name="cost", type="decimal",precision=4, scale=2, nullable=false)
+     * @ORM\Column(name="cost", type="decimal",precision=4, scale=2, nullable=true)
      * @Serializer\Expose
      * @Serializer\SerializedName("cost")
      */
@@ -45,7 +45,7 @@ class Workshop
     /**
      * requirements of a workshop
      * @var string
-     * @ORM\Column(name="requirement", type="string", nullable=false)
+     * @ORM\Column(name="requirement", type="string", nullable=true)
      * @Serializer\Expose
      * @Serializer\SerializedName("requirement")
      */
@@ -53,7 +53,7 @@ class Workshop
     /**
      * description of a workshop
      * @var string
-     * @ORM\Column(name="description", type="text", nullable=false)
+     * @ORM\Column(name="description", type="text", nullable=true)
      * @Serializer\Expose
      * @Serializer\SerializedName("description")
      */

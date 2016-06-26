@@ -290,14 +290,14 @@ class WorkshopTemplateController extends FOSRestController implements ClassResou
      *
      * @param $paramFetcher ParamFetcher
      * @return \Symfony\Component\HttpFoundation\Response
-     * @REST\RequestParam(name="title", requirements=".*", description="title of the Workshop")
-     * @REST\RequestParam(name="description", requirements=".*", description="description of the Workshop")
-     * @REST\RequestParam(name="cost", requirements=".*", description="cost of the Workshop")
-     * @REST\RequestParam(name="requirements", requirements=".*", description="requirements of the Workshop")
-     * @REST\RequestParam(name="location", requirements=".*", description="location of the Workshop")
+     * @REST\RequestParam(name="title", requirements=".*", description="title of the Workshop",nullable=true)
+     * @REST\RequestParam(name="description", requirements=".*", description="description of the Workshop",nullable=true)
+     * @REST\RequestParam(name="cost", requirements=".*", description="cost of the Workshop",nullable=true)
+     * @REST\RequestParam(name="requirements", requirements=".*", description="requirements of the Workshop",nullable=true)
+     * @REST\RequestParam(name="location", requirements=".*", description="location of the Workshop",nullable=true)
      * @REST\RequestParam(name="start_at", requirements=".*", description="starttime of the Workshop",default=null,nullable=true)
      * @REST\RequestParam(name="end_at", requirements=".*", description="endtime of the Workshop",default=null,nullable=true)
-     * @REST\RequestParam(name="max_participants", requirements="\d+", description="maximum number of participants")
+     * @REST\RequestParam(name="max_participants", requirements="\d+", description="maximum number of participants",nullable=true)
      * @param string $title title of the workshop
      * @param string $description description of the workshop
      * @param float $cost cost of the workshop
