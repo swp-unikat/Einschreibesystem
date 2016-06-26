@@ -157,8 +157,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
         $this->getDoctrine()->getManager()->flush();
         
         $url = $this->generateUrl('core_frontend_default_index',[],TRUE)."#/enrollment/confirm/".$workshop->getId()."/".$participant->getId()."/".$token->getToken();
-
-
+        $unsubscribe = $this->generateUrl('core_frontend_default_index',[],TRUE)."#/unsubscribe/".$workshop->getId()."/".$participant->getId();
         //load Template for conferment
         $template = $this->getDoctrine()->getRepository("CoreEntityBundle:EmailTemplate")->find(4);
         /* Creating Twig template from Database */
@@ -168,12 +167,14 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
             ->setSubject($this->get('twig')->createTemplate($template->getEmailSubject())->render(["workshop" => $workshop]))
             ->setFrom($this->getParameter('email_sender'))
             ->setTo($participant->getEmail())
-            ->setBody($renderTemplate->render(["workshop" => $workshop,"participant" => $participant,'url' => $url]),'text/html');
+            ->setBody($renderTemplate->render(["workshop" => $workshop,"participant" => $participant,'url' => $url,'unsubscribe' => $unsubscribe]),'text/html');
         $this->get('mailer')->send($message);
 
         return View::create(NULL, Codes::HTTP_OK);
     }
+    
 
+    
     /**
      * Action to confirm enrollment on a workshop
      * @ApiDoc(
@@ -201,7 +202,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
         // Workshop & Token & participant are valid
         if($workshop != NULL  && $token != NULL && $participant != NULL){
             // Check if Token is not older then 30 min
-            if($token->getValidUntil() >= new \DateTime('now') and $token->getUsedAt() == NULL){
+            if($token->getValidUntil() >= new \DateTime('now') && $token->getUsedAt() == NULL){
                 // Check if this token is dedicated to user
                 if($token->getParticipant() != $participant){
                     return $this->handleView($this->view(['code' => 403,'message' => "User does not match"], 403));
@@ -244,28 +245,72 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      *      404 = "Returned when the data is not found"
      *  }
      * )
-     * @param $id int id of the workshop
-     * @param $token string token to identify the user
-     * @param $participantsID int id of the participant
+     * @param $workshopId int id of the workshop
+     * @param $participantId int id of the participant
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\View()
      */
-    public function getUnsubscribeAction($id,$token, $participantsID)
+    public function getUnsubscribeAction($workshopId,$participantId){
+
+        $workshopParticipant = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:WorkshopParticipants")->findOneBy(['workshop' => $workshopId,'participant' => $participantId]);
+
+
+        if ($workshopParticipant != NULL) {
+            $token = new EmailToken();
+            $token->setParticipant($workshopParticipant->getParticipant());
+            $this->getDoctrine()->getManager()->persist($token);
+            $this->getDoctrine()->getManager()->flush();
+
+            $url = $this->generateUrl('core_frontend_default_index',[],TRUE)."#/#/unsubscribe/".$workshopParticipant->getParticipant()->getId()."/".$workshopParticipant->getWorkshop()->getId()."/".$token->getToken();
+
+            //load Template for confirmation
+            $template = $this->getDoctrine()->getRepository("CoreEntityBundle:EmailTemplate")->find(5);
+            /* Creating Twig template from Database */
+            $renderTemplate = $this->get('twig')->createTemplate($template->getEmailBody());
+            /* Sending E-Mail with Confirmation Link*/
+            $message = \Swift_Message::newInstance()
+                ->setSubject($this->get('twig')->createTemplate($template->getEmailSubject())->render(["workshop" => $workshopParticipant->getWorkshop()]))
+                ->setFrom($this->getParameter('email_sender'))
+                ->setTo($workshopParticipant->getParticipant()->getEmail())
+                ->setBody($renderTemplate->render(["workshop" => $workshopParticipant->getWorkshop(),"participant" => $workshopParticipant->getParticipant(),'url' => $url]),'text/html');
+            $this->get('mailer')->send($message);
+
+            return View::create(NULL, Codes::HTTP_OK);
+
+        } else {
+            return $this->handleView($this->view(['code' => 404,'message' => "workshop,Token or participant not found"], 404));
+        }
+
+
+    }
+
+    /**
+     * action to confirme unsubscribe a
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Action to unsubscribe a Workshop",
+     *  output = "",
+     *  statusCodes = {
+     *      200 = "Returned when successful",
+     *      404 = "Returned when the data is not found"
+     *  }
+     * )
+     * @param $id int id of the workshop
+     * @param $token string token to identify the user
+     * @param $participantsId int id of the participant
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Rest\View()
+     */
+    public function getUnsubscribeConfirmationAction($id,$token, $participantId)
     {
-        $workshop = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Workshop")->find($id);
-        /*@var $token Core\EntityBundle\Entity\EmailToken */
         $token = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:EmailToken")->findOneBy(['token' => $token]);
-        $participant = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Participants")->find($participantsID);
+        $workshopParticipant = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:WorkshopParticipants")->findOneBy(['workshop' => $id,'participant' => $participantId]);
 
-        $workshopParticipant = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:WorkshopParticipants")->findById($id, $participantsID);
-
-        if ($workshop != NULL && $token != NULL && $participant != NULL) {
-            if ($token->getValidUntil() <= new \DateTime('now')) {
-                if ($token->getParticipant() != $participant) {
-                    throw $this->createAccessDeniedException("User does not match");
+        if ($token != NULL  && $workshopParticipant != NULL) {
+            if ($token->getValidUntil() >= new \DateTime('now') && $token->getUsedAt() == NULL) {
+                if ($token->getParticipant() != $workshopParticipant->getParticipant()) {
+                    return $this->handleView($this->view(['code' => 403,'message' => "User does not match"], 403));
                 } else {
-                    $workshopParticipant->setWorkshop($id);
-                    $workshopParticipant->setParticipant($participant);
 
                     $token->setUsedAt(new \DateTime('now'));
                     $this->getDoctrine()->getManager()->persist($token);
@@ -273,10 +318,11 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
                     $this->getDoctrine()->getManager()->flush();
                 }
             } else {
-                throw $this->createAccessDeniedException("Token ist not valid");
+                return $this->handleView($this->view(['code' => 403,'message' => "Token ist not valid"], 403));
+
             }
         } else {
-            return $this->handleView($this->view(['code' => 404,'message' => "Workshop or Token not found"], 404));
+            return $this->handleView($this->view(['code' => 404,'message' => "workshop,Token or participant not found"], 404));
         }
     }
 
