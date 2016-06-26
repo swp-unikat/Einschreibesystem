@@ -147,7 +147,7 @@ class AdminController extends FOSRestController implements ClassResourceInterfac
             $UserManager = $this->get('fos_user.user_manager');
             /** @var $admin User */
             $admin = $UserManager->create();
-            $admin->setEmailCanonical($params['email'])
+            $admin->setEmailCanonical($params['email']);
             $admin->setPlainPassword($params["password"]);
         } else {
             throw $this->createAccessDeniedException("No invitation was sended!");
