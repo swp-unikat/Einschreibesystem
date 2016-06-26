@@ -9,6 +9,7 @@ namespace Core\EntityBundle\Repository;
 
 use Core\EntityBundle\Entity\Workshop;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Internal\Hydration\ArrayHydrator;
 use Doctrine\ORM\Query\Expr\Join;
 /**
  * this class provides get functions of the workshops
@@ -31,10 +32,13 @@ class WorkshopRepository extends EntityRepository
             )
             ->orderBy('workshop.start_at', 'ASC');
         $q->setParameter('now', $oDate);
-        $result = $q->getQuery()->getResult();
+        $result = $q->getQuery()->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
         if (!$result) {
             return false;
         } else {
+            foreach ($result as $key=>$workshop){
+                $result[$key]['numParticipants'] = $this->getParticipants($workshop['id']);
+            }
             return $result;
         }
     }
@@ -60,14 +64,14 @@ class WorkshopRepository extends EntityRepository
     }
     /**
      * function to get participants of a workshop
-     * @param int $workshopID id of a workshop
+     * @param $workshopID int id of a workshop
      */
     public function getParticipants($workshopId){
         $em = $this->getEntityManager();
         $qb = $em->createQueryBuilder();
         $q = $qb->select(["count(wt.id)"])->from("CoreEntityBundle:WorkshopParticipants","wt")->where("wt.workshop = ?1");
         $q->setParameter(1,$workshopId);
-        $result = $q->getQuery()->getResult();
+        $result = $q->getQuery()->getSingleScalarResult();
         return $result;
 
     }

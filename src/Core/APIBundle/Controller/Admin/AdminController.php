@@ -2,7 +2,7 @@
 /**
  * Created by IntelliJ IDEA.
  * User: Marco Hanisch
- * Authors: Marco Hanisch, Andreas Ifland
+ * Authors: Marco Hanisch, Andreas Ifland,Leon Bergmann
  * Date: 31.05.2016
  * Time: 13:01
  */
@@ -16,10 +16,11 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\Util\Codes;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
-
+use Core\EntityBundle\Entity\User;
+use Symfony\Component\BrowserKit\Request;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
-use Core\EntityBundle\Entity\User;
+
 
 /**
  * Class RestController.
@@ -47,9 +48,6 @@ class AdminController extends FOSRestController implements ClassResourceInterfac
     public function inviteAdminAction($email)
     {
         $invitation = new Invitation();
-        //Create Token
-        $code = $invitation->getCode();
-        //$email = $paramFetcher->get("email"); //not needed anymore
         /* Loading the default E-Mail template*/
         $template = $this->getDoctrine()->getRepository("CoreEntityBundle:EmailTemplate")->find(1);
         /* Creating Twig template from Database */
@@ -59,7 +57,7 @@ class AdminController extends FOSRestController implements ClassResourceInterfac
             ->setSubject($template->getEmailSubject())
             ->setFrom('send@example.com')//unsure which email!
             ->setTo($email)
-            ->setBody($renderTemplate->render(["code" => $code, "email" => $email]), 'text/html');
+            ->setBody($renderTemplate->render(["code" => $invitation->getCode(), "email" => $email]), 'text/html');
         $this->get('mailer')->send($message);
         $invitation->send(); //prevents sending invitations twice
         $this->getDoctrine()->getManager()->persist($invitation);
@@ -99,9 +97,9 @@ class AdminController extends FOSRestController implements ClassResourceInterfac
         //$params is array with E-Mail Password and Token (Code)
         $params = $paramFetcher->all();
         //find invitation in database
-        $invitation = $this->getDoctrine()->getManager()->getRepository("invitation")->find();
+        $invitation = $this->getDoctrine()->getManager()->getRepository("invitation")->findOneBy(['code' => $params['code']]);
         //check if invitation parameter sended is true
-        if ($invitation->isSend() && $params["code"] == $invitation->getcode()) {
+        if ($invitation->isSend()) {
             //FOSUserBundle
             $UserManager = $this->get('fos_user.user_manager');
             $admin = $UserManager->create();
@@ -242,7 +240,14 @@ class AdminController extends FOSRestController implements ClassResourceInterfac
      */
     public function getLegalNoticeAction()
     {
-
+        $path = $this->get('kernel')->getRootDir() . '/../web/resources/data/legalNotice';
+        $content = ['content' => file_get_contents($path)];
+        if($content){
+            $view = $this->view($content,200);
+            return $this->handleView($view);
+        }else{
+            return $this->handleView($this->view(['code' => 404,'message' => "Could not read the file."], 404));
+        }
     }
 
     /**
@@ -258,12 +263,19 @@ class AdminController extends FOSRestController implements ClassResourceInterfac
      *)
      *
      * @return \Symfony\Component\HttpFoundation\Response
-     * @param $content string new content of the file
+     * @Rest\RequestParam(name="content", requirements=".*", description="content of contact data",default=null,nullable=true )
+     * @param $paramFetcher ParamFetcher
      * @Rest\View()
      */
-    public function putLegalNoticeAction($content)
+    public function putLegalNoticeAction(ParamFetcher $paramFetcher)
     {
-
+        $paramFetcher->get('content');
+        $path = $this->get('kernel')->getRootDir() . '/../web/resources/data/legalNotice';
+        if(file_put_contents($path,$paramFetcher->get('content'))){
+            return $this->handleView($this->view(['code' => 401,'message' => "Could not write the file.", 'content' => $paramFetcher->get('content')], 401));
+        }else{
+            return View::create(NULL, Codes::HTTP_OK);
+        }
     }
 
     /**
@@ -284,7 +296,14 @@ class AdminController extends FOSRestController implements ClassResourceInterfac
      */
     public function getContactDataAction()
     {
-
+        $path = $this->get('kernel')->getRootDir() . '/../web/resources/data/contactData';
+        $content = ['content' => file_get_contents($path)];
+        if($content){
+            $view = $this->view($content,200);
+            return $this->handleView($view);
+        }else{
+            return $this->handleView($this->view(['code' => 404,'message' => "Could not read the file."], 404));
+        }
     }
 
     /**
@@ -300,12 +319,19 @@ class AdminController extends FOSRestController implements ClassResourceInterfac
      *)
      *
      * @return \Symfony\Component\HttpFoundation\Response
-     * @param $content string new content of the file
+     * @Rest\RequestParam(name="content", requirements=".*", description="content of contact data",default=null,nullable=true )
+     * @param $paramFetcher ParamFetcher
      * @Rest\View()
      */
-    public function putContactDataAction($content)
+    public function putContactDataAction(ParamFetcher $paramFetcher)
     {
-
+        $paramFetcher->get('content');
+        $path = $this->get('kernel')->getRootDir() . '/../web/resources/data/contactData';
+        if(file_put_contents($path,$paramFetcher->get('content'))){
+            return $this->handleView($this->view(['code' => 404,'message' => "Could not write the file.", 'content' => $paramFetcher->get('content')], 401));
+        }else{
+            return View::create(NULL, Codes::HTTP_OK);
+        }
     }
 
 }

@@ -18,13 +18,6 @@ mainAppCtrls.controller('WorkshopListCtrl',['$scope','Workshops','$alert','$tran
         $scope.loading = true;
         Workshops.getAll().$promise.then(function(value){
             $scope.workshopList = value;
-            for(var i=0;i<value.length;i++){
-                Workshops.getParticipants({id: $scope.workshopList[i].id}).$promise.then(function(value){
-                    $scope.workshopList[i].numParticipants = value.length;
-                },function(httpResponse) {
-                    $scope.workshopList[i].numParticipants = 0;
-                });
-            }
             $scope.loading = false;
         },function(httpResponse) {
             //switch through all possible errors
@@ -48,7 +41,7 @@ mainAppCtrls.controller('WorkshopListCtrl',['$scope','Workshops','$alert','$tran
                         container: '#alert',
                         dismissable: false,
                         show: true
-                    })
+                    });
                 break;
             }
             $scope.loading = false;

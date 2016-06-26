@@ -60,6 +60,12 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
         };
 
 
+
+
+
+
+
+
         $scope.loading = true;
         Workshops.get({id: workshopid}).$promise.then(function(value,httpResponse){
             $scope.workshop = value;

@@ -45,7 +45,7 @@ class WorkshopTemplates{
     /**
      * cost of a workshoptemplate
      * @var int
-     * @ORM\Column(name="cost", type="decimal",precision=4, scale=2, nullable=false)
+     * @ORM\Column(name="cost", type="decimal",precision=4, scale=2, nullable=true)
      * @Serializer\Expose
      * @Serializer\SerializedName("cost")
      */
@@ -53,7 +53,7 @@ class WorkshopTemplates{
     /**
      * requirements of a workshoptemplate
      * @var string
-     * @ORM\Column(name="requirement", type="string", nullable=false)
+     * @ORM\Column(name="requirement", type="string", nullable=true)
      * @Serializer\Expose
      * @Serializer\SerializedName("requirement")
      */
@@ -61,7 +61,7 @@ class WorkshopTemplates{
     /**
      * location of a workshoptemplate
      * @var string
-     * @ORM\Column(name="location", type="string", nullable=false)
+     * @ORM\Column(name="location", type="string", nullable=true)
      * @Serializer\Expose
      * @Serializer\SerializedName("location")
      */
@@ -85,7 +85,7 @@ class WorkshopTemplates{
     /**
      * maximum participants of a workshoptemplate
      * @var int
-     * @ORM\Column(name="max_participants", type="integer", nullable=false)
+     * @ORM\Column(name="max_participants", type="integer", nullable=true)
      * @Serializer\Expose
      * @Serializer\SerializedName("max_participants")
      */
