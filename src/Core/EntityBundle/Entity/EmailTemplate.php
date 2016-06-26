@@ -53,7 +53,7 @@ class EmailTemplate{
      * @var boolean
      * @ORM\Column(name="protected", type="boolean", nullable=false)
      * @Serializer\Expose
-     * @Serializer\SerializedName("email_body")
+     * @Serializer\SerializedName("emaiL_protected")
      */
     public $protected;
 
