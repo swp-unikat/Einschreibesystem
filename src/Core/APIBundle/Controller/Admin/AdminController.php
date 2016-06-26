@@ -17,6 +17,7 @@ use FOS\RestBundle\View\View;
 use FOS\RestBundle\Util\Codes;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Core\EntityBundle\Entity\User;
+use Symfony\Component\BrowserKit\Request;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 
@@ -25,7 +26,7 @@ use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
  * Class RestController.
  * This Controller provides methods for the private part. The functions to invite, create, delete and patch an administrator, to get a list of all administrator and to put and patch the legalnotice and the contactdata are provided.
  */
-class UserController extends FOSRestController implements ClassResourceInterface
+class AdminController extends FOSRestController implements ClassResourceInterface
 {
     /**
      * Action to invite new Admin
@@ -239,7 +240,14 @@ class UserController extends FOSRestController implements ClassResourceInterface
      */
     public function getLegalNoticeAction()
     {
-
+        $path = $this->get('kernel')->getRootDir() . '/../web/resources/data/legalNotice';
+        $content = ['content' => file_get_contents($path)];
+        if($content){
+            $view = $this->view($content,200);
+            return $this->handleView($view);
+        }else{
+            return $this->handleView($this->view(['code' => 404,'message' => "Could not read the file."], 404));
+        }
     }
 
     /**
@@ -255,12 +263,19 @@ class UserController extends FOSRestController implements ClassResourceInterface
      *)
      *
      * @return \Symfony\Component\HttpFoundation\Response
-     * @param $content string new content of the file
+     * @Rest\RequestParam(name="content", requirements=".*", description="content of contact data",default=null,nullable=true )
+     * @param $paramFetcher ParamFetcher
      * @Rest\View()
      */
-    public function putLegalNoticeAction($content)
+    public function putLegalNoticeAction(ParamFetcher $paramFetcher)
     {
-
+        $paramFetcher->get('content');
+        $path = $this->get('kernel')->getRootDir() . '/../web/resources/data/legalNotice';
+        if(file_put_contents($path,$paramFetcher->get('content'))){
+            return $this->handleView($this->view(['code' => 401,'message' => "Could not write the file.", 'content' => $paramFetcher->get('content')], 401));
+        }else{
+            return View::create(NULL, Codes::HTTP_OK);
+        }
     }
 
     /**
@@ -281,7 +296,14 @@ class UserController extends FOSRestController implements ClassResourceInterface
      */
     public function getContactDataAction()
     {
-
+        $path = $this->get('kernel')->getRootDir() . '/../web/resources/data/contactData';
+        $content = ['content' => file_get_contents($path)];
+        if($content){
+            $view = $this->view($content,200);
+            return $this->handleView($view);
+        }else{
+            return $this->handleView($this->view(['code' => 404,'message' => "Could not read the file."], 404));
+        }
     }
 
     /**
@@ -297,12 +319,19 @@ class UserController extends FOSRestController implements ClassResourceInterface
      *)
      *
      * @return \Symfony\Component\HttpFoundation\Response
-     * @param $content string new content of the file
+     * @Rest\RequestParam(name="content", requirements=".*", description="content of contact data",default=null,nullable=true )
+     * @param $paramFetcher ParamFetcher
      * @Rest\View()
      */
-    public function putContactDataAction($content)
+    public function putContactDataAction(ParamFetcher $paramFetcher)
     {
-
+        $paramFetcher->get('content');
+        $path = $this->get('kernel')->getRootDir() . '/../web/resources/data/contactData';
+        if(file_put_contents($path,$paramFetcher->get('content'))){
+            return $this->handleView($this->view(['code' => 404,'message' => "Could not write the file.", 'content' => $paramFetcher->get('content')], 401));
+        }else{
+            return View::create(NULL, Codes::HTTP_OK);
+        }
     }
 
 }
