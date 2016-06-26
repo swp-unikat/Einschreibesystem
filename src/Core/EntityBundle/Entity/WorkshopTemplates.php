@@ -85,7 +85,7 @@ class WorkshopTemplates{
     /**
      * maximum participants of a workshoptemplate
      * @var int
-     * @ORM\Column(name="max_participants", type="integer", nullable=false)
+     * @ORM\Column(name="max_participants", type="integer", nullable=true)
      * @Serializer\Expose
      * @Serializer\SerializedName("max_participants")
      */
