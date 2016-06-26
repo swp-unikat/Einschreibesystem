@@ -6,5 +6,5 @@ services:
 #        class: Core\CronBundle\Example
 #        arguments: ["@service_id", "plain_value", %parameter%]
 
-cron_mail:
-  class: Core\CronBundle\CoreCronBundle\Conroller\MailController
+#cron_mail:
+#  class: Core\CronBundle\CoreCronBundle\Conroller\MailController
