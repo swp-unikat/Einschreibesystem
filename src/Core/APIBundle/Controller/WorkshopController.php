@@ -201,10 +201,10 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
         // Workshop & Token & participant are valid
         if($workshop != NULL  && $token != NULL && $participant != NULL){
             // Check if Token is not older then 30 min
-            if($token->getValidUntil() <= new \DateTime('now')){
+            if($token->getValidUntil() >= new \DateTime('now') and $token->getUsedAt() == NULL){
                 // Check if this token is dedicated to user
                 if($token->getParticipant() != $participant){
-                    throw $this->createAccessDeniedException("User does not match");
+                    return $this->handleView($this->view(['code' => 403,'message' => "User does not match"], 403));
                 }else{
                     $participantWorkshop = new WorkshopParticipants();
                     $participantWorkshop->setWorkshop($workshop);
@@ -226,10 +226,10 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
                     return View::create(null, Codes::HTTP_ACCEPTED);
                 }
             }else{
-                throw $this->createAccessDeniedException("Token ist not valid");
+                return $this->handleView($this->view(['code' => 403,'message' => "Token ist not valid"], 403));
             }
         }else{
-            throw $this->createNotFoundException("Workshop or Token not found");
+            return $this->handleView($this->view(['code' => 404,'message' => "workshop,Token or participant not found"], 404));
         }
     }
 
