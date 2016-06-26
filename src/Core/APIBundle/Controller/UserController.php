@@ -25,41 +25,38 @@ use Symfony\Component\HttpFoundation\Request;
  * Class AdminController
  * The AdminController provides functions to iniate a password change. The methods of the controller are accessible with out a login.
  */
-class AdminController extends FOSRestController implements ClassResourceInterface
+class UserController extends FOSRestController implements ClassResourceInterface
  {
     /**
-      * Action to reset the password
-      * @ApiDoc(
-      *  resource=true,
-      *  description="Action to reset the password",
-      *  output = "",
-      *  statusCodes = {
-      *      200 = "Returned when successful",
-      *      404 = "Returned when the data is not found"
-      *  },requirements={{
-      *        "name"="token",
-      *        "dataType"="string",
-      *        "requirement"=".*",
-      *        "description"="email of the admin"
-      * }}
-      * )
-      * @param  $token string the token identifies the user
-      * @param $request Request
-      * @return \Symfony\Component\HttpFoundation\Response
-      * @Rest\View()
-      */
-     public function postResetPasswordAction($token,Request $request)
+     * Action to reset the password
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Action to reset the password",
+     *  output = "",
+     *  statusCodes = {
+     *      200 = "Returned when successful",
+     *      404 = "Returned when the data is not found"
+     *  }
+     * )
+     * @Rest\RequestParam(name="token", requirements=".*", description="token")
+     * @Rest\RequestParam(name="password", requirements=".*", description="password")
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Rest\View()
+     */
+    public function postResetPasswordAction(ParamFetcher $paramFetcher)
      {
-         $password = $request->get("password");
-         $UserManager = $this->get('fos_user.user_manager');
-         $admin = $UserManager->findUserByConfirmationToken($token);
+         $admin = $this->get('fos_user.user_manager')->findUserByConfirmationToken($paramFetcher->get("token"));
+
          if(!$admin){
-             throw $this->createNotFoundException("Admin not found");
+             return $this->handleView($this->view(['code' => 403,'message' => "Used token is not valid."], 403));
          } else {
-             $admin->setPlainPassword($password);
+             $admin->setPlainPassword($paramFetcher->get("password"));
+             $admin->setConfirmationToken(NULL);
+             $this->get('fos_user.user_manager')->updateUser($admin);
          }
          $this->getDoctrine()->getManager()->persist($admin);
          $this->getDoctrine()->getManager()->flush();
+         return View::create(NULL, Codes::HTTP_ACCEPTED);
      }
 
     /**
@@ -95,9 +92,15 @@ class AdminController extends FOSRestController implements ClassResourceInterfac
              /** @var $tokenGenerator \FOS\UserBundle\Util\TokenGeneratorInterface */
              $tokenGenerator = $this->get('fos_user.util.token_generator');
              $user->setConfirmationToken($tokenGenerator->generateToken());
+             $user->setPasswordRequestedAt(new \DateTime('now'));
+             $this->getDoctrine()->getManager()->persist($user);
+             $this->getDoctrine()->getManager()->flush();
+         }else{
+             return $this->handleView($this->view(['code' => 401,'message' => "Password reset already requested."], 401));
          }
 
-         $template = $this->getDoctrine()->getRepository("CoreEntityBundle:EmailTemplate")->find(5);
+         $url = $this->generateUrl('core_frontend_default_index',[],TRUE)."#/password/reset/".$user->getConfirmationToken();
+         $template = $this->getDoctrine()->getRepository("CoreEntityBundle:EmailTemplate")->find(3);
          /* Creating Twig template from Database */
          $renderTemplate = $this->get('twig')->createTemplate($template->getEmailBody());
          /* Sending E-Mail */
@@ -105,8 +108,10 @@ class AdminController extends FOSRestController implements ClassResourceInterfac
              ->setSubject($template->getEmailSubject())
              ->setFrom($this->getParameter('email_sender'))
              ->setTo($paramFetcher->get("email"))
-             ->setBody($renderTemplate->render(['user' => $user]), 'text/html');
+             ->setBody($renderTemplate->render(['email' => $paramFetcher->get("email"),'url' => $url]), 'text/html');
          $this->get('mailer')->send($message);
+
+         return View::create(NULL, Codes::HTTP_OK);
 
      }
 
@@ -144,6 +149,7 @@ class AdminController extends FOSRestController implements ClassResourceInterfac
         if ($invitation->getSent() && $invitation->getUsed() != true) {
             //FOSUserBundle
             $UserManager = $this->get('fos_user.user_manager');
+
             /** @var $admin User */
             $admin = $UserManager->createUser();
             $admin->setEmail($params['email']);
