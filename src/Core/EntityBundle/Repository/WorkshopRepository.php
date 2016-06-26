@@ -71,7 +71,7 @@ class WorkshopRepository extends EntityRepository
         $qb = $em->createQueryBuilder();
         $q = $qb->select(["count(wt.id)"])->from("CoreEntityBundle:WorkshopParticipants","wt")->where("wt.workshop = ?1");
         $q->setParameter(1,$workshopId);
-        $result = $q->getQuery()->getResult();
+        $result = $q->getQuery()->getSingleScalarResult();
         return $result;
 
     }

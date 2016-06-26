@@ -61,7 +61,7 @@ class WorkshopTemplates{
     /**
      * location of a workshoptemplate
      * @var string
-     * @ORM\Column(name="location", type="string", nullable=false)
+     * @ORM\Column(name="location", type="string", nullable=true)
      * @Serializer\Expose
      * @Serializer\SerializedName("location")
      */
