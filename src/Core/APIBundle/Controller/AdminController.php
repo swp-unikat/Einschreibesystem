@@ -80,18 +80,17 @@ class AdminController extends FOSRestController implements ClassResourceInterfac
       * )
       * @param $email string E-Mail
       * @return \Symfony\Component\HttpFoundation\Response
+      * @Rest\RequestParam(name="email", requirements=".*", description="email")
       * @Rest\View()
       */
-     public function postSendPasswordForgotEmailAction($email)
+     public function postSendPasswordForgotEmailAction(ParamFetcher $paramFetcher)
      {
          /** @var $user User */
-         $user = $this->get('fos_user.user_manager')->findUserByUsernameOrEmail($email);
+         $user = $this->get('fos_user.user_manager')->findUserByUsernameOrEmail($paramFetcher->get("email"));
          if (null === $user) {
              $this->createNotFoundException("Username not found");
          }
-         if ($user->isPasswordRequestNonExpired($this->container->getParameter('fos_user.resetting.token_ttl'))) {
-             return $this->createAccessDeniedException("Password already requested");
-         }
+
          if (null === $user->getConfirmationToken()) {
              /** @var $tokenGenerator \FOS\UserBundle\Util\TokenGeneratorInterface */
              $tokenGenerator = $this->get('fos_user.util.token_generator');
@@ -105,7 +104,7 @@ class AdminController extends FOSRestController implements ClassResourceInterfac
          $message = \Swift_Message::newInstance()
              ->setSubject($template->getEmailSubject())
              ->setFrom($this->getParameter('email_sender'))
-             ->setTo($email)
+             ->setTo($paramFetcher->get("email"))
              ->setBody($renderTemplate->render(['user' => $user]), 'text/html');
          $this->get('mailer')->send($message);
 
