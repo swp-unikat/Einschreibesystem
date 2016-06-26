@@ -50,7 +50,7 @@ class MailController extends Controller{
             /* Sending E-Mail */
             $message = \Swift_Message::newInstance()
                 ->setSubject($template->getEmailSubject())
-                ->setFrom('send@example.com')
+                ->setFrom($this->getParameter('email_sender'))
                 ->setTo($participant['email'])
                 ->setBody($renderTemplate->render(["workshop" => $workshop,"participant" => $participant]),'text/html');
             $this->get('mailer')->send($message);
