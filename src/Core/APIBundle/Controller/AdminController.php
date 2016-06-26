@@ -108,6 +108,7 @@ class AdminController extends FOSRestController implements ClassResourceInterfac
              ->setTo($email)
              ->setBody($renderTemplate->render(['user' => $user]), 'text/html');
          $this->get('mailer')->send($message);
+
      }
 
     /**
@@ -137,7 +138,7 @@ class AdminController extends FOSRestController implements ClassResourceInterfac
         //find invitation in database
         $invitation = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Invitation")->findOneBy(['code' => $params['code']]);
         //check if invitation parameter sended is true
-        if ($invitation->isSend()) {
+        if ($invitation->getSent()) {
             //FOSUserBundle
             $UserManager = $this->get('fos_user.user_manager');
             /** @var $admin User */
@@ -150,5 +151,7 @@ class AdminController extends FOSRestController implements ClassResourceInterfac
 
         $this->getDoctrine()->getManager()->persist($admin);
         $this->getDoctrine()->getManager()->flush();
+        
+        return View::create(NULL, Codes::HTTP_OK);
     }
  }
