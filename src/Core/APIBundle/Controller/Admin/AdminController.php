@@ -42,22 +42,25 @@ class AdminController extends FOSRestController implements ClassResourceInterfac
      *
      *
      * @return \Symfony\Component\HttpFoundation\Response
-     * @param $email string email as the username of administrator
+     * @Rest\RequestParam(name="email", requirements=".*", description="email")
      * @Rest\View()
      */
-    public function inviteAdminAction($email)
+    public function postInviteAction(ParamFetcher $paramFetcher)
     {
+        $email = $paramFetcher->get("email");
         $invitation = new Invitation();
         /* Loading the default E-Mail template*/
-        $template = $this->getDoctrine()->getRepository("CoreEntityBundle:EmailTemplate")->find(1);
+        $template = $this->getDoctrine()->getRepository("CoreEntityBundle:EmailTemplate")->find(2);
         /* Creating Twig template from Database */
         $renderTemplate = $this->get('twig')->createTemplate($template->getEmailBody());
         /* Sending E-Mail */
+
+        $url = $this->generateUrl('core_frontend_default_index',[],TRUE)."/#/admin/create/".$invitation->getCode();
         $message = \Swift_Message::newInstance()
             ->setSubject($template->getEmailSubject())
             ->setFrom($this->getParameter('email_sender'))
             ->setTo($email)
-            ->setBody($renderTemplate->render(["code" => $invitation->getCode(), "email" => $email]), 'text/html');
+            ->setBody($renderTemplate->render(["url" => $url, "email" => $email]), 'text/html');
         $this->get('mailer')->send($message);
         $invitation->send(); //prevents sending invitations twice
         $this->getDoctrine()->getManager()->persist($invitation);
