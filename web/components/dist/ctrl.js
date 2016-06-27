@@ -162,7 +162,15 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
         then(function(translations){
             _translations = translations;
         });
-
+        var reformatDate =  function(_date){
+            if(!_date || _date == null)
+                return "";
+            var _dateStr = _date.toJSON();
+            if(_dateStr == null)
+                return "";
+            _dateStr =  _dateStr.slice(0,_dateStr.length-5);
+            return _dateStr.replace('T',' ');
+        };
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:AdminEditWorkshopCtrl#discardChanges
@@ -178,9 +186,6 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
             $scope.workshop.start_at = _originalData.start_at;
             $scope.workshop.end_at = _originalData.end_at;
             $scope.workshop.max_participants = _originalData.max_participants;
-
-
-
 
         }
 
@@ -326,8 +331,8 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
  * @requires restSvcs.Workshops
  * @requires restSvcs.AdminWorkshop
  */
-mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorkshop",'WorkshopTemplate',
-    function($scope, Workshops, AdminWorkshop,WorkshopTemplate) {
+mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorkshop",'WorkshopTemplate','$translate','$alert',
+    function($scope, Workshops, AdminWorkshop,WorkshopTemplate,$translate,$alert) {
         $scope.workshop = {};
 
         //load available Workshoptemplates for list
@@ -339,6 +344,15 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
         $scope.loadTemplate = function(){
             $scope.workshop = JSON.parse(JSON.stringify($scope.selectedTemplate));
         };
+        //Get translations for errors and store in array
+        var _translations = {};
+        //Pass all required translation IDs to translate service
+        $translate(['ALERT_WORKSHOP_NEW_SUCCESS',
+            'ALERT_WORKSHOP_NEW_FAIL']).
+        then(function(translations){
+            _translations = translations;
+        });
+        
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:AdminNewWorkshopCtrl#sendInfo
@@ -371,9 +385,24 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
                 max_participants:$scope.workshop.max_participants
             };
             AdminWorkshop.putWorkshop(data).$promise.then(function(httpResponse){
-                alert('Success!' + httpResponse.status);
+                $alert({
+                    title: '',
+                    type: 'success',
+                    content: _translations.ALERT_WORKSHOP_NEW_SUCCESS + ' \"' + data.title +'\"',
+                    container: '#alert',
+                    dismissable: false,
+                    show: true
+                });
+                
             },function(httpResponse){
-                alert('Error'+httpResponse.statusText);
+                $alert({
+                    title: '',
+                    type: 'danger',
+                    content: _translations.ALERT_WORKSHOP_NEW_FAIL + ' (' + httpReponse.status +')',
+                    container: '#alert',
+                    dismissable: false,
+                    show: true
+                });
             });
         };
         /**
@@ -397,12 +426,9 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
                 $scope.workshop = JSON.parse(JSON.stringify($scope.selectedTemplate));
             }
 
-
-
+            
         }
-
-
-
+        
     }
 
 ]);
@@ -1811,6 +1837,7 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
         $scope.unsubscribe= function(){
   
         };
+        
         $scope.loading = true;
         Workshops.get({id: workshopid}).$promise.then(function(value,httpResponse){
             $scope.workshop = value;
@@ -1879,6 +1906,7 @@ mainAppCtrls.controller('WorkshopListCtrl',['$scope','Workshops','$alert','$tran
                         dismissable: false,
                         show: true
                     });
+                    break;
                 case 500:
                     $scope.myAlert = $alert({
                         title: $scope.errorTitle,

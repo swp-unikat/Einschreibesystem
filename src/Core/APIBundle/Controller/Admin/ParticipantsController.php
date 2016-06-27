@@ -120,8 +120,7 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
         } else {
             $participant->setBlacklisted(true);
             $participant->setBlacklistedAt(new \DateTime("now"));
-            /* ToDO Add User to Database who blacklisted the participant */
-
+            $participant->setBlacklistedFrom($this->getUser());
             $this->getDoctrine()->getManager()->persist($participant);
             $this->getDoctrine()->getManager()->flush();
 

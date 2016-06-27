@@ -117,17 +117,13 @@ class AdminController extends FOSRestController implements ClassResourceInterfac
      *  statusCodes = {
      *      200 = "Returned when successful",
      *      404 = "Returned when the data is not found"
-     *  },requirements={{
-     *        "name"="adminId",
-     *        "dataType"="integer",
-     *        "requirement"="\d+",
-     *        "description"="Admin ID"
-     *}}
+     *  }
+     * 
      * )
-     * @param $paramfetcher params of admin
+     * @param $paramfetcher ParamFetcher 
      * @return \Symfony\Component\HttpFoundation\Response
-     * @Rest\RequestParam(name="oldpassword", requirements=".*", description="json object of workshop")
-     * @Rest\RequestParam(name="newpassword", requirements=".*", description="json object of workshop")
+     * @Rest\RequestParam(name="oldpassword", requirements=".*", description="old password of a admin")
+     * @Rest\RequestParam(name="newpassword", requirements=".*", description="new password of a admin")
      * @Rest\View()
      */
     public function patchAction(ParamFetcher $paramfetcher)
@@ -141,15 +137,48 @@ class AdminController extends FOSRestController implements ClassResourceInterfac
         $encoder = $encoder_service->getEncoder($admin);
         //check if old password input equals the current password in database
         if ($encoder->isPasswordValid($admin->getPassword(), $params['oldpassword'], $admin->getSalt())) {
-            //set new password
             $admin->setPlainPassword($params['newpassword']);
+            $this->get('fos_user.user_manager')->updateUser($admin);
         } else {
-            //old password is wrong
-            throw $this->createAccessDeniedException("The old password is incorrect");
+            return $this->handleView($this->view(['code' => 403,'message' => "Old password is wrong"], 403));
         }
         $this->getDoctrine()->getManager()->persist($admin);
-        $this->getDoctrine()->getManager()->fluch();
+        $this->getDoctrine()->getManager()->flush();
 
+        return View::create(null, Codes::HTTP_OK);
+    }
+
+    /**
+     * Action to change the password
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Action to change the email",
+     *  output = "",
+     *  statusCodes = {
+     *      200 = "Returned when successful",
+     *      404 = "Returned when the data is not found"
+     *  }
+     * )
+     * @param $paramfetcher ParamFetcher
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Rest\RequestParam(name="oldemail", requirements=".*", description="old email")
+     * @Rest\RequestParam(name="newemail", requirements=".*", description="new email")
+     * @Rest\View()
+     */
+    public function patchEmailAction(ParamFetcher $paramFetcher)
+    {
+        //get all params
+        $params = $paramFetcher->all();
+        //get current user
+        $admin = $this->getUser();
+        //check if old password input equals the current password in database
+        if ($admin->getEmail() == $params['oldemail'])
+            $admin->setPlainEmail($params['newemail']);
+        else
+            return $this->handleView($this->view(['code' => 403,'message' => "E-Mail not found"], 403));
+        
+        $this->getDoctrine()->getManager()->persist($admin);
+        $this->getDoctrine()->getManager()->fluch();
         return View::create(null, Codes::HTTP_OK);
     }
 
@@ -212,7 +241,8 @@ class AdminController extends FOSRestController implements ClassResourceInterfac
     }
 
     /**
-     * modify legal notice
+     * modify legal
+     * notice
      * @ApiDoc(
      *  resource=true,
      *  description="modify legal notice",
