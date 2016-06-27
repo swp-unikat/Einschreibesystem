@@ -33,6 +33,7 @@ mainAppCtrls.controller('WorkshopListCtrl',['$scope','Workshops','$alert','$tran
                         dismissable: false,
                         show: true
                     });
+                    break;
                 case 500:
                     $scope.myAlert = $alert({
                         title: $scope.errorTitle,
