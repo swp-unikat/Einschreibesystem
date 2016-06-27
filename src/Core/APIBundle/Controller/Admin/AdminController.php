@@ -139,12 +139,13 @@ class AdminController extends FOSRestController implements ClassResourceInterfac
         if ($encoder->isPasswordValid($admin->getPassword(), $params['oldpassword'], $admin->getSalt())) {
             //set new password
             $admin->setPlainPassword($params['newpassword']);
+            $this->get('fos_user.user_manager')->updateUser($admin);
         } else {
             //old password is wrong
             throw $this->createAccessDeniedException("The old password is incorrect");
         }
         $this->getDoctrine()->getManager()->persist($admin);
-        $this->getDoctrine()->getManager()->fluch();
+        $this->getDoctrine()->getManager()->flush();
 
         return View::create(null, Codes::HTTP_OK);
     }
@@ -162,7 +163,7 @@ class AdminController extends FOSRestController implements ClassResourceInterfac
      * )
      * @param $paramfetcher ParamFetcher
      * @return \Symfony\Component\HttpFoundation\Response
-     * @Rest\RequestParam(name="oldemail", requirements=".*", description="old email)
+     * @Rest\RequestParam(name="oldemail", requirements=".*", description="old email")
      * @Rest\RequestParam(name="newemail", requirements=".*", description="new email")
      * @Rest\View()
      */
@@ -242,7 +243,8 @@ class AdminController extends FOSRestController implements ClassResourceInterfac
     }
 
     /**
-     * modify legal notice
+     * modify legal
+     * notice
      * @ApiDoc(
      *  resource=true,
      *  description="modify legal notice",
