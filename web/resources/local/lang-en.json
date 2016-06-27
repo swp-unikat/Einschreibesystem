@@ -150,6 +150,7 @@
   "ALERT_LOGIN_FAIL": "Failed to login. Password and/or username invalid",
   "ALERT_WORKSHOP_NEW_SUCCESS":"Successfully created new workshop",
   "ALERT_WORKSHOP_NEW_FAIL":"Failed to create workshop. Error code",
+  "ALERT_NO_PARTICIPANTS":"No participants yet",
   "ENTER_MAIL_RESET": "Enter your account's email-address",
   "RESET_PASSWORD": "Reset password",
   "PASSWORD": "Password",

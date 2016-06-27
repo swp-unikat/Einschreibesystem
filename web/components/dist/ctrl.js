@@ -438,8 +438,16 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
  * @requires restSvcs.Workshops
  * @description Controller for showing administrator functions in a workshop.
  */
-mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops', '$stateParams', "$alert",'printer',
-    function($scope,Workshops,$stateParams, $alert,printer) {
+mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops', '$stateParams', "$alert",'printer','$translate',
+    function($scope,Workshops,$stateParams, $alert,printer,$translate) {
+        //Get translations for errors and store in array
+        var _translations = {};
+        //Pass all required translation IDs to translate service
+        $translate(['ALERT_NO_PARTICIPANTS']).
+        then(function(translations){
+            _translations = translations;
+        });
+        
         //TODO : replace with workshop details
         var workshopid;
         workshopid = $stateParams.id;
@@ -453,7 +461,14 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops', '$stat
             
             $scope.loading = false;
         },function(httpResponse) {
-            alert(httpResponse.status + '');
+            $alert({
+                title: '',
+                type: 'danger',
+                content: httpReponse.status,
+                container: '#alert',
+                dismissable: false,
+                show: true
+            });
             $scope.loading = false;
         });
         $scope.loading = true;
@@ -467,7 +482,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops', '$stat
                     $alert({
                         title: '',
                         type: 'info',
-                        content: 'No participants yet',
+                        content: _translations.ALERT_NO_PARTICIPANTS,
                         container: '#alertParticipant',
                         dismissable: false,
                         show: true,
