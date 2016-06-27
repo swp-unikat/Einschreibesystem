@@ -144,7 +144,7 @@ class AdminController extends FOSRestController implements ClassResourceInterfac
             throw $this->createAccessDeniedException("The old password is incorrect");
         }
         $this->getDoctrine()->getManager()->persist($admin);
-        $this->getDoctrine()->getManager()->fluch();
+        $this->getDoctrine()->getManager()->flush();
 
         return View::create(null, Codes::HTTP_OK);
     }
