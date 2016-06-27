@@ -53,7 +53,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
         $workshopRepo = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:Workshop');
         $workshops = $workshopRepo->getAllActiveWorkshops();
         if (!$workshops) {
-            throw $this->createNotFoundException("No Workshops found");
+            return $this->handleView($this->view(['code' => 404,'message' => "No workshop was found"], 404));
         }
         $view = $this->view($workshops, 200);
         return $this->handleView($view);
@@ -85,7 +85,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
     {
         $workshop = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:Workshop')->find($id);
         if (!$workshop) {
-            throw $this->createNotFoundException("This workshop was not found");
+            return $this->handleView($this->view(['code' => 404,'message' => "This workshop was not found"], 404));
         } else {
             $view = $this->view($workshop, 200);
             return $this->handleView($view);
@@ -120,7 +120,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
         $participant = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Participants")->findOneBy(["email" => $params["email"]]);
 
         if (!$workshop) {
-            return $this->handleView($this->view(['code' => 404,'message' => "Workshop not found",'workshop' => $id], 404));
+            return $this->handleView($this->view(['code' => 404,'message' => "Workshop not found"], 404));
         }
 
         if ($participant == NULL){
@@ -137,7 +137,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
         } else {
             //all workshops which the user were not participating yet
             if ($participant->isBlacklisted()) {
-                throw $this->createAccessDeniedException("You are blacklisted");
+                return $this->handleView($this->view(['code' => 403,'message' => "You are blacklisted"], 403));
             }
 
             $workshopParticipants = $this->getDoctrine()->getRepository("CoreEntityBundle:WorkshopParticipants")->findBy(["participant" => $participant, "participated" => 0]);
@@ -145,7 +145,8 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
 
             foreach($workshopParticipants as $tupel){
                 if($workshop->getStartAt() >= $tupel->getWorkshop()->getStartAt() && $workshop->getEndAt() <= $tupel->getWorkshop()->getEndAt()){
-                    throw $this->createAccessDeniedException("Already in Workshop at same Time");
+                    return $this->handleView($this->view(['code' => 403,'message' => "Already in Workshop at same Time"], 403));
+
                 }
             }
         }
