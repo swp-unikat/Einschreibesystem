@@ -7,8 +7,17 @@ var mainAppCtrls = angular.module("mainAppCtrls");
  * @name mainAppCtrls.controller:AdminCreateCtrl
  * @description Initializes the data & function that are being used to create an admin account
  */
-mainAppCtrls.controller('AdminCreateCtrl',['$scope', '$stateParams','$alert',
-    function($scope,$stateParams,$alert) {
+mainAppCtrls.controller('AdminCreateCtrl',['$scope', '$stateParams','$alert','$translate',
+    function($scope,$stateParams,$alert,$translate) {
+        
+        //Get translations for errors and store in array
+        var _translations = {};
+        //Pass all required translation IDs to translate service
+        $translate(['PASSWORD_IDENTICAL_ERROR']).
+        then(function(translations){
+            _translations = translations;
+        });
+        
         //TODO: replace static text with translations
         $scope.placeholder =  {
             username: "Username",
@@ -20,7 +29,7 @@ mainAppCtrls.controller('AdminCreateCtrl',['$scope', '$stateParams','$alert',
 
             title: 'Error',
             type: 'danger',
-            content: 'Passwords must be identical',
+            content: _translations.PASSWORDS_IDENTICAL_ERROR + ' (' + httpReponse.status +')',
             container: '#alert',
             show: false,
             dismissable: false

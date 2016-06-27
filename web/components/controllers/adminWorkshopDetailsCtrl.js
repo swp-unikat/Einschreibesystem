@@ -56,6 +56,42 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops', '$stat
         $scope.printList = function() {
             printer.print('resources/views/participantList.tpl.html',{});
         }
+        /**
+         * @ngdoc function
+         * @name mainAppCtrls.controller:adminWorkshopDetailsCtrl#delete
+         * @methodOf mainAppCtrls.controller:adminWorkshopDetailsCtrl
+         * @param {number} _id id of the partcipant, which should be deleted
+         * @description Deletes the participant with the passed id
+         */
+        $scope.delete = function (_id) {
+            Workshops.delete({id:_id}).$promise.then(function(httpresponse){
+                    $alert({
+                        title:'',
+                        type: 'success',
+                        container:'#alert',
+                        show: true,
+                        dismissable: false,
+                        content: _translations.ALERT_WORKSHOP_DELETE_PARTICIPANT,
+                        duration: 20
+                    });
+                    loadTemplates();
+                }
+                , function (httpResponse) {
+                    $alert({
+                        title: '',
+                        type: 'danger',
+                        content: _translations.ALERT_WORKSHOP_DELETE_PARTICIPANT_FAIL + ' (' + httpReponse.status +')',
+                        container: '#alert',
+                        dismissable: false,
+                        show: true
+                    });
+                }
+            )
 
+        }
+        
+        
+        
+        
     }
 ])
