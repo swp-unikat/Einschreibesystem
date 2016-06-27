@@ -26,14 +26,13 @@ mainAppCtrls.controller('DashboardCtrl',['$scope',
  * @name mainAppCtrls.controller:AdminCreateCtrl
  * @description Initializes the data & function that are being used to create an admin account
  */
-mainAppCtrls.controller('AdminCreateCtrl',['$scope', '$stateParams','$alert',
-    function($scope,$stateParams,$alert) {
+mainAppCtrls.controller('AdminCreateCtrl',['$scope', '$stateParams','$alert','$translate',
+    function($scope,$stateParams,$alert,$translate) {
         
         //Get translations for errors and store in array
         var _translations = {};
         //Pass all required translation IDs to translate service
-        $translate(['ALERT_WORKSHOP_NEW_SUCCESS',
-            'ALERT_WORKSHOP_NEW_FAIL']).
+        $translate(['PASSWORD_IDENTICAL_ERROR']).
         then(function(translations){
             _translations = translations;
         });
@@ -329,6 +328,12 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
     }
 ]);
 
+// Source: web/components/controllers/adminEmailConfirmCtrl.js
+/**
+ * Created by hunte on 27/06/2016.
+ */
+
+
 // Source: web/components/controllers/adminNewWorkshopCtrl.js
 /**
  * Created by hunte on 12/06/2016.
@@ -455,8 +460,16 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
  * @requires restSvcs.Workshops
  * @description Controller for showing administrator functions in a workshop.
  */
-mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops', '$stateParams', "$alert",'printer',
-    function($scope,Workshops,$stateParams, $alert,printer) {
+mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops', '$stateParams', "$alert",'printer','$translate',
+    function($scope,Workshops,$stateParams, $alert,printer,$translate) {
+        //Get translations for errors and store in array
+        var _translations = {};
+        //Pass all required translation IDs to translate service
+        $translate(['ALERT_NO_PARTICIPANTS']).
+        then(function(translations){
+            _translations = translations;
+        });
+        
         //TODO : replace with workshop details
         var workshopid;
         workshopid = $stateParams.id;
@@ -470,7 +483,14 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops', '$stat
             
             $scope.loading = false;
         },function(httpResponse) {
-            alert(httpResponse.status + '');
+            $alert({
+                title: '',
+                type: 'danger',
+                content: httpReponse.status,
+                container: '#alert',
+                dismissable: false,
+                show: true
+            });
             $scope.loading = false;
         });
         $scope.loading = true;
@@ -484,7 +504,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops', '$stat
                     $alert({
                         title: '',
                         type: 'info',
-                        content: 'No participants yet',
+                        content: _translations.ALERT_NO_PARTICIPANTS,
                         container: '#alertParticipant',
                         dismissable: false,
                         show: true,
@@ -502,7 +522,43 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops', '$stat
         $scope.printList = function() {
             printer.print('resources/views/participantList.tpl.html',{});
         }
+        /**
+         * @ngdoc function
+         * @name mainAppCtrls.controller:adminWorkshopDetailsCtrl#delete
+         * @methodOf mainAppCtrls.controller:adminWorkshopDetailsCtrl
+         * @param {number} _id id of the partcipant, which should be deleted
+         * @description Deletes the participant with the passed id
+         */
+        $scope.delete = function (_id) {
+            Workshops.delete({id:_id}).$promise.then(function(httpresponse){
+                    $alert({
+                        title:'',
+                        type: 'success',
+                        container:'#alert',
+                        show: true,
+                        dismissable: false,
+                        content: _translations.ALERT_WORKSHOP_DELETE_PARTICIPANT,
+                        duration: 20
+                    });
+                    loadTemplates();
+                }
+                , function (httpResponse) {
+                    $alert({
+                        title: '',
+                        type: 'danger',
+                        content: _translations.ALERT_WORKSHOP_DELETE_PARTICIPANT_FAIL + ' (' + httpReponse.status +')',
+                        container: '#alert',
+                        dismissable: false,
+                        show: true
+                    });
+                }
+            )
 
+        }
+        
+        
+        
+        
     }
 ])
 
