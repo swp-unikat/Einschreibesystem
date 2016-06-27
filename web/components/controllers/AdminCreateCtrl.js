@@ -9,6 +9,16 @@ var mainAppCtrls = angular.module("mainAppCtrls");
  */
 mainAppCtrls.controller('AdminCreateCtrl',['$scope', '$stateParams','$alert',
     function($scope,$stateParams,$alert) {
+        
+        //Get translations for errors and store in array
+        var _translations = {};
+        //Pass all required translation IDs to translate service
+        $translate(['ALERT_WORKSHOP_NEW_SUCCESS',
+            'ALERT_WORKSHOP_NEW_FAIL']).
+        then(function(translations){
+            _translations = translations;
+        });
+        
         //TODO: replace static text with translations
         $scope.placeholder =  {
             username: "Username",
@@ -20,7 +30,7 @@ mainAppCtrls.controller('AdminCreateCtrl',['$scope', '$stateParams','$alert',
 
             title: 'Error',
             type: 'danger',
-            content: 'Passwords must be identical',
+            content: _translations.PASSWORDS_IDENTICAL_ERROR + ' (' + httpReponse.status +')',
             container: '#alert',
             show: false,
             dismissable: false
