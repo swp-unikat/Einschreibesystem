@@ -118,7 +118,7 @@ class AdminController extends FOSRestController implements ClassResourceInterfac
      *      200 = "Returned when successful",
      *      404 = "Returned when the data is not found"
      *  }
-     *     }
+     * 
      * )
      * @param $paramfetcher ParamFetcher 
      * @return \Symfony\Component\HttpFoundation\Response
