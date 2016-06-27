@@ -185,6 +185,7 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
             $scope.workshop.location = _originalData.location;
             $scope.workshop.start_at = _originalData.start_at;
             $scope.workshop.end_at = _originalData.end_at;
+            $scope.workshop.duration = _originalData.duration;
             $scope.workshop.max_participants = _originalData.max_participants;
 
         }
@@ -196,22 +197,14 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
          * @methodOf mainAppCtrls.controller:AdminEditWorkshopCtrl
          */
         $scope.confirmChanges = function () {
-            var _dataToSend = {
-                title: '',
-                description: '',
-                cost: '',
-                requirements: '',
-                location: '',
-                start_at: '',
-                end_at: '',
-                max_participants: ''
 
-            };
             var _sa = Date.parse($scope.workshop.start_at);
             var _duration = $scope.workshop.duration;
             var _ea = new Date(_sa+_duration + 1000*60*60) ;
 
-            var data = {
+            console.log($scope.workshop.end_at);
+
+            var _dataToSend = {
                 title:$scope.workshop.title,
                 description:$scope.workshop.description,
                 cost:$scope.workshop.cost,
@@ -221,25 +214,8 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
                 end_at:reformatDate(_ea),
                 max_participants:$scope.workshop.max_participants
             };
-
-            //compare all properties of both objects
-            if (_changedData.title != _originalData.title)
-                _dataToSend.title = _changedData.title;
-            if (_changedData.description != _originalData.description)
-                _dataToSend.description = _changedData.description;
-            if (_changedData.cost != _originalData.cost)
-            if (_changedData.location != _originalData.location)
-                _dataToSend.location = _changedData.location;
-            if (_changedData.start_at != _originalData.start_at)
-                _dataToSend.start_at = _changedData.start_at;
-            if (_changedData.end_at != _originalData.end_at)
-                _dataToSend.end_at = _changedData.end_at;
-            if (_changedData.max_participants != _originalData.max_participants)
-                _dataToSend.max_participants = _changedData.max_participants;
-
-
-
-            Workshops.edit({id: _workshopId}, _dataToSend).$promise.then(function (value) {
+            
+            AdminWorkshop.edit({id: _workshopId}, _dataToSend).$promise.then(function (value) {
                 //Store answer from server
                 _originalData = {
                     title: value.title,
@@ -265,7 +241,7 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
                 $alert({
                     title: '',
                     type: 'danger',
-                    content: _translations.ALERT_WORKSHOP_EDIT_FAIL + '(' + httpReponse.status +')',
+                    content: _translations.ALERT_WORKSHOP_EDIT_FAIL + '(' + httpResponse.status +')',
                     container: '#alert',
                     dismissable: true,
                     show: true,
@@ -288,8 +264,11 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
                 start_at: value.start_at,
                 end_at: value.end_at,
                 max_participants: value.max_participants
-
             };
+            var _ea = Date.parse(_originalData.end_at);
+            var _sa = Date.parse(_originalData.start_at);
+            _originalData.duration = _ea - _sa;
+
             //Store original data in ng-model
             $scope.workshop.title = _originalData.title;
             $scope.workshop.description = _originalData.description;
@@ -298,6 +277,7 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
             $scope.workshop.location = _originalData.location;
             $scope.workshop.start_at = _originalData.start_at;
             $scope.workshop.end_at = _originalData.end_at;
+            $scope.workshop.duration = _originalData.duration;
             $scope.workshop.max_participants = _originalData.max_participants;
 
 
