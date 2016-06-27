@@ -9,6 +9,9 @@
   "FACEBOOK": "Facebook",
   "CONTACT": "Contact",
   "WORKSHOP_DETAILS": "Workshop details",
+
+  "CONFIRM_EMAIL":"Confirm email",
+
   "BUTTON_SHOW_PARTICIPANTS": "Show participants",
   "WORKSHOP_REQUIREMENTS": "Requirements",
   "WORKSHOP_DURATION": "Workshop duration",
@@ -122,6 +125,10 @@
   "ENTER_MAIL": "Enter E-Mail",
   "C": "Euro",
   "UNSUBSCRIBE_TEXT": "Click here to unsubscribe from the workshop: ",
+
+  "ALERT_WORKSHOP_DELETE_PARTICIPANT":"Successfully deleted participant from Workshop",
+  "ALERT_WORKSHOP_DELETE_PARTICIPANT_FAIL":"Failed to delete participant from Workshop",
+
   "ALERT_BLACKLIST_DELETE_PARTICIPANT":"Successfully deleted participant from Blacklist",
   "ALERT_BLACKLIST_DELETE_PARTICIPANT_FAIL":"Failed to delete participant from Blacklist",
   "ALERT_EMAILTEMPLATE_NOT_FOUND": "The requested E-Mail template couldn't be found",
