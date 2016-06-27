@@ -73,7 +73,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      * @Rest\RequestParam(name="title", requirements=".*", description="title of the workshop")
      * @Rest\RequestParam(name="description", requirements=".*", description="description of the workshop")
      * @Rest\RequestParam(name="cost", requirements=".*", description="cost of the workshop")
-     * @Rest\RequestParam(name="requirements", requirements=".*", description="requirements of the workshop")
+     * @Rest\RequestParam(name="requirements", requirements=".*", description="requirements of the workshop",default=null,nullable=true)
      * @Rest\RequestParam(name="location", requirements=".*", description="location of the workshop")
      * @Rest\RequestParam(name="start_at", requirements=".*", description="starttime of the workshop")
      * @Rest\RequestParam(name="end_at", requirements=".*", description="endtime of the workshop")
