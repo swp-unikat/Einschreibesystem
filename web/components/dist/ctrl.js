@@ -26,14 +26,13 @@ mainAppCtrls.controller('DashboardCtrl',['$scope',
  * @name mainAppCtrls.controller:AdminCreateCtrl
  * @description Initializes the data & function that are being used to create an admin account
  */
-mainAppCtrls.controller('AdminCreateCtrl',['$scope', '$stateParams','$alert',
-    function($scope,$stateParams,$alert) {
+mainAppCtrls.controller('AdminCreateCtrl',['$scope', '$stateParams','$alert','$translate',
+    function($scope,$stateParams,$alert,$translate) {
         
         //Get translations for errors and store in array
         var _translations = {};
         //Pass all required translation IDs to translate service
-        $translate(['ALERT_WORKSHOP_NEW_SUCCESS',
-            'ALERT_WORKSHOP_NEW_FAIL']).
+        $translate(['PASSWORD_IDENTICAL_ERROR']).
         then(function(translations){
             _translations = translations;
         });
@@ -212,19 +211,17 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
             var _duration = $scope.workshop.duration;
             var _ea = new Date(_sa+_duration + 1000*60*60) ;
 
-            console.log($scope.workshop.end_at);
-
+            console.log($scope.workshop);
             var _dataToSend = {
                 title:$scope.workshop.title,
                 description:$scope.workshop.description,
                 cost:$scope.workshop.cost,
-                requirements:$scope.workshop.requirement,
+                requirements:$scope.workshop.requirements,
                 location:$scope.workshop.location,
                 start_at:reformatDate($scope.workshop.start_at),
                 end_at:reformatDate(_ea),
                 max_participants:$scope.workshop.max_participants
             };
-            
             AdminWorkshop.edit({id: _workshopId}, _dataToSend).$promise.then(function (value) {
                 //Store answer from server
                 _originalData = {
@@ -308,6 +305,12 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
         });
     }
 ]);
+
+// Source: web/components/controllers/adminEmailConfirmCtrl.js
+/**
+ * Created by hunte on 27/06/2016.
+ */
+
 
 // Source: web/components/controllers/adminNewWorkshopCtrl.js
 /**
@@ -482,7 +485,43 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops', '$stat
         $scope.printList = function() {
             printer.print('resources/views/participantList.tpl.html',{});
         }
+        /**
+         * @ngdoc function
+         * @name mainAppCtrls.controller:adminWorkshopDetailsCtrl#delete
+         * @methodOf mainAppCtrls.controller:adminWorkshopDetailsCtrl
+         * @param {number} _id id of the partcipant, which should be deleted
+         * @description Deletes the participant with the passed id
+         */
+        $scope.delete = function (_id) {
+            Workshops.delete({id:_id}).$promise.then(function(httpresponse){
+                    $alert({
+                        title:'',
+                        type: 'success',
+                        container:'#alert',
+                        show: true,
+                        dismissable: false,
+                        content: _translations.ALERT_WORKSHOP_DELETE_PARTICIPANT,
+                        duration: 20
+                    });
+                    loadTemplates();
+                }
+                , function (httpResponse) {
+                    $alert({
+                        title: '',
+                        type: 'danger',
+                        content: _translations.ALERT_WORKSHOP_DELETE_PARTICIPANT_FAIL + ' (' + httpReponse.status +')',
+                        container: '#alert',
+                        dismissable: false,
+                        show: true
+                    });
+                }
+            )
 
+        }
+        
+        
+        
+        
     }
 ])
 
