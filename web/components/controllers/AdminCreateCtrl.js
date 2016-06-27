@@ -7,14 +7,13 @@ var mainAppCtrls = angular.module("mainAppCtrls");
  * @name mainAppCtrls.controller:AdminCreateCtrl
  * @description Initializes the data & function that are being used to create an admin account
  */
-mainAppCtrls.controller('AdminCreateCtrl',['$scope', '$stateParams','$alert',
-    function($scope,$stateParams,$alert) {
+mainAppCtrls.controller('AdminCreateCtrl',['$scope', '$stateParams','$alert','$translate',
+    function($scope,$stateParams,$alert,$translate) {
         
         //Get translations for errors and store in array
         var _translations = {};
         //Pass all required translation IDs to translate service
-        $translate(['ALERT_WORKSHOP_NEW_SUCCESS',
-            'ALERT_WORKSHOP_NEW_FAIL']).
+        $translate(['PASSWORD_IDENTICAL_ERROR']).
         then(function(translations){
             _translations = translations;
         });
