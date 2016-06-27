@@ -137,12 +137,10 @@ class AdminController extends FOSRestController implements ClassResourceInterfac
         $encoder = $encoder_service->getEncoder($admin);
         //check if old password input equals the current password in database
         if ($encoder->isPasswordValid($admin->getPassword(), $params['oldpassword'], $admin->getSalt())) {
-            //set new password
             $admin->setPlainPassword($params['newpassword']);
             $this->get('fos_user.user_manager')->updateUser($admin);
         } else {
-            //old password is wrong
-            throw $this->createAccessDeniedException("The old password is incorrect");
+            return $this->handleView($this->view(['code' => 403,'message' => "Old password is wrong"], 403));
         }
         $this->getDoctrine()->getManager()->persist($admin);
         $this->getDoctrine()->getManager()->flush();
