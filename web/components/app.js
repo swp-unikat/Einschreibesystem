@@ -159,6 +159,16 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                     requiresLogin: true
                 }
             })
+
+            .state('admin_email_confirm', {
+                url: '/workshop/management/details/:id/confirm',
+                controller: 'adminEmailConfirmCtrl',
+                templateUrl: prefix.concat('adminEmailConfirm.html'),
+                data: {
+                    requiresLogin: true
+                }
+            })
+
             .state('admin_workshop_management',{
                 url: '/workshop/management',
                 controller: 'adminWorkshopManagementCtrl',
@@ -192,6 +202,7 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                     requiresLogin: true
                 }
             })
+
 
             .state('admininvite',{
                 url: '/admin/create/:token',
