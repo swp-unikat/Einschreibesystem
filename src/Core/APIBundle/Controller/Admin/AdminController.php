@@ -117,17 +117,13 @@ class AdminController extends FOSRestController implements ClassResourceInterfac
      *  statusCodes = {
      *      200 = "Returned when successful",
      *      404 = "Returned when the data is not found"
-     *  },requirements={{
-     *        "name"="adminId",
-     *        "dataType"="integer",
-     *        "requirement"="\d+",
-     *        "description"="Admin ID"
-     *}}
+     *  }
+     *     }
      * )
-     * @param $paramfetcher params of admin
+     * @param $paramfetcher ParamFetcher 
      * @return \Symfony\Component\HttpFoundation\Response
-     * @Rest\RequestParam(name="oldpassword", requirements=".*", description="json object of workshop")
-     * @Rest\RequestParam(name="newpassword", requirements=".*", description="json object of workshop")
+     * @Rest\RequestParam(name="oldpassword", requirements=".*", description="old password of a admin")
+     * @Rest\RequestParam(name="newpassword", requirements=".*", description="new password of a admin")
      * @Rest\View()
      */
     public function patchAction(ParamFetcher $paramfetcher)
