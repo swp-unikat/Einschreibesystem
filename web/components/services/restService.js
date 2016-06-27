@@ -332,7 +332,7 @@ restSvcs.factory('Admin',['$resource',function($resource){
          * @description Sends an invite link to the passed e-mail
          * @methodOf restSvcs.Admin
          */
-        'invite': {url:'/api/admin/admin/:email/admin/invite',params:{email: '@email'},method: 'GET',isArray: false},
+        'invite': {url:'/api/admin/admin/invite',method: 'POST',isArray: false},
         /**
          * @ngdoc function
          * @name restSvcs.Admin#editContact

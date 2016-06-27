@@ -11,5 +11,4 @@ mainAppCtrls.controller('UnsubscribeCtrl',['$scope',
     function($scope) {
 
     }
-
 ]);

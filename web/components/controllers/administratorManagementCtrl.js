@@ -14,15 +14,15 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin','$alert'
 
         var _translations = {};
         //Pass all required translation IDs to translate service
-        $translate(['INVITED_ADMINISTRATOR_EMAIL','INVITED_ADMINISTRATOR_EMAIL_ERROR']).then(function(translations){
+        $translate(['INVITED_ADMINISTRATOR_EMAIL', 'INVITED_ADMINISTRATOR_EMAIL_ERROR']).then(function (translations) {
             _translations = translations;
         });
-        var loadList = function(){
+        var loadList = function () {
             $scope.loading = true;
-            Admin.list().$promise.then(function(value){
+            Admin.list().$promise.then(function (value) {
                 $scope.admins = value;
                 $scope.loading = false;
-            },function(httpResponse){
+            }, function (httpResponse) {
                 alert(httpResponse.status);
                 $scope.loading = false;
             });
@@ -35,11 +35,11 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin','$alert'
          * @param {number} _id ID of the admin to delete
          * @methodOf mainAppCtrls.controller:AdministratorManagementCtrl
          */
-        $scope.deleteAdmin = function(_id) {
+        $scope.deleteAdmin = function (_id) {
             $scope.loading = true;
-            Admin.delete({id: _id}).$promise.then(function(value){
+            Admin.delete({id: _id}).$promise.then(function (value) {
                 loadList();
-            },function(httpResponse){
+            }, function (httpResponse) {
                 $scope.loading = false;
                 $alert({
                     type: 'danger',
@@ -58,8 +58,8 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin','$alert'
          * @description invites a new admin
          * @methodOf mainAppCtrls.controller:AdministratorManagementCtrl
          */
-        $scope.invite = function() {
-            Admin.invite({email: $scope.admin_mail}).$promise.then(function(value){
+        $scope.invite = function () {
+            Admin.invite({email: $scope.admin_mail}).$promise.then(function (value) {
                 $alert({
                     title: '',
                     type: 'success',
@@ -69,7 +69,7 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin','$alert'
                     show: true,
                     duration: 30
                 });
-            },function(httpResponse){
+            }, function (httpResponse) {
                 $alert({
                     title: '',
                     type: 'danger',
@@ -82,6 +82,4 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin','$alert'
             });
         }
     }
-    }
-
 ]);

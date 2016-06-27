@@ -162,7 +162,15 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
         then(function(translations){
             _translations = translations;
         });
-
+        var reformatDate =  function(_date){
+            if(!_date || _date == null)
+                return "";
+            var _dateStr = _date.toJSON();
+            if(_dateStr == null)
+                return "";
+            _dateStr =  _dateStr.slice(0,_dateStr.length-5);
+            return _dateStr.replace('T',' ');
+        };
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:AdminEditWorkshopCtrl#discardChanges
@@ -178,9 +186,6 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
             $scope.workshop.start_at = _originalData.start_at;
             $scope.workshop.end_at = _originalData.end_at;
             $scope.workshop.max_participants = _originalData.max_participants;
-
-
-
 
         }
 
@@ -589,14 +594,21 @@ mainAppCtrls.controller('adminWorkshopManagementCtrl',['$scope','AdminWorkshop',
  * @descirption Controller for managing administrator list
  * @requires restSvcs.Admin
  */
-mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin','$alert',
-    function($scope,Admin,$alert) {
-        var loadList = function(){
+mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin','$alert','$translate',
+    function($scope,Admin,$alert,$translate) {
+        $scope.loading = true;
+
+        var _translations = {};
+        //Pass all required translation IDs to translate service
+        $translate(['INVITED_ADMINISTRATOR_EMAIL', 'INVITED_ADMINISTRATOR_EMAIL_ERROR']).then(function (translations) {
+            _translations = translations;
+        });
+        var loadList = function () {
             $scope.loading = true;
-            Admin.list().$promise.then(function(value){
+            Admin.list().$promise.then(function (value) {
                 $scope.admins = value;
                 $scope.loading = false;
-            },function(httpResponse){
+            }, function (httpResponse) {
                 alert(httpResponse.status);
                 $scope.loading = false;
             });
@@ -609,33 +621,53 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin','$alert'
          * @param {number} _id ID of the admin to delete
          * @methodOf mainAppCtrls.controller:AdministratorManagementCtrl
          */
-        $scope.deleteAdmin = function(_id) {
+        $scope.deleteAdmin = function (_id) {
             $scope.loading = true;
-            Admin.delete({id: _id}).$promise.then(function(value){
+            Admin.delete({id: _id}).$promise.then(function (value) {
                 loadList();
-            },function(httpResponse){
+            }, function (httpResponse) {
                 $scope.loading = false;
                 $alert({
-                   type: 'danger',
-                   title: 'Error',
-                   content: 'Failed to delete admin',
-                   container: '#alert',
-                   show: true,
-                   dismissable: false,
-                   duration: 30
+                    type: 'danger',
+                    title: 'Error',
+                    content: 'Failed to delete admin',
+                    container: '#alert',
+                    show: true,
+                    dismissable: false,
+                    duration: 30
                 });
             });
         }
-        $scope.invite = function() {
-            $scope.inviting = true;
-            Admin.invite({email: $scope.admin_mail}).$promise.then(function(value){
-                $scope.inviting = false;
-            },function(value){
-                $scope.inviting = false;
+        /**
+         * @ngdoc function
+         * @name mainAppCtrls.controller:AdministratorManagementCtrl#delete
+         * @description invites a new admin
+         * @methodOf mainAppCtrls.controller:AdministratorManagementCtrl
+         */
+        $scope.invite = function () {
+            Admin.invite({email: $scope.admin_mail}).$promise.then(function (value) {
+                $alert({
+                    title: '',
+                    type: 'success',
+                    content: _translations.INVITED_ADMINISTRATOR_EMAIL,
+                    container: '#alert',
+                    dismissable: true,
+                    show: true,
+                    duration: 30
+                });
+            }, function (httpResponse) {
+                $alert({
+                    title: '',
+                    type: 'danger',
+                    content: _translations.INVITED_ADMINISTRATOR_EMAIL_ERROR,
+                    container: '#alert',
+                    dismissable: true,
+                    show: true,
+                    duration: 60
+                })
             });
         }
     }
-
 ]);
 
 // Source: web/components/controllers/blacklistCtrl.js
@@ -1715,7 +1747,6 @@ mainAppCtrls.controller('UnsubscribeCtrl',['$scope',
     function($scope) {
 
     }
-
 ]);
 
 // Source: web/components/controllers/workshopDetails.js
@@ -1785,6 +1816,7 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
         $scope.unsubscribe= function(){
   
         };
+        
         $scope.loading = true;
         Workshops.get({id: workshopid}).$promise.then(function(value,httpResponse){
             $scope.workshop = value;
@@ -1853,6 +1885,7 @@ mainAppCtrls.controller('WorkshopListCtrl',['$scope','Workshops','$alert','$tran
                         dismissable: false,
                         show: true
                     });
+                    break;
                 case 500:
                     $scope.myAlert = $alert({
                         title: $scope.errorTitle,

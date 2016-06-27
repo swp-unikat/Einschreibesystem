@@ -25,7 +25,15 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
         then(function(translations){
             _translations = translations;
         });
-
+        var reformatDate =  function(_date){
+            if(!_date || _date == null)
+                return "";
+            var _dateStr = _date.toJSON();
+            if(_dateStr == null)
+                return "";
+            _dateStr =  _dateStr.slice(0,_dateStr.length-5);
+            return _dateStr.replace('T',' ');
+        };
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:AdminEditWorkshopCtrl#discardChanges
@@ -41,9 +49,6 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
             $scope.workshop.start_at = _originalData.start_at;
             $scope.workshop.end_at = _originalData.end_at;
             $scope.workshop.max_participants = _originalData.max_participants;
-
-
-
 
         }
 

@@ -105,9 +105,9 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      * )
      *
      * @return \Symfony\Component\HttpFoundation\Response
-     * @Rest\RequestParam(name="name", requirements=".*", description="json object of workshop")
-     * @Rest\RequestParam(name="surname", requirements=".*", description="json object of workshop")
-     * @Rest\RequestParam(name="email", requirements=".*", description="json object of workshop")
+     * @Rest\RequestParam(name="name", requirements=".*", description="name of the participant")
+     * @Rest\RequestParam(name="surname", requirements=".*", description="surname of the participant")
+     * @Rest\RequestParam(name="email", requirements=".*", description="email of the participant")
      * @param $id int id of the workshop the user wants to enroll
      * @param $paramFetcher ParamFetcher Helper to get the params from the post request
      * @Rest\View()
@@ -183,6 +183,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      *  output = "",
      *  statusCodes = {
      *      200 = "Returned when successful",
+     *      401 = "Return when errors at content level",
      *      404 = "Returned when the data is not found"
      *  }
      * )
@@ -195,6 +196,12 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      */
     public function getEnrollConfirmAction($workshopId,$participantsId,$token)
     {
+        $workshopParticipant = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:WorkshopParticipants")->findOneBy(['workshop' => $workshopId,'participant' => $participantsId]);
+        if($workshopParticipant){
+            return $this->handleView($this->view(['code' => 403,'message' => "You are already in this workshop"], 403));
+
+        }
+
         $workshop = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Workshop")->find($workshopId);
         $token = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:EmailToken")->findOneBy(['token' => $token]);
         $participant = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Participants")->find($participantsId);
@@ -261,7 +268,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
             $this->getDoctrine()->getManager()->persist($token);
             $this->getDoctrine()->getManager()->flush();
 
-            $url = $this->generateUrl('core_frontend_default_index',[],TRUE)."#/#/unsubscribe/".$workshopParticipant->getParticipant()->getId()."/".$workshopParticipant->getWorkshop()->getId()."/".$token->getToken();
+            $url = $this->generateUrl('core_frontend_default_index',[],TRUE)."#/unsubscribe/".$workshopParticipant->getParticipant()->getId()."/".$workshopParticipant->getWorkshop()->getId()."/".$token->getToken();
 
             //load Template for confirmation
             $template = $this->getDoctrine()->getRepository("CoreEntityBundle:EmailTemplate")->find(5);
@@ -352,7 +359,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      */
     public function getWaitinglistAction($id)
     {
-        $waitingList = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:WorkshopParticipants')->findBy(['workshop' => $id,'waiting' => 1],['enrollment' => "DESC"]);
+        $waitingList = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:WorkshopParticipants')->findBy(['workshop' => $id,'waiting' => true],['enrollment' => "DESC"]);
         if (!$waitingList) {
             return $this->handleView($this->view(['code' => 404,'message' => "No waitinglist for workshop"], 404));
         }
@@ -392,7 +399,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      */
      public function getParticipantsAction($id)
     {  
-	    $participantsList = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:WorkshopParticipants')->findBy(['workshop' => $id],['enrollment' => "DESC"]);
+	    $participantsList = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:WorkshopParticipants')->findBy(['workshop' => $id, 'waiting' => false],['enrollment' => "DESC"]);
 	    if (!$participantsList) {
             return $this->handleView($this->view(['code' => 404,'message' => "No Participant in Workshop found"], 404));
          }

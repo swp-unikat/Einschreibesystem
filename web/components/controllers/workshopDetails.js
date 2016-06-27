@@ -64,6 +64,7 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
         $scope.unsubscribe= function(){
   
         };
+        
         $scope.loading = true;
         Workshops.get({id: workshopid}).$promise.then(function(value,httpResponse){
             $scope.workshop = value;
