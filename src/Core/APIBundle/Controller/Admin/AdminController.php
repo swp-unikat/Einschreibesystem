@@ -162,7 +162,7 @@ class AdminController extends FOSRestController implements ClassResourceInterfac
      * )
      * @param $paramfetcher ParamFetcher
      * @return \Symfony\Component\HttpFoundation\Response
-     * @Rest\RequestParam(name="oldemail", requirements=".*", description="old email)
+     * @Rest\RequestParam(name="oldemail", requirements=".*", description="old email")
      * @Rest\RequestParam(name="newemail", requirements=".*", description="new email")
      * @Rest\View()
      */
@@ -242,7 +242,8 @@ class AdminController extends FOSRestController implements ClassResourceInterfac
     }
 
     /**
-     * modify legal notice
+     * modify legal
+     * notice
      * @ApiDoc(
      *  resource=true,
      *  description="modify legal notice",
