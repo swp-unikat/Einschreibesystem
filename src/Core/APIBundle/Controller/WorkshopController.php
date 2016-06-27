@@ -183,7 +183,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      *  output = "",
      *  statusCodes = {
      *      200 = "Returned when successful",
-     *      401 = "Return when errors at content level"
+     *      401 = "Return when errors at content level",
      *      404 = "Returned when the data is not found"
      *  }
      * )
