@@ -118,9 +118,9 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
 
         $workshop = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Workshop")->find($id);
         $participant = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Participants")->findOneBy(["email" => $params["email"]]);
-        
+
         if (!$workshop) {
-            throw $this->createNotFoundException("Workshop not found");
+            return $this->handleView($this->view(['code' => 404,'message' => "Workshop not found",'workshop' => $id], 404));
         }
 
         if ($participant == NULL){
@@ -144,8 +144,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
             //load workshop with start and endtim, iterate over all
 
             foreach($workshopParticipants as $tupel){
-                $tempWorkshop = $this->getDoctrine()->getRepository("Workshop")->find($tupel->getId());
-                if($workshop->getStartAt() >= $tempWorkshop->getStartAt() && $workshop->getEndAt() <= $tempWorkshop->getEndAt()){
+                if($workshop->getStartAt() >= $tupel->getWorkshop()->getStartAt() && $workshop->getEndAt() <= $tupel->getWorkshop()->getEndAt()){
                     throw $this->createAccessDeniedException("Already in Workshop at same Time");
                 }
             }
@@ -155,7 +154,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
         $token->setParticipant($participant);
         $this->getDoctrine()->getManager()->persist($token);
         $this->getDoctrine()->getManager()->flush();
-        
+
         $url = $this->generateUrl('core_frontend_default_index',[],TRUE)."#/enrollment/confirm/".$workshop->getId()."/".$participant->getId()."/".$token->getToken();
         $unsubscribe = $this->generateUrl('core_frontend_default_index',[],TRUE)."#/unsubscribe/".$workshop->getId()."/".$participant->getId();
         //load Template for conferment
