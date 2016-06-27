@@ -183,7 +183,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      *  output = "",
      *  statusCodes = {
      *      200 = "Returned when successful",
-     *      401 = "Return when errors at content level"
+     *      401 = "Return when errors at content level",
      *      404 = "Returned when the data is not found"
      *  }
      * )
@@ -359,7 +359,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      */
     public function getWaitinglistAction($id)
     {
-        $waitingList = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:WorkshopParticipants')->findBy(['workshop' => $id,'waiting' => 1],['enrollment' => "DESC"]);
+        $waitingList = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:WorkshopParticipants')->findBy(['workshop' => $id,'waiting' => true],['enrollment' => "DESC"]);
         if (!$waitingList) {
             return $this->handleView($this->view(['code' => 404,'message' => "No waitinglist for workshop"], 404));
         }
@@ -399,7 +399,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      */
      public function getParticipantsAction($id)
     {  
-	    $participantsList = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:WorkshopParticipants')->findBy(['workshop' => $id],['enrollment' => "DESC"]);
+	    $participantsList = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:WorkshopParticipants')->findBy(['workshop' => $id, 'waiting' => false],['enrollment' => "DESC"]);
 	    if (!$participantsList) {
             return $this->handleView($this->view(['code' => 404,'message' => "No Participant in Workshop found"], 404));
          }
