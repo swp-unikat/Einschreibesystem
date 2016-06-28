@@ -11,6 +11,22 @@ var mainAppCtrls = angular.module("mainAppCtrls");
  */
 mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops', '$stateParams', "$alert",'printer','$translate',
     function($scope,Workshops,$stateParams, $alert,printer,$translate) {
+
+        $scope.roles = [
+            'guest',
+            'user',
+            'customer',
+            'admin'
+        ];
+        $scope.check = function(value, checked) {
+            var idx = $scope.user.roles.indexOf(value);
+            if (idx >= 0 && !checked) {
+                $scope.user.roles.splice(idx, 1);
+            }
+            if (idx < 0 && checked) {
+                $scope.user.roles.push(value);
+            }
+        };
         //Get translations for errors and store in array
         var _translations = {};
         //Pass all required translation IDs to translate service
