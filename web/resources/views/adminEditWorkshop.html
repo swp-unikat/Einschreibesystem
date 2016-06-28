@@ -25,6 +25,9 @@
             <label>{{ "WORKSHOP_LOCATION" | translate}}</label>
             <input type="text" ng-model="workshop.location" class="form-control ">
 
+            <label>{{ "WORKSHOP_MAXIMUM_NUMBER_OF_PARTICIPANTS" | translate}}</label>
+            <input type="number" ng-model="workshop.max_participants" class="form-control" placeholder="{{workshop.max_participants}}">
+
             <div class="form-group">
                 <label>{{ "WORKSHOP_START_TIME" | translate}}</label>
                 <div class="form-group">
