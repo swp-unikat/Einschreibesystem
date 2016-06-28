@@ -54,7 +54,6 @@
                     </li>
                     <li class="list-group-item"  ng-repeat="p in participants">
                         {{p.name}} {{p.surname}} {{p.email}}
-                        <label ng-repeat="role in roles" checklist-model="getRoles()" checklist-value="role" ng-change="check(role, checked)"> {{role}}>
                             <input type="checkbox" value="">
                             <button type="button" ng-click="delete(x.id)" class="btn btn-default btn-xs">
                                 <span data-toggle="tooltip" title="{{'BUTTON_REMOVE_PARTICIPANT' | translate}}" class="glyphicon glyphicon-trash" aria-hidden="true"></span>
