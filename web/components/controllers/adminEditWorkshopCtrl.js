@@ -65,19 +65,17 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
             var _duration = $scope.workshop.duration;
             var _ea = new Date(_sa+_duration + 1000*60*60) ;
 
-            console.log($scope.workshop.end_at);
-
+            console.log($scope.workshop);
             var _dataToSend = {
                 title:$scope.workshop.title,
                 description:$scope.workshop.description,
                 cost:$scope.workshop.cost,
-                requirements:$scope.workshop.requirement,
+                requirements:$scope.workshop.requirements,
                 location:$scope.workshop.location,
                 start_at:reformatDate($scope.workshop.start_at),
                 end_at:reformatDate(_ea),
                 max_participants:$scope.workshop.max_participants
             };
-            
             AdminWorkshop.edit({id: _workshopId}, _dataToSend).$promise.then(function (value) {
                 //Store answer from server
                 _originalData = {

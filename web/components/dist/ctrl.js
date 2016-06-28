@@ -211,19 +211,17 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
             var _duration = $scope.workshop.duration;
             var _ea = new Date(_sa+_duration + 1000*60*60) ;
 
-            console.log($scope.workshop.end_at);
-
+            console.log($scope.workshop);
             var _dataToSend = {
                 title:$scope.workshop.title,
                 description:$scope.workshop.description,
                 cost:$scope.workshop.cost,
-                requirements:$scope.workshop.requirement,
+                requirements:$scope.workshop.requirements,
                 location:$scope.workshop.location,
                 start_at:reformatDate($scope.workshop.start_at),
                 end_at:reformatDate(_ea),
                 max_participants:$scope.workshop.max_participants
             };
-            
             AdminWorkshop.edit({id: _workshopId}, _dataToSend).$promise.then(function (value) {
                 //Store answer from server
                 _originalData = {
@@ -560,6 +558,16 @@ mainAppCtrls.controller('adminWorkshopManagementCtrl',['$scope','AdminWorkshop',
         $scope.myAlert;
         $scope.currentList = [];
         $scope.elapsedList = [];
+
+        //Get translations for errors and store in array
+        var _translations = {};
+        //Pass all required translation IDs to translate service
+        $translate(['ALERT_WORKSHOP_DELETE_SUCCESS',
+            'ALERT_INTERNAL_SERVER_ERROR']).
+        then(function(translations){
+            _translations = translations;
+        });
+        
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:adminWorkshopManagementCtrl#compareToCurrent
@@ -609,7 +617,7 @@ mainAppCtrls.controller('adminWorkshopManagementCtrl',['$scope','AdminWorkshop',
                         $scope.myAlert = $alert({
                             title: $scope.errorTitle,
                             type: 'danger',
-                            content: 'Internal server error.',
+                            content: _translations.ALERT_INTERNAL_SERVER_ERROR + ' (' + httpReponse.status +')',
                             container: '#alert',
                             dismissable: false,
                             show: true
@@ -635,7 +643,7 @@ mainAppCtrls.controller('adminWorkshopManagementCtrl',['$scope','AdminWorkshop',
                         container:'#alert',
                         show: true,
                         dismissable: true,
-                        content: 'Successfully deleted',
+                        content: _translations.ALERT_WORKSHOP_DELETE_SUCCESS,
                         duration: 20
                     });
                     loadWorkshops();
