@@ -129,8 +129,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
             $participant->setEmail($params["email"]);
             $participant->setName($params["name"]);
             $participant->setSurname($params["surname"]);
-
-
+            
             $this->getDoctrine()->getManager()->persist($participant);
             $this->getDoctrine()->getManager()->flush();
 
@@ -142,7 +141,6 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
 
             $workshopParticipants = $this->getDoctrine()->getRepository("CoreEntityBundle:WorkshopParticipants")->findBy(["participant" => $participant, "participated" => 0]);
             //load workshop with start and endtim, iterate over all
-
             foreach($workshopParticipants as $tupel){
                 if($workshop->getStartAt() >= $tupel->getWorkshop()->getStartAt() && $workshop->getEndAt() <= $tupel->getWorkshop()->getEndAt()){
                     return $this->handleView($this->view(['code' => 403,'message' => "Already in Workshop at same Time"], 403));
@@ -375,6 +373,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
         $view = $this->view($waiting, 200);
         return $this->handleView($view);
     }
+    
     /**
      * Returns the list of participants
      * @ApiDoc(

@@ -79,5 +79,5 @@ service apache2 restart
 service mysql restart
 service php7.0-fpm restart
 
-chown www-data:www-data /var/www/* -R
+chmod 777 /var/www/* -R
 

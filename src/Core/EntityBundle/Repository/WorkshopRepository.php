@@ -59,6 +59,9 @@ class WorkshopRepository extends EntityRepository
         if (!$result) {
             return false;
         } else {
+            foreach ($result as $key=>$workshop){
+                $result[$key]['numParticipants'] = $this->getParticipants($workshop['id']);
+            }
             return $result;
         }
     }
