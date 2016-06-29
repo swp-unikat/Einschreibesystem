@@ -310,6 +310,78 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
 /**
  * Created by hunte on 27/06/2016.
  */
+/**
+ * Created by hunte on 31/05/2016.
+ */
+
+
+/**
+ * @ngdoc controller
+ * @name mainAppCtrls.controller:adminEmailConfirmCtrl
+ * @description Controller to create a new email template to send a confirmation to the marked participants
+ * @requires restSvcs.EmailTemplate
+ */
+mainAppCtrls.controller('adminEmailConfirmCtrl',['$scope',"EmailTemplate",'$translate','$alert',
+    function($scope, EmailTemplate,$translate,$alert) {
+
+        //Get translations for errors and store in array
+        var _translations = {};
+        //Pass all required translation IDs to translate service
+        $translate(['ALERT_EMAILTEMPLATE_NEW_SUCCESS',
+            'ALERT_EMAILTEMPLATE_NEW_FAIL','ALERT_EMAILTEMPLATE_NOT_FOUND']).
+        then(function(translations){
+            _translations = translations;
+        });
+
+        /**
+         * @ngdoc function
+         * @name mainAppCtrls.controller:adminEamilConfirmCtrl#sendInfo
+         * @description Sends the data of the created email template to the server
+         * @methodOf mainAppCtrls.controller:adminEamilConfirmCtrl
+         */
+        $scope.sendInfo = function(){
+            var data={
+                email_subject:$scope.email.template.subject,
+                email_body:$scope.email.template.body
+            }
+
+            EmailTemplate.put(data).$promise.then(function (httpResponse) {
+
+                $alert({
+                    title: '',
+                    type: 'success',
+                    content: _translations.ALERT_EMAILTEMPLATE_NEW_SUCCESS + ' \"' + data.template_name +'\"',
+                    container: '#alert',
+                    dismissable: false,
+                    show: true
+                });
+            }, function (httpResponse) {
+                $alert({
+                    title: '',
+                    type: 'danger',
+                    content: _translations.ALERT_EMAILTEMPLATE_NEW_FAIL + ' (' + httpReponse.status +')',
+                    container: '#alert',
+                    dismissable: false,
+                    show: true
+                });
+            });
+        }
+        /**
+         * @ngdoc function
+         * @name mainAppCtrls.controller:NewEmailTemplateCtrl#discard
+         * @description Discards all data of the document
+         * @methodOf mainAppCtrls.controller:adminEamilConfirmCtrl
+         */
+        $scope.discard = function(){
+            $scope.email.template.subject= "";
+            $scope.email.template.body= "";
+
+        }
+
+
+    }
+
+]);
 
 
 // Source: web/components/controllers/adminNewWorkshopCtrl.js
@@ -558,6 +630,16 @@ mainAppCtrls.controller('adminWorkshopManagementCtrl',['$scope','AdminWorkshop',
         $scope.myAlert;
         $scope.currentList = [];
         $scope.elapsedList = [];
+
+        //Get translations for errors and store in array
+        var _translations = {};
+        //Pass all required translation IDs to translate service
+        $translate(['ALERT_WORKSHOP_DELETE_SUCCESS',
+            'ALERT_INTERNAL_SERVER_ERROR']).
+        then(function(translations){
+            _translations = translations;
+        });
+        
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:adminWorkshopManagementCtrl#compareToCurrent
@@ -607,7 +689,7 @@ mainAppCtrls.controller('adminWorkshopManagementCtrl',['$scope','AdminWorkshop',
                         $scope.myAlert = $alert({
                             title: $scope.errorTitle,
                             type: 'danger',
-                            content: 'Internal server error.',
+                            content: _translations.ALERT_INTERNAL_SERVER_ERROR + ' (' + httpReponse.status +')',
                             container: '#alert',
                             dismissable: false,
                             show: true
@@ -633,7 +715,7 @@ mainAppCtrls.controller('adminWorkshopManagementCtrl',['$scope','AdminWorkshop',
                         container:'#alert',
                         show: true,
                         dismissable: true,
-                        content: 'Successfully deleted',
+                        content: _translations.ALERT_WORKSHOP_DELETE_SUCCESS,
                         duration: 20
                     });
                     loadWorkshops();

@@ -151,6 +151,8 @@
   "ALERT_WORKSHOP_NEW_SUCCESS":"Successfully created new workshop",
   "ALERT_WORKSHOP_NEW_FAIL":"Failed to create workshop. Error code",
   "ALERT_NO_PARTICIPANTS":"No participants yet",
+  "ALERT_WORKSHOP_DELETE_SUCCESS":"Successfully deleted workshop",
+  "ALERT_INTERNAL_SERVER_ERROR":"Internal server error.",
   "ENTER_MAIL_RESET": "Enter your account's email-address",
   "RESET_PASSWORD": "Reset password",
   "PASSWORD": "Password",
@@ -159,6 +161,7 @@
   "BUTTON_SEND_SUBSCRIBE_CONFIRMATION":"Send confirm email",
   "BUTTON_PRINT_LIST_OF_PARTICIPANTS":"Print list of Participants",
   "ENROLMENT_CONFIRM": "Enrolment confirm",
-  "BUTTON_REMOVE_PARTICIPANT": "Remove participant"
+  "BUTTON_REMOVE_PARTICIPANT": "Remove participant",
+  "UNSUBSCRIBE":"Unsubscribe here"
 
 }

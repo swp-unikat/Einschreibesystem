@@ -54,11 +54,13 @@ class WorkshopRepository extends EntityRepository
         $q = $qb->select(array('workshop'))
             ->from('CoreEntityBundle:Workshop', 'workshop')
             ->orderBy('workshop.start_at', 'ASC');
-        $q->setParameter('now', $oDate);
-        $result = $q->getQuery()->getResult();
+        $result = $q->getQuery()->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
         if (!$result) {
             return false;
         } else {
+            foreach ($result as $key=>$workshop){
+                $result[$key]['numParticipants'] = $this->getParticipants($workshop['id']);
+            }
             return $result;
         }
     }

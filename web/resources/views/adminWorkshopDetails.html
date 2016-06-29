@@ -1,4 +1,4 @@
-
+<h1>{{ "WORKSHOP_DETAILS" | translate}}</h1>
 <div class="col-md-2 col-xs-2 pull-right">
     <a ui-sref="admin_workshop_management"> <button class="btn btn-default">{{ "BUTTON_BACK" | translate}}</button></a>
 </div>
@@ -54,7 +54,6 @@
                     </li>
                     <li class="list-group-item"  ng-repeat="p in participants">
                         {{p.name}} {{p.surname}} {{p.email}}
-                        <label>
                             <input type="checkbox" value="">
                             <button type="button" ng-click="delete(x.id)" class="btn btn-default btn-xs">
                                 <span data-toggle="tooltip" title="{{'BUTTON_REMOVE_PARTICIPANT' | translate}}" class="glyphicon glyphicon-trash" aria-hidden="true"></span>
@@ -82,7 +81,7 @@
             </div>
             <div class="col-md-8">
                 <br><br><br><br><br><br><br><br><br>
-                <button type="button" class="btn btn-default" ng-click="openNewTemplate()">{{ "BUTTON_SEND_SUBSCRIBE_CONFIRMATION" | translate}}</button>
+                <a ui-sref="admin_email_confirm"><button type="button" class="btn btn-default" ng-click="openNewTemplate()">{{ "BUTTON_SEND_SUBSCRIBE_CONFIRMATION" | translate}}</button></a>
                 <button type="button" class="btn btn-default" ng-click="printList()">{{ "BUTTON_PRINT_LIST_OF_PARTICIPANTS" | translate}}</button>
             </div>
         </div>

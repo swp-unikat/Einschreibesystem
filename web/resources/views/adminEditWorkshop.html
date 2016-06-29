@@ -17,13 +17,16 @@
             <div text-angular  ng-model="workshop.description"></div>
 
             <label>{{ "WORKSHOP_COST" | translate}}</label>
-            <input type="text" ng-model="workshop.cost" class="form-control ">
+            <input type="number" ng-model="workshop.cost" class="form-control ">
 
             <label>{{ "WORKSHOP_REQUIREMENTS" | translate}}</label>
             <input type="text" ng-model="workshop.requirements" class="form-control ">
 
             <label>{{ "WORKSHOP_LOCATION" | translate}}</label>
             <input type="text" ng-model="workshop.location" class="form-control ">
+
+            <label>{{ "WORKSHOP_MAXIMUM_NUMBER_OF_PARTICIPANTS" | translate}}</label>
+            <input type="number" ng-model="workshop.max_participants" class="form-control" placeholder="{{workshop.max_participants}}">
 
             <div class="form-group">
                 <label>{{ "WORKSHOP_START_TIME" | translate}}</label>
