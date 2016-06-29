@@ -28,14 +28,14 @@ class loadEmailTemplate implements FixtureInterface
         $emailTemplate = new EmailTemplate();
         $emailTemplate->setTemplateName("Erinnerungsmail");
         $emailTemplate->setEmailSubject("Erinnerungsmail für {{workshop.title}}");
-        $emailTemplate->setEmailBody("Hallo {{participant.surname}},<br> morgen um {{workshop.startAt|date('Y-m-d h:i')}} beginnt der Workshop {{workshop.title}}, für den Sie sich eingeschrieben haben!");
+        $emailTemplate->setEmailBody("Hallo {{participant.surname}},<br> morgen um {{workshop.startAt|date('Y-m-d h:i')}} beginnt der Workshop {{workshop.title}}, für welchen Sie sich eingeschrieben haben! <br> <br> Hello{{participant.surname}},<br>  the workshop {{workshop.title}} ,you enrolled for, will start tomorrow at {{workshop.startAt|date('Y-m-d h:i')}}! ");
         $emailTemplate->setProtected(true);
         $manager->persist($emailTemplate);
         
         $emailTemplate2 = new EmailTemplate();
         $emailTemplate2->setTemplateName("Invitation");
         $emailTemplate2->setEmailSubject("We invite you to be a part of our team");
-        $emailTemplate2->setEmailBody("Hello {{email},<br> we would be pleas it you be a part of our team pleas follow the link below. <br> <a href='{{url}}'>{{url}}</a>");
+        $emailTemplate2->setEmailBody("Hello {{email},<br> we would be pleas it you be a part of our team pleas follow the link below. <br> <a href='{{url}}'>{{url}}</a> <br> <br> Hallo {{email},<br> wir würden uns freuen, wenn du Teil unseres Team wirst, folge dafür den nachfolgenden Link. <br> <a href='{{url}}'>{{url}}</a>");
         $emailTemplate2->setProtected(true);
         $manager->persist($emailTemplate2);
         
