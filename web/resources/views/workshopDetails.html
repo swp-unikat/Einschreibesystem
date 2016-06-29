@@ -96,11 +96,29 @@
                                 <input type="email" name="e_mail" ng-model="e_mail" class="form-control input-sm" placeholder="Email Address">
                             </div>
                             <button type="button" ng-click="sendInfo()" translate class="btn success btn-block">BUTTON_ENROLL</button>
-                            <button type="button" ng-click="unsubscribe()" class="btn btn-default">{{ "BUTTON_UNSUBSCRIBE" | translate}}</button></a>
 
                         </form>
                     </div>
                 </div>
+                <!--Unsubscribe panel-->
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 translate class="panel-title">UNSUBSCRIBE</h3>
+                    </div>
+                    <div class="panel-body">
+                        <form role="form">
+
+
+                            <div class="form-group">
+                                <input type="email" name="e_mail" ng-model="e_mail" class="form-control input-sm" placeholder="Email Address">
+                            </div>
+
+                            <button type="button" ng-click="unsubscribe()" class="btn btn-default btn-block">{{ "BUTTON_UNSUBSCRIBE" | translate}}</button></a>
+
+                        </form>
+                    </div>
+                </div>
+
             </div>
 
             <div class="col-xs-6 col-sm-4 col-md-4" id="alertEnroll" bs-alert></div>
