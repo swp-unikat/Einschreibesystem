@@ -62,6 +62,13 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops', '$stat
             }
             $scope.loading = false;
         });
+        $scope.loading = true;
+        Workshops.getWaitinglist({id: workshopid}).$promise.then(function(response){
+            $scope.waitingList = response;
+            $scope.loading = false;
+        },function(response){
+            $scope.loading = false;
+        });
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:adminWorkshopDetailsCtrl#printList
