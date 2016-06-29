@@ -69,6 +69,10 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
         Workshops.get({id: workshopid}).$promise.then(function(value,httpResponse){
             $scope.workshop = value;
 
+            var _ea = Date.parse($scope.workshop.end_at);
+            var _sa = Date.parse($scope.workshop.start_at);
+            $scope.workshop.duration = new Date(_ea - _sa);
+            
             $scope.loading = false;
         },function(httpResponse) {
             alert(httpResponse.status + '');
