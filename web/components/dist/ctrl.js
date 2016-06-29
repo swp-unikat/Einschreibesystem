@@ -207,18 +207,26 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
          */
         $scope.confirmChanges = function () {
 
+            var reformatDate =  function(_date){
+                if(!_date || _date == null)
+                    return "";
+                var _dateStr = _date.toJSON();
+                if(_dateStr == null)
+                    return "";
+                _dateStr =  _dateStr.slice(0,_dateStr.length-5);
+                return _dateStr.replace('T',' ');
+            };
             var _sa = Date.parse($scope.workshop.start_at);
             var _duration = $scope.workshop.duration;
             var _ea = new Date(_sa+_duration + 1000*60*60) ;
 
-            console.log($scope.workshop);
             var _dataToSend = {
                 title:$scope.workshop.title,
                 description:$scope.workshop.description,
                 cost:$scope.workshop.cost,
                 requirements:$scope.workshop.requirements,
                 location:$scope.workshop.location,
-                start_at:reformatDate($scope.workshop.start_at),
+                start_at:reformatDate((new Date(_sa))),
                 end_at:reformatDate(_ea),
                 max_participants:$scope.workshop.max_participants
             };
@@ -308,12 +316,8 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
 
 // Source: web/components/controllers/adminEmailConfirmCtrl.js
 /**
- * Created by hunte on 27/06/2016.
+ * Created by mohammad on 27/06/2016.
  */
-/**
- * Created by hunte on 31/05/2016.
- */
-
 
 /**
  * @ngdoc controller
@@ -372,6 +376,7 @@ mainAppCtrls.controller('adminEmailConfirmCtrl',['$scope',"EmailTemplate",'$tran
          * @description Discards all data of the document
          * @methodOf mainAppCtrls.controller:adminEamilConfirmCtrl
          */
+        
         $scope.discard = function(){
             $scope.email.template.subject= "";
             $scope.email.template.body= "";
@@ -512,6 +517,22 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
  */
 mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops', '$stateParams', "$alert",'printer','$translate',
     function($scope,Workshops,$stateParams, $alert,printer,$translate) {
+
+        $scope.roles = [
+            'guest',
+            'user',
+            'customer',
+            'admin'
+        ];
+        $scope.check = function(value, checked) {
+            var idx = $scope.user.roles.indexOf(value);
+            if (idx >= 0 && !checked) {
+                $scope.user.roles.splice(idx, 1);
+            }
+            if (idx < 0 && checked) {
+                $scope.user.roles.push(value);
+            }
+        };
         //Get translations for errors and store in array
         var _translations = {};
         //Pass all required translation IDs to translate service
