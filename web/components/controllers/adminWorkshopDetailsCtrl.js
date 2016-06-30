@@ -41,26 +41,40 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
             });
             $scope.loading = false;
         });
-        $scope.loading = true;
-        Workshops.getParticipants({id: workshopid}).$promise.then(function(value,httpResponse){
-            $scope.participants = value;
+        /**
+         * @ngdoc function
+         * @name mainAppCtrls.controller:adminWorkshopDetailsCtrl#loadParticipants
+         * @methodOf mainAppCtrls.controller:adminWorkshopDetailsCtrl
+         * @description Function to load a list of remaining Participants
+         */
+        var loadParticipants = function (){
+            $scope.loading = true;
+            Workshops.getParticipants({id: workshopid}).$promise.then(function(value,httpResponse){
+                $scope.participants = value;
 
-            $scope.loading = false;
-        },function(httpResponse) {
-            switch(httpResponse.status){
-                case 404:
-                    $alert({
-                        title: '',
-                        type: 'info',
-                        content: _translations.ALERT_NO_PARTICIPANTS,
-                        container: '#alertParticipant',
-                        dismissable: false,
-                        show: true,
-                        animation: 'am-fade-and-slide-top'
-                    });
-            }
-            $scope.loading = false;
-        });
+                $scope.loading = false;
+            },function(httpResponse) {
+                switch(httpResponse.status){
+                    case 404:
+                        $alert({
+                            title: '',
+                            type: 'info',
+                            content: _translations.ALERT_NO_PARTICIPANTS,
+                            container: '#alertParticipant',
+                            dismissable: false,
+                            show: true,
+                            animation: 'am-fade-and-slide-top'
+                        });
+                }
+                $scope.loading = false;
+            });
+
+        };
+
+        //Load participants
+        loadParticipants();
+
+        //Load waitinglist
         $scope.loading = true;
         Workshops.getWaitinglist({id: workshopid}).$promise.then(function(response){
             $scope.waitingList = response;
@@ -68,23 +82,6 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
         },function(response){
             $scope.loading = false;
         });
-
-        /**
-         * @ngdoc function
-         * @name mainAppCtrls.controller:adminWorkshopDetailsCtrl#loadList
-         * @methodOf mainAppCtrls.controller:adminWorkshopDetailsCtrl
-         * @description Function to load a list of remaining Participants
-         */
-        var loadList = function (){
-            $scope.loading = true;
-            Participants.getParticipants()
-            ({id: workshopid}).$promise.then(function(value,httpResponse){
-                $scope.participants = value;
-            }, function (httpResponse) {
-                $scope.loading = false;
-            });
-        };
-        
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:adminWorkshopDetailsCtrl#printList
@@ -92,13 +89,13 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
          * @description Prints the participants list
          */
         $scope.printList = function() {
-            printer.print('resources/views/participantList.tpl.html',{});
+            printer.print('resources/views/participantList.tpl.html',$scope.participants);
         }
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:adminWorkshopDetailsCtrl#delete
          * @methodOf mainAppCtrls.controller:adminWorkshopDetailsCtrl
-         * @param {number} _id id of the participant, which should be deleted
+         * @param {number} _id id of the participant, which should be removed from the workshop
          * @description Deletes the participant with the passed id
          */
         $scope.delete = function (_id) {
@@ -126,6 +123,22 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
                 }
             )
 
+        }
+
+        //Overbook a participant from the waitinglist
+
+        $scope.overbook = function(_id){
+            AdminWorkshop.overbook({id: workshopid,participantsid: _id}).then(function(response){
+                $alert({
+                   type: 'success',
+                   duration: 20,
+                   container: '#alert',
+                   content: 'Successfully overbooked workshop'
+                });
+                loadParticipants();
+            },function(response){
+                
+            });
         }
         
         
