@@ -59,7 +59,9 @@ class UserController extends FOSRestController implements ClassResourceInterface
         $renderTemplate = $this->get('twig')->createTemplate($template->getEmailBody());
         /* Sending E-Mail */
         $invitation->setEmail($email);
+
         $url = $this->generateUrl('core_frontend_default_index',[],TRUE)."#/admin/create/".$invitation->getCode();
+
         $message = \Swift_Message::newInstance()
             ->setSubject($template->getEmailSubject())
             ->setFrom($this->getParameter('email_sender'))
