@@ -121,29 +121,35 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
             $participant->setBlacklisted(true);
             $participant->setBlacklistedAt(new \DateTime("now"));
             $participant->setBlacklistedFrom($this->getUser());
-            
-        $template = $this->getDoctrine()->getRepository("CoreEntityBundle:EmailTemplate")->findOneBy(['template_name' => 'Blacklistsetzung']);
-        if(!$template){
-            return $this->handleView($this->view(['code' => 404,'message' => "E-Mail Template not found"], 404));
-        }
-        /* Creating Twig template from Database */
-        $renderTemplate = $this->get('twig')->createTemplate($template->getEmailBody());
 
+            /* Load E-Mail-Template*/
+            $template = $this->getDoctrine()->getRepository("CoreEntityBundle:EmailTemplate")->findOneBy(['template_name' => 'Blacklistsetzung']);
+            if (!$template) {
+                return $this->handleView($this->view(['code' => 404, 'message' => "E-Mail Template not found"], 404));
+            }
+
+            $workshops = $this->getDoctrine()->getRepository("CoreEntityBundle:WorkshopParticipants")->findBy(['participant' => $participant,'participated' => false]);
+            /* remove from all workshops*/
+            foreach ($workshops as $w){
+                $this->getDoctrine()->getManager()->remove($w);
+            }
+
+            /* Creating Twig template from Database */
+            $renderTemplate = $this->get('twig')->createTemplate($template->getEmailBody());
+            /* Send Mail */
             $message = \Swift_Message::newInstance()
                 ->setSubject($this->get('twig')->createTemplate($template->getEmailSubject())->render(["workshop" => $workshop]))
                 ->setFrom($this->getParameter('email_sender'))
                 ->setTo($participant->getEmail())
-                ->setBody($renderTemplate->render([ "participant" => $participant]), 'text/html');
+                ->setBody($renderTemplate->render(["participant" => $participant]), 'text/html');
             $this->get('mailer')->send($message);
-            $this->getDoctrine()->getManager()->remove($wp);
-
-            
-            $this->getDoctrine()->getManager()->remove($participant);
+            /* persist to database*/
             $this->getDoctrine()->getManager()->persist($participant);
             $this->getDoctrine()->getManager()->flush();
 
             return View::create(null, Codes::HTTP_NO_CONTENT);
         }
+
     }
     
     /**
