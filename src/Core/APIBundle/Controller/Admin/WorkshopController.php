@@ -202,7 +202,6 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
         $template = $this->getDoctrine()->getRepository("CoreEntityBundle:EmailTemplate")->findOneBy(['template_name' => 'Workshop Cancel']);
         if(!$template){
             return $this->handleView($this->view(['code' => 404,'message' => "E-Mail Template not found"], 404));
-
         }
         /* Creating Twig template from Database */
         $renderTemplate = $this->get('twig')->createTemplate($template->getEmailBody());
@@ -313,5 +312,71 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
         $this->getDoctrine()->getManager()->flush();
         return View::create(null, Codes::HTTP_OK);
 
+    }
+
+    /**
+     * Returns the waiting list of a workshop
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Returns the waiting list of a workshop",
+     *  output = {
+     *      "class"="Core\EntityBundle\Entity\Participants",
+     *      "groups"={"names"}
+     *  },statusCodes = {
+     *      200 = "Returned when successful",
+     *      404 = "Returned when the data is not found"
+     *  },requirements={
+     *      {
+     *          "name"="id",
+     *          "dataType"="integer",
+     *          "requirement"="\d+",
+     *          "description"="Workshop ID"
+     *      }
+     *  }
+     * )
+     * @param $id int id of workshop
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Rest\View()
+     */
+    public function getWaitinglistAction($id)
+    {
+        $waitingList = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:WorkshopParticipants')->findBy(['workshop' => $id,'waiting' => true],['enrollment' => "DESC"]);
+        if (!$waitingList) {
+            return $this->handleView($this->view(['code' => 404,'message' => "No waitinglist for workshop"], 404));
+        }
+        $view = $this->view($waitingList, 200);
+        return $this->handleView($view);
+    }
+
+    /**
+     * Returns the list of participants
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Returns the list of participants",
+     *  output = "Core\EntityBundle\Entity\Participants",
+     *  statusCodes = {
+     *      200 = "Returned when successful",
+     *      404 = "Returned when the data is not found"
+     *  },requirements={
+     *      {
+     *          "name"="id",
+     *          "dataType"="integer",
+     *          "requirement"="\d+",
+     *          "description"="Workshop ID"
+     *      }
+     *  }
+     * )
+     * @param $id int id of workshop
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Rest\View()
+     */
+    public function getParticipantsAction($id)
+    {
+        $participantsList = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:WorkshopParticipants')->findBy(['workshop' => $id, 'waiting' => false],['enrollment' => "DESC"]);
+        if (!$participantsList) {
+            return $this->handleView($this->view(['code' => 404,'message' => "No Participant in Workshop found"], 404));
+        }
+        $view = $this->view($participantsList, 200);
+        return $this->handleView($view);
     }
 }

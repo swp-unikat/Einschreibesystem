@@ -71,7 +71,11 @@ class MailController extends Controller{
     protected function sendMail($participants,$workshop){
         $counter = 0;
         /* Loading the default E-Mail template*/
-        $template = $this->em->getRepository("CoreEntityBundle:EmailTemplate")->find(1);
+        $template = $this->getDoctrine()->getRepository("CoreEntityBundle:EmailTemplate")->findOneBy(['template_name' => 'Reminder']);
+        if(!$template){
+            $this->logger->error("E-Mail Template not found");
+            return 0;
+        }
         /* Creating Twig template from Database */
         $renderTemplate = $this->twig->createTemplate($template->getEmailBody());
         foreach ($participants as $participant){
