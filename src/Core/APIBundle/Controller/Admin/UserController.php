@@ -54,7 +54,7 @@ class UserController extends FOSRestController implements ClassResourceInterface
 
         $invitation = new Invitation();
         /* Loading the default E-Mail template*/
-        $template = $this->getDoctrine()->getRepository("CoreEntityBundle:EmailTemplate")->find(2);
+        $template = $this->getDoctrine()->getRepository("CoreEntityBundle:EmailTemplate")->findOneBy(['template_name' => 'Invitation']);
         /* Creating Twig template from Database */
         $renderTemplate = $this->get('twig')->createTemplate($template->getEmailBody());
         /* Sending E-Mail */
