@@ -9,8 +9,8 @@ var mainAppCtrls = angular.module("mainAppCtrls");
  * @requires restSvcs.Workshops
  * @description Controller for showing administrator functions in a workshop.
  */
-mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Participants', '$stateParams', "$alert",'printer','$translate',
-    function($scope,Workshops,Participants, $stateParams, $alert,printer,$translate) {
+mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Participants', '$stateParams', "$alert",'printer','$translate','AdminWorkshop',
+    function($scope,Workshops,Participants, $stateParams, $alert,printer,$translate,AdminWorkshop) {
         //Get translations for errors and store in array
         var _translations = {};
         //Pass all required translation IDs to translate service
@@ -70,18 +70,21 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
             });
 
         };
+        var loadWaitinglist = function() {
+            $scope.loading = true;
+            Workshops.getWaitinglist({id: workshopid}).$promise.then(function(response){
+                $scope.waitingList = response;
+                $scope.loading = false;
+            },function(response){
+                $scope.loading = false;
+            });
+        };
 
         //Load participants
         loadParticipants();
 
         //Load waitinglist
-        $scope.loading = true;
-        Workshops.getWaitinglist({id: workshopid}).$promise.then(function(response){
-            $scope.waitingList = response;
-            $scope.loading = false;
-        },function(response){
-            $scope.loading = false;
-        });
+       loadWaitinglist();
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:adminWorkshopDetailsCtrl#printList
@@ -133,11 +136,21 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
                    type: 'success',
                    duration: 20,
                    container: '#alert',
-                   content: 'Successfully overbooked workshop'
+                   content: 'Successfully overbooked workshop',
+                   show: 'true',
+                    title: 'Success'
                 });
                 loadParticipants();
+                loadWaitinglist();
             },function(response){
-                
+                $alert({
+                    type: 'danger',
+                    duration: 20,
+                    container: '#alert',
+                    content: 'Successfully overbooked workshop',
+                    show: 'true',
+                    title: 'Error'
+                });
             });
         }
         
