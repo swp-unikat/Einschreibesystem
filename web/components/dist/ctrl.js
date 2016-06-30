@@ -339,9 +339,9 @@ mainAppCtrls.controller('adminEmailConfirmCtrl',['$scope',"EmailTemplate",'$tran
 
         /**
          * @ngdoc function
-         * @name mainAppCtrls.controller:adminEamilConfirmCtrl#sendInfo
+         * @name mainAppCtrls.controller:adminEmailConfirmCtrl#sendInfo
          * @description Sends the data of the created email template to the server
-         * @methodOf mainAppCtrls.controller:adminEamilConfirmCtrl
+         * @methodOf mainAppCtrls.controller:adminEmailConfirmCtrl
          */
         $scope.sendInfo = function(){
             var data={
@@ -372,9 +372,9 @@ mainAppCtrls.controller('adminEmailConfirmCtrl',['$scope',"EmailTemplate",'$tran
         }
         /**
          * @ngdoc function
-         * @name mainAppCtrls.controller:NewEmailTemplateCtrl#discard
+         * @name mainAppCtrls.controller:adminEmailConfirmCtrl#discard
          * @description Discards all data of the document
-         * @methodOf mainAppCtrls.controller:adminEamilConfirmCtrl
+         * @methodOf mainAppCtrls.controller:adminEmailConfirmCtrl
          */
         
         $scope.discard = function(){
@@ -515,8 +515,8 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
  * @requires restSvcs.Workshops
  * @description Controller for showing administrator functions in a workshop.
  */
-mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops', '$stateParams', "$alert",'printer','$translate',
-    function($scope,Workshops,$stateParams, $alert,printer,$translate) {
+mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Participants', '$stateParams', "$alert",'printer','$translate',
+    function($scope,Workshops,Participants, $stateParams, $alert,printer,$translate) {
         //Get translations for errors and store in array
         var _translations = {};
         //Pass all required translation IDs to translate service
@@ -525,7 +525,6 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops', '$stat
             _translations = translations;
         });
         
-        //TODO : replace with workshop details
         var workshopid;
         workshopid = $stateParams.id;
         $scope.loading = true;
@@ -575,6 +574,23 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops', '$stat
         },function(response){
             $scope.loading = false;
         });
+
+        /**
+         * @ngdoc function
+         * @name mainAppCtrls.controller:adminWorkshopDetailsCtrl#loadList
+         * @methodOf mainAppCtrls.controller:adminWorkshopDetailsCtrl
+         * @description Function to load a list of remaining Participants
+         */
+        var loadList = function (){
+            $scope.loading = true;
+            Participants.getParticipants()
+            ({id: workshopid}).$promise.then(function(value,httpResponse){
+                $scope.participants = value;
+            }, function (httpResponse) {
+                $scope.loading = false;
+            });
+        };
+        
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:adminWorkshopDetailsCtrl#printList
@@ -588,7 +604,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops', '$stat
          * @ngdoc function
          * @name mainAppCtrls.controller:adminWorkshopDetailsCtrl#delete
          * @methodOf mainAppCtrls.controller:adminWorkshopDetailsCtrl
-         * @param {number} _id id of the partcipant, which should be deleted
+         * @param {number} _id id of the participant, which should be deleted
          * @description Deletes the participant with the passed id
          */
         $scope.delete = function (_id) {
@@ -602,7 +618,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops', '$stat
                         content: _translations.ALERT_WORKSHOP_DELETE_PARTICIPANT,
                         duration: 20
                     });
-                    loadTemplates();
+                    loadList();
                 }
                 , function (httpResponse) {
                     $alert({

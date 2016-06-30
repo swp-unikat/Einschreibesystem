@@ -102,7 +102,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
          * @description Deletes the participant with the passed id
          */
         $scope.delete = function (_id) {
-            Workshops.delete({id:_id}).$promise.then(function(httpresponse){
+            Participants.delete({id:_id}).$promise.then(function(httpresponse){
                     $alert({
                         title:'',
                         type: 'success',

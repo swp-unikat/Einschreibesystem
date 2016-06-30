@@ -4,7 +4,7 @@
         <translate>CONFIRM_EMAIL</translate>
     </h1>
     <div class="col-md-2 col-xs-2 pull-right">
-        <a ui-sref="administrator_workshop_details">
+        <a ui-sref="administrator_workshop_details ({workshopid :id})">
             <button class="btn btn-default">{{ "BUTTON_BACK" | translate}}</button>
         </a>
     </div>
@@ -13,32 +13,32 @@
 
 </div>
 
-<div>
+<div class="col-md-2" bs-alert></div>
     <body data-spy="scroll" data-target=".navbar">
     <form role="search">
 
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label>{{ "EMAIL_SUBJECT" | translate}}</label>
+                    <input type="text" ng-model="email.template.subject" class="form-control ">
 
-        <div class="col-md-6">
-            <div class="form-group">
-                <label>{{ "EMAIL_SUBJECT" | translate}}</label>
-                <input type="text" ng-model="email.template.subject" class="form-control ">
+                    <label>{{ "EMAIL_BODY" | translate}}</label>
+                    <div text-angular ng-model="email.template.body"></div>
 
-                <label>{{ "EMAIL_BODY" | translate}}</label>
-                <div text-angular ng-model="email.template.body"></div>
-
-                <br>
-                <div class="form-group row text-left">
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-info" ng-click="discard()">{{ "BUTTON_DISCARD" | translate}}</button>
-                        <button type="button" class="btn btn-info" ng-click="sendInfo()">{{ "BUTTON_CONFIRM" | translate}}</button>
+                    <br>
+                    <div class="form-group row text-left">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-info" ng-click="discard()">{{ "BUTTON_DISCARD" | translate}}</button>
+                            <button type="button" class="btn btn-info" ng-click="sendInfo()">{{ "BUTTON_CONFIRM" | translate}}</button>
+                        </div>
                     </div>
                 </div>
             </div>
+            <br>
+            <br>
+            <div class="col-md-6" id="alert" bs-alert></div>
         </div>
-        <br>
-        <br>
-        <div class="col-md-6" id="alert" bs-alert></div>
-
     </form>
     </body>
 </div>
