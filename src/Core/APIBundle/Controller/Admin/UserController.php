@@ -147,7 +147,7 @@ class UserController extends FOSRestController implements ClassResourceInterface
         $this->getDoctrine()->getManager()->persist($admin);
         $this->getDoctrine()->getManager()->flush();
 
-        return $this->handleView($this->view(['code' => 200,'message' => "Password successful change"], 200));
+        return $this->handleView($this->view(['code' => 200,'message' => "Password successful changed"], 200));
 
     }
 

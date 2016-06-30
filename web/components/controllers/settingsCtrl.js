@@ -99,28 +99,36 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm','Admin',
                 });
                 return;
             }
-            //TODO Need to set ID
             var _data = {
                 oldpassword: $scope.form.password_old,
                 newpassword: $scope.form.password,
-                adminId: 0
             };
-            //TODO add confirm
             Admin.changePassword(_data).$promise.then(function(value){
+                if($scope.pwAlert != null)
+                    $scope.pwAlert.hide();
 
+                $scope.pwAlert = $alert({
+                    title: "Success",
+                    type: 'success',
+                    content: value.message,
+                    container: '#pwalert',
+                    dismissable: false,
+                    show: true
+                });
             },function(value){
                 if($scope.pwAlert != null)
                     $scope.pwAlert.hide();
+
                 $scope.pwAlert = $alert({
                     title: "Error",
                     type: 'danger',
-                    content: 'Couldnt change password. Error ( '+value.status+ ' )',
+                    content: value.data.message,
                     container: '#pwalert',
                     dismissable: false,
                     show: true
                 });
             });
-        }
+        };
         /**
          * @ngdoc function
          * @name  mainAppCtrls.controller:SettingsCtrl#changeEmail
@@ -130,12 +138,12 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm','Admin',
         $scope.changeEmail = function() {
             var _personal_email = $scope.form.personal_email;
             if(_personal_email == null || _personal_email == '') {
-                return;
+                
             }
             //TODO confirm
 
             //TODO Send to server, handle response ( Missing API function )
-        }
+        };
         /**
          * @ngdoc function
          * @name  mainAppCtrls.controller:SettingsCtrl#discardContact
@@ -148,7 +156,7 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm','Admin',
             $scope.form.address = _originalData.address;
             $scope.form.facebook = _originalData.facebook;
             $scope.form.email = _originalData.email;
-        }
+        };
         /**
          * @ngdoc function
          * @name  mainAppCtrls.controller:SettingsCtrl#saveContactChange
