@@ -343,7 +343,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
             return $this->handleView($this->view(['code' => 404,'message' => "No waitinglist for workshop"], 404));
         }
         $list = [];
-        foreach($participantsList as $p){
+        foreach($waitingList as $p){
             $list[] =$p->getParticipant();
         }
         $view = $this->view($list, 200);
