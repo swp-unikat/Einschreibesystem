@@ -1,5 +1,4 @@
 <div class="container">
-
     <h1>
         <translate>NEW_EMAIL_TEMPLATE</translate>
     </h1>
@@ -9,32 +8,28 @@
         </a>
     </div>
     <hr>
-</div>
-<div>
-    <form role="search">
-        <div class="col-md-6">
-            <div class="form-group">
+    <div class="col-md-6">
+        <div class="form-group">
 
-                <label>{{ "EMAIL_TEMPLATE_TITLE" | translate}}</label>
-                <input type="text" ng-model="email.template.title" class="form-control ">
+            <label>{{ "EMAIL_TEMPLATE_TITLE" | translate}}</label>
+            <input type="text" ng-model="email.template.title" class="form-control ">
 
-                <label>{{ "EMAIL_SUBJECT" | translate}}</label>
-                <input type="text" ng-model="email.template.subject" class="form-control ">
+            <label>{{ "EMAIL_SUBJECT" | translate}}</label>
+            <input type="text" ng-model="email.template.subject" class="form-control ">
 
-                <label>{{ "EMAIL_BODY" | translate}}</label>
-                <div text-angular ng-model="email.template.body"></div>
+            <label>{{ "EMAIL_BODY" | translate}}</label>
+            <div text-angular ng-model="email.template.body"></div>
 
 
-                <div class="form-group row text-right">
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-info" ng-click="discard()">{{ "BUTTON_DISCARD" | translate}}</button>
-                        <button type="button" class="btn btn-info" ng-click="sendInfo()">{{ "BUTTON_CONFIRM" | translate}}</button>
-                    </div>
+            <div class="form-group row text-right">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-info" ng-click="discard()">{{ "BUTTON_DISCARD" | translate}}</button>
+                    <button type="button" class="btn btn-info" ng-click="sendInfo()">{{ "BUTTON_CONFIRM" | translate}}</button>
                 </div>
             </div>
         </div>
-        <div class="col-md-6" id="alert" bs-alert></div>
-    </form>
+    </div>
+    <div class="col-md-6" id="alert" bs-alert></div>
 </div>
 
 
