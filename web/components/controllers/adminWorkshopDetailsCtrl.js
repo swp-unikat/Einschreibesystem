@@ -154,6 +154,29 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
             });
         }
         
+        //Move participant to blacklist
+        $scope.blacklist = function (_id){
+            AdminWorkshop.blacklist({id: _id}).$promise.then(function(response){
+                $alert({
+                    type: 'success',
+                    duration: 20,
+                    container: '#alert',
+                    content: 'User was blacklisted',
+                    show: true,
+                    title: 'Success'
+                })
+            },function(response){
+                $alert({
+                    type: 'danger',
+                    duration: 20,
+                    container: '#alert',
+                    content: 'Failed to blacklist user ('+response.status+')',
+                    show: true,
+                    title: 'Error'
+                })
+            });
+        }
+        
         
         
         

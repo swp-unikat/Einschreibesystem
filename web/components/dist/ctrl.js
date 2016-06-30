@@ -516,8 +516,8 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
  * @requires restSvcs.Workshops
  * @description Controller for showing administrator functions in a workshop.
  */
-mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Participants', '$stateParams', "$alert",'printer','$translate',min
-    function($scope,Workshops,Participants, $stateParams, $alert,printer,$translate) {
+mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Participants', '$stateParams', "$alert",'printer','$translate','AdminWorkshop',
+    function($scope,Workshops,Participants, $stateParams, $alert,printer,$translate,AdminWorkshop) {
         //Get translations for errors and store in array
         var _translations = {};
         //Pass all required translation IDs to translate service
@@ -658,6 +658,29 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
                     show: 'true',
                     title: 'Error'
                 });
+            });
+        }
+        
+        //Move participant to blacklist
+        $scope.blacklist = function (_id){
+            AdminWorkshop.blacklist({id: _id}).$promise.then(function(response){
+                $alert({
+                    type: 'success',
+                    duration: 20,
+                    container: '#alert',
+                    content: 'User was blacklisted',
+                    show: true,
+                    title: 'Success'
+                })
+            },function(response){
+                $alert({
+                    type: 'danger',
+                    duration: 20,
+                    container: '#alert',
+                    content: 'Failed to blacklist user ('+response.status+')',
+                    show: true,
+                    title: 'Error'
+                })
             });
         }
         
@@ -920,7 +943,7 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin','$alert'
              */
             $scope.delete = function (_id) {
                 $scope.deleting = true;
-                Participants.deleteParticipant({id:_id}).$promise.then(function(httpResponse){
+                Participants.removeBlacklist({id:_id}).$promise.then(function(httpResponse){
                        $scope.deleting = false;
                         $alert({
                             title:'',
