@@ -23,6 +23,7 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Routing\ClassResourceInterface;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Debug\Exception\FatalErrorException
 /**
  * Class RestController.
  * This class provides the private actions of a workshop.
