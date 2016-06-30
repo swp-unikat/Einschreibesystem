@@ -23,7 +23,7 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Routing\ClassResourceInterface;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Debug\Exception\FatalErrorException
+use Symfony\Component\Debug\Exception\FatalErrorException;
 /**
  * Class RestController.
  * This class provides the private actions of a workshop.
@@ -168,6 +168,8 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
         }
         /* Creating Twig template from Database */
         $renderTemplate = $this->get('twig')->createTemplate($template->getEmailBody());
+
+        $workshopParticipants = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:WorkshopParticipants')->findBy(['workshop' => $workshop]);
 
         foreach($workshopParticipants as $wp)
         {

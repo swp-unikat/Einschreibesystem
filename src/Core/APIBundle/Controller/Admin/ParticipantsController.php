@@ -122,23 +122,21 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
             $participant->setBlacklistedAt(new \DateTime("now"));
             $participant->setBlacklistedFrom($this->getUser());
             
-        $workshopParticipants = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:WorkshopParticipants')->findBy(['workshop' => $workshop]);
         $template = $this->getDoctrine()->getRepository("CoreEntityBundle:EmailTemplate")->findOneBy(['template_name' => 'Blacklistsetzung']);
         if(!$template){
             return $this->handleView($this->view(['code' => 404,'message' => "E-Mail Template not found"], 404));
         }
         /* Creating Twig template from Database */
         $renderTemplate = $this->get('twig')->createTemplate($template->getEmailBody());
-        for($participant)
-        {
+
             $message = \Swift_Message::newInstance()
                 ->setSubject($this->get('twig')->createTemplate($template->getEmailSubject())->render(["workshop" => $workshop]))
                 ->setFrom($this->getParameter('email_sender'))
-                ->setTo($wp->getParticipant()->getEmail())
-                ->setBody($renderTemplate->render(["workshop" => $workshop , "participant" => $wp->getParticipant()]), 'text/html');
+                ->setTo($participant->getEmail())
+                ->setBody($renderTemplate->render([ "participant" => $participant]), 'text/html');
             $this->get('mailer')->send($message);
             $this->getDoctrine()->getManager()->remove($wp);
-        }
+
             
             $this->getDoctrine()->getManager()->remove($participant);
             $this->getDoctrine()->getManager()->persist($participant);
