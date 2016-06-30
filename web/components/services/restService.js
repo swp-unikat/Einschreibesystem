@@ -297,21 +297,21 @@ restSvcs.factory('Admin',['$resource',function($resource){
          * @description Returns a list of all currentyl active Admins
          * @methodOf restSvcs.Admin
          */
-       'list': {url:'/api/admin/admin/list',method: 'GET',isArray: true},
+       'list': {url:'/api/admin/user/list',method: 'GET',isArray: true},
         /**
          * @ngdoc function
          * @name restSvcs.Admin#remove
          * @description Deactivates an admin account
          * @methodOf restSvcs.Admin
          */
-       'delete': {url:'/api/admin/admin/:id',method: 'DELETE',params: {id: '@id'},isArray: false},
+       'delete': {url:'/api/admin/user/:id',method: 'DELETE',params: {id: '@id'},isArray: false},
         /**
          * @ngdoc function
          * @name restSvcs.Admin#changePassword
          * @description Changes the admin password
          * @methodOf restSvcs.Admin
          */
-        'changePassword': {url:'/api/admin/admin',method: 'PATCH',isArray: false},
+        'changePassword': {url:'/api/admin/user',method: 'PATCH',isArray: false},
         /**
          * @ngdoc function
          * @name restSvcs.Admin#resetPassword
@@ -332,20 +332,20 @@ restSvcs.factory('Admin',['$resource',function($resource){
          * @description Sends an invite link to the passed e-mail
          * @methodOf restSvcs.Admin
          */
-        'invite': {url:'/api/admin/admin/invite',method: 'POST',isArray: false},
+        'invite': {url:'/api/admin/user/invite',method: 'POST',isArray: false},
         /**
          * @ngdoc function
          * @name restSvcs.Admin#editContact
          * @description Edits the contact data saved on the server
          * @methodOf restSvcs.Admin
          */
-        'editContact': {url: '/api/admin/admin/contact/data',method: 'PUT',isArray: false},
+        'editContact': {url: '/api/admin/user/contact/data',method: 'PUT',isArray: false},
         /**
          * @ngdoc function
          * @name restSvcs.Admin#editLegalNotice
          * @description Edits the legal Notice saved on the server
          * @methodOf restSvcs.Admin
          */
-        'editLegalNotice': {url: '/api/admin/admin/legal/notice',method: 'PUT',isArray: false}
+        'editLegalNotice': {url: '/api/admin/user/legal/notice',method: 'PUT',isArray: false}
     });
 }]);
