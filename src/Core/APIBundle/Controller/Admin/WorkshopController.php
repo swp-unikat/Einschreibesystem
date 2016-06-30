@@ -271,10 +271,10 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
     }
 
     /**
-     * action to overbook a workshop
+     * action to confirm participation
      * @ApiDoc(
      *  resource=true,
-     *  description="overbook a workshop",
+     *  description="action to confirm participation",
      *  output = "",
      *  statusCodes = {
      *      200 = "Returned when successful",
