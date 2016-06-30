@@ -216,7 +216,8 @@ restSvcs.factory('Participants',['$resource',function($resource){
          * @methodOf restSvcs.Participants
          * @param {integer} id Participants-ID
          */
-        'getParticipant': {method: 'GET',params: {id: '@id'}, isArray: false}
+        'getParticipant': {method: 'GET',params: {id: '@id'}, isArray: false},
+        'remove': {method: 'GET',url: ' /api/admin/participants/:participant/remove/:workshop',params: {participant: '@participant'},workshop: '@workshop',isArray: false},
     });
 }]);
 /**

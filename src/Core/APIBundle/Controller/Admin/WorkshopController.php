@@ -344,7 +344,11 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
         if (!$waitingList) {
             return $this->handleView($this->view(['code' => 404,'message' => "No waitinglist for workshop"], 404));
         }
-        $view = $this->view($waitingList, 200);
+        $list = [];
+        foreach($participantsList as $p){
+            $list[] =$p->getParticipant();
+        }
+        $view = $this->view($list, 200);
         return $this->handleView($view);
     }
 
@@ -353,8 +357,10 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      * @ApiDoc(
      *  resource=true,
      *  description="Returns the list of participants",
-     *  output = "Core\EntityBundle\Entity\Participants",
-     *  statusCodes = {
+     *  output = {
+     *      "class"="Core\EntityBundle\Entity\Participants",
+     *      "groups"={"names"}
+     * },statusCodes = {
      *      200 = "Returned when successful",
      *      404 = "Returned when the data is not found"
      *  },requirements={
@@ -374,9 +380,14 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
     {
         $participantsList = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:WorkshopParticipants')->findBy(['workshop' => $id, 'waiting' => false],['enrollment' => "DESC"]);
         if (!$participantsList) {
-            return $this->handleView($this->view(['code' => 404,'message' => "No Participant in Workshop found"], 404));
+            return $this->handleView($this->view(['code' => 404, 'message' => "No Participant in Workshop found"], 404));
+
         }
-        $view = $this->view($participantsList, 200);
+        $list = [];
+        foreach($participantsList as $p){
+            $list[] =$p->getParticipant();
+        }
+        $view = $this->view($list, 200);
         return $this->handleView($view);
     }
 }
