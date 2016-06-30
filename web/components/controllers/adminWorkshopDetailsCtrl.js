@@ -155,7 +155,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
         }
         
         //Move participant to blacklist
-        $scope.blacklist = function (_id){
+        $scope.blacklistUser = function (_id){
             Participants.blacklist({id: _id}).$promise.then(function(response){
                 $alert({
                     type: 'success',
