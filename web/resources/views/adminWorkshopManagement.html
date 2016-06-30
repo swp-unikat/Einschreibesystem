@@ -57,13 +57,12 @@
                     <!-- /.box -->
             </div>
 
-        </div>
         <h1>{{ "ELAPSED_WORKSHOPS" | translate}}</h1>
         <hr>
         <br>
         <div class="box-group" ng-repeat="workshop in elapsedList">
-                    <div class="box box-default">
-                        <div class="box-header with-border">
+            <div class="box box-default">
+                <div class="box-header with-border">
                             <h4 class="box-title">{{workshop.title}} <label class="small participants" >({{workshop.numParticipants}}/{{workshop.max_participants}})</label></h4>
                             <!--{{participant.number}}/{{max.participants}}-->
 
@@ -75,24 +74,24 @@
                             <!-- /.box-tools -->
                         </div>
                         <!-- /.box-header -->
-                        <div class="box-body " ng-show="toggle">
-                            <div class="form-group">
-                                <label translate class="col-lg-2 col-sm-12 control-label">WORKSHOP_DESCRIPTION</label>
-                                <div class="col-sm-10 col-sm-12" ng-bind-html="workshop.description"></div>
-                            </div>
-                            <div class="form-group">
+                <div class="box-body " ng-show="toggle">
+                    <div class="form-group">
+                        <label translate class="control-label">WORKSHOP_DESCRIPTION</label>
+                        <div ng-bind-html="workshop.description"></div>
+                    </div>
+                    <div class="form-group">
                                 <label translate class="col-lg-2 col-sm-12 control-label">WORKSHOP_COST</label>
                                 <div class="col-sm-10 col-sm-12"><label>{{workshop.cost}}</label></div>
                             </div>
-                            <div class="btn pull-right">
+                    <div class="btn pull-right">
 
                                 <a ui-sref="administrator_workshop_details({id: workshop.id})"><button type="button" translate class="btn btn-secondary span4">BUTTON_DETAILS</button></a>
                                 <button ng-click="delete(workshop.id)" type="button" translate class="btn btn-danger span4">{{ "BUTTON_DELETE_WORKSHOP" | translate}}
                                 </button>
                             </div>
-                        </div>
+                </div>
                         <!-- /.box-body -->
-                    </div>
+            </div>
                     <!-- /.box -->
         </div>
         <!-- loading -->

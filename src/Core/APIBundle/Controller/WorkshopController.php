@@ -303,7 +303,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      * )
      * @param $id int id of the workshop
      * @param $token string token to identify the user
-     * @param $participantsId int id of the participant
+     * @param $participantId int id of the participant
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\View()
      */
