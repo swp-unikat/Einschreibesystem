@@ -18,8 +18,10 @@
                 <div class="box-group" ng-repeat="workshop in currentList">
                     <div class="box box-default">
                         <div class="box-header with-border">
-                            <h4 class="box-title">{{workshop.title}} <label class="small participants" >({{workshop.numParticipants}}/{{workshop.max_participants}})</label></h4>
-                            <!--{{participant.number}}/{{max.participants}}-->
+                            <h4 class="box-title" type="button" ng-click="toggle= !toggle">
+                                {{workshop.title}} <label class="small participants" >({{workshop.numParticipants}}/{{workshop.max_participants}})</label>
+                                <label class="small" style="margin-right:10%;">{{workshop.start_at|date: "dd/MM/yyyy hh:mm"}}</label>
+                            </h4>
 
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" ng-click="toggle = !toggle">
