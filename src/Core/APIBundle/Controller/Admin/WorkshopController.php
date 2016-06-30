@@ -78,14 +78,6 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      * @Rest\RequestParam(name="start_at", requirements=".*", description="starttime of the workshop")
      * @Rest\RequestParam(name="end_at", requirements=".*", description="endtime of the workshop")
      * @Rest\RequestParam(name="max_participants", requirements=".*", description="maximum number of participants")
-     * @param string $title title of the workshop
-     * @param string $description description of the workshop
-     * @param float $cost cost of the workshop
-     * @param string $requirements requirements of the workshop
-     * @param string $location location of the workshop
-     * @param DateTime $start_at starttime of the workshop
-     * @param DateTime $end_at endtime of the workshop
-     * @param integer $max_participants maximum number of participants
      * @return action to create a new Workshop
      * @var Workshop $workshop
      * @Rest\View()
@@ -141,14 +133,6 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      * @Rest\RequestParam(name="start_at", requirements=".*", description="starttime of the workshop",default=null,nullable=true)
      * @Rest\RequestParam(name="end_at", requirements=".*", description="endtime of the workshop",default=null,nullable=true)
      * @Rest\RequestParam(name="max_participants", requirements=".*", description="maximum number of participants",default=null,nullable=true )
-     * @param string $title title of the workshop
-     * @param string $description description of the workshop
-     * @param float $cost cost of the workshop
-     * @param string $requirements requirements of the workshop
-     * @param string $location location of the workshop
-     * @param DateTime $start_at starttime of the workshop
-     * @param DateTime $end_at endtime of the workshop
-     * @param integer $max_participants maximum number of participants
      * @return array information of a workshop
      * @var Workshop $workshop
      * @Rest\View()
@@ -212,10 +196,34 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
         if (!$workshop) {
             throw $this->createNotFoundException("Workshop not found");
         }
-        $this->getDoctrine()->getManager()->remove($workshop);
-        $this->getDoctrine()->getManager()->flush($workshop);
 
-        return View::create(null, Codes::HTTP_OK);
+        $workshopParticipants = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:WorkshopParticipants')->findBy(['workshop' => $workshop]);
+
+        $template = $this->getDoctrine()->getRepository("CoreEntityBundle:EmailTemplate")->findOneBy(['template_name' => 'Workshop Cancel']);
+        if(!$template){
+            return $this->handleView($this->view(['code' => 404,'message' => "E-Mail Template not found"], 404));
+
+        }
+        /* Creating Twig template from Database */
+        $renderTemplate = $this->get('twig')->createTemplate($template->getEmailBody());
+
+        foreach($workshopParticipants as $wp)
+        {
+            $message = \Swift_Message::newInstance()
+                ->setSubject($this->get('twig')->createTemplate($template->getEmailSubject())->render(["workshop" => $workshop]))
+                ->setFrom($this->getParameter('email_sender'))
+                ->setTo($wp->getParticipant()->getEmail())
+                ->setBody($renderTemplate->render(["workshop" => $workshop , "participant" => $wp->getParticipant()]), 'text/html');
+            $this->get('mailer')->send($message);
+            $this->getDoctrine()->getManager()->remove($wp);
+
+        }
+
+        $this->getDoctrine()->getManager()->remove($workshop);
+        $this->getDoctrine()->getManager()->flush();
+
+
+        return $this->handleView($this->view(['code' => 200,'message' => "Deleted & Mail send"], 200));
     }
     
     
@@ -244,7 +252,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      * )
      *
      * @param $id int id of the workshop
-     * @param $participantID int id of the workshopparticipants
+     * @param $participantId int id of the workshopparticipants
      * @return \Symfony\Component\HttpFoundation\Response
      * @var WorkshopParticipants $workshopParticipant
      * @Rest\View()
