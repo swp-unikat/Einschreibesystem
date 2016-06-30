@@ -160,6 +160,26 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
             $workshop->setEndAt(\DateTime::createFromFormat('Y-m-d H:i:s',$params["end_at"]));
         if($params["max_participants"] != NULL)
             $workshop->setMaxParticipants($params["max_participants"]);
+        
+        $template = $this->getDoctrine()->getRepository("CoreEntityBundle:EmailTemplate")->findOneBy(['template_name' => 'Changed Workshopdetails']);
+        if(!$template){
+            return $this->handleView($this->view(['code' => 404,'message' => "E-Mail Template not found"], 404));
+        }
+        /* Creating Twig template from Database */
+        $renderTemplate = $this->get('twig')->createTemplate($template->getEmailBody());
+
+        foreach($workshopParticipants as $wp)
+        {
+            $message = \Swift_Message::newInstance()
+                ->setSubject($this->get('twig')->createTemplate($template->getEmailSubject())->render(["workshop" => $workshop]))
+                ->setFrom($this->getParameter('email_sender'))
+                ->setTo($wp->getParticipant()->getEmail())
+                ->setBody($renderTemplate->render(["workshop" => $workshop , "participant" => $wp->getParticipant()]), 'text/html');
+            $this->get('mailer')->send($message);
+            $this->getDoctrine()->getManager()->remove($wp);
+
+        }
+        
         $this->getDoctrine()->getManager()->persist($workshop);
         $this->getDoctrine()->getManager()->flush();
         $view = $this->view($workshop,201);
