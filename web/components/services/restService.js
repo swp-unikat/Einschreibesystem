@@ -168,7 +168,7 @@ restSvcs.factory('AdminWorkshop',['$resource',function($resource){
           * @param {integer} id Workshop-ID
           * @param {integer} participantsid Participants-ID
           */
-          'overbook': {method: 'PATCH',url:'/api/admin/workshops/:id/waitinglists/:participantid' ,params: {id: '@id', participantsid: '@participantsid'}, isArray: false},
+          'overbook': {method: 'PATCH',url:'/api/admin/workshops/:id/waitinglist/:participantid' ,params: {id: '@id', participantsid: '@participantsid'}, isArray: false},
     });
 }]);
 /**
