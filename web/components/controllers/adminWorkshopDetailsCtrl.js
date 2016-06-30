@@ -164,7 +164,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
                     content: 'User was blacklisted',
                     show: true,
                     title: 'Success'
-                })
+                });
             },function(response){
                 $alert({
                     type: 'danger',
@@ -173,9 +173,32 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
                     content: 'Failed to blacklist user ('+response.status+')',
                     show: true,
                     title: 'Error'
-                })
+                });
             });
-        }
+        };
+
+        //Remove participant from list
+        $scope.remove = function(_id){
+          Participants.remove({id: _id}).$promise.then(function(response){
+              $alert({
+                  type: 'success',
+                  duration: 20,
+                  container: '#alert',
+                  content: 'Removed participant from list',
+                  show: true,
+                  title: 'Success'
+              });
+            },function(response){
+              $alert({
+                  type: 'danger',
+                  duration: 20,
+                  container: '#alert',
+                  content: 'Failed to remove user ('+response.status+')',
+                  show: true,
+                  title: 'Error'
+              });
+            });
+        };
         
         
         
