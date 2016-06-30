@@ -22,17 +22,20 @@
                             <table class="table user-list">
                                 <thead>
                                 <tr>
-                                    <th><span><translate>LAST_NAME</translate></span></th>
-                                    <th><span><translate>FIRST_NAME</translate></span></th>
-                                    <th><span><translate>USER_EMAIL_ADDRESS</translate></span></th>
+                                    <th class="col-sm-2"><span><translate>LAST_NAME</translate></span></th>
+                                    <th class="col-sm-2"><span><translate>FIRST_NAME</translate></span></th>
+                                    <th class="col-sm-3"><span><translate>USER_EMAIL_ADDRESS</translate></span></th>
+                                    <th class="col-sm-3"><span><translate>BLACKLISTED_FROM</translate></span></th>
+                                    <th class="col-sm-2"><span><translate>OPTION</translate></span></th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr ng-repeat="x in userdata">
-                                    <td>{{ x.name }}</td>
-                                    <td>{{ x.surname }}</td>
-                                    <td>{{ x.email }}</td>
-                                    <td>
+                                    <td class="col-sm-2">{{ x.name }}</td>
+                                    <td class="col-sm-2">{{ x.surname }}</td>
+                                    <td class="col-sm-3">{{ x.email }}</td>
+                                    <td class="col-sm-3"></td>
+                                    <td class="col-sm-2">
                                         <button type="button"
                                                 class="btn btn-default btn-xs" ng-click="delete(x.id)">
                                             <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
