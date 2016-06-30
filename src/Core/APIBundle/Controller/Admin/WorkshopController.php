@@ -202,7 +202,6 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
         $template = $this->getDoctrine()->getRepository("CoreEntityBundle:EmailTemplate")->findOneBy(['template_name' => 'Workshop Cancel']);
         if(!$template){
             return $this->handleView($this->view(['code' => 404,'message' => "E-Mail Template not found"], 404));
-
         }
         /* Creating Twig template from Database */
         $renderTemplate = $this->get('twig')->createTemplate($template->getEmailBody());
