@@ -638,7 +638,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
         //Overbook a participant from the waitinglist
 
         $scope.overbook = function(_id){
-            AdminWorkshop.overbook({id: workshopid,participantsid: _id}).then(function(response){
+            AdminWorkshop.overbook({id: workshopid,participantid: _id}).$promise.then(function(response){
                 $alert({
                    type: 'success',
                    duration: 20,
