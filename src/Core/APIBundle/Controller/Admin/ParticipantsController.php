@@ -201,6 +201,36 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
             return $this->handleView($view);
          }
     }
+
+
+    /**
+     * delete user from participants list
+     * @ApiDoc(
+     *  resource=true,
+     *  description="",
+     *  output = "",
+     *  statusCodes = {
+     *      200 = "Returned when successful",
+     *      404 = "Returned when the data is not found"
+     *  }
+     * )
+     * @param $participant int id of participant
+     * @param  $workshop int id of workshop
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Rest\View()
+     */
+    public function removeAction($participant,$workshop)
+    {
+        $participantAtWorkshop = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:WorkshopParticipants")->findOneBy(['participant'=>$participant,'workshop' => $workshop]);
+        if (!$participantAtWorkshop){
+            return $this->handleView($this->view(['code' => 404,'message' => "Participant at Workshop not found"], 404));
+        }else{
+            $this->getDoctrine()->getManager()->remove($participantAtWorkshop);
+            $this->getDoctrine()->getManager()->flush();
+            return $this->handleView($this->view(['code' => 200,'message' => "Remove participant from workshop"], 200));
+
+        }
+    }
 }
 
 
