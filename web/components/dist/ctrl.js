@@ -339,9 +339,9 @@ mainAppCtrls.controller('adminEmailConfirmCtrl',['$scope',"EmailTemplate",'$tran
 
         /**
          * @ngdoc function
-         * @name mainAppCtrls.controller:adminEamilConfirmCtrl#sendInfo
+         * @name mainAppCtrls.controller:adminEmailConfirmCtrl#sendInfo
          * @description Sends the data of the created email template to the server
-         * @methodOf mainAppCtrls.controller:adminEamilConfirmCtrl
+         * @methodOf mainAppCtrls.controller:adminEmailConfirmCtrl
          */
         $scope.sendInfo = function(){
             var data={
@@ -372,9 +372,9 @@ mainAppCtrls.controller('adminEmailConfirmCtrl',['$scope',"EmailTemplate",'$tran
         }
         /**
          * @ngdoc function
-         * @name mainAppCtrls.controller:NewEmailTemplateCtrl#discard
+         * @name mainAppCtrls.controller:adminEmailConfirmCtrl#discard
          * @description Discards all data of the document
-         * @methodOf mainAppCtrls.controller:adminEamilConfirmCtrl
+         * @methodOf mainAppCtrls.controller:adminEmailConfirmCtrl
          */
         
         $scope.discard = function(){
@@ -605,7 +605,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
          * @description Deletes the participant with the passed id
          */
         $scope.delete = function (_id) {
-            Workshops.delete({id:_id}).$promise.then(function(httpresponse){
+            Participants.delete({id:_id}).$promise.then(function(httpresponse){
                     $alert({
                         title:'',
                         type: 'success',
