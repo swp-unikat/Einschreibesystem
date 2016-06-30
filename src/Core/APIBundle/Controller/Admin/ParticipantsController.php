@@ -219,7 +219,7 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\View()
      */
-    public function removeAction($participant,$workshop)
+    public function deleteRemoveAction($participant,$workshop)
     {
         $participantAtWorkshop = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:WorkshopParticipants")->findOneBy(['participant'=>$participant,'workshop' => $workshop]);
         if (!$participantAtWorkshop){

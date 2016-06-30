@@ -28,7 +28,7 @@ service_admin_participants:
 service_admin_secure:
     type: rest
     prefix: /api/admin
-    resource: "@CoreAPIBundle/Controller/Admin/AdminController.php"
+    resource: "@CoreAPIBundle/Controller/Admin/UserController.php"
     name_prefix:  api_admin_ # naming collision
 
 service_workshop_template:
