@@ -22,6 +22,7 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
         $scope.loadTemplate = function(){
             $scope.workshop = JSON.parse(JSON.stringify($scope.selectedTemplate));
         };
+        $scope.workshop.duration=-3600000;
         //Get translations for errors and store in array
         var _translations = {};
         //Pass all required translation IDs to translate service
