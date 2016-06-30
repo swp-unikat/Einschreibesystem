@@ -122,16 +122,16 @@ class UserController extends FOSRestController implements ClassResourceInterface
      *  }
      * 
      * )
-     * @param $paramfetcher ParamFetcher 
+     * @param $paramFetcher ParamFetcher
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\RequestParam(name="oldpassword", requirements=".*", description="old password of a admin")
      * @Rest\RequestParam(name="newpassword", requirements=".*", description="new password of a admin")
      * @Rest\View()
      */
-    public function patchAction(ParamFetcher $paramfetcher)
+    public function patchAction(ParamFetcher $paramFetcher)
     {
         //get all params
-        $params = $paramfetcher->all();
+        $params = $paramFetcher->all();
         //get current user
         $admin = $this->getUser();
         //needed for encoding the current password
@@ -147,7 +147,8 @@ class UserController extends FOSRestController implements ClassResourceInterface
         $this->getDoctrine()->getManager()->persist($admin);
         $this->getDoctrine()->getManager()->flush();
 
-        return View::create(null, Codes::HTTP_OK);
+        return $this->handleView($this->view(['code' => 200,'message' => "Password successful change"], 200));
+
     }
 
     /**
@@ -161,7 +162,7 @@ class UserController extends FOSRestController implements ClassResourceInterface
      *      404 = "Returned when the data is not found"
      *  }
      * )
-     * @param $paramfetcher ParamFetcher
+     * @param $paramFetcher ParamFetcher
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\RequestParam(name="oldemail", requirements=".*", description="old email")
      * @Rest\RequestParam(name="newemail", requirements=".*", description="new email")
