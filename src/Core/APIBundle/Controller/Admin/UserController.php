@@ -26,7 +26,7 @@ use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
  * Class RestController.
  * This Controller provides methods for the private part. The functions to invite, create, delete and patch an administrator, to get a list of all administrator and to put and patch the legalnotice and the contactdata are provided.
  */
-class AdminController extends FOSRestController implements ClassResourceInterface
+class UserController extends FOSRestController implements ClassResourceInterface
 {
     /**
      * Action to invite new Admin
@@ -59,7 +59,9 @@ class AdminController extends FOSRestController implements ClassResourceInterfac
         $renderTemplate = $this->get('twig')->createTemplate($template->getEmailBody());
         /* Sending E-Mail */
         $invitation->setEmail($email);
+
         $url = $this->generateUrl('core_frontend_default_index',[],TRUE)."#/admin/create/".$invitation->getCode();
+
         $message = \Swift_Message::newInstance()
             ->setSubject($template->getEmailSubject())
             ->setFrom($this->getParameter('email_sender'))
