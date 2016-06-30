@@ -49,7 +49,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
          */
         var loadParticipants = function (){
             $scope.loading = true;
-            Workshops.getParticipants({id: workshopid}).$promise.then(function(value,httpResponse){
+            AdminWorkshop.participants({id: workshopid}).$promise.then(function(value,httpResponse){
                 $scope.participants = value;
 
                 $scope.loading = false;
@@ -72,7 +72,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
         };
         var loadWaitinglist = function() {
             $scope.loading = true;
-            Workshops.getWaitinglist({id: workshopid}).$promise.then(function(response){
+            AdminWorkshop.waitinglist({id: workshopid}).$promise.then(function(response){
                 $scope.waitingList = response;
                 $scope.loading = false;
             },function(response){

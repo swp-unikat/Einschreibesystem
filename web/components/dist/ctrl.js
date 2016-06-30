@@ -556,7 +556,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
          */
         var loadParticipants = function (){
             $scope.loading = true;
-            Workshops.getParticipants({id: workshopid}).$promise.then(function(value,httpResponse){
+            AdminWorkshop.participants({id: workshopid}).$promise.then(function(value,httpResponse){
                 $scope.participants = value;
 
                 $scope.loading = false;
@@ -579,7 +579,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
         };
         var loadWaitinglist = function() {
             $scope.loading = true;
-            Workshops.getWaitinglist({id: workshopid}).$promise.then(function(response){
+            AdminWorkshop.waitinglist({id: workshopid}).$promise.then(function(response){
                 $scope.waitingList = response;
                 $scope.loading = false;
             },function(response){
@@ -671,7 +671,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
                     content: 'User was blacklisted',
                     show: true,
                     title: 'Success'
-                })
+                });
             },function(response){
                 $alert({
                     type: 'danger',
@@ -680,9 +680,32 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
                     content: 'Failed to blacklist user ('+response.status+')',
                     show: true,
                     title: 'Error'
-                })
+                });
             });
-        }
+        };
+
+        //Remove participant from list
+        $scope.remove = function(_id){
+          Participants.remove({id: _id}).$promise.then(function(response){
+              $alert({
+                  type: 'success',
+                  duration: 20,
+                  container: '#alert',
+                  content: 'Removed participant from list',
+                  show: true,
+                  title: 'Success'
+              });
+            },function(response){
+              $alert({
+                  type: 'danger',
+                  duration: 20,
+                  container: '#alert',
+                  content: 'Failed to remove user ('+response.status+')',
+                  show: true,
+                  title: 'Error'
+              });
+            });
+        };
         
         
         
