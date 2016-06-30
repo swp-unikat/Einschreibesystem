@@ -46,6 +46,7 @@
 
                     </div>
                 </div>
+                <div id="alert" bs-alert></div>
             </div>
             <div class="col-md-2">
                 <ul class="list-group">
@@ -73,14 +74,14 @@
                     </li>
                     <li class="list-group-item"  ng-repeat="p in waitingList">
                         {{p.name}} {{p.surname}} {{p.email}}
-                        <button type="button" class="btn btn-default btn-xs pull-right" ng-click="overbook()">
+                        <button type="button" class="btn btn-default btn-xs pull-right" ng-click="overbook(p.id)">
                             <span class="glyphicon glyphicon-transfer"></span>
                         </button>
                     </li>
                 </ul>
             </div>
             <div class="col-md-8">
-                <br><br><br><br><br><br><br><br><br>
+                <br><br><br><br>
                 <a ui-sref="admin_email_confirm"><button type="button" class="btn btn-default" ng-click="openNewTemplate()">{{ "BUTTON_SEND_SUBSCRIBE_CONFIRMATION" | translate}}</button></a>
                 <button type="button" class="btn btn-default" ng-click="printList()">{{ "BUTTON_PRINT_LIST_OF_PARTICIPANTS" | translate}}</button>
             </div>

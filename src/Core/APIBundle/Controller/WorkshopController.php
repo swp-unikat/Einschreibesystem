@@ -170,9 +170,6 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
 
         return View::create(NULL, Codes::HTTP_OK);
     }
-    
-
-    
     /**
      * Action to confirm enrollment on a workshop
      * @ApiDoc(
@@ -220,16 +217,20 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
                     // Get Participants
                     $participants = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Workshop")->getParticipants($workshopId);
                     // Check if a waitinglist ist requiered
-                    if($participants > $workshop->getMaxParticipants())
-                        $participantWorkshop->setWaiting(true);
-                    else
+                    if($workshop->getMaxParticipants() > $participants)
                         $participantWorkshop->setWaiting(false);
+                    else
+                        $participantWorkshop->setWaiting(true);
                     $token->setUsedAt(new \DateTime('now'));
                     // save to database
                     $this->getDoctrine()->getManager()->persist($token);
                     $this->getDoctrine()->getManager()->persist($participantWorkshop);
                     $this->getDoctrine()->getManager()->flush();
-                    return View::create(null, Codes::HTTP_ACCEPTED);
+                    //
+                    if ($participantWorkshop->isWaiting())
+                        return $this->handleView($this->view(['code' => 200,'message' => $workshop->getTitle()], 200));
+                    else
+                        return $this->handleView($this->view(['code' => 201,'message' => 'You are on the waiting list'], 200));
                 }
             }else{
                 return $this->handleView($this->view(['code' => 403,'message' => "Token ist not valid"], 403));
@@ -302,7 +303,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      * )
      * @param $id int id of the workshop
      * @param $token string token to identify the user
-     * @param $participantsId int id of the participant
+     * @param $participantId int id of the participant
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\View()
      */

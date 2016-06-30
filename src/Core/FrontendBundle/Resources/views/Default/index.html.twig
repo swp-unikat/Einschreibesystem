@@ -40,7 +40,7 @@
         .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
     </style>
 </head>
-<body data-spy="scroll" data-target=".navbar" ng-controller="GlobalCtrl">
+<body ng-controller="GlobalCtrl">
 
 <nav class="navbar navbar-default">
     <div class="container-fluid">
@@ -63,16 +63,16 @@
     </div>
 </div>
 </nav>
-
-
 <div ui-view=""></div>
 
 <footer class="footer">
-    <div class="row text-center">
-        <a ui-sref="legalnotice"><button translate type="button" class="btn btn-link">LEGAL_NOTICE</button></a>
-        <a ui-sref="contact"><button translate type="button" class="btn btn-link">CONTACT</button></a>
-    </div>
+        <div class="container text-center">
+            <a ui-sref="legalnotice"><button translate type="button" class="btn btn-link">LEGAL_NOTICE</button></a>
+            <a ui-sref="contact"><button translate type="button" class="btn btn-link">CONTACT</button></a>
+        </div>
 </footer>
+</div>
+
 
 </body>
 </html>
