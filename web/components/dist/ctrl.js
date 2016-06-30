@@ -661,6 +661,29 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
             });
         }
         
+        //Move participant to blacklist
+        $scope.blacklist = function (_id){
+            Participants.blacklist({id: _id}).$promise.then(function(response){
+                $alert({
+                    type: 'success',
+                    duration: 20,
+                    container: '#alert',
+                    content: 'User was blacklisted',
+                    show: true,
+                    title: 'Success'
+                })
+            },function(response){
+                $alert({
+                    type: 'danger',
+                    duration: 20,
+                    container: '#alert',
+                    content: 'Failed to blacklist user ('+response.status+')',
+                    show: true,
+                    title: 'Error'
+                })
+            });
+        }
+        
         
         
         
@@ -920,7 +943,7 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin','$alert'
              */
             $scope.delete = function (_id) {
                 $scope.deleting = true;
-                Participants.deleteParticipant({id:_id}).$promise.then(function(httpResponse){
+                Participants.removeBlacklist({id:_id}).$promise.then(function(httpResponse){
                        $scope.deleting = false;
                         $alert({
                             title:'',

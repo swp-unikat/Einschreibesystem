@@ -131,7 +131,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
         //Overbook a participant from the waitinglist
 
         $scope.overbook = function(_id){
-            AdminWorkshop.overbook({id: workshopid,participantsid: _id}).then(function(response){
+            AdminWorkshop.overbook({id: workshopid,participantsid: _id}).$promise.then(function(response){
                 $alert({
                    type: 'success',
                    duration: 20,
@@ -151,6 +151,29 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
                     show: 'true',
                     title: 'Error'
                 });
+            });
+        }
+        
+        //Move participant to blacklist
+        $scope.blacklist = function (_id){
+            Participants.blacklist({id: _id}).$promise.then(function(response){
+                $alert({
+                    type: 'success',
+                    duration: 20,
+                    container: '#alert',
+                    content: 'User was blacklisted',
+                    show: true,
+                    title: 'Success'
+                })
+            },function(response){
+                $alert({
+                    type: 'danger',
+                    duration: 20,
+                    container: '#alert',
+                    content: 'Failed to blacklist user ('+response.status+')',
+                    show: true,
+                    title: 'Error'
+                })
             });
         }
         

@@ -168,7 +168,7 @@ restSvcs.factory('AdminWorkshop',['$resource',function($resource){
           * @param {integer} id Workshop-ID
           * @param {integer} participantsid Participants-ID
           */
-          'patchwaitinglist': {method: 'PATCH',url:'/api/admin/workshops/:id/waitinglists/:participantid' ,params: {id: '@id', participantsid: '@participantsid'}, isArray: false},
+          'overbook': {method: 'PATCH',url:'/api/admin/workshops/:id/waitinglist/:participantid' ,params: {id: '@id', participantsid: '@participantsid'}, isArray: false},
     });
 }]);
 /**
@@ -196,11 +196,11 @@ restSvcs.factory('Participants',['$resource',function($resource){
         'getblacklistall': {method: 'GET',url: '/api/admin/participants/blacklist/all', isArray: true},
          /**
           * @ngdoc function
-          * @name restSvcs.Participants#put
-          * @description create a new Participants
+          * @name restSvcs.Participants#blacklist
+          * @description Put participants on blacklist
           * @methodOf restSvcs.Participants
           */
-        'putParticipant': {method: 'PUT', isArray:false},
+        'blacklist': {method: 'PUT',url: '/api/admin/participants/:id/blacklist',params:{id: '@id'}, isArray:false},
         /**
           * @ngdoc function
           * @name restSvcs.Participants#delete
@@ -208,7 +208,7 @@ restSvcs.factory('Participants',['$resource',function($resource){
           * @methodOf restSvcs.Participants
           * @param {integer} id Participants-ID
           */
-          'deleteParticipant': {url: '/api/admin/participants/:id/blacklist',method: 'DELETE',params: {id: '@id'}, isArray: false},
+          'removeBlacklist': {url: '/api/admin/participants/:id/blacklist',method: 'DELETE',params: {id: '@id'}, isArray: false},
         /**
          * @ngdoc funtion
          * @name restSvcs.Participants#get
