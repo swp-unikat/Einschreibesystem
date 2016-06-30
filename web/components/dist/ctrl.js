@@ -516,8 +516,8 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
  * @requires restSvcs.Workshops
  * @description Controller for showing administrator functions in a workshop.
  */
-mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Participants', '$stateParams', "$alert",'printer','$translate',
-    function($scope,Workshops,Participants, $stateParams, $alert,printer,$translate) {
+mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Participants', '$stateParams', "$alert",'printer','$translate','AdminWorkshop',
+    function($scope,Workshops,Participants, $stateParams, $alert,printer,$translate,AdminWorkshop) {
         //Get translations for errors and store in array
         var _translations = {};
         //Pass all required translation IDs to translate service
@@ -577,18 +577,21 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
             });
 
         };
+        var loadWaitinglist = function() {
+            $scope.loading = true;
+            Workshops.getWaitinglist({id: workshopid}).$promise.then(function(response){
+                $scope.waitingList = response;
+                $scope.loading = false;
+            },function(response){
+                $scope.loading = false;
+            });
+        };
 
         //Load participants
         loadParticipants();
 
         //Load waitinglist
-        $scope.loading = true;
-        Workshops.getWaitinglist({id: workshopid}).$promise.then(function(response){
-            $scope.waitingList = response;
-            $scope.loading = false;
-        },function(response){
-            $scope.loading = false;
-        });
+       loadWaitinglist();
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:adminWorkshopDetailsCtrl#printList
@@ -640,11 +643,44 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
                    type: 'success',
                    duration: 20,
                    container: '#alert',
-                   content: 'Successfully overbooked workshop'
+                   content: 'Successfully overbooked workshop',
+                   show: 'true',
+                    title: 'Success'
                 });
                 loadParticipants();
+                loadWaitinglist();
             },function(response){
-                
+                $alert({
+                    type: 'danger',
+                    duration: 20,
+                    container: '#alert',
+                    content: 'Successfully overbooked workshop',
+                    show: 'true',
+                    title: 'Error'
+                });
+            });
+        }
+        
+        //Move participant to blacklist
+        $scope.blacklist = function (_id){
+            Participants.blacklist({id: _id}).$promise.then(function(response){
+                $alert({
+                    type: 'success',
+                    duration: 20,
+                    container: '#alert',
+                    content: 'User was blacklisted',
+                    show: true,
+                    title: 'Success'
+                })
+            },function(response){
+                $alert({
+                    type: 'danger',
+                    duration: 20,
+                    container: '#alert',
+                    content: 'Failed to blacklist user ('+response.status+')',
+                    show: true,
+                    title: 'Error'
+                })
             });
         }
         
@@ -907,7 +943,7 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin','$alert'
              */
             $scope.delete = function (_id) {
                 $scope.deleting = true;
-                Participants.deleteParticipant({id:_id}).$promise.then(function(httpResponse){
+                Participants.removeBlacklist({id:_id}).$promise.then(function(httpResponse){
                        $scope.deleting = false;
                         $alert({
                             title:'',
@@ -1555,7 +1591,7 @@ mainAppCtrls.controller('NewWorkshopTemplateCtrl',['$scope',"WorkshopTemplate",'
         then(function(translations){
             _translations = translations;
         });
-        $scope.workshop.duration=3600000;
+        $scope.workshop.duration=-3600000;
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:NewWorkshopTemplateCtrl#sendInfo

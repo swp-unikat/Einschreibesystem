@@ -45,7 +45,7 @@ var mainAppCtrls = angular.module("mainAppCtrls");
              */
             $scope.delete = function (_id) {
                 $scope.deleting = true;
-                Participants.deleteParticipant({id:_id}).$promise.then(function(httpResponse){
+                Participants.removeBlacklist({id:_id}).$promise.then(function(httpResponse){
                        $scope.deleting = false;
                         $alert({
                             title:'',

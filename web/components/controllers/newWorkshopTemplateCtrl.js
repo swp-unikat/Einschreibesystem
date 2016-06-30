@@ -21,7 +21,7 @@ mainAppCtrls.controller('NewWorkshopTemplateCtrl',['$scope',"WorkshopTemplate",'
         then(function(translations){
             _translations = translations;
         });
-        $scope.workshop.duration=3600000;
+        $scope.workshop.duration=-3600000;
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:NewWorkshopTemplateCtrl#sendInfo
