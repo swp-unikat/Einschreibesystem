@@ -357,8 +357,10 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      * @ApiDoc(
      *  resource=true,
      *  description="Returns the list of participants",
-     *  output = "Core\EntityBundle\Entity\Participants",
-     *  statusCodes = {
+     *  output = {
+     *      "class"="Core\EntityBundle\Entity\Participants",
+     *      "groups"={"names"}
+     * },statusCodes = {
      *      200 = "Returned when successful",
      *      404 = "Returned when the data is not found"
      *  },requirements={
