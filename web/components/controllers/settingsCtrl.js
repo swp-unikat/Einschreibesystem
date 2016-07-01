@@ -31,25 +31,19 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm','Admin',
             ['html', 'insertImage', 'insertLink'],
             ['justifyLeft', 'justifyCenter', 'justifyRight', 'indent', 'outdent']
         ];
+
+        Admin.getLegalNotice().$promise.then(
+            function(value){
+                $scope.newLegalNotice = value.content;
+            },function(value){
+                console.log(value);
+            });
+
+
+
         $scope.pwAlert = null;
-        /**
-         * @ngdoc function
-         * @name mainAppCtrls.controller:SettingsCtrl#loadContact
-         * @methodOf mainAppCtrls.controller:SettingsCtrl
-         * @description Loads the current contact data
-         */
-        $scope.loadContact = function() {
 
-        };
-        /**
-         * @ngdoc function
-         * @name mainAppCtrls.controller:SettingsCtrl#loadLegalNotice
-         * @methodOf mainAppCtrls.controller:SettingsCtrl
-         * @description Loads the current legalnotice
-         */
-        $scope.loadLegalNotice = function() {
 
-        };
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:SettingsCtrl#validatePW
@@ -138,7 +132,7 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm','Admin',
         $scope.changeEmail = function() {
             var _personal_email = $scope.form.personal_email;
             if(_personal_email == null || _personal_email == '') {
-                
+
             }
             //TODO confirm
 
@@ -164,14 +158,31 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm','Admin',
          * @description checks validity of changes made to input and sends change request to server
          */
         $scope.saveContactChange = function() {
-            var _dataToSend = $scope.form;
-            if(!$scope.form.email.$valid) {
-                //TODO error message
-                return;
-            }
-            console.log('Uhm..');
-            //TODO add confirm
+            var _dataToSend = {
+                content : angular.toJson($scope.form)
+            };
 
+            Admin.editContact(_dataToSend).$promise.then(
+                function(value){
+                    $alert({
+                        title: "Success",
+                        type: 'success',
+                        content: value.message,
+                        container: '#alertInfo',
+                        dismissable: false,
+                        show: true
+                    });
+                },
+                function(value){
+                    $alert({
+                        title: "Error",
+                        type: 'danger',
+                        content: value.message,
+                        container: '#alertInfo',
+                        dismissable: false,
+                        show: true
+                    });
+                });
         }
     }
 ]);

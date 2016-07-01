@@ -67,7 +67,7 @@ mainAppCtrls.controller('AdminCreateCtrl',['$scope', '$stateParams','$alert','$t
 
                 $scope.password_confirm = "";
                 $scope.myAlert.show();
-                return;
+                
             }
             else{
                 $scope.myAlert.hide();
@@ -197,7 +197,7 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
             $scope.workshop.duration = _originalData.duration;
             $scope.workshop.max_participants = _originalData.max_participants;
 
-        }
+        };
 
         /**
          * @ngdoc function
@@ -263,7 +263,7 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
                     duration: 60
                 });
             });
-        }
+        };
 
         //Fetch data from API
         $scope.loading = true;
@@ -347,7 +347,7 @@ mainAppCtrls.controller('adminEmailConfirmCtrl',['$scope',"EmailTemplate",'$tran
             var data={
                 email_subject:$scope.email.template.subject,
                 email_body:$scope.email.template.body
-            }
+            };
 
             EmailTemplate.put(data).$promise.then(function (httpResponse) {
 
@@ -369,7 +369,7 @@ mainAppCtrls.controller('adminEmailConfirmCtrl',['$scope',"EmailTemplate",'$tran
                     show: true
                 });
             });
-        }
+        };
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:adminEmailConfirmCtrl#discard
@@ -600,7 +600,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
          */
         $scope.printList = function() {
             printer.print('resources/views/participantList.tpl.html',$scope.participants);
-        }
+        };
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:adminWorkshopDetailsCtrl#delete
@@ -633,7 +633,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
                 }
             )
 
-        }
+        };
 
         //Overbook a participant from the waitinglist
 
@@ -659,7 +659,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
                     title: 'Error'
                 });
             });
-        }
+        };
         
         //Move participant to blacklist
         $scope.blacklistUser = function (_id){
@@ -711,7 +711,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
         
         
     }
-])
+]);
 
 // Source: web/components/controllers/adminWorkshopManagementCtrl.js
 /**
@@ -794,7 +794,7 @@ mainAppCtrls.controller('adminWorkshopManagementCtrl',['$scope','AdminWorkshop',
                             container: '#alert',
                             dismissable: false,
                             show: true
-                        })
+                        });
                         break;
                 }
                 $scope.loading = false;
@@ -885,7 +885,7 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin','$alert'
                     duration: 30
                 });
             });
-        }
+        };
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:AdministratorManagementCtrl#delete
@@ -992,7 +992,7 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin','$alert'
                     }
                 )
 
-            }
+            };
             loadBlacklist();
 
 
@@ -1054,7 +1054,7 @@ mainAppCtrls.controller('EditEmailTemplateCtrl',['$scope','EmailTemplate','$stat
         $scope.discardChanges = function () {
             $scope.title = _originalData.title;
             $scope.email = _originalData.email;
-        }
+        };
 
         /**
          * @ngdoc function
@@ -1110,7 +1110,7 @@ mainAppCtrls.controller('EditEmailTemplateCtrl',['$scope','EmailTemplate','$stat
                         duration: 60
                     });
             });
-        }
+        };
 
         //Fetch data from API
         $scope.loading = true;
@@ -1190,7 +1190,7 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
             $scope.workshop.start_at = _originalData.start_at;
             $scope.workshop.end_at = _originalData.end_at;
             $scope.workshop.max_participants = _originalData.max_participants;
-        }
+        };
 
 
         /**
@@ -1277,7 +1277,7 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
                     duration: 60
                 });
             });
-        }
+        };
 
         //Fetch data from API
         $scope.loading = true;
@@ -1425,7 +1425,7 @@ mainAppCtrls.controller('LoginCtrl',['$scope','$http','store','$state','jwtHelpe
         var _translations;
         $translate(['TITLE_ERROR','ALERT_LOGIN_FAIL']).then(function(translation){
             _translations = translation;
-        })
+        });
         
         /**
          * @ngdoc function
@@ -1471,7 +1471,7 @@ mainAppCtrls.controller('LoginCtrl',['$scope','$http','store','$state','jwtHelpe
          */
         $scope.showResetPanel = function() {
             $scope.reset_panel = !$scope.reset_panel;
-        }
+        };
 
         $scope.resetPassword = function() {
 
@@ -1548,7 +1548,7 @@ mainAppCtrls.controller('NewEmailTemplateCtrl',['$scope',"EmailTemplate",'$trans
                 template_name:$scope.email.template.title,
                 email_subject:$scope.email.template.subject,
                 email_body:$scope.email.template.body
-            }
+            };
             
             EmailTemplate.put(data).$promise.then(function (httpResponse) {
                 
@@ -1570,7 +1570,7 @@ mainAppCtrls.controller('NewEmailTemplateCtrl',['$scope',"EmailTemplate",'$trans
                     show: true
                 });
             });
-        }
+        };
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:NewEmailTemplateCtrl#discard
@@ -1845,25 +1845,19 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm','Admin',
             ['html', 'insertImage', 'insertLink'],
             ['justifyLeft', 'justifyCenter', 'justifyRight', 'indent', 'outdent']
         ];
+
+        Admin.getLegalNotice().$promise.then(
+            function(value){
+                $scope.newLegalNotice = value.content;
+            },function(value){
+                console.log(value);
+            });
+
+
+
         $scope.pwAlert = null;
-        /**
-         * @ngdoc function
-         * @name mainAppCtrls.controller:SettingsCtrl#loadContact
-         * @methodOf mainAppCtrls.controller:SettingsCtrl
-         * @description Loads the current contact data
-         */
-        $scope.loadContact = function() {
 
-        };
-        /**
-         * @ngdoc function
-         * @name mainAppCtrls.controller:SettingsCtrl#loadLegalNotice
-         * @methodOf mainAppCtrls.controller:SettingsCtrl
-         * @description Loads the current legalnotice
-         */
-        $scope.loadLegalNotice = function() {
 
-        };
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:SettingsCtrl#validatePW
@@ -1913,28 +1907,36 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm','Admin',
                 });
                 return;
             }
-            //TODO Need to set ID
             var _data = {
                 oldpassword: $scope.form.password_old,
                 newpassword: $scope.form.password,
-                adminId: 0
             };
-            //TODO add confirm
             Admin.changePassword(_data).$promise.then(function(value){
+                if($scope.pwAlert != null)
+                    $scope.pwAlert.hide();
 
+                $scope.pwAlert = $alert({
+                    title: "Success",
+                    type: 'success',
+                    content: value.message,
+                    container: '#pwalert',
+                    dismissable: false,
+                    show: true
+                });
             },function(value){
                 if($scope.pwAlert != null)
                     $scope.pwAlert.hide();
+
                 $scope.pwAlert = $alert({
                     title: "Error",
                     type: 'danger',
-                    content: 'Couldnt change password. Error ( '+value.status+ ' )',
+                    content: value.data.message,
                     container: '#pwalert',
                     dismissable: false,
                     show: true
                 });
             });
-        }
+        };
         /**
          * @ngdoc function
          * @name  mainAppCtrls.controller:SettingsCtrl#changeEmail
@@ -1944,12 +1946,12 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm','Admin',
         $scope.changeEmail = function() {
             var _personal_email = $scope.form.personal_email;
             if(_personal_email == null || _personal_email == '') {
-                return;
+
             }
             //TODO confirm
 
             //TODO Send to server, handle response ( Missing API function )
-        }
+        };
         /**
          * @ngdoc function
          * @name  mainAppCtrls.controller:SettingsCtrl#discardContact
@@ -1962,7 +1964,7 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm','Admin',
             $scope.form.address = _originalData.address;
             $scope.form.facebook = _originalData.facebook;
             $scope.form.email = _originalData.email;
-        }
+        };
         /**
          * @ngdoc function
          * @name  mainAppCtrls.controller:SettingsCtrl#saveContactChange
@@ -1970,14 +1972,31 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm','Admin',
          * @description checks validity of changes made to input and sends change request to server
          */
         $scope.saveContactChange = function() {
-            var _dataToSend = $scope.form;
-            if(!$scope.form.email.$valid) {
-                //TODO error message
-                return;
-            }
-            console.log('Uhm..');
-            //TODO add confirm
+            var _dataToSend = {
+                content : angular.toJson($scope.form)
+            };
 
+            Admin.editContact(_dataToSend).$promise.then(
+                function(value){
+                    $alert({
+                        title: "Success",
+                        type: 'success',
+                        content: value.message,
+                        container: '#alertInfo',
+                        dismissable: false,
+                        show: true
+                    });
+                },
+                function(value){
+                    $alert({
+                        title: "Error",
+                        type: 'danger',
+                        content: value.message,
+                        container: '#alertInfo',
+                        dismissable: false,
+                        show: true
+                    });
+                });
         }
     }
 ]);

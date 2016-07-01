@@ -111,15 +111,15 @@ restSvcs.factory('WorkshopTemplate',['$resource',function($resource){
          * @description create a new workshoptemplate
          * @methodOf restSvcs.WorkshopTemplate
          */
-         'put':{ method: 'PUT', isArray: false},
-         /**
-          * @ngdoc function
-          * @name restSvcs.WorkshopTemplate#delete
-          * @description delete a workshoptemplate
-          * @methodOf restSvcs.WorkshopTemplate
-          * @param {integer} id Workshop-ID
-          */
-          'deleteWorkshopTemplate': {method: 'DELETE',params: {id: '@id'}, isArray: false}
+        'put':{ method: 'PUT', isArray: false},
+        /**
+         * @ngdoc function
+         * @name restSvcs.WorkshopTemplate#delete
+         * @description delete a workshoptemplate
+         * @methodOf restSvcs.WorkshopTemplate
+         * @param {integer} id Workshop-ID
+         */
+        'deleteWorkshopTemplate': {method: 'DELETE',params: {id: '@id'}, isArray: false}
     });
 }]);
 /**
@@ -129,22 +129,22 @@ restSvcs.factory('WorkshopTemplate',['$resource',function($resource){
  */
 restSvcs.factory('AdminWorkshop',['$resource',function($resource){
     return $resource('/api/admin/workshops/:id',{},{
-         /**
-          * @ngdoc function
-          * @name restSvcs.AdminWorkshop#gethistory
-          * @description show all workshops
-          * @methodOf restSvcs.AdminWorkshop
-          * @returns {httpPromise} resolve with fetched data, or fails with error description.
+        /**
+         * @ngdoc function
+         * @name restSvcs.AdminWorkshop#gethistory
+         * @description show all workshops
+         * @methodOf restSvcs.AdminWorkshop
+         * @returns {httpPromise} resolve with fetched data, or fails with error description.
          */
         'gethistory': {method: 'GET',params: {id: 'history'}, isArray: true},
-         /**
-          * @ngdoc function
-          * @name restSvcs.AdminWorkshop#put
-          * @description create a new workshop
-          * @methodOf restSvcs.AdminWorkshop
-          */
-          'putWorkshop': {method: 'PUT', isArray:false},
-         /**
+        /**
+         * @ngdoc function
+         * @name restSvcs.AdminWorkshop#put
+         * @description create a new workshop
+         * @methodOf restSvcs.AdminWorkshop
+         */
+        'putWorkshop': {method: 'PUT', isArray:false},
+        /**
          * @ngdoc function
          * @name restSvcs.AdminWorkshop#patch
          * @description edit a single workshop
@@ -152,25 +152,25 @@ restSvcs.factory('AdminWorkshop',['$resource',function($resource){
          * @param {integer} id Workshop-ID
          */
         'edit': {method: 'PATCH',params: {id: '@id'}, isArray: false},
-         /**
-          * @ngdoc function
-          * @name restSvcs.AdminWorkshop#delete
-          * @description delete a workshop
-          * @methodOf restSvcs.AdminWorkshop
-          * @param {integer} id Workshop-ID
-          */
-          'deleteWorkshop': {method: 'DELETE',params: {id: '@id'}, isArray: false},
-         /**
-          * @ngdoc function
-          * @name restSvcs.AdminWorkshop#patchwaitinglist
-          * @description overbook the workshop
-          * @methodOf restSvcs.AdminWorkshop
-          * @param {integer} id Workshop-ID
-          * @param {integer} participantsid Participants-ID
-          */
-          'overbook': {method: 'PATCH',url:'/api/admin/workshops/:id/waitinglist/:participantid' ,params: {id: '@id', participantid: '@participantid'}, isArray: false},
-          'participants': {method: 'GET',url:'/api/admin/workshops/:id/participants',params: {id: '@id'},isArray: true},
-          'waitinglist': {method: 'GET',url:'/api/admin/workshops/:id/waitinglist',params: {id: '@id'},isArray: true}
+        /**
+         * @ngdoc function
+         * @name restSvcs.AdminWorkshop#delete
+         * @description delete a workshop
+         * @methodOf restSvcs.AdminWorkshop
+         * @param {integer} id Workshop-ID
+         */
+        'deleteWorkshop': {method: 'DELETE',params: {id: '@id'}, isArray: false},
+        /**
+         * @ngdoc function
+         * @name restSvcs.AdminWorkshop#patchwaitinglist
+         * @description overbook the workshop
+         * @methodOf restSvcs.AdminWorkshop
+         * @param {integer} id Workshop-ID
+         * @param {integer} participantsid Participants-ID
+         */
+        'overbook': {method: 'PATCH',url:'/api/admin/workshops/:id/waitinglist/:participantid' ,params: {id: '@id', participantid: '@participantid'}, isArray: false},
+        'participants': {method: 'GET',url:'/api/admin/workshops/:id/participants',params: {id: '@id'},isArray: true},
+        'waitinglist': {method: 'GET',url:'/api/admin/workshops/:id/waitinglist',params: {id: '@id'},isArray: true}
     });
 }]);
 /**
@@ -180,37 +180,37 @@ restSvcs.factory('AdminWorkshop',['$resource',function($resource){
  */
 restSvcs.factory('Participants',['$resource',function($resource){
     return $resource('/api/admin/participants/:id',{},{
-         /**
-          * @ngdoc function
-          * @name restSvcs.Participants#all
-          * @description show all participants
-          * @methodOf restSvcs.Participants
-          * @returns {httpPromise} resolve with fetched data, or fails with error description
+        /**
+         * @ngdoc function
+         * @name restSvcs.Participants#all
+         * @description show all participants
+         * @methodOf restSvcs.Participants
+         * @returns {httpPromise} resolve with fetched data, or fails with error description
          */
         'getall': {method: 'GET',params: {id: 'all'}, isArray: true},
-         /**
-          * @ngdoc function
-          * @name restSvcs.Participants#all
-          * @description show all blacklisted participants
-          * @methodOf restSvcs.Participants
-          * @returns {httpPromise} resolve with fetched data, or fails with error description
-          */
+        /**
+         * @ngdoc function
+         * @name restSvcs.Participants#all
+         * @description show all blacklisted participants
+         * @methodOf restSvcs.Participants
+         * @returns {httpPromise} resolve with fetched data, or fails with error description
+         */
         'getblacklistall': {method: 'GET',url: '/api/admin/participants/blacklist/all', isArray: true},
-         /**
-          * @ngdoc function
-          * @name restSvcs.Participants#blacklist
-          * @description Put participants on blacklist
-          * @methodOf restSvcs.Participants
-          */
+        /**
+         * @ngdoc function
+         * @name restSvcs.Participants#blacklist
+         * @description Put participants on blacklist
+         * @methodOf restSvcs.Participants
+         */
         'blacklist': {method: 'PUT',url: '/api/admin/participants/:id/blacklist',params:{id: '@id'}, isArray:false},
         /**
-          * @ngdoc function
-          * @name restSvcs.Participants#delete
-          * @description remove a participant from blacklist
-          * @methodOf restSvcs.Participants
-          * @param {integer} id Participants-ID
-          */
-          'removeBlacklist': {url: '/api/admin/participants/:id/blacklist',method: 'DELETE',params: {id: '@id'}, isArray: false},
+         * @ngdoc function
+         * @name restSvcs.Participants#delete
+         * @description remove a participant from blacklist
+         * @methodOf restSvcs.Participants
+         * @param {integer} id Participants-ID
+         */
+        'removeBlacklist': {url: '/api/admin/participants/:id/blacklist',method: 'DELETE',params: {id: '@id'}, isArray: false},
         /**
          * @ngdoc funtion
          * @name restSvcs.Participants#get
@@ -230,11 +230,11 @@ restSvcs.factory('Participants',['$resource',function($resource){
 restSvcs.factory('EmailTemplate',['$resource',function($resource){
     return $resource('/api/admin/email/template/:id',{},{
         /**
-          * @ngdoc function
-          * @name restSvcs.EmailTemplate#all
-          * @description show all emailtemplates
-          * @methodOf restSvcs.EmailTemplate
-          * @returns {httpPromise} resolve with fetched data, or fails with error description
+         * @ngdoc function
+         * @name restSvcs.EmailTemplate#all
+         * @description show all emailtemplates
+         * @methodOf restSvcs.EmailTemplate
+         * @returns {httpPromise} resolve with fetched data, or fails with error description
          */
         'getAll': {url: '/api/admin/email/template/list',method: 'GET', isArray: true},
         /**
@@ -254,20 +254,20 @@ restSvcs.factory('EmailTemplate',['$resource',function($resource){
          */
         'edit': {method: 'PATCH',params: {id: '@id'}, isArray: false},
         /**
-          * @ngdoc function
-          * @name restSvcs.EmailTemplate#put
-          * @description create a new Emailtemplate
-          * @methodOf restSvcs.EmailTemplate
-          */
+         * @ngdoc function
+         * @name restSvcs.EmailTemplate#put
+         * @description create a new Emailtemplate
+         * @methodOf restSvcs.EmailTemplate
+         */
         'put': {method: 'PUT', isArray:false},
         /**
-          * @ngdoc function
-          * @name restSvcs.EmailTemplate#delete
-          * @description remove a emailtemplate
-          * @methodOf restSvcs.EmailTemplate
-          * @param {integer} id Emailtemplate-ID
-          */
-          'delete': {method: 'DELETE',params: {id: '@id'}, isArray: false}
+         * @ngdoc function
+         * @name restSvcs.EmailTemplate#delete
+         * @description remove a emailtemplate
+         * @methodOf restSvcs.EmailTemplate
+         * @param {integer} id Emailtemplate-ID
+         */
+        'delete': {method: 'DELETE',params: {id: '@id'}, isArray: false}
     });
 }]);
 /**
@@ -278,12 +278,12 @@ restSvcs.factory('EmailTemplate',['$resource',function($resource){
 restSvcs.factory('Email',['$resource',function($resource){
     return $resource('/api/admin/email/:workshopid/send',{},{
         /**
-          * @ngdoc function
-          * @name restSvcs.Email#send
-          * @description send Email
-          * @methodOf restSvcs.Email
-          * @param {number} workshopid Workshop-ID
-          */
+         * @ngdoc function
+         * @name restSvcs.Email#send
+         * @description send Email
+         * @methodOf restSvcs.Email
+         * @param {number} workshopid Workshop-ID
+         */
         'sendEmail': {method: 'PATCH',params: {workshopid: '@id'}, isArray: false}
     });
 }]);
@@ -300,14 +300,14 @@ restSvcs.factory('Admin',['$resource',function($resource){
          * @description Returns a list of all currentyl active Admins
          * @methodOf restSvcs.Admin
          */
-       'list': {url:'/api/admin/user/list',method: 'GET',isArray: true},
+        'list': {url:'/api/admin/user/list',method: 'GET',isArray: true},
         /**
          * @ngdoc function
          * @name restSvcs.Admin#remove
          * @description Deactivates an admin account
          * @methodOf restSvcs.Admin
          */
-       'delete': {url:'/api/admin/user/:id',method: 'DELETE',params: {id: '@id'},isArray: false},
+        'delete': {url:'/api/admin/user/:id',method: 'DELETE',params: {id: '@id'},isArray: false},
         /**
          * @ngdoc function
          * @name restSvcs.Admin#changePassword
@@ -349,6 +349,20 @@ restSvcs.factory('Admin',['$resource',function($resource){
          * @description Edits the legal Notice saved on the server
          * @methodOf restSvcs.Admin
          */
-        'editLegalNotice': {url: '/api/admin/user/legal/notice',method: 'PUT',isArray: false}
+        'editLegalNotice': {url: '/api/admin/user/legal/notice',method: 'PUT',isArray: false},
+        /**
+         * @ngdoc function
+         * @name restSvcs.Admin#editContact
+         * @description Edits the contact data saved on the server
+         * @methodOf restSvcs.Admin
+         */
+        'getContact': {url: '/api/admin/user/contact/data',method: 'GET',isArray: false},
+        /**
+         * @ngdoc function
+         * @name restSvcs.Admin#editLegalNotice
+         * @description Edits the legal Notice saved on the server
+         * @methodOf restSvcs.Admin
+         */
+        'getLegalNotice': {url: '/api/admin/user/legal/notice',method: 'GET',isArray: false}
     });
 }]);
