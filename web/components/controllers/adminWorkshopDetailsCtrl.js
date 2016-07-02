@@ -94,42 +94,8 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
         $scope.printList = function() {
             printer.print('resources/views/participantList.tpl.html',$scope.participants);
         };
-        /**
-         * @ngdoc function
-         * @name mainAppCtrls.controller:adminWorkshopDetailsCtrl#delete
-         * @methodOf mainAppCtrls.controller:adminWorkshopDetailsCtrl
-         * @param {number} _id id of the participant, which should be removed from the workshop
-         * @description Deletes the participant with the passed id
-         */
-        $scope.delete = function (_workshop,_participant) {
-            Participants.delete({participant:_participant,workshop:_workshop}).$promise.then(function(httpresponse){
-                    $alert({
-                        title:'',
-                        type: 'success',
-                        container:'#alert',
-                        show: true,
-                        dismissable: false,
-                        content: _translations.ALERT_WORKSHOP_DELETE_PARTICIPANT,
-                        duration: 20
-                    });
-                    loadList();
-                }
-                , function (httpResponse) {
-                    $alert({
-                        title: '',
-                        type: 'danger',
-                        content: _translations.ALERT_WORKSHOP_DELETE_PARTICIPANT_FAIL + ' (' + httpReponse.status +')',
-                        container: '#alert',
-                        dismissable: false,
-                        show: true
-                    });
-                }
-            )
-
-        };
 
         //Overbook a participant from the waitinglist
-
         $scope.overbook = function(_id){
             AdminWorkshop.overbook({id: workshopid,participantid: _id}).$promise.then(function(response){
                 $alert({
@@ -178,25 +144,25 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
         };
 
         //Remove participant from list
-        $scope.remove = function(_id){
-          Participants.remove({id: _id}).$promise.then(function(response){
-              $alert({
-                  type: 'success',
-                  duration: 20,
-                  container: '#alert',
-                  content: 'Removed participant from list',
-                  show: true,
-                  title: 'Success'
-              });
+        $scope.remove = function (_participant,_workshop) {
+            Participants.remove({participant:_participant,workshop:_workshop}).$promise.then(function(response){
+                $alert({
+                    type: 'success',
+                    duration: 20,
+                    container: '#alert',
+                    content: 'Removed participant from list',
+                    show: true,
+                    title: 'Success'
+                });
             },function(response){
-              $alert({
-                  type: 'danger',
-                  duration: 20,
-                  container: '#alert',
-                  content: 'Failed to remove user ('+response.status+')',
-                  show: true,
-                  title: 'Error'
-              });
+                $alert({
+                    type: 'danger',
+                    duration: 20,
+                    container: '#alert',
+                    content: 'Failed to remove user ('+response.status+')',
+                    show: true,
+                    title: 'Error'
+                });
             });
         };
         
