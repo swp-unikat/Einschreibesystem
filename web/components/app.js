@@ -259,8 +259,20 @@ mainApp.config(['$translateProvider', function($translateProvider) {
  * @name mainApp.controller:GlobalCtrl
  * @description Controller applied to the body HTML-Tag to avoid pollution of the rootScope. Provides Information wether login or logout button are to be shown
  */
-mainApp.controller('GlobalCtrl',['$scope','store','jwtHelper','$state',function($scope,store,jwtHelper,$state) {
+mainApp.controller('GlobalCtrl',['$scope','store','jwtHelper','$state','$http','$translate',function($scope,store,jwtHelper,$state,$http,$translate,$translateProvider) {
+    //Get language config
+    $http.get("resources/local/config.json").then(function(response){
+        //save available languages
+        $scope.langs = response.data.lang;
+        //set default language
+        $translate.use(response.data.default);
+        for(var i=0;i<$scope.langs.length;i++) {
+            if(response.data.default === $scope.langs[i].code)
+                $scope.selectedLang = $scope.langs[i];
+        }
+    },function(response){
 
+    });
     $scope.show_login = true;
     $scope.show_logout = false;
     //Function called on every state change. Takes care of the buttons to be shown correctly
@@ -302,6 +314,11 @@ mainApp.controller('GlobalCtrl',['$scope','store','jwtHelper','$state',function(
             $scope.show_login = true;
             $scope.show_logout = false;
         }
+    };
+    
+    //change language
+    $scope.changeLang = function() {
+        $translate.use($scope.selectedLang.code);
     };
 }
 ]);
