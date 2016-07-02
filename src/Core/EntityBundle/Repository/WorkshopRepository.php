@@ -49,7 +49,6 @@ class WorkshopRepository extends EntityRepository
     {
         $em = $this->getEntityManager();
         $qb = $em->createQueryBuilder();
-        $oDate = new \DateTime('now');
 
         $q = $qb->select(array('workshop'))
             ->from('CoreEntityBundle:Workshop', 'workshop')
