@@ -141,7 +141,7 @@ class UserController extends FOSRestController implements ClassResourceInterface
         //$params is array with E-Mail Password and Token (Code)
         $params = $paramFetcher->all();
         //find invitation in database
-        if($params['username'] == NULL){
+        if($params['username'] === NULL){
             $params['username'] = uniqid();
         }
         $invitation = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Invitation")->findOneBy(['code' => $params['code']]);
