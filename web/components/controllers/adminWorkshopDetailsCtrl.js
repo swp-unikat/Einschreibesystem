@@ -93,7 +93,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
          */
         $scope.printList = function() {
             printer.print('resources/views/participantList.tpl.html',$scope.participants);
-        }
+        };
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:adminWorkshopDetailsCtrl#delete
@@ -101,8 +101,8 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
          * @param {number} _id id of the participant, which should be removed from the workshop
          * @description Deletes the participant with the passed id
          */
-        $scope.delete = function (_id) {
-            Participants.delete({id:_id}).$promise.then(function(httpresponse){
+        $scope.delete = function (_workshop,_participant) {
+            Participants.delete({participant:_participant,workshop:_workshop}).$promise.then(function(httpresponse){
                     $alert({
                         title:'',
                         type: 'success',
@@ -126,7 +126,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
                 }
             )
 
-        }
+        };
 
         //Overbook a participant from the waitinglist
 
@@ -152,7 +152,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
                     title: 'Error'
                 });
             });
-        }
+        };
         
         //Move participant to blacklist
         $scope.blacklistUser = function (_id){
@@ -204,4 +204,4 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
         
         
     }
-])
+]);
