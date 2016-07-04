@@ -71,7 +71,7 @@ class MailController extends Controller{
     protected function sendMail($participants,$workshop){
         $counter = 0;
         /* Loading the default E-Mail template*/
-        $template = $this->getDoctrine()->getRepository("CoreEntityBundle:EmailTemplate")->findOneBy(['template_name' => 'Reminder']);
+        $template = $this->em->getRepository("CoreEntityBundle:EmailTemplate")->findOneBy(['template_name' => 'Reminder']);
         if(!$template){
             $this->logger->error("E-Mail Template not found");
             return 0;
