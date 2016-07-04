@@ -171,7 +171,6 @@
   "ALERT_SUCCESSFULLY_ENROLLED_WORKSHOP":"Successfully enrolled to workshop",
   "ALERT_INVALID_ENROLMENT_LINK":"Invalid enrollment link. If you received this link via e-mail, please contact an administrator.",
   "ALERT_ENROLLMENT_SUCCSESSFULL":"Enrollment successful. Please check your E-Mail!",
-  "ALERT_NO_PARTICIPANTS":"No participants yet",
   "ALERT_NEGATIVE_COST":"negative cost",
   "ALERT_NEGATIVE_PARTICIPANTS":"negative participants",
   "ALERT_WORKSHOP_IN_PAST":"workshop is in the past",
@@ -181,8 +180,9 @@
   "ALERT_FAILED_BLACKLISTED": "Failed to blacklist user",
   "ALERT_SUCCESSFUL_REMOVED_USER": "Removed participant from list",
   "ALERT_FAILED_REMOVE_USER": "Failed to remove user",
+  "ALERT_PASSWORD_IDENTICAL": "Passwords have to be identical",
+  "AlERT_PASSWORD_EMPTY":"Passwords cannot be empty",
   "AVAILABLE_PLACEHOLDERS": "available placeholders"
-
 
 
 
