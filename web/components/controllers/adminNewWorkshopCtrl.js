@@ -27,7 +27,7 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
         var _translations = {};
         //Pass all required translation IDs to translate service
         $translate(['ALERT_WORKSHOP_NEW_SUCCESS',
-            'ALERT_WORKSHOP_NEW_FAIL']).
+            'ALERT_WORKSHOP_NEW_FAIL', 'ALERT_NEGATIVE_COST', 'ALERT_NEGATIVE_PARTICIPANTS', 'ALERT_WORKSHOP_IN_PAST']).
         then(function(translations){
             _translations = translations;
         });
@@ -58,7 +58,7 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
                 $alert({
                     title: 'Error',
                     type: 'danger',
-                    content: 'negative cost',
+                    content: _translations.ALERT_NEGATIVE_COST,
                     container: '#alert',
                     dismissable: false,
                     show: true
@@ -70,7 +70,7 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
                 $alert({
                     title: 'Error',
                     type: 'danger',
-                    content: 'negative participants',
+                    content: _translations.ALERT_NEGATIVE_PARTICIPANTS,
                     container: '#alert',
                     dismissable: false,
                     show: true
@@ -82,7 +82,7 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
                 $alert({
                     title: 'Error',
                     type: 'danger',
-                    content: 'workshop is in the past',
+                    content: _translations.ALERT_WORKSHOP_IN_PAST,
                     container: '#alert',
                     dismissable: false,
                     show: true

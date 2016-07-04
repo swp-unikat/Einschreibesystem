@@ -439,7 +439,7 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
         var _translations = {};
         //Pass all required translation IDs to translate service
         $translate(['ALERT_WORKSHOP_NEW_SUCCESS',
-            'ALERT_WORKSHOP_NEW_FAIL']).
+            'ALERT_WORKSHOP_NEW_FAIL', 'ALERT_NEGATIVE_COST', 'ALERT_NEGATIVE_PARTICIPANTS', 'ALERT_WORKSHOP_IN_PAST']).
         then(function(translations){
             _translations = translations;
         });
@@ -470,7 +470,7 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
                 $alert({
                     title: 'Error',
                     type: 'danger',
-                    content: 'negative cost',
+                    content: _translations.ALERT_NEGATIVE_COST,
                     container: '#alert',
                     dismissable: false,
                     show: true
@@ -482,7 +482,7 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
                 $alert({
                     title: 'Error',
                     type: 'danger',
-                    content: 'negative participants',
+                    content: _translations.ALERT_NEGATIVE_PARTICIPANTS,
                     container: '#alert',
                     dismissable: false,
                     show: true
@@ -494,7 +494,7 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
                 $alert({
                     title: 'Error',
                     type: 'danger',
-                    content: 'workshop is in the past',
+                    content: _translations.ALERT_WORKSHOP_IN_PAST,
                     container: '#alert',
                     dismissable: false,
                     show: true
@@ -874,7 +874,7 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin','$alert'
 
         var _translations = {};
         //Pass all required translation IDs to translate service
-        $translate(['INVITED_ADMINISTRATOR_EMAIL', 'INVITED_ADMINISTRATOR_EMAIL_ERROR']).then(function (translations) {
+        $translate(['INVITED_ADMINISTRATOR_EMAIL', 'INVITED_ADMINISTRATOR_EMAIL_ERROR', 'ALERT_DELETE_ADMIN']).then(function (translations) {
             _translations = translations;
         });
         var loadList = function () {
@@ -904,7 +904,7 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin','$alert'
                 $alert({
                     type: 'danger',
                     title: 'Error',
-                    content: 'Failed to delete admin',
+                    content: _translations.ALERT_DELETE_ADMIN,
                     container: '#alert',
                     show: true,
                     dismissable: false,
