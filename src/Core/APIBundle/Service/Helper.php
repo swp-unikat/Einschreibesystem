@@ -33,7 +33,7 @@ class Helper{
                 $this->logger->info("Workshop has participants");
                 $nextParticipant = $this->getNextParticipant($workshop->getId());
                 if ($nextParticipant) {
-                    $this->logger->info("Workshop has participants on waiting list");
+                    $this->logger->info("Workshop has participants on waiting list", null, null);
                     $nextParticipant->setWaiting(false);
                     $this->em->persist($nextParticipant);
                     $this->em->flush();
