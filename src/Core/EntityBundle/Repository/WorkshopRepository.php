@@ -90,7 +90,7 @@ class WorkshopRepository extends EntityRepository
         $qb = $this->getEntityManager()->createQueryBuilder();
         $q  = $qb->select(["workshop.id"])
                  ->from("CoreEntityBundle:Workshop","workshop")
-            ->where("workshop.notified = 0 and date_sub(workshop.star_at,24,'hour') < ?1 and workshop.end_at > ?1");
+            ->where("workshop.notified = 0 and date_sub(workshop.start_at,24,'hour') < ?1 and workshop.end_at > ?1");
         $q->setParameter(1,$now);
         $result = $q->getQuery()->getResult();
 
