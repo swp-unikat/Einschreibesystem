@@ -52,7 +52,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
     {
         $workshops = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Workshop")->getAllWorkshops();
         if (!$workshops) {
-            throw $this->createNotFoundException("No Workshops found");
+            return $this->handleView($this->view(['code' => 404,'message' => "No Workshops found"], 404));
         }
         $view = $this->view($workshops, 200);
         return $this->handleView($view);
@@ -143,7 +143,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
         $params = $paramFetcher->all();
         $workshop = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:Workshop')->find($id);
         if (!$workshop) {
-            throw $this->createNotFoundException("This workshop was not found");
+            return $this->handleView($this->view(['code' => 404,'message' => "This workshop was not found"], 404));
         }
         if($params["title"] != NULL)
             $workshop->setTitle($params["title"]);
@@ -217,7 +217,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
     {
         $workshop = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Workshop")->find($id);
         if (!$workshop) {
-            throw $this->createNotFoundException("Workshop not found");
+            return $this->handleView($this->view(['code' => 404,'message' => "No Workshop found"], 404));
         }
 
         $workshopParticipants = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:WorkshopParticipants')->findBy(['workshop' => $workshop]);
@@ -284,7 +284,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
         //relation between workshop and participant
         $workshopParticipant = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:WorkshopParticipants")->findOneBy([ "workshop"=>$id,"participant"=>$participantId]);
         if (!$workshopParticipant) {
-            throw $this->createNotFoundException("No participant on waiting list found");
+            return $this->handleView($this->view(['code' => 404,'message' => "No Participants on waiting list found"], 404));
         }
         $workshopParticipant->setWaiting(0); /** 0 -> im Workshop, 1-> Waiting */
         $this->getDoctrine()->getManager()->persist($workshopParticipant);
@@ -327,7 +327,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
         $workshopParticipant = $this->getDoctrine()->getRepository("CoreEntityBundle:WorkshopParticipants")->findOneBy(["workshop" => $id,"participant" => $participantId]);
 
         if(!$workshopParticipant){
-            throw $this->createNotFoundException("User not found in this Workshop");
+            return $this->handleView($this->view(['code' => 404,'message' => "User not found in this workshop"], 404));
         }
 
         $workshopParticipant->setParticipated(true);

@@ -56,7 +56,7 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
     {
        $participants = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:Participants')->findAll();
         if (!$participants) {
-            throw $this->createNotFoundException("No Participants found");
+            return $this->handleView($this->view(['code' => 404,'message' => "No Participants found"], 404));
         } 
         $view = $this->view($participants, 200);
         return $this->handleView($view);	    
@@ -85,8 +85,9 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
     {
         $participantsBlacklist = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:Participants')->findBy(['blacklisted' => TRUE]);
         if (!$participantsBlacklist) {
-            throw $this->createNotFoundException("No Participant on Blacklist found");
+            return $this->handleView($this->view(['code' => 404,'message' => "No Participants on Blacklist found"], 404));
         }
+        
         foreach($participantsBlacklist as $participant){
             $result[] = ['id' => $participant->getId(),'email' => $participant->getEmail(),'surname' => $participant->getSurname(),'name' => $participant->getName(),'blacklisted_at' => $participant->getBlacklistedAt(),'blacklisted_from' => $participant->getBlacklistedFrom()->getEmail()];
         }
@@ -124,7 +125,7 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
     {
         $participant = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:Participants')->find($id);
         if (!$participant) {
-            throw $this->createNotFoundException("No User found");
+            return $this->handleView($this->view(['code' => 404,'message' => "No User found"], 404));
         } else {
             $participant->setBlacklisted(true);
             $participant->setBlacklistedAt(new \DateTime("now"));
@@ -190,7 +191,7 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
     {
        $participantsBlacklist = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Participants")->find($id);
         if (!$participantsBlacklist) {
-            throw $this->createNotFoundException("No Participant on Blacklist found");
+            return $this->handleView($this->view(['code' => 404,'message' => "No Participants on Blacklist found"], 404));
         }
 
         /* Load E-Mail-Template*/
@@ -243,7 +244,7 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
     {
         $participantsBlacklist = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:Participants')->find($id);
         if (!$participantsBlacklist) {
-            throw $this->createNotFoundException("No User found");
+            return $this->handleView($this->view(['code' => 404,'message' => "No User found"], 404));
          } else {
             $view = $this->view($participantsBlacklist, 200);
             return $this->handleView($view);

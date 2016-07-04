@@ -47,7 +47,7 @@ class WorkshopTemplateController extends FOSRestController implements ClassResou
     {
         $workshopTemplates = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:WorkshopTemplates')->findAll();
 	    if(!$workshopTemplates) {
-            throw $this->createNotFoundException("No WorkshopTemplate found");
+            return $this->handleView($this->view(['code' => 404,'message' => "No workshop template found"], 404));
         }
 
 	    $view = $this->view($workshopTemplates, 200);
@@ -82,7 +82,7 @@ class WorkshopTemplateController extends FOSRestController implements ClassResou
     {
         $workshopTemplate = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:WorkshopTemplates')->find($id);
         if (!$workshopTemplate) {
-            throw $this->createNotFoundException("This workshop template was not found");
+            return $this->handleView($this->view(['code' => 404,'message' => "This workshop template found"], 404));
         } else {
             $view = $this->view($workshopTemplate, 200);
             return $this->handleView($view);
@@ -194,7 +194,8 @@ class WorkshopTemplateController extends FOSRestController implements ClassResou
         $workshopTemplate = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:WorkshopTemplates")->find($id);
         /* check if the workshopTemplate exist */
         if (!$workshopTemplate) {
-            throw $this->createNotFoundException("No WorkshopTemplate found");
+            return $this->handleView($this->view(['code' => 404,'message' => "No workshop tempalte found"], 404));
+
         }
         /* check the parameters */
         if($params["title"] != NULL)
@@ -352,7 +353,7 @@ class WorkshopTemplateController extends FOSRestController implements ClassResou
     {
         $workshopTemplate = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:WorkshopTemplates")->find($id);
         if (!$workshopTemplate) {
-            throw $this->createNotFoundException("WorkshopTemplate not found");
+            return $this->handleView($this->view(['code' => 404,'message' => "Workshop template not found"], 404));
         }
         $this->getDoctrine()->getManager()->remove($workshopTemplate);
         $this->getDoctrine()->getManager()->flush();
