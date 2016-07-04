@@ -36,7 +36,7 @@
                                     <td class="col-sm-2">{{ x.surname }}</td>
                                     <td class="col-sm-3">{{ x.email }}</td>
                                     <td class="col-sm-3">{{ x.blacklisted_from }}</td>
-                                    <td class="col-sm-1">{{ x.blacklisted_at| date : 'dd-MM-yyy hh:mm' }}</td>
+                                    <td class="col-sm-1">{{ x.blacklisted_at| date : 'dd-MM-yyyy h:mm' }}</td>
                                     <td class="col-sm-2">
                                         <button type="button"
                                                 class="btn btn-default btn-xs" ng-click="delete(x.id)">
