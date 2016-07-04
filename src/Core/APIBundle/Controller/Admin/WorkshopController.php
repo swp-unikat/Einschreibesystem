@@ -179,7 +179,6 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
                 ->setTo($wp->getParticipant()->getEmail())
                 ->setBody($renderTemplate->render(["workshop" => $workshop , "participant" => $wp->getParticipant()]), 'text/html');
             $this->get('mailer')->send($message);
-            $this->getDoctrine()->getManager()->remove($wp);
 
         }
         
