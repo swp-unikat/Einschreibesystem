@@ -180,8 +180,8 @@
   "ALERT_SUCCESSFUL_BLACKLISTED":"User was blacklisted",
   "ALERT_FAILED_BLACKLISTED": "Failed to blacklist user",
   "ALERT_SUCCESSFUL_REMOVED_USER": "Removed participant from list",
-  "ALERT_FAILED_REMOVE_USER": "Failed to remove user"
-
+  "ALERT_FAILED_REMOVE_USER": "Failed to remove user",
+  "AVAILABLE_PLACEHOLDERS": "available placeholders"
 
 
 
