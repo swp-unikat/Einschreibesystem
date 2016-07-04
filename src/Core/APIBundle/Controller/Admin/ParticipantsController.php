@@ -138,7 +138,7 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
                 $this->container->get('helper')->checkParticipantList($w->getWorkshop()->getId());
             }
             /* Load E-Mail-Template*/
-            $template = $this->getDoctrine()->getRepository("CoreEntityBundle:EmailTemplate")->findOneBy(['template_name' => 'Blacklistsetzung']);
+            $template = $this->getDoctrine()->getRepository("CoreEntityBundle:EmailTemplate")->findOneBy(['template_name' => 'Blacklisting']);
             if (!$template) {
                 return $this->handleView($this->view(['code' => 404, 'message' => "E-Mail Template not found"], 404));
             }
