@@ -15,7 +15,7 @@ mainAppCtrls.controller('NewEmailTemplateCtrl',['$scope',"EmailTemplate",'$trans
         var _translations = {};
         //Pass all required translation IDs to translate service
         $translate(['ALERT_EMAILTEMPLATE_NEW_SUCCESS',
-            'ALERT_EMAILTEMPLATE_NEW_FAIL','ALERT_EMAILTEMPLATE_NOT_FOUND']).
+            'ALERT_EMAILTEMPLATE_NEW_FAIL',]).
         then(function(translations){
             _translations = translations;
         });
