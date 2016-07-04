@@ -43,7 +43,7 @@ class MailController extends Controller{
         $workshops = $this->em->getRepository("CoreEntityBundle:Workshop")->getWorkshopsForNotificationEmail();
         if(!$workshops){
             $this->logger->info("No Workshops to notify.");
-            return 0;
+            return $count;
         }
         foreach ($workshops as $id) {
             /* Load Workshop object */
