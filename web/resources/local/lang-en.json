@@ -166,7 +166,6 @@
   "BLACKLISTED_FROM":"blacklisted from",
   "OPTION":"Option",
   "OLD_EMAIL": "Old email-adress",
-  "EMAIL":"E-Mail",
   "USERNAME":"Username",
   "ALERT_NOT_FOUND_WORKSHOP":"Couldn't find the workshop you tried to enroll to.",
   "ALERT_SUCCESSFULLY_ENROLLED_WORKSHOP":"Successfully enrolled to workshop",

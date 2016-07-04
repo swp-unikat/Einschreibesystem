@@ -365,6 +365,6 @@ restSvcs.factory('Admin',['$resource',function($resource){
          */
         'getLegalNotice': {url: '/api/admin/user/legal/notice',method: 'GET',isArray: false},
         'changeEmail': {url: '/api/admin/user/email',method: 'PATCH',isArray: false},
-        'createAdmin': {urk :'/api/user/admin/create',method: 'POST',isArray: false}
+        'createAdmin': {url :'/api/user/create/admin',method: 'POST',isArray: false}
     });
 }]);
