@@ -204,8 +204,8 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
         $message = \Swift_Message::newInstance()
             ->setSubject($template->getEmailSubject())
             ->setFrom($this->getParameter('email_sender'))
-            ->setTo($participant->getEmail())
-            ->setBody($renderTemplate->render(["participant" => $participant]), 'text/html');
+            ->setTo($participantsBlacklist->getEmail())
+            ->setBody($renderTemplate->render(["participant" => $participantsBlacklist]), 'text/html');
         $this->get('mailer')->send($message);
 
         $participantsBlacklist->setBlacklisted(false);
