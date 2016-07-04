@@ -15,6 +15,7 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm','Admin', '$
         });
         var _originalData = {};
         $scope.form = {};
+        $scope.ln = {};
         //TODO: load i18n for Placeholders and Tabnames
         $scope.tabs = [
 
@@ -39,11 +40,13 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm','Admin', '$
             ['justifyLeft', 'justifyCenter', 'justifyRight', 'indent', 'outdent']
         ];
 
+        var _originalNotice = "";
         Admin.getLegalNotice().$promise.then(
             function(value){
-                $scope.newLegalNotice = value.content;
+                $scope.ln.legalNotice = value.content;
+                _originalNotice = value.content;
             },function(value){
-                console.log(value);
+
             });
 
 
@@ -182,28 +185,32 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm','Admin', '$
         $scope.saveLegalNotice = function () {
             
             var _dataToSend = {
-                content : angular.toJson($scope.newLegalNotice)
+                content : $scope.ln.legalNotice
             };
+            console.log(_dataToSend.content);
             Admin.editLegalNotice(_dataToSend).$promise.then(function (value) {
                 $alert({
                     title: "Success",
                     type: 'success',
-                    content: value.message,
+                    content: value.statusText,
                     container: '#alertInfo',
                     dismissable: false,
                     show: true
                 });
+                $scope.legalNotice = value.content;
             },function (value) {
                 $alert({
                     title: "Error",
                     type: 'danger',
-                    content: value.message,
+                    content: value.statusText,
                     container: '#alertInfo',
                     dismissable: false,
                     show: true
                 });
-                $scope.newLegalNotice = value.content;
             });
+        };
+        $scope.discardLegalNotice = function() {
+            $scope.ln.legalNotice = _originalNotice;
         };
         
         

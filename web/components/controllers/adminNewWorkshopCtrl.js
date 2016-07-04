@@ -51,7 +51,7 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
             };
             var _sa = Date.parse($scope.workshop.start_at);
             var _duration = $scope.workshop.duration;
-            var _ea = new Date(_sa+_duration + 1000*60*60) ;
+            var _ea = new Date(_sa+_duration) ;
             var now = new Date();
             var error = false;
             if($scope.workshop.cost < 0){
