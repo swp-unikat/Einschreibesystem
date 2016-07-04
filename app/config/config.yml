@@ -32,11 +32,13 @@ framework:
     http_method_override: true
 
 monolog:
-  handlers:
-    participants:
-      type: stream
-      level: info
-      path: app/logs/participants.log
+    channels: ['mail','participants']
+    handlers:
+      app:
+        level:    debug
+        type:     stream
+        path:     '%kernel.logs_dir%/app.log'
+        channels: ['mail','participants']
 
 # Twig Configuration
 twig:
