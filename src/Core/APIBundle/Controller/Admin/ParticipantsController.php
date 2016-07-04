@@ -67,8 +67,10 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
      * @ApiDoc(
      *  resource=true,
      *  description="Returns list of all participants that are blacklisted",
-     *  output = "Core\EntityBundle\Entity\Participants",
-     *  statusCodes = {
+     *  output = {
+     *      "class"="Core\EntityBundle\Entity\WorkshopParticipants",
+     *      "groups"={"names"}
+     *  },statusCodes = {
      *      200 = "Returned when successful",
      *      404 = "Returned when the data is not found"
      *  }
@@ -85,7 +87,11 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
         if (!$participantsBlacklist) {
             throw $this->createNotFoundException("No Participant on Blacklist found");
         }
-        $view = $this->view($participantsBlacklist, 200);
+        foreach($participantsBlacklist as $participant){
+            $result[] = ['id' => $participant->getId(),'surname' => $participant->getSurname(),'name' => $participant->getName(),'blacklisted_at' => $participant->getBlacklistedAt(),'blacklisted_from' => $participant->getBlacklistedFrom()->getEmail()];
+        }
+
+        $view = $this->view($result, 200);
         return $this->handleView($view);
     }
 
