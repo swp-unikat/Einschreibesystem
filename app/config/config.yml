@@ -66,7 +66,6 @@ doctrine:
         auto_generate_proxy_classes: "%kernel.debug%"
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
-    server_version: 5.5
 
 # Swiftmailer Configuration
 swiftmailer:
