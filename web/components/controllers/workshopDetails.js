@@ -16,12 +16,14 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
         $translate(['ALERT_ENROLLMENT_SUCCSESSFULL','ALERT_NO_PARTICIPANTS','FIRST_NAME','LAST_NAME','EMAIL']).
         then(function(translations){
             _translations = translations;
+            $scope.placeholder =  {
+                firstname: _translations.FIRST_NAME ,
+                lastname: _translations.LAST_NAME,
+                emailadress: _translations.EMAIL
+            };
+            
         });
-        $scope.placeholder =  {
-            firstname: _translations.FIRST_NAME ,
-            lastname: _translations.LAST_NAME,
-            emailadress: _translations.EMAIL
-        };
+        
         //TODO : replace with workshop details
         var workshopid = $stateParams.id;
         /**
@@ -59,7 +61,7 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
                     animation: 'am-fade-and-slide-top'
                 });
             },function(httpResponse){
-                //TODO internationalisierung
+                
                 $alert({
                     title: 'Error',
                     type: 'danger',
