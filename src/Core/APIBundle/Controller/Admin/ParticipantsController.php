@@ -185,6 +185,22 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
         if (!$participantsBlacklist) {
             throw $this->createNotFoundException("No Participant on Blacklist found");
         }
+
+        /* Load E-Mail-Template*/
+        $template = $this->getDoctrine()->getRepository("CoreEntityBundle:EmailTemplate")->findOneBy(['template_name' => 'Blacklistremoved']);
+        if (!$template) {
+            return $this->handleView($this->view(['code' => 404, 'message' => "E-Mail Template not found"], 404));
+        }
+        /* Creating Twig template from Database */
+        $renderTemplate = $this->get('twig')->createTemplate($template->getEmailBody());
+        /* Send Mail */
+        $message = \Swift_Message::newInstance()
+            ->setSubject($template->getEmailSubject())
+            ->setFrom($this->getParameter('email_sender'))
+            ->setTo($participant->getEmail())
+            ->setBody($renderTemplate->render(["participant" => $participant]), 'text/html');
+        $this->get('mailer')->send($message);
+
         $participantsBlacklist->setBlacklisted(false);
         $this->getDoctrine()->getManager()->persist($participantsBlacklist);
         $this->getDoctrine()->getManager()->flush();
