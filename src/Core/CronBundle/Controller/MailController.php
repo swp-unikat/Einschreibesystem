@@ -26,7 +26,7 @@ class MailController extends Controller{
     protected $logger;
     protected $mailer;
 
-    public function __construct(EntityManager $em,\Twig_Extension $twig,MonologBundle $logger,\Swift_Mailer $mailer)
+    public function __construct(EntityManager $em, $twig, MonologBundle $logger, \Swift_Mailer $mailer)
     {
         $this->em		= $em;
         $this->twig		= $twig;
