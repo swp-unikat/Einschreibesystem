@@ -13,10 +13,15 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
         //Get translations for errors and store in array
         var _translations = {};
         //Pass all required translation IDs to translate service
-        $translate(['ALERT_ENROLLMENT_SUCCSESSFULL','ALERT_NO_PARTICIPANTS']).
+        $translate(['ALERT_ENROLLMENT_SUCCSESSFULL','ALERT_NO_PARTICIPANTS','FIRST_NAME','LAST_NAME','EMAIL']).
         then(function(translations){
             _translations = translations;
         });
+        $scope.placeholder =  {
+            firstname: _translations.FIRST_NAME ,
+            lastname: _translations.LAST_NAME,
+            emailadress: _translations.EMAIL
+        };
         //TODO : replace with workshop details
         var workshopid = $stateParams.id;
         /**
@@ -42,11 +47,11 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
               id: workshopid
             };
             Workshops.enroll(_params,_data).$promise.then(function(value,httpResponse){
-                
+                //TODO internationalisierung
                 $alert({
                     title: 'Success',
                     type: 'success',
-                    content:  _translations.ALERT_ENROLLMENT_SUCCSESSFULL,
+                    content: 'Enrollment successful. Please check your E-Mail!',
                     container: '#alertEnroll',
                     dismissable: true,
                     duration: 20,
@@ -54,7 +59,7 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
                     animation: 'am-fade-and-slide-top'
                 });
             },function(httpResponse){
-                
+                //TODO internationalisierung
                 $alert({
                     title: 'Error',
                     type: 'danger',
@@ -99,7 +104,7 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
                     $alert({
                         title: '',
                         type: 'info',
-                        content:  _translations.ALERT_NO_PARTICIPANTS,
+                        content: 'No participants yet',
                         container: '#alertParticipant',
                         dismissable: false,
                         show: true,
