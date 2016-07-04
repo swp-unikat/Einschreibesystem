@@ -70,7 +70,7 @@ class loadEmailTemplate implements FixtureInterface
         $emailTemplate7 = new EmailTemplate();
         $emailTemplate7->setTemplateName("Changed Workshopdetails");
         $emailTemplate7->setEmailSubject("Details of {{workshop.title}} are changed");
-        $emailTemplate7->setEmailBody("<p>Hallo {{participant.surname}},</p><p>die Details des Workshop {{workshop.title}} haben sich geändert. <br/></p><p>Bitte informiere dich auf der Website von UNIKAT über die aktuellen Details.<br/><br/><br/></p>");
+        $emailTemplate7->setEmailBody("<p>Hallo {{participant.surname}},</p><p>die Details des Workshop <a href=\"{{url}}\">{{workshop.title}}</a> haben sich geändert. <br/></p><p>Bitte informiere dich auf der Website von UNIKAT über die aktuellen Details.<!--EndFragment--><br/><br/><br/></p>");
         $emailTemplate7->setProtected(true);
         $manager->persist($emailTemplate7);
 
