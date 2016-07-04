@@ -169,6 +169,36 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm','Admin',
             });
             
         };
+        
+        
+        $scope.saveLegalNotice = function () {
+            
+            var _dataToSend = {
+                content : angular.toJson($scope.newLegalNotice)
+            };
+            Admin.editLegalNotice(_dataToSend).$promise.then(function (value) {
+                $alert({
+                    title: "Success",
+                    type: 'success',
+                    content: value.message,
+                    container: '#alertInfo',
+                    dismissable: false,
+                    show: true
+                });
+            },function (value) {
+                $alert({
+                    title: "Error",
+                    type: 'danger',
+                    content: value.message,
+                    container: '#alertInfo',
+                    dismissable: false,
+                    show: true
+                });
+                $scope.newLegalNotice = value.content;
+            });
+        };
+        
+        
         /**
          * @ngdoc function
          * @name  mainAppCtrls.controller:SettingsCtrl#discardContact
