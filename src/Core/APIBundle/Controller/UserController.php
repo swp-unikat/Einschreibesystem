@@ -146,7 +146,7 @@ class UserController extends FOSRestController implements ClassResourceInterface
         }
         $invitation = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Invitation")->findOneBy(['code' => $params['code']]);
         //check if invitation parameter sended is true
-        if ($invitation->getSent() && $invitation->getUsed() != true) {
+        if ($invitation->getSent() && $invitation->getUsed() !== true) {
             //FOSUserBundle
             $UserManager = $this->get('fos_user.user_manager');
 

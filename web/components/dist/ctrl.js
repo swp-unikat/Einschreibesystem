@@ -32,16 +32,16 @@ mainAppCtrls.controller('AdminCreateCtrl',['$scope', '$stateParams','$alert','$t
         //Get translations for errors and store in array
         var _translations = {};
         //Pass all required translation IDs to translate service
-        $translate(['PASSWORD_IDENTICAL_ERROR', 'EMAIL', 'USERNAME', 'NEW_PASSWORD', 'REPEAT_PASSWORD']).
+        $translate(['PASSWORD_IDENTICAL_ERROR']).
         then(function(translations){
             _translations = translations;
         });
         
+        
         $scope.placeholder =  {
-            username: _translations.USERNAME ,
-            password: _translations.NEW_PASSWORD,
-            confirm_password: _translations.REPEAT_PASSWORD,
-            email: _translations.EMAIL
+            username: "Username",
+            password: "Password",
+            confirm_password: "Confirm Password"
         };
         //TODO: add errors for no username, no password, not authorozizied
         $scope.myAlert = $alert({
@@ -67,7 +67,7 @@ mainAppCtrls.controller('AdminCreateCtrl',['$scope', '$stateParams','$alert','$t
 
                 $scope.password_confirm = "";
                 $scope.myAlert.show();
-                return;
+                
             }
             else{
                 $scope.myAlert.hide();
@@ -197,7 +197,7 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
             $scope.workshop.duration = _originalData.duration;
             $scope.workshop.max_participants = _originalData.max_participants;
 
-        }
+        };
 
         /**
          * @ngdoc function
@@ -263,7 +263,7 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
                     duration: 60
                 });
             });
-        }
+        };
 
         //Fetch data from API
         $scope.loading = true;
@@ -347,7 +347,7 @@ mainAppCtrls.controller('adminEmailConfirmCtrl',['$scope',"EmailTemplate",'$tran
             var data={
                 email_subject:$scope.email.template.subject,
                 email_body:$scope.email.template.body
-            }
+            };
 
             EmailTemplate.put(data).$promise.then(function (httpResponse) {
 
@@ -369,7 +369,7 @@ mainAppCtrls.controller('adminEmailConfirmCtrl',['$scope',"EmailTemplate",'$tran
                     show: true
                 });
             });
-        }
+        };
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:adminEmailConfirmCtrl#discard
@@ -600,7 +600,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
          */
         $scope.printList = function() {
             printer.print('resources/views/participantList.tpl.html',$scope.participants);
-        }
+        };
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:adminWorkshopDetailsCtrl#delete
@@ -633,7 +633,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
                 }
             )
 
-        }
+        };
 
         //Overbook a participant from the waitinglist
 
@@ -659,7 +659,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
                     title: 'Error'
                 });
             });
-        }
+        };
         
         //Move participant to blacklist
         $scope.blacklistUser = function (_id){
@@ -711,7 +711,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
         
         
     }
-])
+]);
 
 // Source: web/components/controllers/adminWorkshopManagementCtrl.js
 /**
@@ -794,7 +794,7 @@ mainAppCtrls.controller('adminWorkshopManagementCtrl',['$scope','AdminWorkshop',
                             container: '#alert',
                             dismissable: false,
                             show: true
-                        })
+                        });
                         break;
                 }
                 $scope.loading = false;
@@ -885,7 +885,7 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin','$alert'
                     duration: 30
                 });
             });
-        }
+        };
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:AdministratorManagementCtrl#delete
@@ -992,7 +992,7 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin','$alert'
                     }
                 )
 
-            }
+            };
             loadBlacklist();
 
 
@@ -1054,7 +1054,7 @@ mainAppCtrls.controller('EditEmailTemplateCtrl',['$scope','EmailTemplate','$stat
         $scope.discardChanges = function () {
             $scope.title = _originalData.title;
             $scope.email = _originalData.email;
-        }
+        };
 
         /**
          * @ngdoc function
@@ -1110,7 +1110,7 @@ mainAppCtrls.controller('EditEmailTemplateCtrl',['$scope','EmailTemplate','$stat
                         duration: 60
                     });
             });
-        }
+        };
 
         //Fetch data from API
         $scope.loading = true;
@@ -1190,7 +1190,7 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
             $scope.workshop.start_at = _originalData.start_at;
             $scope.workshop.end_at = _originalData.end_at;
             $scope.workshop.max_participants = _originalData.max_participants;
-        }
+        };
 
 
         /**
@@ -1277,7 +1277,7 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
                     duration: 60
                 });
             });
-        }
+        };
 
         //Fetch data from API
         $scope.loading = true;
@@ -1336,16 +1336,8 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
  * @name mainAppCtrls.controller:EnrollmentConfirmCtrl
  * @description Controller for showing enrollment confirm
  */
-mainAppCtrls.controller('EnrollmentConfirmCtrl',['$scope','Workshops','$stateParams','$alert', '$translate',
-    function($scope,Workshops,$stateParams,$alert,$translate) {
-        //Get translations for errors and store in array
-        var _translations = {};
-        //Pass all required translation IDs to translate service
-        $translate(['ALERT_NOT_FOUND_WORKSHOP', 'ALERT_SUCCESSFULLY_ENROLLED_WORKSHOP', 'ALERT_INVALID_ENROLMENT_LINK']).
-        then(function(translations){
-            _translations = translations;
-        });
-        
+mainAppCtrls.controller('EnrollmentConfirmCtrl',['$scope','Workshops','$stateParams','$alert',
+    function($scope,Workshops,$stateParams,$alert) {
         $scope.workshop = {};
         $scope.loading = true;
         Workshops.getWorkshop({id: $stateParams.workshopid}).$promise.then(function(value){
@@ -1360,7 +1352,7 @@ mainAppCtrls.controller('EnrollmentConfirmCtrl',['$scope','Workshops','$statePar
                 dismissable: false,
                 show: true,
                 title: 'Error',
-                content: _translations.ALERT_NOT_FOUND_WORKSHOP,
+                content: "Couldn't find the workshop you tried to enrol to.",
                 type: 'danger'
             });
         });
@@ -1374,7 +1366,7 @@ mainAppCtrls.controller('EnrollmentConfirmCtrl',['$scope','Workshops','$statePar
                 dismissable: false,
                 show: true,
                 title: 'Success',
-                content: _translations.ALERT_SUCCESSFULLY_ENROLLED_WORKSHOP + '\"' + $scope.workshop.title + '\"',
+                content: 'Successfully enrolled to workshop \"' + $scope.workshop.title + '\"',
                 type: 'success'
             });
             $scope.loading = false;
@@ -1386,7 +1378,7 @@ mainAppCtrls.controller('EnrollmentConfirmCtrl',['$scope','Workshops','$statePar
                        dismissable: false,
                        show: true,
                        title: 'Error',
-                       content: _translations.ALERT_INVALID_ENROLMENT_LINK,
+                       content: 'Invalid enrolment link. If you received this link via e-mail, please contact an administrator.',
                        type: 'danger'
                     });
                     break;
@@ -1433,7 +1425,7 @@ mainAppCtrls.controller('LoginCtrl',['$scope','$http','store','$state','jwtHelpe
         var _translations;
         $translate(['TITLE_ERROR','ALERT_LOGIN_FAIL']).then(function(translation){
             _translations = translation;
-        })
+        });
         
         /**
          * @ngdoc function
@@ -1479,7 +1471,7 @@ mainAppCtrls.controller('LoginCtrl',['$scope','$http','store','$state','jwtHelpe
          */
         $scope.showResetPanel = function() {
             $scope.reset_panel = !$scope.reset_panel;
-        }
+        };
 
         $scope.resetPassword = function() {
 
@@ -1556,7 +1548,7 @@ mainAppCtrls.controller('NewEmailTemplateCtrl',['$scope',"EmailTemplate",'$trans
                 template_name:$scope.email.template.title,
                 email_subject:$scope.email.template.subject,
                 email_body:$scope.email.template.body
-            }
+            };
             
             EmailTemplate.put(data).$promise.then(function (httpResponse) {
                 
@@ -1578,7 +1570,7 @@ mainAppCtrls.controller('NewEmailTemplateCtrl',['$scope',"EmailTemplate",'$trans
                     show: true
                 });
             });
-        }
+        };
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:NewEmailTemplateCtrl#discard

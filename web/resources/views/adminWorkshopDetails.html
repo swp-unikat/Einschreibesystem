@@ -59,7 +59,7 @@
                         <label>{{p.name}} {{p.surname}}</label> (<span class="small">{{p.email}}</span>)
 	                           <span class="pull-right">
 		                            <input type="checkbox" value="">
-		                            <button type="button" ng-click="remove(p.id)" class="btn btn-default btn-xs">
+		                            <button type="button" ng-click="remove(workshop.id,p.id)" class="btn btn-default btn-xs">
 		                                <span data-toggle="tooltip" title="{{'BUTTON_REMOVE_PARTICIPANT' | translate}}" class="glyphicon glyphicon-trash" aria-hidden="true"></span>
 		                            </button>
 		                            <button type="button" ng-click="blacklistUser(p.id)" class="btn btn-default btn-xs">
