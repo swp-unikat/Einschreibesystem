@@ -8,8 +8,20 @@ var mainAppCtrls = angular.module("mainAppCtrls");
  * @description Loads workshop details
  * @requires restSvcs.Workshops
  */
-mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$stateParams', "$alert",
-    function($scope,Workshops,$stateParams, $alert) {
+mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$stateParams', "$alert","$translate",
+    function($scope,Workshops,$stateParams, $alert, $translate) {
+        //Get translations for errors and store in array
+        var _translations = {};
+        //Pass all required translation IDs to translate service
+        $translate(['ALERT_ENROLLMENT_SUCCSESSFULL','ALERT_NO_PARTICIPANTS','FIRST_NAME','LAST_NAME','EMAIL']).
+        then(function(translations){
+            _translations = translations;
+        });
+        $scope.placeholder =  {
+            firstname: _translations.FIRST_NAME ,
+            lastname: _translations.LAST_NAME,
+            emailadress: _translations.EMAIL
+        };
         //TODO : replace with workshop details
         var workshopid = $stateParams.id;
         /**
@@ -35,11 +47,11 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
               id: workshopid
             };
             Workshops.enroll(_params,_data).$promise.then(function(value,httpResponse){
-                //TODO internationalisierung
+
                 $alert({
                     title: 'Success',
                     type: 'success',
-                    content: 'Enrollment successful. Please check your E-Mail!',
+                    content: _translations.ALERT_ENROLLMENT_SUCCSESSFULL ,
                     container: '#alertEnroll',
                     dismissable: true,
                     duration: 20,
@@ -92,7 +104,7 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
                     $alert({
                         title: '',
                         type: 'info',
-                        content: 'No participants yet',
+                        content: _translations.ALERT_NO_PARTICIPANTS,
                         container: '#alertParticipant',
                         dismissable: false,
                         show: true,

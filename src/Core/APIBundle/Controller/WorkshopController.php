@@ -321,6 +321,8 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
                 } else {
 
                     $token->setUsedAt(new \DateTime('now'));
+                    // check if participant moves from waiting list to participant list
+                    $this->container->get('helper')->checkParticipantList($id);
                     $this->getDoctrine()->getManager()->persist($token);
                     $this->getDoctrine()->getManager()->remove($workshopParticipant);
                     $this->getDoctrine()->getManager()->flush();
