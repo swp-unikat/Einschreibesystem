@@ -15,6 +15,7 @@ use Core\EntityBundle\Repository\WorkshopRepository;
 use Core\EntityBundle\Entity\EmailTemplate;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\MonologBundle\MonologBundle;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Class to load E-Mail Template and send E-Mail
@@ -25,13 +26,15 @@ class MailController extends Controller{
     protected $twig;
     protected $logger;
     protected $mailer;
+    protected $container;
 
-    public function __construct(EntityManager $em, $twig, $logger, $mailer)
+    public function __construct(EntityManager $em, $twig, $logger, $mailer,ContainerInterface $container)
     {
-        $this->em		= $em;
-        $this->twig		= $twig;
-        $this->logger	= $logger;
-        $this->mailer  	= $mailer;
+        $this->em		    = $em;
+        $this->twig		    = $twig;
+        $this->logger	    = $logger;
+        $this->mailer  	    = $mailer;
+        $this->container    = $container;
     }
 
     /**
@@ -45,11 +48,13 @@ class MailController extends Controller{
             $this->logger->info("No Workshops to notify.");
             return $count;
         }
+
         foreach ($workshops as $id) {
             /* Load Workshop object */
             $workshop = $this->em->getRepository("CoreEntityBundle:Workshop")->find($id['id']);
             /* Load Workshop Participants*/
-            $participants = $this->em->getRepository("CoreEntityBundle:Workshop")->getParticipants($workshop->getId());
+            $participants = $this->em->getRepository("CoreEntityBundle:WorkshopParticipants")->findBy(['workshop' => $workshop]);
+
             if($participants){
                 $count += $this->sendMail($participants,$workshop);
                 $workshop->setNotified(true);
@@ -82,7 +87,7 @@ class MailController extends Controller{
             /* Sending E-Mail */
             $message = \Swift_Message::newInstance()
                 ->setSubject($template->getEmailSubject())
-                ->setFrom($this->getParameter('email_sender'))
+                ->setFrom($this->container->getParameter('email_sender'))
                 ->setTo($participant['email'])
                 ->setBody($renderTemplate->render(["workshop" => $workshop,"participant" => $participant]),'text/html');
             $this->mailer->send($message);
