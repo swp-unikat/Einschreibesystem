@@ -36,7 +36,7 @@ monolog:
     participants:
       type: stream
       level: info
-      path: /var/logs/participants.log
+      path: var/logs/participants.log
 
 # Twig Configuration
 twig:
