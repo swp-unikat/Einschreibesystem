@@ -7,6 +7,8 @@
  */
 namespace Core\APIBundle\Controller\Admin;
 
+use Core\EntityBundle\Entity\Participants;
+use Core\EntityBundle\Entity\WorkshopParticipants;
 use Doctrine\Common\Collections\Criteria;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Request\ParamFetcher;
@@ -48,7 +50,6 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
      *
      * @return \Symfony\Component\HttpFoundation\Response
      * @return give the list of all participants
-     * @var Participants $participants
      * @Rest\View()
      */  
     public function getAllAction()
@@ -73,8 +74,7 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
      * )
      * )
      *
-     * @return \Symfony\Component\HttpFoundation\Response
-     * @return list of all participants that are blacklisted
+     * @return \Symfony\Component\HttpFoundation\Response list of all participants that are blacklisted
      * @var Participants $participantsBlacklist
      * @Rest\View()
      */
@@ -87,8 +87,9 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
         $view = $this->view($participantsBlacklist, 200);
         return $this->handleView($view);
     }
-    	/**
-    	 * add participant to blacklist
+
+    /*
+     * add participant to blacklist
      * @ApiDoc(
      *  resource=true,
      *  description="Add participants to blacklist ",
@@ -122,23 +123,23 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
             $participant->setBlacklistedAt(new \DateTime("now"));
             $participant->setBlacklistedFrom($this->getUser());
 
+            $workshops = $this->getDoctrine()->getRepository("CoreEntityBundle:WorkshopParticipants")->findBy(['participant' => $participant,'participated' => false]);
+            /* remove from all workshops*/
+            foreach ($workshops as $w){
+                $this->getDoctrine()->getManager()->remove($w);
+                // check if participant moves from waiting list to participant list
+                $this->container->get('helper')->checkParticipantList($w->getWorkshop()->getId());
+            }
             /* Load E-Mail-Template*/
             $template = $this->getDoctrine()->getRepository("CoreEntityBundle:EmailTemplate")->findOneBy(['template_name' => 'Blacklistsetzung']);
             if (!$template) {
                 return $this->handleView($this->view(['code' => 404, 'message' => "E-Mail Template not found"], 404));
             }
-
-            $workshops = $this->getDoctrine()->getRepository("CoreEntityBundle:WorkshopParticipants")->findBy(['participant' => $participant,'participated' => false]);
-            /* remove from all workshops*/
-            foreach ($workshops as $w){
-                $this->getDoctrine()->getManager()->remove($w);
-            }
-
             /* Creating Twig template from Database */
             $renderTemplate = $this->get('twig')->createTemplate($template->getEmailBody());
             /* Send Mail */
             $message = \Swift_Message::newInstance()
-                ->setSubject($this->get('twig')->createTemplate($template->getEmailSubject())->render(["workshop" => $workshop]))
+                ->setSubject($template->getEmailSubject())
                 ->setFrom($this->getParameter('email_sender'))
                 ->setTo($participant->getEmail())
                 ->setBody($renderTemplate->render(["participant" => $participant]), 'text/html');
@@ -249,6 +250,9 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
         if (!$participantAtWorkshop){
             return $this->handleView($this->view(['code' => 404,'message' => "Participant at Workshop not found"], 404));
         }else{
+            // check if participant moves from waiting list to participant list
+            $this->container->get('helper')->checkParticipantList($workshop);
+
             $this->getDoctrine()->getManager()->remove($participantAtWorkshop);
             $this->getDoctrine()->getManager()->flush();
             return $this->handleView($this->view(['code' => 200,'message' => "Remove participant from workshop"], 200));
