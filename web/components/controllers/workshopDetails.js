@@ -59,7 +59,7 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
                     animation: 'am-fade-and-slide-top'
                 });
             },function(httpResponse){
-                //TODO internationalisierung
+                
                 $alert({
                     title: 'Error',
                     type: 'danger',

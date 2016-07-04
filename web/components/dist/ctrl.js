@@ -468,7 +468,40 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
             var _sa = Date.parse($scope.workshop.start_at);
             var _duration = $scope.workshop.duration;
             var _ea = new Date(_sa+_duration + 1000*60*60) ;
+            var now = new Date();
 
+            if($scope.workshop.cost < 0){
+                $alert({
+                    title: 'Error',
+                    type: 'danger',
+                    content: 'negative cos',
+                    container: '#alert',
+                    dismissable: false,
+                    show: true
+                });
+            }
+
+            if($scope.workshop.max_participants < 0){
+                $alert({
+                    title: 'Error',
+                    type: 'danger',
+                    content: 'negative participants',
+                    container: '#alert',
+                    dismissable: false,
+                    show: true
+                });
+            }
+
+            if($scope.workshop.start_at < now) {
+                $alert({
+                    title: 'Error',
+                    type: 'danger',
+                    content: 'workshop is in the past',
+                    container: '#alert',
+                    dismissable: false,
+                    show: true
+                });
+            }
             var data = {
                 title:$scope.workshop.title,
                 description:$scope.workshop.description,
@@ -1884,6 +1917,7 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm','Admin',
                 return true;
             }
         };
+        
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:SettingsCtrl#changePassword
@@ -1949,7 +1983,7 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm','Admin',
             if($scope.emailAlert != null)
                 $scope.emailAlert.hide();
             var _email_new = $scope.form.email_new;
-            var _email_old = $scope.form.email_old
+            var _email_old = $scope.form.email_old;
             if(_email_new == null || _email_new == '') {
                 //error
             }
@@ -2088,14 +2122,19 @@ mainAppCtrls.controller('UnsubscribeCtrl',['$scope',
  * @requires restSvcs.Workshops
  */
 mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$stateParams', "$alert","$translate",
-    function($scope,Workshops,$stateParams, $alert) {
+    function($scope,Workshops,$stateParams, $alert, $translate) {
         //Get translations for errors and store in array
         var _translations = {};
         //Pass all required translation IDs to translate service
-        $translate(['ALERT_ENROLLMENT_SUCCSESSFULL','ALERT_NO_PARTICIPANTS']).
+        $translate(['ALERT_ENROLLMENT_SUCCSESSFULL','ALERT_NO_PARTICIPANTS','FIRST_NAME','LAST_NAME','EMAIL']).
         then(function(translations){
             _translations = translations;
         });
+        $scope.placeholder =  {
+            firstname: _translations.FIRST_NAME ,
+            lastname: _translations.LAST_NAME,
+            emailadress: _translations.EMAIL
+        };
         //TODO : replace with workshop details
         var workshopid = $stateParams.id;
         /**
@@ -2121,11 +2160,11 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
               id: workshopid
             };
             Workshops.enroll(_params,_data).$promise.then(function(value,httpResponse){
-                
+
                 $alert({
                     title: 'Success',
                     type: 'success',
-                    content:  _translations.ALERT_ENROLLMENT_SUCCSESSFULL,
+                    content: _translations.ALERT_ENROLLMENT_SUCCSESSFULL ,
                     container: '#alertEnroll',
                     dismissable: true,
                     duration: 20,
@@ -2178,7 +2217,7 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
                     $alert({
                         title: '',
                         type: 'info',
-                        content:  _translations.ALERT_NO_PARTICIPANTS,
+                        content: _translations.ALERT_NO_PARTICIPANTS,
                         container: '#alertParticipant',
                         dismissable: false,
                         show: true,
