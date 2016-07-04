@@ -47,11 +47,11 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
               id: workshopid
             };
             Workshops.enroll(_params,_data).$promise.then(function(value,httpResponse){
-                //TODO internationalisierung
+
                 $alert({
                     title: 'Success',
                     type: 'success',
-                    content: 'Enrollment successful. Please check your E-Mail!',
+                    content: _translations.ALERT_ENROLLMENT_SUCCSESSFULL ,
                     container: '#alertEnroll',
                     dismissable: true,
                     duration: 20,
@@ -104,7 +104,7 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
                     $alert({
                         title: '',
                         type: 'info',
-                        content: 'No participants yet',
+                        content: _translations.ALERT_NO_PARTICIPANTS,
                         container: '#alertParticipant',
                         dismissable: false,
                         show: true,
