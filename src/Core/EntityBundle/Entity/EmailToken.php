@@ -71,7 +71,7 @@ class EmailToken{
     public function __construct()
     {
         $this->created = new \DateTime("now");
-        $this->valid_until = $this->created;
+        $this->valid_until = new \DateTime("now");
         $this->valid_until->add(new \DateInterval('PT30M'));
         $this->token = hash("sha512",bin2hex(openssl_random_pseudo_bytes(255)));
     }
