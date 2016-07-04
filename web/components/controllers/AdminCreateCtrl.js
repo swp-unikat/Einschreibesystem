@@ -24,7 +24,6 @@ mainAppCtrls.controller('AdminCreateCtrl',['$scope', '$stateParams','$alert','$t
                 };
                 $scope.form = {};
                 $scope.myAlert = $alert({
-
                     title: 'Error',
                     type: 'danger',
                     content: _translations.PASSWORDS_IDENTICAL_ERROR,

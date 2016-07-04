@@ -100,7 +100,7 @@ class UserController extends FOSRestController implements ClassResourceInterface
          }
 
          $url = $this->generateUrl('core_frontend_default_index',[],TRUE)."#/password/reset/".$user->getConfirmationToken();
-         $template = $this->getDoctrine()->getRepository("CoreEntityBundle:EmailTemplate")->find(3);
+         $template = $this->getDoctrine()->getRepository("CoreEntityBundle:EmailTemplate")->findOneBy(['template_name' => 'Invitation']);
          /* Creating Twig template from Database */
          $renderTemplate = $this->get('twig')->createTemplate($template->getEmailBody());
          /* Sending E-Mail */
