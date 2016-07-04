@@ -5,8 +5,16 @@ var mainAppCtrls = angular.module("mainAppCtrls");
  * @name mainAppCtrls.controller:EnrollmentConfirmCtrl
  * @description Controller for showing enrollment confirm
  */
-mainAppCtrls.controller('EnrollmentConfirmCtrl',['$scope','Workshops','$stateParams','$alert',
-    function($scope,Workshops,$stateParams,$alert) {
+mainAppCtrls.controller('EnrollmentConfirmCtrl',['$scope','Workshops','$stateParams','$alert', '$translate',
+    function($scope,Workshops,$stateParams,$alert,$translate) {
+        //Get translations for errors and store in array
+        var _translations = {};
+        //Pass all required translation IDs to translate service
+        $translate(['ALERT_NOT_FOUND_WORKSHOP', 'ALERT_SUCCESSFULLY_ENROLLED_WORKSHOP', 'ALERT_INVALID_ENROLMENT_LINK']).
+        then(function(translations){
+            _translations = translations;
+        });
+        
         $scope.workshop = {};
         $scope.loading = true;
         Workshops.getWorkshop({id: $stateParams.workshopid}).$promise.then(function(value){
@@ -21,7 +29,7 @@ mainAppCtrls.controller('EnrollmentConfirmCtrl',['$scope','Workshops','$statePar
                 dismissable: false,
                 show: true,
                 title: 'Error',
-                content: "Couldn't find the workshop you tried to enrol to.",
+                content: _translations.ALERT_NOT_FOUND_WORKSHOP,
                 type: 'danger'
             });
         });
@@ -35,7 +43,7 @@ mainAppCtrls.controller('EnrollmentConfirmCtrl',['$scope','Workshops','$statePar
                 dismissable: false,
                 show: true,
                 title: 'Success',
-                content: 'Successfully enrolled to workshop \"' + $scope.workshop.title + '\"',
+                content: _translations.ALERT_SUCCESSFULLY_ENROLLED_WORKSHOP + '\"' + $scope.workshop.title + '\"',
                 type: 'success'
             });
             $scope.loading = false;
@@ -47,7 +55,7 @@ mainAppCtrls.controller('EnrollmentConfirmCtrl',['$scope','Workshops','$statePar
                        dismissable: false,
                        show: true,
                        title: 'Error',
-                       content: 'Invalid enrolment link. If you received this link via e-mail, please contact an administrator.',
+                       content: _translations.ALERT_INVALID_ENROLMENT_LINK,
                        type: 'danger'
                     });
                     break;

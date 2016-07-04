@@ -13,16 +13,16 @@ mainAppCtrls.controller('AdminCreateCtrl',['$scope', '$stateParams','$alert','$t
         //Get translations for errors and store in array
         var _translations = {};
         //Pass all required translation IDs to translate service
-        $translate(['PASSWORD_IDENTICAL_ERROR']).
+        $translate(['PASSWORD_IDENTICAL_ERROR', 'EMAIL', 'USERNAME', 'NEW_PASSWORD', 'REPEAT_PASSWORD']).
         then(function(translations){
             _translations = translations;
         });
         
-        //TODO: replace static text with translations
         $scope.placeholder =  {
-            username: "Username",
-            password: "Password",
-            confirm_password: "Confirm Password"
+            username: _translations.USERNAME ,
+            password: _translations.NEW_PASSWORD,
+            confirm_password: _translations.REPEAT_PASSWORD,
+            email: _translations.EMAIL
         };
         //TODO: add errors for no username, no password, not authorozizied
         $scope.myAlert = $alert({
