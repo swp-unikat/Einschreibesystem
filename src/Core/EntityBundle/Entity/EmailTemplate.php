@@ -39,6 +39,7 @@ class EmailTemplate{
      * @Serializer\SerializedName("email_subject")
      */
     public $email_subject;
+
     /**
      * body of e-mailtemplate
      * @var string
@@ -47,6 +48,24 @@ class EmailTemplate{
      * @Serializer\SerializedName("email_body")
      */
     public $email_body;
+
+    /**
+     * placeholder
+     * @var string
+     * @ORM\Column(name="placeholder", type="string", nullable=false)
+     * @Serializer\Expose
+     * @Serializer\SerializedName("placeholder")
+     */
+    public $placeholder;
+
+    /**
+     * routes
+     * @var string
+     * @ORM\Column(name="routes", type="string", nullable=false)
+     * @Serializer\Expose
+     * @Serializer\SerializedName("routes")
+     */
+    public $routes;
 
     /**
      * protection
@@ -148,6 +167,22 @@ class EmailTemplate{
     public function setProtected($protected)
     {
         $this->protected = $protected;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPlaceholder()
+    {
+        return $this->placeholder;
+    }
+
+    /**
+     * @param string $placeholder
+     */
+    public function setPlaceholder($placeholder)
+    {
+        $this->placeholder = $placeholder;
     }
     
     
