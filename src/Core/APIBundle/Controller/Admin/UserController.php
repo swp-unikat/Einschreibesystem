@@ -42,6 +42,7 @@ class UserController extends FOSRestController implements ClassResourceInterface
      *
      *
      * @return \Symfony\Component\HttpFoundation\Response
+     * @param $paramFetcher ParamFetcher
      * @Rest\RequestParam(name="email", requirements=".*", description="email")
      * @Rest\View()
      */
@@ -99,12 +100,13 @@ class UserController extends FOSRestController implements ClassResourceInterface
      */
     public function deleteAction($adminID)
     {
-        $admin = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle')->find($adminID);
+        $admin = $this->get('fos_user.user_manager')->findUserBy(['id' => $adminID]);
         if (!$admin) {
-            throw $this->createNotFoundException("Admin not found");
+            return $this->handleView($this->view(['code' => 404, 'message' => "Admin not found"], 404));
         } else {
             $admin->setEnabled(false);
         }
+        $this->get('fos_user.user_manager')->updateUser($admin);
         $this->getDoctrine()->getManager()->persist($admin);
         $this->getDoctrine()->getManager()->flush();
         return View::create(null, Codes::HTTP_OK);
