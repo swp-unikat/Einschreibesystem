@@ -42,6 +42,7 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm','Admin',
 
 
         $scope.pwAlert = null;
+        $scope.emailAlert = null;
 
 
         /**
@@ -109,6 +110,7 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm','Admin',
                     dismissable: false,
                     show: true
                 });
+                $scope.form = {};
             },function(value){
                 if($scope.pwAlert != null)
                     $scope.pwAlert.hide();
@@ -121,7 +123,9 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm','Admin',
                     dismissable: false,
                     show: true
                 });
+                $scope.form = {};
             });
+
         };
         /**
          * @ngdoc function
@@ -130,13 +134,40 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm','Admin',
          * @description checks validity of email and sends request to change it to the server
          */
         $scope.changeEmail = function() {
-            var _personal_email = $scope.form.personal_email;
-            if(_personal_email == null || _personal_email == '') {
-
+            if($scope.emailAlert != null)
+                $scope.emailAlert.hide();
+            var _email_new = $scope.form.email_new;
+            var _email_old = $scope.form.email_old
+            if(_email_new == null || _email_new == '') {
+                //error
             }
-            //TODO confirm
-
-            //TODO Send to server, handle response ( Missing API function )
+            if(_email_old == null || _email_old == '') {
+                //error
+            }
+            Admin.changeEmail({oldemail: _email_old, newemail: _email_new}).$promise.then(function(response){
+                $scope.emailAlert = $alert({
+                   content: response.statusText,
+                   type: 'success',
+                   title: 'Success',
+                   show: true,
+                   dismissable: false,
+                   duration: 30,
+                   container: '#emailAlert' 
+                });
+                $scope.form = {};
+            },function(response){
+                $scope.emailAlert = $alert({
+                    content: response.statusText,
+                    type: 'danger',
+                    title: 'Error',
+                    show: true,
+                    dismissable: false,
+                    duration: 30,
+                    container: '#emailAlert'
+                });
+                $scope.form = {};
+            });
+            
         };
         
         

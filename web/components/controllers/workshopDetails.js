@@ -62,7 +62,10 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
         };
 
         $scope.unsubscribe= function(){
-  
+            var _params = {
+              workshopId: workshopid,
+                
+            };
         };
         
         $scope.loading = true;

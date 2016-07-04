@@ -7,7 +7,6 @@ var mainAppCtrls = angular.module("mainAppCtrls");
  * @name mainAppCtrls.controller:DashboardCtrl
  * @description Controller for showing administrator functions
  */
-//TODO: if /dashboard is called, change hideDashboard to false
 mainAppCtrls.controller('DashboardCtrl',['$scope',
     function($scope) {
         
@@ -32,16 +31,16 @@ mainAppCtrls.controller('AdminCreateCtrl',['$scope', '$stateParams','$alert','$t
         //Get translations for errors and store in array
         var _translations = {};
         //Pass all required translation IDs to translate service
-        $translate(['PASSWORD_IDENTICAL_ERROR']).
+        $translate(['PASSWORD_IDENTICAL_ERROR', 'EMAIL', 'USERNAME', 'NEW_PASSWORD', 'REPEAT_PASSWORD']).
         then(function(translations){
             _translations = translations;
         });
         
-        
         $scope.placeholder =  {
-            username: "Username",
-            password: "Password",
-            confirm_password: "Confirm Password"
+            username: _translations.USERNAME ,
+            password: _translations.NEW_PASSWORD,
+            confirm_password: _translations.REPEAT_PASSWORD,
+            email: _translations.EMAIL
         };
         //TODO: add errors for no username, no password, not authorozizied
         $scope.myAlert = $alert({
@@ -67,11 +66,12 @@ mainAppCtrls.controller('AdminCreateCtrl',['$scope', '$stateParams','$alert','$t
 
                 $scope.password_confirm = "";
                 $scope.myAlert.show();
-                
+                return;
             }
             else{
                 $scope.myAlert.hide();
                 //TODO: send request to api to create new account
+                
             }
         };
     }
@@ -197,7 +197,7 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
             $scope.workshop.duration = _originalData.duration;
             $scope.workshop.max_participants = _originalData.max_participants;
 
-        };
+        }
 
         /**
          * @ngdoc function
@@ -263,7 +263,7 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
                     duration: 60
                 });
             });
-        };
+        }
 
         //Fetch data from API
         $scope.loading = true;
@@ -347,7 +347,7 @@ mainAppCtrls.controller('adminEmailConfirmCtrl',['$scope',"EmailTemplate",'$tran
             var data={
                 email_subject:$scope.email.template.subject,
                 email_body:$scope.email.template.body
-            };
+            }
 
             EmailTemplate.put(data).$promise.then(function (httpResponse) {
 
@@ -369,7 +369,7 @@ mainAppCtrls.controller('adminEmailConfirmCtrl',['$scope',"EmailTemplate",'$tran
                     show: true
                 });
             });
-        };
+        }
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:adminEmailConfirmCtrl#discard
@@ -601,42 +601,8 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
         $scope.printList = function() {
             printer.print('resources/views/participantList.tpl.html',$scope.participants);
         };
-        /**
-         * @ngdoc function
-         * @name mainAppCtrls.controller:adminWorkshopDetailsCtrl#delete
-         * @methodOf mainAppCtrls.controller:adminWorkshopDetailsCtrl
-         * @param {number} _id id of the participant, which should be removed from the workshop
-         * @description Deletes the participant with the passed id
-         */
-        $scope.delete = function (_id) {
-            Participants.delete({id:_id}).$promise.then(function(httpresponse){
-                    $alert({
-                        title:'',
-                        type: 'success',
-                        container:'#alert',
-                        show: true,
-                        dismissable: false,
-                        content: _translations.ALERT_WORKSHOP_DELETE_PARTICIPANT,
-                        duration: 20
-                    });
-                    loadList();
-                }
-                , function (httpResponse) {
-                    $alert({
-                        title: '',
-                        type: 'danger',
-                        content: _translations.ALERT_WORKSHOP_DELETE_PARTICIPANT_FAIL + ' (' + httpReponse.status +')',
-                        container: '#alert',
-                        dismissable: false,
-                        show: true
-                    });
-                }
-            )
-
-        };
 
         //Overbook a participant from the waitinglist
-
         $scope.overbook = function(_id){
             AdminWorkshop.overbook({id: workshopid,participantid: _id}).$promise.then(function(response){
                 $alert({
@@ -685,25 +651,25 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
         };
 
         //Remove participant from list
-        $scope.remove = function(_id){
-          Participants.remove({id: _id}).$promise.then(function(response){
-              $alert({
-                  type: 'success',
-                  duration: 20,
-                  container: '#alert',
-                  content: 'Removed participant from list',
-                  show: true,
-                  title: 'Success'
-              });
+        $scope.remove = function (_participant,_workshop) {
+            Participants.remove({participant:_participant,workshop:_workshop}).$promise.then(function(response){
+                $alert({
+                    type: 'success',
+                    duration: 20,
+                    container: '#alert',
+                    content: 'Removed participant from list',
+                    show: true,
+                    title: 'Success'
+                });
             },function(response){
-              $alert({
-                  type: 'danger',
-                  duration: 20,
-                  container: '#alert',
-                  content: 'Failed to remove user ('+response.status+')',
-                  show: true,
-                  title: 'Error'
-              });
+                $alert({
+                    type: 'danger',
+                    duration: 20,
+                    container: '#alert',
+                    content: 'Failed to remove user ('+response.status+')',
+                    show: true,
+                    title: 'Error'
+                });
             });
         };
         
@@ -794,7 +760,7 @@ mainAppCtrls.controller('adminWorkshopManagementCtrl',['$scope','AdminWorkshop',
                             container: '#alert',
                             dismissable: false,
                             show: true
-                        });
+                        })
                         break;
                 }
                 $scope.loading = false;
@@ -885,7 +851,7 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin','$alert'
                     duration: 30
                 });
             });
-        };
+        }
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:AdministratorManagementCtrl#delete
@@ -992,7 +958,7 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin','$alert'
                     }
                 )
 
-            };
+            }
             loadBlacklist();
 
 
@@ -1054,7 +1020,7 @@ mainAppCtrls.controller('EditEmailTemplateCtrl',['$scope','EmailTemplate','$stat
         $scope.discardChanges = function () {
             $scope.title = _originalData.title;
             $scope.email = _originalData.email;
-        };
+        }
 
         /**
          * @ngdoc function
@@ -1110,7 +1076,7 @@ mainAppCtrls.controller('EditEmailTemplateCtrl',['$scope','EmailTemplate','$stat
                         duration: 60
                     });
             });
-        };
+        }
 
         //Fetch data from API
         $scope.loading = true;
@@ -1190,7 +1156,7 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
             $scope.workshop.start_at = _originalData.start_at;
             $scope.workshop.end_at = _originalData.end_at;
             $scope.workshop.max_participants = _originalData.max_participants;
-        };
+        }
 
 
         /**
@@ -1277,7 +1243,7 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
                     duration: 60
                 });
             });
-        };
+        }
 
         //Fetch data from API
         $scope.loading = true;
@@ -1336,8 +1302,16 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
  * @name mainAppCtrls.controller:EnrollmentConfirmCtrl
  * @description Controller for showing enrollment confirm
  */
-mainAppCtrls.controller('EnrollmentConfirmCtrl',['$scope','Workshops','$stateParams','$alert',
-    function($scope,Workshops,$stateParams,$alert) {
+mainAppCtrls.controller('EnrollmentConfirmCtrl',['$scope','Workshops','$stateParams','$alert', '$translate',
+    function($scope,Workshops,$stateParams,$alert,$translate) {
+        //Get translations for errors and store in array
+        var _translations = {};
+        //Pass all required translation IDs to translate service
+        $translate(['ALERT_NOT_FOUND_WORKSHOP', 'ALERT_SUCCESSFULLY_ENROLLED_WORKSHOP', 'ALERT_INVALID_ENROLMENT_LINK']).
+        then(function(translations){
+            _translations = translations;
+        });
+        
         $scope.workshop = {};
         $scope.loading = true;
         Workshops.getWorkshop({id: $stateParams.workshopid}).$promise.then(function(value){
@@ -1352,7 +1326,7 @@ mainAppCtrls.controller('EnrollmentConfirmCtrl',['$scope','Workshops','$statePar
                 dismissable: false,
                 show: true,
                 title: 'Error',
-                content: "Couldn't find the workshop you tried to enrol to.",
+                content: _translations.ALERT_NOT_FOUND_WORKSHOP,
                 type: 'danger'
             });
         });
@@ -1366,7 +1340,7 @@ mainAppCtrls.controller('EnrollmentConfirmCtrl',['$scope','Workshops','$statePar
                 dismissable: false,
                 show: true,
                 title: 'Success',
-                content: 'Successfully enrolled to workshop \"' + $scope.workshop.title + '\"',
+                content: _translations.ALERT_SUCCESSFULLY_ENROLLED_WORKSHOP + '\"' + $scope.workshop.title + '\"',
                 type: 'success'
             });
             $scope.loading = false;
@@ -1378,7 +1352,7 @@ mainAppCtrls.controller('EnrollmentConfirmCtrl',['$scope','Workshops','$statePar
                        dismissable: false,
                        show: true,
                        title: 'Error',
-                       content: 'Invalid enrolment link. If you received this link via e-mail, please contact an administrator.',
+                       content: _translations.ALERT_INVALID_ENROLMENT_LINK,
                        type: 'danger'
                     });
                     break;
@@ -1425,7 +1399,7 @@ mainAppCtrls.controller('LoginCtrl',['$scope','$http','store','$state','jwtHelpe
         var _translations;
         $translate(['TITLE_ERROR','ALERT_LOGIN_FAIL']).then(function(translation){
             _translations = translation;
-        });
+        })
         
         /**
          * @ngdoc function
@@ -1471,7 +1445,7 @@ mainAppCtrls.controller('LoginCtrl',['$scope','$http','store','$state','jwtHelpe
          */
         $scope.showResetPanel = function() {
             $scope.reset_panel = !$scope.reset_panel;
-        };
+        }
 
         $scope.resetPassword = function() {
 
@@ -1548,7 +1522,7 @@ mainAppCtrls.controller('NewEmailTemplateCtrl',['$scope',"EmailTemplate",'$trans
                 template_name:$scope.email.template.title,
                 email_subject:$scope.email.template.subject,
                 email_body:$scope.email.template.body
-            };
+            }
             
             EmailTemplate.put(data).$promise.then(function (httpResponse) {
                 
@@ -1570,7 +1544,7 @@ mainAppCtrls.controller('NewEmailTemplateCtrl',['$scope',"EmailTemplate",'$trans
                     show: true
                 });
             });
-        };
+        }
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:NewEmailTemplateCtrl#discard
@@ -1856,6 +1830,7 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm','Admin',
 
 
         $scope.pwAlert = null;
+        $scope.emailAlert = null;
 
 
         /**
@@ -1923,6 +1898,7 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm','Admin',
                     dismissable: false,
                     show: true
                 });
+                $scope.form = {};
             },function(value){
                 if($scope.pwAlert != null)
                     $scope.pwAlert.hide();
@@ -1935,7 +1911,9 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm','Admin',
                     dismissable: false,
                     show: true
                 });
+                $scope.form = {};
             });
+
         };
         /**
          * @ngdoc function
@@ -1944,14 +1922,71 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm','Admin',
          * @description checks validity of email and sends request to change it to the server
          */
         $scope.changeEmail = function() {
-            var _personal_email = $scope.form.personal_email;
-            if(_personal_email == null || _personal_email == '') {
-
+            if($scope.emailAlert != null)
+                $scope.emailAlert.hide();
+            var _email_new = $scope.form.email_new;
+            var _email_old = $scope.form.email_old
+            if(_email_new == null || _email_new == '') {
+                //error
             }
-            //TODO confirm
-
-            //TODO Send to server, handle response ( Missing API function )
+            if(_email_old == null || _email_old == '') {
+                //error
+            }
+            Admin.changeEmail({oldemail: _email_old, newemail: _email_new}).$promise.then(function(response){
+                $scope.emailAlert = $alert({
+                   content: response.statusText,
+                   type: 'success',
+                   title: 'Success',
+                   show: true,
+                   dismissable: false,
+                   duration: 30,
+                   container: '#emailAlert' 
+                });
+                $scope.form = {};
+            },function(response){
+                $scope.emailAlert = $alert({
+                    content: response.statusText,
+                    type: 'danger',
+                    title: 'Error',
+                    show: true,
+                    dismissable: false,
+                    duration: 30,
+                    container: '#emailAlert'
+                });
+                $scope.form = {};
+            });
+            
         };
+        
+        
+        $scope.saveLegalNotice = function () {
+            
+            var _dataToSend = {
+                content : angular.toJson($scope.newLegalNotice)
+            };
+            Admin.editLegalNotice(_dataToSend).$promise.then(function (value) {
+                $alert({
+                    title: "Success",
+                    type: 'success',
+                    content: value.message,
+                    container: '#alertInfo',
+                    dismissable: false,
+                    show: true
+                });
+            },function (value) {
+                $alert({
+                    title: "Error",
+                    type: 'danger',
+                    content: value.message,
+                    container: '#alertInfo',
+                    dismissable: false,
+                    show: true
+                });
+                $scope.newLegalNotice = value.content;
+            });
+        };
+        
+        
         /**
          * @ngdoc function
          * @name  mainAppCtrls.controller:SettingsCtrl#discardContact
@@ -2082,7 +2117,10 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
         };
 
         $scope.unsubscribe= function(){
-  
+            var _params = {
+              workshopId: workshopid,
+                
+            };
         };
         
         $scope.loading = true;

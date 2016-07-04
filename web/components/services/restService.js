@@ -52,7 +52,7 @@ restSvcs.factory('Workshops',['$resource',function($resource){
          * @param {number} id Workshop-ID
          * @param {string} token Unsubscribetoken
          */
-        'unsubscribe': {method: 'GET',url:'/api/workshops/:workshopId/unsubscribe/:token',params: {id: '@id', token: '@token'},isArray: false},
+        'unsubscribe': {method: 'GET',url:'/api/workshops/:workshopId/unsubscribe/:participantId',params: {workshopId: '@workshopId', participantId: '@participantId'},isArray: false},
         /**
          * @ngdoc funtion
          * @name restSvcs.Workshops#unsubscribeWorkshop
@@ -363,6 +363,8 @@ restSvcs.factory('Admin',['$resource',function($resource){
          * @description Edits the legal Notice saved on the server
          * @methodOf restSvcs.Admin
          */
-        'getLegalNotice': {url: '/api/admin/user/legal/notice',method: 'GET',isArray: false}
+        'getLegalNotice': {url: '/api/admin/user/legal/notice',method: 'GET',isArray: false},
+        'changeEmail': {url: '/api/admin/user/email',method: 'PATCH',isArray: false},
+        'createAdmin': {urk :'/api/user/admin/create',method: 'POST',isArray: false}
     });
 }]);
