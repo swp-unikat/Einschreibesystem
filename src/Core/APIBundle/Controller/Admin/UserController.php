@@ -206,9 +206,9 @@ class UserController extends FOSRestController implements ClassResourceInterface
      */
     public function getListAction()
     {
-        $admin = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:User")->findAll();
+        $admin = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:User")->findBy(["enabled" => 1]);
         if (!$admin) {
-            throw $this->createNotFoundException("No admin was found");
+            return $this->handleView($this->view(['code' => 404, 'message' => "No admins found"], 404));
         } else {
             $view = $this->view($admin, 200);
             return $this->handleView($view);
