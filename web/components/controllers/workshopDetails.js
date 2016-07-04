@@ -10,6 +10,19 @@ var mainAppCtrls = angular.module("mainAppCtrls");
  */
 mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$stateParams', "$alert",
     function($scope,Workshops,$stateParams, $alert) {
+        //Get translations for errors and store in array
+        var _translations = {};
+        //Pass all required translation IDs to translate service
+        $translate(['FIRSTNAME','LASTNAME','EMAIL']).
+        then(function(translations){
+            _translations = translations;
+        });
+
+        $scope.placeholder =  {
+            firstname: _translations.FIRST_NAME ,
+            lastname: _translations.LAST_NAME,
+            emailadress: _translations.EMAIL
+
         //TODO : replace with workshop details
         var workshopid = $stateParams.id;
         /**
