@@ -8,22 +8,20 @@ var mainAppCtrls = angular.module("mainAppCtrls");
  * @description Loads workshop details
  * @requires restSvcs.Workshops
  */
-mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$stateParams', "$alert",
-    function($scope,Workshops,$stateParams, $alert) {
+mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$stateParams', "$alert","$translate",
+    function($scope,Workshops,$stateParams, $alert, $translate) {
         //Get translations for errors and store in array
         var _translations = {};
         //Pass all required translation IDs to translate service
-        $translate(['FIRSTNAME','LASTNAME','EMAIL']).
+        $translate(['ALERT_ENROLLMENT_SUCCSESSFULL','ALERT_NO_PARTICIPANTS','FIRST_NAME','LAST_NAME','EMAIL']).
         then(function(translations){
             _translations = translations;
         });
-
         $scope.placeholder =  {
             firstname: _translations.FIRST_NAME ,
             lastname: _translations.LAST_NAME,
             emailadress: _translations.EMAIL
         };
-        
         //TODO : replace with workshop details
         var workshopid = $stateParams.id;
         /**
@@ -77,7 +75,7 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
 
         $scope.unsubscribe= function(){
             var _params = {
-              workshopId: workshopid
+              workshopId: workshopid,
                 
             };
         };
