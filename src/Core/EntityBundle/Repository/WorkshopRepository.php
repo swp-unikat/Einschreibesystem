@@ -92,7 +92,7 @@ class WorkshopRepository extends EntityRepository
                  ->from("CoreEntityBundle:Workshop","workshop")
             ->where("workshop.notified = 0 and date_sub(workshop.start_at,24,'hour') < ?1 and workshop.end_at > ?1");
         $q->setParameter(1,$now);
-        $result = $q->getQuery()->getResult();
+        $result = $q->getQuery()->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
 
         return $result;
     }
