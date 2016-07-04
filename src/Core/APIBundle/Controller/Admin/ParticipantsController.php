@@ -61,8 +61,9 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
         $view = $this->view($participants, 200);
         return $this->handleView($view);	    
     }
-    	/**
-    	 * returns list of all participants that are blacklisted
+
+    /**
+     * returns list of all participants that are blacklisted
      * @ApiDoc(
      *  resource=true,
      *  description="Returns list of all participants that are blacklisted",
@@ -88,7 +89,7 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
         return $this->handleView($view);
     }
 
-    /*
+    /**
      * add participant to blacklist
      * @ApiDoc(
      *  resource=true,
