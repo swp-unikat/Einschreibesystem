@@ -19,6 +19,15 @@ mainAppCtrls.controller('adminEmailConfirmCtrl',['$scope',"EmailTemplate",'$tran
         then(function(translations){
             _translations = translations;
         });
+        //load available Workshoptemplates for list
+        EmailTemplate.getAll().$promise.then(function(response){
+            $scope.templates = response;
+        },function(response){
+            
+        });
+        $scope.loadTemplate = function(){
+            $scope.Emailtemplate = JSON.parse(JSON.stringify($scope.selectedTemplate));
+        };
 
         /**
          * @ngdoc function
