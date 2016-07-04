@@ -4,7 +4,7 @@
         <translate>CONFIRM_EMAIL</translate>
     </h1>
     <div class="col-md-2 col-xs-2 pull-right">
-        <a ui-sref="administrator_workshop_details ({workshopid :id})">
+        <a ui-sref="administrator_workshop_details ({id: workshopid})">
             <button class="btn btn-default">{{ "BUTTON_BACK" | translate}}</button>
         </a>
     </div>
@@ -14,42 +14,35 @@
     <!--dropdown-->
     <button type="button" class="btn btn-default" ng-model="selectedTemplate" data-html="1" data-toggle="true"
             data-placeholder="Select a template"
-            ng-change="loadTemplate()" bs-options="template.title for template in templates"
+            ng-change="loadTemplate()" bs-options="template.template_name for template in templates"
             bs-select>
-        Action <span class="caret"></span>
+        <span class="caret"></span>
     </button>
 
     <!--dropdown end-->
 </div>
 
 <div class="col-md-2" bs-alert></div>
-    <body data-spy="scroll" data-target=".navbar">
-    <form role="search">
-
         <div class="row">
             <div class="col-lg-6">
                 <div class="form-group">
                     <label>{{ "EMAIL_SUBJECT" | translate}}</label>
-                    <input type="text" ng-model="email.template.subject" class="form-control ">
+                    <input type="text" ng-model="email.subject" class="form-control ">
 
                     <label>{{ "EMAIL_BODY" | translate}}</label>
-                    <div text-angular ng-model="email.template.body"></div>
+                    <div text-angular ng-model="email.body"></div>
 
                     <br>
                     <div class="form-group row text-left">
                         <div class="btn-group">
                             <button type="button" class="btn btn-info" ng-click="discard()">{{ "BUTTON_DISCARD" | translate}}</button>
-                            <button type="button" class="btn btn-info" ng-click="sendInfo()">{{ "BUTTON_CONFIRM" | translate}}</button>
+                            <button type="button" class="btn btn-info" ng-click="send()">{{ "BUTTON_CONFIRM" | translate}}</button>
                         </div>
                     </div>
                 </div>
             </div>
-            <br>
-            <br>
             <div class="col-md-6" id="alert" bs-alert></div>
         </div>
-    </form>
-    </body>
 </div>
 
 

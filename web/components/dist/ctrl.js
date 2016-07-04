@@ -345,9 +345,10 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
  * @description Controller to create a new email template to send a confirmation to the marked participants
  * @requires restSvcs.EmailTemplate
  */
-mainAppCtrls.controller('adminEmailConfirmCtrl',['$scope',"EmailTemplate",'$translate','$alert',
-    function($scope, EmailTemplate,$translate,$alert) {
-
+mainAppCtrls.controller('adminEmailConfirmCtrl',['$scope',"EmailTemplate",'$translate','$alert','$stateParams',
+    function($scope, EmailTemplate,$translate,$alert,$stateParams) {
+        $scope.email = {};
+        $scope.workshopid =  $stateParams.id;
         //Get translations for errors and store in array
         var _translations = {};
         //Pass all required translation IDs to translate service
@@ -363,7 +364,9 @@ mainAppCtrls.controller('adminEmailConfirmCtrl',['$scope',"EmailTemplate",'$tran
             
         });
         $scope.loadTemplate = function(){
-            $scope.Emailtemplate = JSON.parse(JSON.stringify($scope.selectedTemplate));
+            var template = JSON.parse(JSON.stringify($scope.selectedTemplate));
+            $scope.email.body = template.email_body;
+            $scope.email.subject = template.email_subject;
         };
 
         /**
@@ -372,32 +375,8 @@ mainAppCtrls.controller('adminEmailConfirmCtrl',['$scope',"EmailTemplate",'$tran
          * @description Sends the data of the created email template to the server
          * @methodOf mainAppCtrls.controller:adminEmailConfirmCtrl
          */
-        $scope.sendInfo = function(){
-            var data={
-                email_subject:$scope.email.template.subject,
-                email_body:$scope.email.template.body
-            }
+        $scope.send = function(){
 
-            EmailTemplate.put(data).$promise.then(function (httpResponse) {
-
-                $alert({
-                    title: '',
-                    type: 'success',
-                    content: _translations.ALERT_EMAILTEMPLATE_NEW_SUCCESS + ' \"' + data.template_name +'\"',
-                    container: '#alert',
-                    dismissable: false,
-                    show: true
-                });
-            }, function (httpResponse) {
-                $alert({
-                    title: '',
-                    type: 'danger',
-                    content: _translations.ALERT_EMAILTEMPLATE_NEW_FAIL + ' (' + httpReponse.status +')',
-                    container: '#alert',
-                    dismissable: false,
-                    show: true
-                });
-            });
         }
         /**
          * @ngdoc function
@@ -407,8 +386,8 @@ mainAppCtrls.controller('adminEmailConfirmCtrl',['$scope',"EmailTemplate",'$tran
          */
         
         $scope.discard = function(){
-            $scope.email.template.subject= "";
-            $scope.email.template.body= "";
+            $scope.email.subject= "";
+            $scope.email.body= "";
 
         }
 
@@ -594,11 +573,10 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
         then(function(translations){
             _translations = translations;
         });
-        
-        var workshopid;
-        workshopid = $stateParams.id;
+
+        $scope.workshopid = $stateParams.id;
         $scope.loading = true;
-        Workshops.get({id: workshopid}).$promise.then(function(value,httpResponse){
+        Workshops.get({id:  $scope.workshopid}).$promise.then(function(value,httpResponse){
             $scope.workshop = value;
 
             var _ea = Date.parse($scope.workshop.end_at);
@@ -625,7 +603,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
          */
         var loadParticipants = function (){
             $scope.loading = true;
-            AdminWorkshop.participants({id: workshopid}).$promise.then(function(value,httpResponse){
+            AdminWorkshop.participants({id:  $scope.workshopid}).$promise.then(function(value,httpResponse){
                 $scope.participants = value;
 
                 $scope.loading = false;
@@ -648,7 +626,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
         };
         var loadWaitinglist = function() {
             $scope.loading = true;
-            AdminWorkshop.waitinglist({id: workshopid}).$promise.then(function(response){
+            AdminWorkshop.waitinglist({id:  $scope.workshopid}).$promise.then(function(response){
                 $scope.waitingList = response;
                 $scope.loading = false;
             },function(response){
@@ -673,7 +651,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
 
         //Overbook a participant from the waitinglist
         $scope.overbook = function(_id){
-            AdminWorkshop.overbook({id: workshopid,participantid: _id}).$promise.then(function(response){
+            AdminWorkshop.overbook({id:  $scope.workshopid,participantid: _id}).$promise.then(function(response){
                 $alert({
                    type: 'success',
                    duration: 20,

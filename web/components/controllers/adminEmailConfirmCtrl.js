@@ -8,9 +8,10 @@ var mainAppCtrls = angular.module("mainAppCtrls");
  * @description Controller to create a new email template to send a confirmation to the marked participants
  * @requires restSvcs.EmailTemplate
  */
-mainAppCtrls.controller('adminEmailConfirmCtrl',['$scope',"EmailTemplate",'$translate','$alert',
-    function($scope, EmailTemplate,$translate,$alert) {
-
+mainAppCtrls.controller('adminEmailConfirmCtrl',['$scope',"EmailTemplate",'$translate','$alert','$stateParams',
+    function($scope, EmailTemplate,$translate,$alert,$stateParams) {
+        $scope.email = {};
+        $scope.workshopid =  $stateParams.id;
         //Get translations for errors and store in array
         var _translations = {};
         //Pass all required translation IDs to translate service
@@ -26,7 +27,9 @@ mainAppCtrls.controller('adminEmailConfirmCtrl',['$scope',"EmailTemplate",'$tran
             
         });
         $scope.loadTemplate = function(){
-            $scope.Emailtemplate = JSON.parse(JSON.stringify($scope.selectedTemplate));
+            var template = JSON.parse(JSON.stringify($scope.selectedTemplate));
+            $scope.email.body = template.email_body;
+            $scope.email.subject = template.email_subject;
         };
 
         /**
@@ -35,32 +38,8 @@ mainAppCtrls.controller('adminEmailConfirmCtrl',['$scope',"EmailTemplate",'$tran
          * @description Sends the data of the created email template to the server
          * @methodOf mainAppCtrls.controller:adminEmailConfirmCtrl
          */
-        $scope.sendInfo = function(){
-            var data={
-                email_subject:$scope.email.template.subject,
-                email_body:$scope.email.template.body
-            }
+        $scope.send = function(){
 
-            EmailTemplate.put(data).$promise.then(function (httpResponse) {
-
-                $alert({
-                    title: '',
-                    type: 'success',
-                    content: _translations.ALERT_EMAILTEMPLATE_NEW_SUCCESS + ' \"' + data.template_name +'\"',
-                    container: '#alert',
-                    dismissable: false,
-                    show: true
-                });
-            }, function (httpResponse) {
-                $alert({
-                    title: '',
-                    type: 'danger',
-                    content: _translations.ALERT_EMAILTEMPLATE_NEW_FAIL + ' (' + httpReponse.status +')',
-                    container: '#alert',
-                    dismissable: false,
-                    show: true
-                });
-            });
         }
         /**
          * @ngdoc function
@@ -70,8 +49,8 @@ mainAppCtrls.controller('adminEmailConfirmCtrl',['$scope',"EmailTemplate",'$tran
          */
         
         $scope.discard = function(){
-            $scope.email.template.subject= "";
-            $scope.email.template.body= "";
+            $scope.email.subject= "";
+            $scope.email.body= "";
 
         }
 
