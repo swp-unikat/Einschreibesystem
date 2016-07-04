@@ -166,7 +166,7 @@
   "BLACKLISTED_FROM":"blacklisted from",
   "OPTION":"Option",
   "OLD_EMAIL": "Old email-adress",
-  "USERNAME":"Username",
+  "USERNAME":"Username (optional)",
   "ALERT_NOT_FOUND_WORKSHOP":"Couldn't find the workshop you tried to enroll to.",
   "ALERT_SUCCESSFULLY_ENROLLED_WORKSHOP":"Successfully enrolled to workshop",
   "ALERT_INVALID_ENROLMENT_LINK":"Invalid enrollment link. If you received this link via e-mail, please contact an administrator.",
