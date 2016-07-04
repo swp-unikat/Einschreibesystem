@@ -7,10 +7,9 @@ var mainAppCtrls = angular.module("mainAppCtrls");
  * @name mainAppCtrls.controller:DashboardCtrl
  * @description Controller for showing administrator functions
  */
-//TODO: if /dashboard is called, change hideDashboard to false
 mainAppCtrls.controller('DashboardCtrl',['$scope',
     function($scope) {
-
+        
     }
 
 ]);
@@ -28,7 +27,7 @@ mainAppCtrls.controller('DashboardCtrl',['$scope',
  */
 mainAppCtrls.controller('AdminCreateCtrl',['$scope', '$stateParams','$alert','$translate',
     function($scope,$stateParams,$alert,$translate) {
-
+        
         //Get translations for errors and store in array
         var _translations = {};
         //Pass all required translation IDs to translate service
@@ -36,7 +35,7 @@ mainAppCtrls.controller('AdminCreateCtrl',['$scope', '$stateParams','$alert','$t
         then(function(translations){
             _translations = translations;
         });
-
+        
         //TODO: replace static text with translations
         $scope.placeholder =  {
             username: "Username",
@@ -67,7 +66,7 @@ mainAppCtrls.controller('AdminCreateCtrl',['$scope', '$stateParams','$alert','$t
 
                 $scope.password_confirm = "";
                 $scope.myAlert.show();
-                
+                return;
             }
             else{
                 $scope.myAlert.hide();
@@ -85,12 +84,12 @@ mainAppCtrls.controller('AdminCreateCtrl',['$scope', '$stateParams','$alert','$t
 
 /**
  * @ngdoc controller
- * @name mainAppCtrls.controller:EmailTemplateCtrl
- * @description Module containing all email templates
+* @name mainAppCtrls.controller:EmailTemplateCtrl
+* @description Module containing all email templates
  * @requires restSvscs.EmailTemplate
- */
+*/
 mainAppCtrls.controller('EmailTemplateCtrl', ['$scope', "EmailTemplate",'$alert','$modal',
-
+    
     function ($scope, EmailTemplate, $alert,$modal) {
         /**
          * @ngdoc function
@@ -128,8 +127,8 @@ mainAppCtrls.controller('EmailTemplateCtrl', ['$scope', "EmailTemplate",'$alert'
                         content: 'Successfully deleted',
                         duration: 20
                     });
-                    loadTemplates();
-                }
+                loadTemplates();
+            }
                 , function (httpResponse) {
                     alert('Error');
                 }
@@ -197,7 +196,7 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
             $scope.workshop.duration = _originalData.duration;
             $scope.workshop.max_participants = _originalData.max_participants;
 
-        };
+        }
 
         /**
          * @ngdoc function
@@ -263,7 +262,7 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
                     duration: 60
                 });
             });
-        };
+        }
 
         //Fetch data from API
         $scope.loading = true;
@@ -347,7 +346,7 @@ mainAppCtrls.controller('adminEmailConfirmCtrl',['$scope',"EmailTemplate",'$tran
             var data={
                 email_subject:$scope.email.template.subject,
                 email_body:$scope.email.template.body
-            };
+            }
 
             EmailTemplate.put(data).$promise.then(function (httpResponse) {
 
@@ -369,14 +368,14 @@ mainAppCtrls.controller('adminEmailConfirmCtrl',['$scope',"EmailTemplate",'$tran
                     show: true
                 });
             });
-        };
+        }
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:adminEmailConfirmCtrl#discard
          * @description Discards all data of the document
          * @methodOf mainAppCtrls.controller:adminEmailConfirmCtrl
          */
-
+        
         $scope.discard = function(){
             $scope.email.template.subject= "";
             $scope.email.template.body= "";
@@ -423,7 +422,7 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
         then(function(translations){
             _translations = translations;
         });
-
+        
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:AdminNewWorkshopCtrl#sendInfo
@@ -464,7 +463,7 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
                     dismissable: false,
                     show: true
                 });
-
+                
             },function(httpResponse){
                 $alert({
                     title: '',
@@ -497,9 +496,9 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
                 $scope.workshop = JSON.parse(JSON.stringify($scope.selectedTemplate));
             }
 
-
+            
         }
-
+        
     }
 
 ]);
@@ -525,7 +524,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
         then(function(translations){
             _translations = translations;
         });
-
+        
         var workshopid;
         workshopid = $stateParams.id;
         $scope.loading = true;
@@ -535,7 +534,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
             var _ea = Date.parse($scope.workshop.end_at);
             var _sa = Date.parse($scope.workshop.start_at);
             $scope.workshop.duration = new Date(_ea - _sa);
-
+            
             $scope.loading = false;
         },function(httpResponse) {
             $alert({
@@ -591,7 +590,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
         loadParticipants();
 
         //Load waitinglist
-        loadWaitinglist();
+       loadWaitinglist();
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:adminWorkshopDetailsCtrl#printList
@@ -603,15 +602,14 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
         };
 
         //Overbook a participant from the waitinglist
-
         $scope.overbook = function(_id){
             AdminWorkshop.overbook({id: workshopid,participantid: _id}).$promise.then(function(response){
                 $alert({
-                    type: 'success',
-                    duration: 20,
-                    container: '#alert',
-                    content: 'Successfully overbooked workshop',
-                    show: 'true',
+                   type: 'success',
+                   duration: 20,
+                   container: '#alert',
+                   content: 'Successfully overbooked workshop',
+                   show: 'true',
                     title: 'Success'
                 });
                 loadParticipants();
@@ -627,7 +625,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
                 });
             });
         };
-
+        
         //Move participant to blacklist
         $scope.blacklistUser = function (_id){
             Participants.blacklist({id: _id}).$promise.then(function(response){
@@ -673,10 +671,10 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
                 });
             });
         };
-
-
-
-
+        
+        
+        
+        
     }
 ]);
 
@@ -707,7 +705,7 @@ mainAppCtrls.controller('adminWorkshopManagementCtrl',['$scope','AdminWorkshop',
         then(function(translations){
             _translations = translations;
         });
-
+        
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:adminWorkshopManagementCtrl#compareToCurrent
@@ -717,9 +715,9 @@ mainAppCtrls.controller('adminWorkshopManagementCtrl',['$scope','AdminWorkshop',
          * @returns {boolean} Returns true if passed date lies in the future
          **/
         var compareToCurrent = function (a){
-            var  d1 = new Date();
-            var  d2 = new Date(a);
-            return (d2.getTime()>d1.getTime())
+           var  d1 = new Date();
+           var  d2 = new Date(a);
+           return (d2.getTime()>d1.getTime())
         };
         //Get and store translation for alert title.
         $translate(['TITLE_ERROR', 'ERROR_NO_WORKSHOPS']).then(function (translations) {
@@ -761,7 +759,7 @@ mainAppCtrls.controller('adminWorkshopManagementCtrl',['$scope','AdminWorkshop',
                             container: '#alert',
                             dismissable: false,
                             show: true
-                        });
+                        })
                         break;
                 }
                 $scope.loading = false;
@@ -852,7 +850,7 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin','$alert'
                     duration: 30
                 });
             });
-        };
+        }
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:AdministratorManagementCtrl#delete
@@ -894,79 +892,79 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin','$alert'
  * @description Controller show you a list of blacklisted users
  * @requires restSvcs.Participants
  */
-mainAppCtrls.controller('BlacklistCtrl', ['$scope', "Participants",'$alert','$modal','$translate',
+    mainAppCtrls.controller('BlacklistCtrl', ['$scope', "Participants",'$alert','$modal','$translate',
 
-    function ($scope, Participants, $alert,$modal,$translate) {
+        function ($scope, Participants, $alert,$modal,$translate) {
 
 
-        //Get translations for errors and store in array
-        var _translations = {};
-        //Pass all required translation IDs to translate service
-        $translate(['ALERT_BLACKLIST_DELETE_PARTICIPANT',
-            'ALERT_BLACKLIST_DELETE_PARTICIPANT_FAIL']).
-        then(function(translations){
-            _translations = translations;
-        });
-        /**
-         * @ngdoc function
-         * @name mainAppCtrls.controller:BlacklistCtrl#loadingBlacklist
-         * @methodOf mainAppCtrls.controller:BlacklistCtrl
-         * @description Function to load a list of persons, which were set on the blacklist
-         */
-        var loadBlacklist = function (){
-            $scope.loading = true;
-            Participants.getblacklistall()
-                .$promise.then(function (value) {
-                $scope.userdata = value;
-                $scope.loading = false;
-
-            }, function (httpResponse) {
-                $scope.loading = false;
+            //Get translations for errors and store in array
+            var _translations = {};
+            //Pass all required translation IDs to translate service
+            $translate(['ALERT_BLACKLIST_DELETE_PARTICIPANT',
+                'ALERT_BLACKLIST_DELETE_PARTICIPANT_FAIL']).
+            then(function(translations){
+                _translations = translations;
             });
-        };
-        /**
-         * @ngdoc function
-         * @name mainAppCtrls.controller:BlacklistCtrl#delete
-         * @methodOf mainAppCtrls.controller:BlacklistCtrl
-         * @description Function removes a selected person from the blacklist
-         * @params {number} _id user id of the person, which should be removed
-         */
-        $scope.delete = function (_id) {
-            $scope.deleting = true;
-            Participants.removeBlacklist({id:_id}).$promise.then(function(httpResponse){
-                    $scope.deleting = false;
-                    $alert({
-                        title:'',
-                        type: 'success',
-                        container:'#alert',
-                        show: true,
-                        dismissable: false,
-                        content: _translations.ALERT_BLACKLIST_DELETE_PARTICIPANT,
-                        duration: 20
-                    });
-                    loadBlacklist();
-                }
-                , function (httpResponse) {
-                    $scope.deleting = false;
-                    $alert({
-                        title: '',
-                        type: 'danger',
-                        content: _translations.ALERT_BLACKLIST_DELETE_PARTICIPANT_FAIL + ' (' + httpReponse.status +')',
-                        container: '#alert',
-                        dismissable: false,
-                        show: true
-                    });
-                }
-            )
+                /**
+                 * @ngdoc function
+                 * @name mainAppCtrls.controller:BlacklistCtrl#loadingBlacklist
+                 * @methodOf mainAppCtrls.controller:BlacklistCtrl
+                 * @description Function to load a list of persons, which were set on the blacklist
+                 */
+                var loadBlacklist = function (){
+                $scope.loading = true;
+                Participants.getblacklistall()
+                    .$promise.then(function (value) {
+                    $scope.userdata = value;
+                    $scope.loading = false;
 
-        };
-        loadBlacklist();
+                }, function (httpResponse) {
+                    $scope.loading = false;
+                });
+            };
+            /**
+             * @ngdoc function
+             * @name mainAppCtrls.controller:BlacklistCtrl#delete
+             * @methodOf mainAppCtrls.controller:BlacklistCtrl
+             * @description Function removes a selected person from the blacklist
+             * @params {number} _id user id of the person, which should be removed
+             */
+            $scope.delete = function (_id) {
+                $scope.deleting = true;
+                Participants.removeBlacklist({id:_id}).$promise.then(function(httpResponse){
+                       $scope.deleting = false;
+                        $alert({
+                            title:'',
+                            type: 'success',
+                            container:'#alert',
+                            show: true,
+                            dismissable: false,
+                            content: _translations.ALERT_BLACKLIST_DELETE_PARTICIPANT,
+                            duration: 20
+                        });
+                        loadBlacklist();
+                    }
+                    , function (httpResponse) {
+                        $scope.deleting = false;
+                        $alert({
+                            title: '',
+                            type: 'danger',
+                            content: _translations.ALERT_BLACKLIST_DELETE_PARTICIPANT_FAIL + ' (' + httpReponse.status +')',
+                            container: '#alert',
+                            dismissable: false,
+                            show: true
+                        });
+                    }
+                )
+
+            }
+            loadBlacklist();
 
 
-
-    }
-
-
+            
+        }
+            
+            
 ]);
 
 // Source: web/components/controllers/contactCtrl.js
@@ -981,7 +979,7 @@ mainAppCtrls.controller('BlacklistCtrl', ['$scope', "Participants",'$alert','$mo
  */
 mainAppCtrls.controller('ContactCtrl',['$scope',
     function($scope) {
-
+        
     }
 
 ]);
@@ -997,7 +995,7 @@ mainAppCtrls.controller('ContactCtrl',['$scope',
  */
 mainAppCtrls.controller('EditEmailTemplateCtrl',['$scope','EmailTemplate','$stateParams','$translate','$alert',
     function($scope,EmailTemplate,$stateParams,$translate,$alert) {
-
+        
         var _workshopId = $stateParams.id;
 
         //Initialize _originalData
@@ -1021,7 +1019,7 @@ mainAppCtrls.controller('EditEmailTemplateCtrl',['$scope','EmailTemplate','$stat
         $scope.discardChanges = function () {
             $scope.title = _originalData.title;
             $scope.email = _originalData.email;
-        };
+        }
 
         /**
          * @ngdoc function
@@ -1067,17 +1065,17 @@ mainAppCtrls.controller('EditEmailTemplateCtrl',['$scope','EmailTemplate','$stat
                     duration: 30
                 });
             }, function (httpResponse) {
-                $alert({
-                    title: '',
-                    type: 'danger',
-                    content: _translations.ALERT_EMAILTEMPLATE_EDIT_FAIL + '(' + httpReponse.status +')',
-                    container: '#alert',
-                    dismissable: true,
-                    show: true,
-                    duration: 60
-                });
+                    $alert({
+                        title: '',
+                        type: 'danger',
+                        content: _translations.ALERT_EMAILTEMPLATE_EDIT_FAIL + '(' + httpReponse.status +')',
+                        container: '#alert',
+                        dismissable: true,
+                        show: true,
+                        duration: 60
+                    });
             });
-        };
+        }
 
         //Fetch data from API
         $scope.loading = true;
@@ -1148,7 +1146,7 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
          * @methodOf mainAppCtrls.controller:EditWorkshopTemplateCtrl
          */
         $scope.discard = function () {
-
+            
             $scope.workshop.title = _originalData.title;
             $scope.workshop.description = _originalData.description;
             $scope.workshop.cost = _originalData.cost;
@@ -1157,7 +1155,7 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
             $scope.workshop.start_at = _originalData.start_at;
             $scope.workshop.end_at = _originalData.end_at;
             $scope.workshop.max_participants = _originalData.max_participants;
-        };
+        }
 
 
         /**
@@ -1176,13 +1174,13 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
                 start_at: '',
                 end_at: '',
                 max_participants: ''
-
+                
             };
             var _sa = new Date(_originalData.start_at);
             var _duration = $scope.workshop.duration;
             var _ea = new Date(_duration + 1000*60*60);
             var _changedData = {
-
+                
                 title: $scope.workshop.title,
                 description: $scope.workshop.description,
                 cost: $scope.workshop.cost,
@@ -1222,7 +1220,7 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
                     start_at: value.title,
                     end_at: value.end_at,
                     max_participants: value.max_participants
-
+                    
                 };
                 $alert({
                     title: '',
@@ -1244,7 +1242,7 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
                     duration: 60
                 });
             });
-        };
+        }
 
         //Fetch data from API
         $scope.loading = true;
@@ -1274,7 +1272,7 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
             $scope.workshop.location = _originalData.location;
             $scope.workshop.duration = _originalData.duration;
             $scope.workshop.max_participants = _originalData.max_participants;
-
+            
 
 
 
@@ -1312,7 +1310,7 @@ mainAppCtrls.controller('EnrollmentConfirmCtrl',['$scope','Workshops','$statePar
             var _ea = Date.parse($scope.workshop.end_at);
             var _sa = Date.parse($scope.workshop.start_at);
             $scope.workshop.duration = new Date(_ea - _sa);
-
+            
         },function(value){
             $alert({
                 container: '#alert',
@@ -1341,12 +1339,12 @@ mainAppCtrls.controller('EnrollmentConfirmCtrl',['$scope','Workshops','$statePar
             switch(httpResponse.status){
                 case 404:
                     $alert({
-                        container: '#alert',
-                        dismissable: false,
-                        show: true,
-                        title: 'Error',
-                        content: 'Invalid enrolment link. If you received this link via e-mail, please contact an administrator.',
-                        type: 'danger'
+                       container: '#alert',
+                       dismissable: false,
+                       show: true,
+                       title: 'Error',
+                       content: 'Invalid enrolment link. If you received this link via e-mail, please contact an administrator.',
+                       type: 'danger'
                     });
                     break;
             }
@@ -1368,7 +1366,7 @@ mainAppCtrls.controller('EnrollmentConfirmCtrl',['$scope','Workshops','$statePar
  */
 mainAppCtrls.controller('LegalNoticeCtrl',['$scope',
     function($scope) {
-
+ 
     }
 
 ]);
@@ -1388,12 +1386,12 @@ mainAppCtrls.controller('LoginCtrl',['$scope','$http','store','$state','jwtHelpe
         $scope.reset_panel = false;
         var jwt = store.get('jwt');
         $scope.reset = {};
-
+        
         var _translations;
         $translate(['TITLE_ERROR','ALERT_LOGIN_FAIL']).then(function(translation){
             _translations = translation;
-        });
-
+        })
+        
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:LoginCtrl#sendInfo
@@ -1438,7 +1436,7 @@ mainAppCtrls.controller('LoginCtrl',['$scope','$http','store','$state','jwtHelpe
          */
         $scope.showResetPanel = function() {
             $scope.reset_panel = !$scope.reset_panel;
-        };
+        }
 
         $scope.resetPassword = function() {
 
@@ -1494,7 +1492,7 @@ mainAppCtrls.controller('LoginCtrl',['$scope','$http','store','$state','jwtHelpe
  */
 mainAppCtrls.controller('NewEmailTemplateCtrl',['$scope',"EmailTemplate",'$translate','$alert',
     function($scope, EmailTemplate,$translate,$alert) {
-
+        
         //Get translations for errors and store in array
         var _translations = {};
         //Pass all required translation IDs to translate service
@@ -1503,7 +1501,7 @@ mainAppCtrls.controller('NewEmailTemplateCtrl',['$scope',"EmailTemplate",'$trans
         then(function(translations){
             _translations = translations;
         });
-
+        
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:NewEmailTemplateCtrl#sendInfo
@@ -1515,10 +1513,10 @@ mainAppCtrls.controller('NewEmailTemplateCtrl',['$scope',"EmailTemplate",'$trans
                 template_name:$scope.email.template.title,
                 email_subject:$scope.email.template.subject,
                 email_body:$scope.email.template.body
-            };
-
+            }
+            
             EmailTemplate.put(data).$promise.then(function (httpResponse) {
-
+                
                 $alert({
                     title: '',
                     type: 'success',
@@ -1537,7 +1535,7 @@ mainAppCtrls.controller('NewEmailTemplateCtrl',['$scope',"EmailTemplate",'$trans
                     show: true
                 });
             });
-        };
+        }
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:NewEmailTemplateCtrl#discard
@@ -1548,10 +1546,10 @@ mainAppCtrls.controller('NewEmailTemplateCtrl',['$scope',"EmailTemplate",'$trans
             $scope.email.template.title= "";
             $scope.email.template.subject= "";
             $scope.email.template.body= "";
-
+            
         }
 
-
+        
     }
 
 ]);
@@ -1572,7 +1570,7 @@ mainAppCtrls.controller('NewWorkshopTemplateCtrl',['$scope',"WorkshopTemplate",'
     function($scope, WorkshopTemplate,$translate,$alert) {
         $scope.workshop = {};
         $scope.myAlert;
-
+        
         //Get translations for errors and store in array
         var _translations = {};
         //Pass all required translation IDs to translate service
@@ -1622,12 +1620,12 @@ mainAppCtrls.controller('NewWorkshopTemplateCtrl',['$scope',"WorkshopTemplate",'
                 $scope.myAlert.hide();
             WorkshopTemplate.put(data).$promise.then(function(httpResponse){
                 $scope.myAlert = $alert({
-                    container: '#alert',
-                    type: 'success',
-                    title: '',
-                    content: _translations.ALERT_WORKSHOPTEMPLATE_NEW_SUCCESS + ' \"' + data.title +'\"',
-                    show: true,
-                    dismissable: false
+                   container: '#alert',
+                   type: 'success',
+                   title: '',
+                   content: _translations.ALERT_WORKSHOPTEMPLATE_NEW_SUCCESS + ' \"' + data.title +'\"',
+                   show: true,
+                   dismissable: false
                 });
             },function(httpResponse){
                 $scope.myAlert = $alert({
@@ -1684,7 +1682,7 @@ mainAppCtrls.controller('PasswordResetCtrl',['$scope','$alert','$translate','Adm
         $scope.form = {};
         var _translations;
         $translate(['TITLE_ERROR','PASSWORDS_IDENTICAL_ERROR','PASSWORD_EMPTY_ERROR']).then(function(translations){
-            _translations = translations;
+           _translations = translations;
         });
         var pwAlert;
         var _token = $stateParams.token;
@@ -1823,6 +1821,7 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm','Admin',
 
 
         $scope.pwAlert = null;
+        $scope.emailAlert = null;
 
 
         /**
@@ -1890,6 +1889,7 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm','Admin',
                     dismissable: false,
                     show: true
                 });
+                $scope.form = {};
             },function(value){
                 if($scope.pwAlert != null)
                     $scope.pwAlert.hide();
@@ -1902,7 +1902,9 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm','Admin',
                     dismissable: false,
                     show: true
                 });
+                $scope.form = {};
             });
+
         };
         /**
          * @ngdoc function
@@ -1911,13 +1913,40 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm','Admin',
          * @description checks validity of email and sends request to change it to the server
          */
         $scope.changeEmail = function() {
-            var _personal_email = $scope.form.personal_email;
-            if(_personal_email == null || _personal_email == '') {
-
+            if($scope.emailAlert != null)
+                $scope.emailAlert.hide();
+            var _email_new = $scope.form.email_new;
+            var _email_old = $scope.form.email_old
+            if(_email_new == null || _email_new == '') {
+                //error
             }
-            //TODO confirm
-
-            //TODO Send to server, handle response ( Missing API function )
+            if(_email_old == null || _email_old == '') {
+                //error
+            }
+            Admin.changeEmail({oldemail: _email_old, newemail: _email_new}).$promise.then(function(response){
+                $scope.emailAlert = $alert({
+                   content: response.statusText,
+                   type: 'success',
+                   title: 'Success',
+                   show: true,
+                   dismissable: false,
+                   duration: 30,
+                   container: '#emailAlert' 
+                });
+                $scope.form = {};
+            },function(response){
+                $scope.emailAlert = $alert({
+                    content: response.statusText,
+                    type: 'danger',
+                    title: 'Error',
+                    show: true,
+                    dismissable: false,
+                    duration: 30,
+                    container: '#emailAlert'
+                });
+                $scope.form = {};
+            });
+            
         };
         /**
          * @ngdoc function
@@ -2006,20 +2035,20 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
          * @methodOf mainAppCtrls.controller:WorkshopDetailsCtrl
          */
         $scope.sendInfo= function(){
-            var first_name=$scope.first_name;
+            var first_name=$scope.first_name;   
             var last_name=$scope.last_name;
             var _email=$scope.e_mail;
 
             //check if input is valid
             var _data = {
-                //Data to be send
-                name: first_name,
-                surname: last_name,
-                email:   _email
+              //Data to be send  
+              name: first_name,
+              surname: last_name,
+              email:   _email
             };
             //parameters for url
             var _params = {
-                id: workshopid
+              id: workshopid
             };
             Workshops.enroll(_params,_data).$promise.then(function(value,httpResponse){
                 //TODO internationalisierung
@@ -2049,9 +2078,12 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
         };
 
         $scope.unsubscribe= function(){
-
+            var _params = {
+              workshopId: workshopid,
+                
+            };
         };
-
+        
         $scope.loading = true;
         Workshops.get({id: workshopid}).$promise.then(function(value,httpResponse){
             $scope.workshop = value;
@@ -2059,7 +2091,7 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
             var _ea = Date.parse($scope.workshop.end_at);
             var _sa = Date.parse($scope.workshop.start_at);
             $scope.workshop.duration = new Date(_ea - _sa);
-
+            
             $scope.loading = false;
         },function(httpResponse) {
             alert(httpResponse.status + '');
@@ -2106,7 +2138,7 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
  */
 mainAppCtrls.controller('WorkshopListCtrl',['$scope','Workshops','$alert','$translate',
     function($scope,Workshops,$alert,$translate) {
-
+        
         //Define object to store the alert in
         $scope.myAlert;
         //Get and store translation for alert title.
@@ -2142,7 +2174,7 @@ mainAppCtrls.controller('WorkshopListCtrl',['$scope','Workshops','$alert','$tran
                         dismissable: false,
                         show: true
                     });
-                    break;
+                break;
             }
             $scope.loading = false;
         });
@@ -2175,7 +2207,7 @@ mainAppCtrls.controller('WorkshopTemplateCtrl', ['$scope', "WorkshopTemplate",'$
         then(function(translations){
             _translations = translations;
         });
-
+        
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:WorkshopTemplateCtrl#loadTemplates
