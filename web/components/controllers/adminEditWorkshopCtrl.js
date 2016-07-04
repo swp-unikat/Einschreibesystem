@@ -51,7 +51,7 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
             $scope.workshop.duration = _originalData.duration;
             $scope.workshop.max_participants = _originalData.max_participants;
 
-        }
+        };
 
         /**
          * @ngdoc function
@@ -73,6 +73,46 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
             var _sa = Date.parse($scope.workshop.start_at);
             var _duration = $scope.workshop.duration;
             var _ea = new Date(_sa+_duration + 1000*60*60) ;
+
+            var error = false;
+            if($scope.workshop.cost < 0){
+                $alert({
+                    title: 'Error',
+                    type: 'danger',
+                    content: _translations.ALERT_NEGATIVE_COST,
+                    container: '#alert',
+                    dismissable: false,
+                    show: true
+                });
+                error = true;
+            }
+
+            if($scope.workshop.max_participants < 0){
+                $alert({
+                    title: 'Error',
+                    type: 'danger',
+                    content: _translations.ALERT_NEGATIVE_PARTICIPANTS,
+                    container: '#alert',
+                    dismissable: false,
+                    show: true
+                });
+                error = true;
+            }
+
+            if($scope.workshop.start_at < now) {
+                $alert({
+                    title: 'Error',
+                    type: 'danger',
+                    content: _translations.ALERT_WORKSHOP_IN_PAST,
+                    container: '#alert',
+                    dismissable: false,
+                    show: true
+                });
+                error = true;
+            }
+
+            if(error)
+                return false;
 
             var _dataToSend = {
                 title:$scope.workshop.title,
@@ -117,7 +157,7 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
                     duration: 60
                 });
             });
-        }
+        };
 
         //Fetch data from API
         $scope.loading = true;

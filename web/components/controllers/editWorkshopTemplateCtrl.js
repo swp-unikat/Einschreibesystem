@@ -39,7 +39,7 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
             $scope.workshop.start_at = _originalData.start_at;
             $scope.workshop.end_at = _originalData.end_at;
             $scope.workshop.max_participants = _originalData.max_participants;
-        }
+        };
 
 
         /**
@@ -61,6 +61,48 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
             var _sa = Date.parse($scope.workshop.start_at);
             var _duration = $scope.workshop.duration;
             var _ea = new Date(_sa+_duration) ;
+            
+            var error = false;
+            if($scope.workshop.cost < 0){
+                $alert({
+                    title: 'Error',
+                    type: 'danger',
+                    content: _translations.ALERT_NEGATIVE_COST,
+                    container: '#alert',
+                    dismissable: false,
+                    show: true
+                });
+                error = true;
+            }
+
+            if($scope.workshop.max_participants < 0){
+                $alert({
+                    title: 'Error',
+                    type: 'danger',
+                    content: _translations.ALERT_NEGATIVE_PARTICIPANTS,
+                    container: '#alert',
+                    dismissable: false,
+                    show: true
+                });
+                error = true;
+            }
+
+            if($scope.workshop.start_at < now) {
+                $alert({
+                    title: 'Error',
+                    type: 'danger',
+                    content: _translations.ALERT_WORKSHOP_IN_PAST,
+                    container: '#alert',
+                    dismissable: false,
+                    show: true
+                });
+                error = true;
+            }
+
+            if(error)
+                return false;
+
+
             var data = {
                 title:$scope.workshop.title,
                 description:$scope.workshop.description,
@@ -92,7 +134,7 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
                     duration: 60
                 });
             });
-        }
+        };
 
         //Fetch data from API
         $scope.loading = true;
