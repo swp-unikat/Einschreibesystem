@@ -439,7 +439,7 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
         var _translations = {};
         //Pass all required translation IDs to translate service
         $translate(['ALERT_WORKSHOP_NEW_SUCCESS',
-            'ALERT_WORKSHOP_NEW_FAIL']).
+            'ALERT_WORKSHOP_NEW_FAIL', 'ALERT_NEGATIVE_COST', 'ALERT_NEGATIVE_PARTICIPANTS', 'ALERT_WORKSHOP_IN_PAST']).
         then(function(translations){
             _translations = translations;
         });
@@ -470,7 +470,7 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
                 $alert({
                     title: 'Error',
                     type: 'danger',
-                    content: 'negative cost',
+                    content: _translations.ALERT_NEGATIVE_COST,
                     container: '#alert',
                     dismissable: false,
                     show: true
@@ -482,7 +482,7 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
                 $alert({
                     title: 'Error',
                     type: 'danger',
-                    content: 'negative participants',
+                    content: _translations.ALERT_NEGATIVE_PARTICIPANTS,
                     container: '#alert',
                     dismissable: false,
                     show: true
@@ -494,7 +494,7 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
                 $alert({
                     title: 'Error',
                     type: 'danger',
-                    content: 'workshop is in the past',
+                    content: _translations.ALERT_WORKSHOP_IN_PAST,
                     container: '#alert',
                     dismissable: false,
                     show: true
@@ -581,7 +581,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
         //Get translations for errors and store in array
         var _translations = {};
         //Pass all required translation IDs to translate service
-        $translate(['ALERT_NO_PARTICIPANTS']).
+        $translate(['ALERT_NO_PARTICIPANTS', 'ALERT_SUCCESSFUL_OVERBOOK', 'ALERT_FAIL_OVERBOOK', 'ALERT_SUCCESSFUL_REMOVED_USER', 'ALERT_FAILED_REMOVED_USER',]).
         then(function(translations){
             _translations = translations;
         });
@@ -669,7 +669,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
                    type: 'success',
                    duration: 20,
                    container: '#alert',
-                   content: 'Successfully overbooked workshop',
+                   content: _translations.ALERT_SUCCESSFUL_OVERBOOK,
                    show: 'true',
                     title: 'Success'
                 });
@@ -680,7 +680,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
                     type: 'danger',
                     duration: 20,
                     container: '#alert',
-                    content: 'Successfully overbooked workshop',
+                    content: _translations.ALERT_FAIL_OVERBOOK,
                     show: 'true',
                     title: 'Error'
                 });
@@ -694,7 +694,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
                     type: 'success',
                     duration: 20,
                     container: '#alert',
-                    content: 'User was blacklisted',
+                    content: _translations.ALERT_SUCCESSFUL_BLACKLISTED,
                     show: true,
                     title: 'Success'
                 });
@@ -703,7 +703,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
                     type: 'danger',
                     duration: 20,
                     container: '#alert',
-                    content: 'Failed to blacklist user ('+response.status+')',
+                    content: _translations.ALERT_FAILED_BLACKLISTED + '('+response.status+')',
                     show: true,
                     title: 'Error'
                 });
@@ -717,7 +717,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
                     type: 'success',
                     duration: 20,
                     container: '#alert',
-                    content: 'Removed participant from list',
+                    content: _translations.ALERT_SUCCESSFUL_REMOVED_USER,
                     show: true,
                     title: 'Success'
                 });
@@ -726,7 +726,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
                     type: 'danger',
                     duration: 20,
                     container: '#alert',
-                    content: 'Failed to remove user ('+response.status+')',
+                    content: _translations.ALERT_FAILED_REMOVED_USER + '('+response.status+')',
                     show: true,
                     title: 'Error'
                 });
@@ -874,7 +874,7 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin','$alert'
 
         var _translations = {};
         //Pass all required translation IDs to translate service
-        $translate(['INVITED_ADMINISTRATOR_EMAIL', 'INVITED_ADMINISTRATOR_EMAIL_ERROR']).then(function (translations) {
+        $translate(['INVITED_ADMINISTRATOR_EMAIL', 'INVITED_ADMINISTRATOR_EMAIL_ERROR', 'ALERT_DELETE_ADMIN']).then(function (translations) {
             _translations = translations;
         });
         var loadList = function () {
@@ -904,7 +904,7 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin','$alert'
                 $alert({
                     type: 'danger',
                     title: 'Error',
-                    content: 'Failed to delete admin',
+                    content: _translations.ALERT_DELETE_ADMIN,
                     container: '#alert',
                     show: true,
                     dismissable: false,
@@ -1566,7 +1566,7 @@ mainAppCtrls.controller('NewEmailTemplateCtrl',['$scope',"EmailTemplate",'$trans
         var _translations = {};
         //Pass all required translation IDs to translate service
         $translate(['ALERT_EMAILTEMPLATE_NEW_SUCCESS',
-            'ALERT_EMAILTEMPLATE_NEW_FAIL','ALERT_EMAILTEMPLATE_NOT_FOUND']).
+            'ALERT_EMAILTEMPLATE_NEW_FAIL',]).
         then(function(translations){
             _translations = translations;
         });
@@ -1852,8 +1852,15 @@ mainAppCtrls.controller('PasswordResetCtrl',['$scope','$alert','$translate','Adm
  * @name mainAppCtrls.controller:SettingsCtrl
  * @description Controller for the Settings view
  */
-mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm','Admin',
-    function($scope,$alert,$confirm,Admin) {
+mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm','Admin', '$translate',
+    function($scope,$alert,$confirm,Admin,$translate) {
+        //Get translations for errors and store in array
+        var _translations = {};
+        //Pass all required translation IDs to translate service
+        $translate(['ALERT_PASSWORD_IDENTICAL', '',]).
+        then(function(translations){
+            _translations = translations;
+        });
         var _originalData = {};
         $scope.form = {};
         //TODO: load i18n for Placeholders and Tabnames
@@ -1908,7 +1915,7 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm','Admin',
                 $scope.pwAlert = $alert({
                     title: "Error",
                     type: 'danger',
-                    content: 'Passwords have to be identical',
+                    content: _translations.ALERT_PASSWORD_IDENTICAL,
                     container: '#pwalert',
                     dismissable: false,
                     show: true
@@ -1936,7 +1943,7 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm','Admin',
                 $scope.pwAlert = $alert({
                     title: "Error",
                     type: 'danger',
-                    content: 'Passwords cannot be empty',
+                    content: _translations.AlERT_PASSWORD_EMPTY,
                     container: '#pwalert',
                     dismissable: false,
                     show: true

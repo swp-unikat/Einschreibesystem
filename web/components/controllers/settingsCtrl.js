@@ -4,8 +4,15 @@ var mainAppCtrls = angular.module("mainAppCtrls");
  * @name mainAppCtrls.controller:SettingsCtrl
  * @description Controller for the Settings view
  */
-mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm','Admin',
-    function($scope,$alert,$confirm,Admin) {
+mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm','Admin', '$translate',
+    function($scope,$alert,$confirm,Admin,$translate) {
+        //Get translations for errors and store in array
+        var _translations = {};
+        //Pass all required translation IDs to translate service
+        $translate(['ALERT_PASSWORD_IDENTICAL', '',]).
+        then(function(translations){
+            _translations = translations;
+        });
         var _originalData = {};
         $scope.form = {};
         //TODO: load i18n for Placeholders and Tabnames
@@ -60,7 +67,7 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm','Admin',
                 $scope.pwAlert = $alert({
                     title: "Error",
                     type: 'danger',
-                    content: 'Passwords have to be identical',
+                    content: _translations.ALERT_PASSWORD_IDENTICAL,
                     container: '#pwalert',
                     dismissable: false,
                     show: true
@@ -88,7 +95,7 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm','Admin',
                 $scope.pwAlert = $alert({
                     title: "Error",
                     type: 'danger',
-                    content: 'Passwords cannot be empty',
+                    content: _translations.AlERT_PASSWORD_EMPTY,
                     container: '#pwalert',
                     dismissable: false,
                     show: true
