@@ -31,6 +31,13 @@ framework:
     fragments:       ~
     http_method_override: true
 
+monolog:
+  handlers:
+    participants:
+      type: stream
+      level: info
+      path: var/logs/participants.log
+
 # Twig Configuration
 twig:
     debug:            "%kernel.debug%"

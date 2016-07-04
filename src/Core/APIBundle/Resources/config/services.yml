@@ -10,3 +10,5 @@ services:
          calls:
               - [ setEntityManager, [ '@doctrine.orm.entity_manager' ]]
               - [ setLogger,['@logger']]
+         tags:
+              - { name: monolog.logger, channel: 'participants' }
