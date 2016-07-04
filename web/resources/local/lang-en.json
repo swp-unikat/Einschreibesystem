@@ -128,7 +128,7 @@
 
   "ALERT_WORKSHOP_DELETE_PARTICIPANT":"Successfully deleted participant from Workshop",
   "ALERT_WORKSHOP_DELETE_PARTICIPANT_FAIL":"Failed to delete participant from Workshop",
-
+  "ALERT_DELETE_ADMIN":"Failed to delete admin",
   "ALERT_BLACKLIST_DELETE_PARTICIPANT":"Successfully deleted participant from Blacklist",
   "ALERT_BLACKLIST_DELETE_PARTICIPANT_FAIL":"Failed to delete participant from Blacklist",
   "ALERT_EMAILTEMPLATE_NOT_FOUND": "The requested E-Mail template couldn't be found",
@@ -171,7 +171,11 @@
   "ALERT_SUCCESSFULLY_ENROLLED_WORKSHOP":"Successfully enrolled to workshop",
   "ALERT_INVALID_ENROLMENT_LINK":"Invalid enrollment link. If you received this link via e-mail, please contact an administrator.",
   "ALERT_ENROLLMENT_SUCCSESSFULL":"Enrollment successful. Please check your E-Mail!",
-  "ALERT_NO_PARTICIPANTS":"No participants yet"
+  "ALERT_NO_PARTICIPANTS":"No participants yet",
+  "ALERT_NEGATIVE_COST":"negative cost",
+  "ALERT_NEGATIVE_PARTICIPANTS":"negative participants",
+  "ALERT_WORKSHOP_IN_PAST":"workshop is in the past"
+
 
 
 

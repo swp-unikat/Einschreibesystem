@@ -39,8 +39,11 @@ prntSvcs.factory('printer',['$rootScope','$compile','$http','$timeout','$q', fun
      */
     var print = function (templateUrl, data) {
         $http.get(templateUrl).success(function(template){
-            var printScope = $rootScope.$new()
-            angular.extend(printScope, data);
+            var printScope = $rootScope.$new();
+            var _data = {
+                data: data
+            };
+            angular.extend(printScope, _data);
             var element = $compile($('<div>' + template + '</div>'))(printScope);
             var waitForRenderAndPrint = function() {
                 if(printScope.$$phase || $http.pendingRequests.length) {
