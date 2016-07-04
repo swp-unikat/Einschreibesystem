@@ -22,7 +22,8 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
             firstname: _translations.FIRST_NAME ,
             lastname: _translations.LAST_NAME,
             emailadress: _translations.EMAIL
-
+        };
+        
         //TODO : replace with workshop details
         var workshopid = $stateParams.id;
         /**
@@ -76,7 +77,7 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
 
         $scope.unsubscribe= function(){
             var _params = {
-              workshopId: workshopid,
+              workshopId: workshopid
                 
             };
         };
