@@ -298,16 +298,6 @@ class WorkshopTemplateController extends FOSRestController implements ClassResou
      * @REST\RequestParam(name="start_at", requirements=".*", description="starttime of the Workshop",default=null,nullable=true)
      * @REST\RequestParam(name="end_at", requirements=".*", description="endtime of the Workshop",default=null,nullable=true)
      * @REST\RequestParam(name="max_participants", requirements="\d+", description="maximum number of participants",nullable=true)
-     * @param string $title title of the workshop
-     * @param string $description description of the workshop
-     * @param float $cost cost of the workshop
-     * @param string $requirements requirements of the workshop
-     * @param string $location location of the workshop
-     * @param DateTime $start_at starttime of the workshop
-     * @param DateTime $end_at endtime of the workshop
-     * @param integer $max_participants maximum number of participants
-     * @return action to create new templates
-     * @var WorkshopTemplates §workshopTemplate
      * @Rest\View()
      */
     public function putAction(ParamFetcher $paramFetcher)  {
