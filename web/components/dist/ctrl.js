@@ -1235,63 +1235,29 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
          * @methodOf mainAppCtrls.controller:EditWorkshopTemplateCtrl
          */
         $scope.sendInfo = function () {
-            var _dataToSend = {
-                title: '',
-                description: '',
-                cost: '',
-                requirements: '',
-                location: '',
-                start_at: '',
-                end_at: '',
-                max_participants: ''
-                
+            var reformatDate =  function(_date){
+                if(!_date || _date == null)
+                    return "";
+                var _dateStr = _date.toJSON();
+                if(_dateStr == null)
+                    return "";
+                _dateStr =  _dateStr.slice(0,_dateStr.length-5);
+                return _dateStr.replace('T',' ');
             };
-            var _sa = new Date(_originalData.start_at);
+            var _sa = Date.parse($scope.workshop.start_at);
             var _duration = $scope.workshop.duration;
-            var _ea = new Date(_duration + 1000*60*60);
-            var _changedData = {
-                
-                title: $scope.workshop.title,
-                description: $scope.workshop.description,
-                cost: $scope.workshop.cost,
-                requirements: $scope.workshop.requirements,
-                location: $scope.workshop.location,
-                start_at: $scope.workshop.start_at,
-                end_at: $scope.workshop.end_at,
-                max_participants: $scope.workshop.max_participants
+            var _ea = new Date(_sa+_duration) ;
+            var data = {
+                title:$scope.workshop.title,
+                description:$scope.workshop.description,
+                cost:$scope.workshop.cost,
+                requirements:$scope.workshop.requirement,
+                location:$scope.workshop.location,
+                start_at:reformatDate((new Date(_sa))),
+                end_at:reformatDate(_ea),
+                max_participants:$scope.workshop.max_participants
             };
-
-            //compare all properties of both objects
-            if (_changedData.title != _originalData.title)
-                _dataToSend.title = _changedData.title;
-            if (_changedData.description != _originalData.description)
-                _dataToSend.description = _changedData.description;
-            if (_changedData.cost != _originalData.cost)
-                _dataToSend.cost = _changedData.cost;
-            if (_changedData.location != _originalData.location)
-                _dataToSend.location = _changedData.location;
-            if (_changedData.start_at != _originalData.start_at)
-                _dataToSend.start_at = _changedData.start_at;
-            if (_changedData.end_at != _originalData.end_at)
-                _dataToSend.end_at = _changedData.end_at;
-            if (_changedData.max_participants != _originalData.max_participants)
-                _dataToSend.max_participants = _changedData.max_participants;
-
-
-
-            WorkshopTemplate.edit({id: _workshopId}, _dataToSend).$promise.then(function (value) {
-                //Store answer from server
-                _originalData = {
-                    title: value.title,
-                    description: value.title,
-                    cost: value.title,
-                    requirements: value.title,
-                    location: value.title,
-                    start_at: value.title,
-                    end_at: value.end_at,
-                    max_participants: value.max_participants
-                    
-                };
+            WorkshopTemplate.edit({id: _workshopId}, data).$promise.then(function (value) {
                 $alert({
                     title: '',
                     type: 'success',
@@ -1327,9 +1293,11 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
                 title: value.title,
                 description: value.description,
                 cost: value.cost,
-                requirements: value.requirements,
+                requirement: value.requirement,
                 location: value.location,
                 duration: _duration,
+                start_at: value.start_at,
+                end_at: value.end_at,
                 max_participants: value.max_participants
 
             };
@@ -1338,9 +1306,11 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
             $scope.workshop.title = _originalData.title;
             $scope.workshop.description = _originalData.description;
             $scope.workshop.cost = _originalData.cost;
-            $scope.workshop.requirements = _originalData.requirements;
+            $scope.workshop.requirement = _originalData.requirement;
             $scope.workshop.location = _originalData.location;
             $scope.workshop.duration = _originalData.duration;
+            $scope.workshop.start_at = _originalData.start_at;
+            $scope.workshop.end_at = _originalData.end_at;
             $scope.workshop.max_participants = _originalData.max_participants;
             
 
