@@ -174,8 +174,8 @@
   "ALERT_NO_PARTICIPANTS":"No participants yet",
   "ALERT_NEGATIVE_COST":"negative cost",
   "ALERT_NEGATIVE_PARTICIPANTS":"negative participants",
-  "ALERT_WORKSHOP_IN_PAST":"workshop is in the past"
-
+  "ALERT_WORKSHOP_IN_PAST":"workshop is in the past",
+  "AVAILABLE_PLACEHOLDERS":"available placeholders"
 
 
 
