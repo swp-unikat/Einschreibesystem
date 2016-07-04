@@ -88,7 +88,7 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
             throw $this->createNotFoundException("No Participant on Blacklist found");
         }
         foreach($participantsBlacklist as $participant){
-            $result[] = ['id' => $participant->getId(),'surname' => $participant->getSurname(),'name' => $participant->getName(),'blacklisted_at' => $participant->getBlacklistedAt(),'blacklisted_from' => $participant->getBlacklistedFrom()->getEmail()];
+            $result[] = ['id' => $participant->getId(),'email' => $participant->getEmail(),'surname' => $participant->getSurname(),'name' => $participant->getName(),'blacklisted_at' => $participant->getBlacklistedAt(),'blacklisted_from' => $participant->getBlacklistedFrom()->getEmail()];
         }
 
         $view = $this->view($result, 200);

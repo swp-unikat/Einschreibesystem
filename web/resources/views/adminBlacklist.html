@@ -26,6 +26,7 @@
                                     <th class="col-sm-2"><span><translate>FIRST_NAME</translate></span></th>
                                     <th class="col-sm-3"><span><translate>USER_EMAIL_ADDRESS</translate></span></th>
                                     <th class="col-sm-3"><span><translate>BLACKLISTED_FROM</translate></span></th>
+                                    <th class="col-sm-1"><span><translate>BLACKLISTED_AT</translate></span></th>
                                     <th class="col-sm-2"><span><translate>OPTION</translate></span></th>
                                 </tr>
                                 </thead>
@@ -35,6 +36,7 @@
                                     <td class="col-sm-2">{{ x.surname }}</td>
                                     <td class="col-sm-3">{{ x.email }}</td>
                                     <td class="col-sm-3">{{ x.blacklisted_from }}</td>
+                                    <td class="col-sm-1">{{ x.blacklisted_at }}</td>
                                     <td class="col-sm-2">
                                         <button type="button"
                                                 class="btn btn-default btn-xs" ng-click="delete(x.id)">
