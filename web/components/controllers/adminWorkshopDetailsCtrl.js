@@ -92,7 +92,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
          * @description Prints the participants list
          */
         $scope.printList = function() {
-            printer.print('resources/views/participantList.tpl.html',$scope.participants);
+            printer.print('resources/views/participantList.tpl.html',$scope.participants,$scope.workshop);
         };
 
         //Overbook a participant from the waitinglist
