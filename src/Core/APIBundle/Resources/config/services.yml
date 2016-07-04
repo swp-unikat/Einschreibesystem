@@ -8,5 +8,5 @@ services:
      helper:
          class: Core\APIBundle\Service\Helper
          calls:
-              - [ setEntityManager, [ @doctrine.orm.entity_manager ]]
-              - [ setLogger,[@logger]]
+              - [ setEntityManager, [ '@doctrine.orm.entity_manager' ]]
+              - [ setLogger,['@logger']]
