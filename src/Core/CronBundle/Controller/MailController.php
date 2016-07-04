@@ -28,7 +28,7 @@ class MailController extends Controller{
     protected $mailer;
     protected $container;
 
-    public function __construct(EntityManager $em, $twig, $logger, $mailer,ContainerInterface $container)
+    public function __construct(EntityManager $em, $twig, $logger, $mailer,$container)
     {
         $this->em		    = $em;
         $this->twig		    = $twig;
@@ -53,8 +53,7 @@ class MailController extends Controller{
             /* Load Workshop object */
             $workshop = $this->em->getRepository("CoreEntityBundle:Workshop")->find($id['id']);
             /* Load Workshop Participants*/
-            $participants = $this->em->getRepository("CoreEntityBundle:WorkshopParticipants")->findBy(['workshop' => $workshop]);
-
+            $participants = $this->em->getRepository("CoreEntityBundle:WorkshopParticipants")->findBy(['workshop' => $workshop, "waiting" => false]);
             if($participants){
                 $count += $this->sendMail($participants,$workshop);
                 $workshop->setNotified(true);
@@ -83,13 +82,13 @@ class MailController extends Controller{
         }
         /* Creating Twig template from Database */
         $renderTemplate = $this->twig->createTemplate($template->getEmailBody());
-        foreach ($participants as $participant){
+        foreach ($participants as $wp){
             /* Sending E-Mail */
             $message = \Swift_Message::newInstance()
-                ->setSubject($template->getEmailSubject())
+                ->setSubject($this->get('twig')->createTemplate($template->getEmailSubject())->render(["workshop" => $workshop]))
                 ->setFrom($this->container->getParameter('email_sender'))
-                ->setTo($participant['email'])
-                ->setBody($renderTemplate->render(["workshop" => $workshop,"participant" => $participant]),'text/html');
+                ->setTo($wp->getParticipant()->getEmail())
+                ->setBody($renderTemplate->render(["workshop" => $workshop,"participant" => $wp->getParticipant()]),'text/html');
             $this->mailer->send($message);
             $counter++;
         }
