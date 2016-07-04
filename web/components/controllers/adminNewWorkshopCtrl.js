@@ -52,7 +52,40 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
             var _sa = Date.parse($scope.workshop.start_at);
             var _duration = $scope.workshop.duration;
             var _ea = new Date(_sa+_duration + 1000*60*60) ;
+            var now = new Date();
 
+            if($scope.workshop.cost < 0){
+                $alert({
+                    title: 'Error',
+                    type: 'danger',
+                    content: 'negative cos',
+                    container: '#alert',
+                    dismissable: false,
+                    show: true
+                });
+            }
+
+            if($scope.workshop.max_participants < 0){
+                $alert({
+                    title: 'Error',
+                    type: 'danger',
+                    content: 'negative participants',
+                    container: '#alert',
+                    dismissable: false,
+                    show: true
+                });
+            }
+
+            if($scope.workshop.start_at < now) {
+                $alert({
+                    title: 'Error',
+                    type: 'danger',
+                    content: 'workshop is in the past',
+                    container: '#alert',
+                    dismissable: false,
+                    show: true
+                });
+            }
             var data = {
                 title:$scope.workshop.title,
                 description:$scope.workshop.description,

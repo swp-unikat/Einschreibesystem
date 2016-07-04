@@ -72,6 +72,7 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm','Admin',
                 return true;
             }
         };
+        
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:SettingsCtrl#changePassword
@@ -137,7 +138,7 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm','Admin',
             if($scope.emailAlert != null)
                 $scope.emailAlert.hide();
             var _email_new = $scope.form.email_new;
-            var _email_old = $scope.form.email_old
+            var _email_old = $scope.form.email_old;
             if(_email_new == null || _email_new == '') {
                 //error
             }
