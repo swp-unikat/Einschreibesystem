@@ -175,7 +175,14 @@
   "ALERT_NEGATIVE_COST":"negative cost",
   "ALERT_NEGATIVE_PARTICIPANTS":"negative participants",
   "ALERT_WORKSHOP_IN_PAST":"workshop is in the past",
-  "AVAILABLE_PLACEHOLDERS":"available placeholders"
+  "ALERT_SUCCESSFUL_OVERBOOK":"Successfully overbooked workshop",
+  "ALERT_FAIL_OVERBOOK":"Failed to overbook workshop",
+  "ALERT_SUCCESSFUL_BLACKLISTED":"User was blacklisted",
+  "ALERT_FAILED_BLACKLISTED": "Failed to blacklist user",
+  "ALERT_SUCCESSFUL_REMOVED_USER": "Removed participant from list",
+  "ALERT_FAILED_REMOVE_USER": "Failed to remove user"
+
+
 
 
 
