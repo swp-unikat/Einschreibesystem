@@ -23,8 +23,10 @@
 
             <div class="form-group row text-right">
                 <div class="btn-group">
-                    <button type="button" class="btn btn-info" ng-click="discard()">{{ "BUTTON_DISCARD" | translate}}</button>
-                    <button type="button" class="btn btn-info" ng-click="sendInfo()">{{ "BUTTON_CONFIRM" | translate}}</button>
+                    <button type="button" class="btn btn-info" ng-click="discard()">{{ "BUTTON_DISCARD" | translate}}
+                    </button>
+                    <button type="button" class="btn btn-info" ng-click="sendInfo()">{{ "BUTTON_CONFIRM" | translate}}
+                    </button>
                 </div>
             </div>
         </div>
@@ -35,16 +37,27 @@
         <div class="container">
 
             <div class="col-md-3">
-                <h3><translate>AVAILABLE_PLACEHOLDERS</translate></h3>
-            <ul class="list-group">
-                <li class="list-group-item">participant.surname</li>
-                <li class="list-group-item">name</li>
-                <li class="list-group-item">workshop.title</li>
-                <li class="list-group-item">workshop.startAt|date('Y-m-d h:i')</li>
-                <li class="list-group-item">email</li>
-                <li class="list-group-item">url</li>
-            </ul>
-        </div></div>
+                <h3>
+                    <translate>AVAILABLE_PLACEHOLDERS</translate>
+                </h3>
+                <ul class="list-group">
+                    <li class="list-group-item"><strong>workshop :</strong></li>
+                    <li class="list-group-item"><span class="indent"></span>title</li>
+                    <li class="list-group-item"><span class="indent"></span>cost</li>
+                    <li class="list-group-item"><span class="indent"></span>requirements</li>
+                    <li class="list-group-item"><span class="indent"></span>description</li>
+                    <li class="list-group-item"><span class="indent"></span>location</li>
+                    <li class="list-group-item"><span class="indent"></span>start_at</li>
+                    <li class="list-group-item"><span class="indent"></span>max_participants</li>
+                </ul>
+                <ul class="list-group">
+                    <li class="list-group-item"><strong>participant :</strong></li>
+                    <li class="list-group-item"><span class="indent"></span>name</li>
+                    <li class="list-group-item"><span class="indent"></span>surname</li>
+                    <li class="list-group-item"><span class="indent"></span>email</li>
+                </ul>
+            </div>
+        </div>
 
 
     </div>

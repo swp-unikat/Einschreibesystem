@@ -19,8 +19,22 @@ class Helper{
      * @var EntityManager
      */
     protected $em;
-
+    /*
+     * @var logger
+     */
     protected $logger;
+    /*
+     * @var twig
+     */
+    protected $twig;
+    /*
+     * @var container
+     */
+    protected $container;
+    /*
+     *@var mailer 
+     */
+    protected $mailer;
     /*
      * @param Workshop $workshop
      */
@@ -35,6 +49,19 @@ class Helper{
                 if ($nextParticipant) {
                     $this->logger->info("Workshop has participants on waiting list", null, null);
                     $nextParticipant->setWaiting(false);
+                    /* Loading the default E-Mail template*/
+                    $template = $this->em->getRepository("CoreEntityBundle:EmailTemplate")->findOneBy(['template_name' => 'Participant']);
+                    /* Creating Twig template from Database */
+                    $renderTemplate = $this->twig->createTemplate($template->getEmailBody());
+                    /* Sending E-Mail */
+                    
+                    $message = \Swift_Message::newInstance()
+                        ->setSubject($template->getEmailSubject())
+                        ->setFrom($this->container->getParameter('email_sender'))
+                        ->setTo($nextParticipant->getParticipant()->getEmail())
+                        ->setBody($renderTemplate->render(['participant' => $nextParticipant->getParticipant(),'workshop' => $nextParticipant->getWorkshop()] ), 'text/html');
+                    $this->mailer->send($message);
+
                     $this->em->persist($nextParticipant);
                     $this->em->flush();
                     $this->logger->info("moved " . $nextParticipant->getParticipant()->getEmail() . " to participant list");
@@ -69,5 +96,17 @@ class Helper{
     public function setLogger($logger)
     {
         $this->logger = $logger;
+    }
+    
+    public function setTwig($twig){
+        $this->twig = $twig;
+    }
+    
+    public function setContainer($container){
+        $this->container = $container;
+    }
+
+    public function setMailer($mailer){
+        $this->mailer = $mailer;
     }
 }

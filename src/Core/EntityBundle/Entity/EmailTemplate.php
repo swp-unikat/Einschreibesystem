@@ -52,7 +52,7 @@ class EmailTemplate{
     /**
      * placeholder
      * @var string
-     * @ORM\Column(name="placeholder", type="string", nullable=false)
+     * @ORM\Column(name="placeholder", type="string", nullable=true)
      * @Serializer\Expose
      * @Serializer\SerializedName("placeholder")
      */
@@ -61,7 +61,7 @@ class EmailTemplate{
     /**
      * routes
      * @var string
-     * @ORM\Column(name="routes", type="string", nullable=false)
+     * @ORM\Column(name="routes", type="string", nullable=true)
      * @Serializer\Expose
      * @Serializer\SerializedName("routes")
      */
