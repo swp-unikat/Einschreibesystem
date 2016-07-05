@@ -50,7 +50,7 @@ class Helper{
                     $this->logger->info("Workshop has participants on waiting list", null, null);
                     $nextParticipant->setWaiting(false);
                     /* Loading the default E-Mail template*/
-                    $template = $this->em->getRepository("CoreEntityBundle:EmailTemplate")->findOneBy(['template_name' => 'Invitation']);
+                    $template = $this->em->getRepository("CoreEntityBundle:EmailTemplate")->findOneBy(['template_name' => 'Participant']);
                     /* Creating Twig template from Database */
                     $renderTemplate = $this->twig->createTemplate($template->getEmailBody());
                     /* Sending E-Mail */

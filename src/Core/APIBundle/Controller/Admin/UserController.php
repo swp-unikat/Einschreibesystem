@@ -178,12 +178,12 @@ class UserController extends FOSRestController implements ClassResourceInterface
         $admin = $this->getUser();
         //check if old password input equals the current password in database
         if ($admin->getEmail() == $params['oldemail'])
-            $admin->setPlainEmail($params['newemail']);
+            $admin->setEmail($params['newemail']);
         else
             return $this->handleView($this->view(['code' => 403,'message' => "E-Mail not found"], 403));
-        
+
         $this->getDoctrine()->getManager()->persist($admin);
-        $this->getDoctrine()->getManager()->fluch();
+        $this->getDoctrine()->getManager()->flush();
         return View::create(null, Codes::HTTP_OK);
     }
 
