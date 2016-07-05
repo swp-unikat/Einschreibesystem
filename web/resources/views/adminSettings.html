@@ -1,5 +1,10 @@
 <div class="container">
     <h1 translate> SETTINGS</h1>
+    <div class="col-md-2 col-xs-2 pull-right">
+        <a ui-sref="dashboard">
+            <button class="btn btn-default">{{ "BUTTON_BACK_TO_DASHBOARD" | translate}}</button>
+        </a>
+    </div>
     <hr>
     <div class="col-md-12 col-xs-12" bs-tabs>
         <div ng-repeat="tab in tabs" title="{{ tab.title }}" name="{{ tab.title }}" bs-pane>
