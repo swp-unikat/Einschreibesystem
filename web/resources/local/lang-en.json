@@ -189,7 +189,7 @@
   "ALERT_FAILED_REMOVE_USER": "Failed to remove user",
   "ALERT_PASSWORD_IDENTICAL": "Passwords have to be identical",
   "AlERT_PASSWORD_EMPTY":"Passwords cannot be empty",
-  "AVAILABLE_PLACEHOLDERS": "available placeholders",
+  "AVAILABLE_PLACEHOLDERS": "Available placeholders",
   "ALERT_EMAIL_EMPTY": "E-Mail field cannot be empty!",
   "ALERT_OLDEMAIL_EMPTY": "E-Mail field for old e-mail cannot be empty!"
 
