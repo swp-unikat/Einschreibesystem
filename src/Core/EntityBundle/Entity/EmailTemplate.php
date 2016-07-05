@@ -43,7 +43,7 @@ class EmailTemplate{
     /**
      * body of e-mailtemplate
      * @var string
-     * @ORM\Column(name="email_body", type="mediumtext", nullable=false)
+     * @ORM\Column(name="email_body", type="text", nullable=false)
      * @Serializer\Expose
      * @Serializer\SerializedName("email_body")
      */
