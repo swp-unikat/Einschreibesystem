@@ -42,6 +42,23 @@ class WorkshopRepository extends EntityRepository
             return $result;
         }
     }
+
+    /**
+     * function to get participants of a workshop
+     * @param $workshopID int id of a workshop
+     */
+    public function getParticipants($workshopId)
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder();
+        $q = $qb->select(["count(wt.id)"])->from("CoreEntityBundle:WorkshopParticipants",
+            "wt")->where("wt.workshop = ?1");
+        $q->setParameter(1, $workshopId);
+        $result = $q->getQuery()->getSingleScalarResult();
+        return $result;
+
+    }
+
     /**
      * function to get all workshops
      */
@@ -57,36 +74,26 @@ class WorkshopRepository extends EntityRepository
         if (!$result) {
             return false;
         } else {
-            foreach ($result as $key=>$workshop){
+            foreach ($result as $key => $workshop) {
                 $result[$key]['numParticipants'] = $this->getParticipants($workshop['id']);
             }
             return $result;
         }
     }
-    /**
-     * function to get participants of a workshop
-     * @param $workshopID int id of a workshop
-     */
-    public function getParticipants($workshopId){
-        $em = $this->getEntityManager();
-        $qb = $em->createQueryBuilder();
-        $q = $qb->select(["count(wt.id)"])->from("CoreEntityBundle:WorkshopParticipants","wt")->where("wt.workshop = ?1");
-        $q->setParameter(1,$workshopId);
-        $result = $q->getQuery()->getSingleScalarResult();
-        return $result;
 
-    }
     /**
      * function to find workshops where a notification e-mail is needed
      */
     public function getWorkshopsForNotificationEmail(){
         $now = new \DateTime("now");
+        $then = new \DateTime("+24 hour");
         $qb = $this->getEntityManager()->createQueryBuilder();
         $q  = $qb->select(["workshop.id"])
                  ->from("CoreEntityBundle:Workshop","workshop")
-                 ->where("workshop.notified = 0 and workshop.start_at < ?1 and workshop.end_at > ?1" );
+            ->where("workshop.notified = 0 and date_sub(workshop.start_at,24,'hour') < ?1 and workshop.end_at > ?1");
         $q->setParameter(1,$now);
-        $result = $q->getQuery()->getResult();
+        $result = $q->getQuery()->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
+
         return $result;
     }
 

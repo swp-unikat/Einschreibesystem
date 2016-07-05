@@ -26,7 +26,6 @@ prntSvcs.factory('printer',['$rootScope','$compile','$http','$timeout','$q', fun
         mywindow.print();
         mywindow.close();
         return true;
-
     };
 
     /**
@@ -37,10 +36,16 @@ prntSvcs.factory('printer',['$rootScope','$compile','$http','$timeout','$q', fun
      * @param {string} templateUrl URL to the template to be rendered
      * @param {object} data data to be rendered in the template
      */
-    var print = function (templateUrl, data) {
+    var print = function (templateUrl, data,workshop) {
         $http.get(templateUrl).success(function(template){
-            var printScope = $rootScope.$new()
-            angular.extend(printScope, data);
+            var printScope = $rootScope.$new();
+            var _data = {
+                data : {
+                    participants: data,
+                    workshop: workshop
+                }
+            };
+            angular.extend(printScope, _data);
             var element = $compile($('<div>' + template + '</div>'))(printScope);
             var waitForRenderAndPrint = function() {
                 if(printScope.$$phase || $http.pendingRequests.length) {

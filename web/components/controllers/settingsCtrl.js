@@ -4,10 +4,18 @@ var mainAppCtrls = angular.module("mainAppCtrls");
  * @name mainAppCtrls.controller:SettingsCtrl
  * @description Controller for the Settings view
  */
-mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm','Admin',
-    function($scope,$alert,$confirm,Admin) {
+mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm','Admin', '$translate',
+    function($scope,$alert,$confirm,Admin,$translate) {
+        //Get translations for errors and store in array
+        var _translations = {};
+        //Pass all required translation IDs to translate service
+        $translate(['ALERT_PASSWORD_IDENTICAL', '',]).
+        then(function(translations){
+            _translations = translations;
+        });
         var _originalData = {};
         $scope.form = {};
+        $scope.ln = {};
         //TODO: load i18n for Placeholders and Tabnames
         $scope.tabs = [
 
@@ -32,11 +40,13 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm','Admin',
             ['justifyLeft', 'justifyCenter', 'justifyRight', 'indent', 'outdent']
         ];
 
+        var _originalNotice = "";
         Admin.getLegalNotice().$promise.then(
             function(value){
-                $scope.newLegalNotice = value.content;
+                $scope.ln.legalNotice = value.content;
+                _originalNotice = value.content;
             },function(value){
-                console.log(value);
+
             });
 
 
@@ -60,7 +70,7 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm','Admin',
                 $scope.pwAlert = $alert({
                     title: "Error",
                     type: 'danger',
-                    content: 'Passwords have to be identical',
+                    content: _translations.ALERT_PASSWORD_IDENTICAL,
                     container: '#pwalert',
                     dismissable: false,
                     show: true
@@ -88,7 +98,7 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm','Admin',
                 $scope.pwAlert = $alert({
                     title: "Error",
                     type: 'danger',
-                    content: 'Passwords cannot be empty',
+                    content: _translations.AlERT_PASSWORD_EMPTY,
                     container: '#pwalert',
                     dismissable: false,
                     show: true
@@ -175,28 +185,32 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm','Admin',
         $scope.saveLegalNotice = function () {
             
             var _dataToSend = {
-                content : angular.toJson($scope.newLegalNotice)
+                content : $scope.ln.legalNotice
             };
+            console.log(_dataToSend.content);
             Admin.editLegalNotice(_dataToSend).$promise.then(function (value) {
                 $alert({
                     title: "Success",
                     type: 'success',
-                    content: value.message,
+                    content: value.statusText,
                     container: '#alertInfo',
                     dismissable: false,
                     show: true
                 });
+                $scope.legalNotice = value.content;
             },function (value) {
                 $alert({
                     title: "Error",
                     type: 'danger',
-                    content: value.message,
+                    content: value.statusText,
                     container: '#alertInfo',
                     dismissable: false,
                     show: true
                 });
-                $scope.newLegalNotice = value.content;
             });
+        };
+        $scope.discardLegalNotice = function() {
+            $scope.ln.legalNotice = _originalNotice;
         };
         
         

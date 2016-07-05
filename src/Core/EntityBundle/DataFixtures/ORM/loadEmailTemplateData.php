@@ -26,7 +26,7 @@ class loadEmailTemplate implements FixtureInterface
      */
     public function load(ObjectManager $manager){
         $emailTemplate = new EmailTemplate();
-        $emailTemplate->setTemplateName("Erinnerungsmail");
+        $emailTemplate->setTemplateName("Reminder");
         $emailTemplate->setEmailSubject("Erinnerungsmail für {{workshop.title}}");
         $emailTemplate->setEmailBody("Hallo {{participant.surname}},<br> morgen um {{workshop.startAt|date('Y-m-d h:i')}} beginnt der Workshop {{workshop.title}}, für welchen Sie sich eingeschrieben haben! <br> <br> Hello{{participant.surname}},<br>  the workshop {{workshop.title}} ,you enrolled for, will start tomorrow at {{workshop.startAt|date('Y-m-d h:i')}}! ");
         $emailTemplate->setProtected(true);
@@ -40,21 +40,47 @@ class loadEmailTemplate implements FixtureInterface
         $manager->persist($emailTemplate2);
         
         $emailTemplate3 = new EmailTemplate();
-        $emailTemplate3->setTemplateName("Ausfall");
-        $emailTemplate3->setEmailSubject("Ausfall eines ausstehenden Workshops");
-        $emailTemplate3->setEmailBody("Der Workshop in 2 Tagen kann aufgrund von Krankheit nicht stattfinden! Die Kosten bekommen Sie selbst verständlich erstattet.");
+        $emailTemplate3->setTemplateName("Reset Password");
+        $emailTemplate3->setEmailSubject("Reset password instructions");
+        $emailTemplate3->setEmailBody("Hello {{email}},<br> pleas follow this <a href=\"{{url}}\">link</a> to reset your password.");
         $emailTemplate3->setProtected(true);
         $manager->persist($emailTemplate3);
         
         $emailTemplate4 = new EmailTemplate();
-        $emailTemplate4->setTemplateName("Teilnahmebestätigung");
-        $emailTemplate4->setEmailSubject("Teilnahmebestätigung für absolvierten Workshop");
-        $emailTemplate4->setEmailBody("Im Anhang dieser Mail finden Sie eine Teilnahmebestätigung, an dem Sie erfolgreich teilgenommen haben!");
+        $emailTemplate4->setTemplateName("Enrollment");
+        $emailTemplate4->setEmailSubject("Confirm your enrollment for {{workshop.title}}");
+        $emailTemplate4->setEmailBody("Hello {{participant.surname}},<br>   confirm your enrollment at {{workshop.title}} within 30 Minutes.<br> <a href='{{url}}'>{{url}}</a> <br>");
         $emailTemplate4->setProtected(true);
         $manager->persist($emailTemplate4);
-        /*
-             * Hier weiteres EmailTemplate anlegen
-             */
-            $manager->flush();
+
+        $emailTemplate5 = new EmailTemplate();
+        $emailTemplate5->setTemplateName("Workshop Cancel");
+        $emailTemplate5->setEmailSubject("The workshop {{workshop.title}} at {{workshop.start_at}} was canceld");
+        $emailTemplate5->setEmailBody("<p>Hello {{participant.surname}},<br/><br/></p><p>regrettably the workshop {{workshop.title}} was canceld.Your Team.</p>");
+        $emailTemplate5->setProtected(true);
+        $manager->persist($emailTemplate5);
+
+        $emailTemplate6 = new EmailTemplate();
+        $emailTemplate6->setTemplateName("Blacklisting");
+        $emailTemplate6->setEmailSubject("Your account was closed");
+        $emailTemplate6->setEmailBody("<p>Hallo {{participant.name}} {{participant.surname}},</p><p>du wurdest von einem Administrator auf die Blacklist gesetzt und dadurch von allen Workshops abgemeldet.</p><p>Bei Fragen wende dich bitte an die Administratoren.<br/></p>");
+        $emailTemplate6->setProtected(true);
+        $manager->persist($emailTemplate6);
+
+        $emailTemplate7 = new EmailTemplate();
+        $emailTemplate7->setTemplateName("Changed Workshopdetails");
+        $emailTemplate7->setEmailSubject("Details of {{workshop.title}} are changed");
+        $emailTemplate7->setEmailBody("<p>Hallo {{participant.surname}},</p><p>die Details des Workshop <a href=\"{{url}}\">{{workshop.title}}</a> haben sich geändert. <br/></p><p>Bitte informiere dich auf der Website von UNIKAT über die aktuellen Details.<!--EndFragment--><br/><br/><br/></p>");
+        $emailTemplate7->setProtected(true);
+        $manager->persist($emailTemplate7);
+
+        $emailTemplate8 = new EmailTemplate();
+        $emailTemplate8->setTemplateName("Blacklistremoved");
+        $emailTemplate8->setEmailSubject("Removed from Blacklist");
+        $emailTemplate8->setEmailBody("<p>Hello {{participant.name}} {{participant.surname}},</p><p><!--EndFragment-->you are not longer at the Blacklist. Now you could take part at our Workshops.<br/><br/></p>");
+        $emailTemplate8->setProtected(true);
+        $manager->persist($emailTemplate8);
+
+        $manager->flush();
     }
 }

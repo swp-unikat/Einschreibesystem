@@ -33,7 +33,7 @@ class MailCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $beginn = microtime(true);
+        $start = microtime(true);
         $lock = new LockHandler('cron:email');
         if (!$lock->lock()) {
             $output->writeln('The command is already running in another process.');
@@ -41,8 +41,8 @@ class MailCommand extends ContainerAwareCommand
         }
         $mail = $this->getContainer()->get('cron');
         $msg = $mail->run();
-        $dauer = microtime(true) - $beginn;
-        $output->writeln('Processing of '.$msg." datasets: $dauer Sek.");
+        $duration = microtime(true) - $start;
+        $this->getContainer()->get("logger")->info('Processing of ' . $msg . " datasets: $duration Sek.");
         $lock->release();
     }
 }

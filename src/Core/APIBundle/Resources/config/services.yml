@@ -8,4 +8,7 @@ services:
      helper:
          class: Core\APIBundle\Service\Helper
          calls:
-              - [ setEntityManager, [ @doctrine.orm.entity_manager ]]
+              - [ setEntityManager, [ '@doctrine.orm.entity_manager' ]]
+              - [ setLogger,['@logger']]
+         tags:
+              - { name: monolog.logger, channel: 'participants' }

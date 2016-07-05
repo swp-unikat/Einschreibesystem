@@ -17,8 +17,8 @@ mainAppCtrls.controller('EditEmailTemplateCtrl',['$scope','EmailTemplate','$stat
         //Get translations for errors and store in array
         var _translations = {};
         //Pass all required translation IDs to translate service
-        $translate(['ALERT_EMAILTEMPLATE_EDIT_SUCCESS',
-            'ALERT_EMAILTEMPLATE_EDIT_FAIL','ALERT_EMAILTEMPLATE_NOT_FOUND']).
+        $translate(['ALERT_WORKSHOPTEMPLATE_EDIT_SUCCESS',
+            'ALERT_WORKSHOPTEMPLATE_EDIT_FAIL','ALERT_WORKSHOPTEMPLATE_NOT_FOUND','ALERT_NEGATIVE_COST','ALERT_NEGATIVE_PARTICIPANTS','ALERT_WORKSHOP_IN_PAST']).
         then(function(translations){
             _translations = translations;
         });
@@ -71,7 +71,7 @@ mainAppCtrls.controller('EditEmailTemplateCtrl',['$scope','EmailTemplate','$stat
                 $alert({
                     title: '',
                     type: 'success',
-                    content: _translations.ALERT_EMAILTEMPLATE_EDIT_SUCCESS + ' \"' + _originalData.title +'\"',
+                    content: _translations.ALERT_WORKSHOPTEMPLATE_EDIT_SUCCESS + ' \"' + _originalData.title +'\"',
                     container: '#alert',
                     dismissable: true,
                     show: true,

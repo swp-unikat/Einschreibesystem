@@ -45,7 +45,45 @@ mainAppCtrls.controller('NewWorkshopTemplateCtrl',['$scope',"WorkshopTemplate",'
             var _sa = new Date(0);
             var _duration = $scope.workshop.duration;
             var _ea = new Date(_duration);
+            var error = false;
+            if($scope.workshop.cost < 0){
+                $alert({
+                    title: 'Error',
+                    type: 'danger',
+                    content: _translations.ALERT_NEGATIVE_COST,
+                    container: '#alert',
+                    dismissable: false,
+                    show: true
+                });
+                error = true;
+            }
 
+            if($scope.workshop.max_participants < 0){
+                $alert({
+                    title: 'Error',
+                    type: 'danger',
+                    content: _translations.ALERT_NEGATIVE_PARTICIPANTS,
+                    container: '#alert',
+                    dismissable: false,
+                    show: true
+                });
+                error = true;
+            }
+
+            if($scope.workshop.start_at < now) {
+                $alert({
+                    title: 'Error',
+                    type: 'danger',
+                    content: _translations.ALERT_WORKSHOP_IN_PAST,
+                    container: '#alert',
+                    dismissable: false,
+                    show: true
+                });
+                error = true;
+            }
+
+            if(error)
+                return false;
 
             var data = {
                 title:$scope.workshop.title,

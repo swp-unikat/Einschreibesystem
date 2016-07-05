@@ -1,6 +1,6 @@
 services:
    cron:
      class: "Core\CronBundle\Controller\MailController"
-     arguments: [ @doctrine.orm.entity_manager,@twig,@logger,@mailer]
+     arguments: [ @doctrine.orm.entity_manager,@twig,@logger,@mailer,@service_container]
      tags:
             - { name: monolog.logger, channel: mail }

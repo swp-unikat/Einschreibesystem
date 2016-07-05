@@ -31,6 +31,15 @@ framework:
     fragments:       ~
     http_method_override: true
 
+monolog:
+    channels: ['mail','participants']
+    handlers:
+      app:
+        level:    debug
+        type:     stream
+        path:     '%kernel.logs_dir%/app.log'
+        channels: ['mail','participants']
+
 # Twig Configuration
 twig:
     debug:            "%kernel.debug%"

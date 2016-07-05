@@ -85,7 +85,7 @@ class UserController extends FOSRestController implements ClassResourceInterface
          /** @var $user User */
          $user = $this->get('fos_user.user_manager')->findUserByUsernameOrEmail($paramFetcher->get("email"));
          if (null === $user) {
-             $this->createNotFoundException("Username not found");
+             return $this->handleView($this->view(['code' => 404,'message' => "Username not found"], 404));
          }
 
          if (null === $user->getConfirmationToken()) {
@@ -100,7 +100,7 @@ class UserController extends FOSRestController implements ClassResourceInterface
          }
 
          $url = $this->generateUrl('core_frontend_default_index',[],TRUE)."#/password/reset/".$user->getConfirmationToken();
-         $template = $this->getDoctrine()->getRepository("CoreEntityBundle:EmailTemplate")->find(3);
+         $template = $this->getDoctrine()->getRepository("CoreEntityBundle:EmailTemplate")->findOneBy(['template_name' => 'Invitation']);
          /* Creating Twig template from Database */
          $renderTemplate = $this->get('twig')->createTemplate($template->getEmailBody());
          /* Sending E-Mail */
@@ -158,7 +158,8 @@ class UserController extends FOSRestController implements ClassResourceInterface
             $admin->setEnabled(true);
             $invitation->setUsed(true);
         } else {
-            throw $this->createAccessDeniedException("No invitation was sended or the invitation was already used");
+            return $this->handleView($this->view(['code' => 403,'message' => "No invitation was sended or the invitation was already used"], 403));
+
         }
 
         $this->getDoctrine()->getManager()->persist($admin);

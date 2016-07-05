@@ -14,15 +14,14 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
         //Get translations for errors and store in array
         var _translations = {};
         //Pass all required translation IDs to translate service
-        $translate(['ALERT_NO_PARTICIPANTS']).
+        $translate(['ALERT_NO_PARTICIPANTS', 'ALERT_SUCCESSFUL_OVERBOOK', 'ALERT_FAIL_OVERBOOK', 'ALERT_SUCCESSFUL_REMOVED_USER', 'ALERT_FAILED_REMOVED_USER',]).
         then(function(translations){
             _translations = translations;
         });
-        
-        var workshopid;
-        workshopid = $stateParams.id;
+
+        $scope.workshopid = $stateParams.id;
         $scope.loading = true;
-        Workshops.get({id: workshopid}).$promise.then(function(value,httpResponse){
+        Workshops.get({id:  $scope.workshopid}).$promise.then(function(value,httpResponse){
             $scope.workshop = value;
 
             var _ea = Date.parse($scope.workshop.end_at);
@@ -49,7 +48,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
          */
         var loadParticipants = function (){
             $scope.loading = true;
-            AdminWorkshop.participants({id: workshopid}).$promise.then(function(value,httpResponse){
+            AdminWorkshop.participants({id:  $scope.workshopid}).$promise.then(function(value,httpResponse){
                 $scope.participants = value;
 
                 $scope.loading = false;
@@ -72,7 +71,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
         };
         var loadWaitinglist = function() {
             $scope.loading = true;
-            AdminWorkshop.waitinglist({id: workshopid}).$promise.then(function(response){
+            AdminWorkshop.waitinglist({id:  $scope.workshopid}).$promise.then(function(response){
                 $scope.waitingList = response;
                 $scope.loading = false;
             },function(response){
@@ -92,17 +91,17 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
          * @description Prints the participants list
          */
         $scope.printList = function() {
-            printer.print('resources/views/participantList.tpl.html',$scope.participants);
+            printer.print('resources/views/participantList.tpl.html',$scope.participants,$scope.workshop);
         };
 
         //Overbook a participant from the waitinglist
         $scope.overbook = function(_id){
-            AdminWorkshop.overbook({id: workshopid,participantid: _id}).$promise.then(function(response){
+            AdminWorkshop.overbook({id:  $scope.workshopid,participantid: _id}).$promise.then(function(response){
                 $alert({
                    type: 'success',
                    duration: 20,
                    container: '#alert',
-                   content: 'Successfully overbooked workshop',
+                   content: _translations.ALERT_SUCCESSFUL_OVERBOOK,
                    show: 'true',
                     title: 'Success'
                 });
@@ -113,7 +112,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
                     type: 'danger',
                     duration: 20,
                     container: '#alert',
-                    content: 'Successfully overbooked workshop',
+                    content: _translations.ALERT_FAIL_OVERBOOK,
                     show: 'true',
                     title: 'Error'
                 });
@@ -127,7 +126,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
                     type: 'success',
                     duration: 20,
                     container: '#alert',
-                    content: 'User was blacklisted',
+                    content: _translations.ALERT_SUCCESSFUL_BLACKLISTED,
                     show: true,
                     title: 'Success'
                 });
@@ -136,7 +135,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
                     type: 'danger',
                     duration: 20,
                     container: '#alert',
-                    content: 'Failed to blacklist user ('+response.status+')',
+                    content: _translations.ALERT_FAILED_BLACKLISTED + '('+response.status+')',
                     show: true,
                     title: 'Error'
                 });
@@ -150,7 +149,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
                     type: 'success',
                     duration: 20,
                     container: '#alert',
-                    content: 'Removed participant from list',
+                    content: _translations.ALERT_SUCCESSFUL_REMOVED_USER,
                     show: true,
                     title: 'Success'
                 });
@@ -159,7 +158,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
                     type: 'danger',
                     duration: 20,
                     container: '#alert',
-                    content: 'Failed to remove user ('+response.status+')',
+                    content: _translations.ALERT_FAILED_REMOVED_USER + '('+response.status+')',
                     show: true,
                     title: 'Error'
                 });

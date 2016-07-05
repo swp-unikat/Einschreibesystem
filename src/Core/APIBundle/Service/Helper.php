@@ -20,25 +20,29 @@ class Helper{
      */
     protected $em;
 
+    protected $logger;
     /*
      * @param Workshop $workshop
      */
     public function checkParticipantList($workshopID){
         $workshop = $this->em->getRepository("CoreEntityBundle:Workshop")->find($workshopID);
         if($workshop){
-            $participant = $this->em->getRepository("CoreEntityBundle:Workshop")->getParticipants($workshopID);
-            if($participant) {
-                if ($participant < $workshop->getMaxParticipants()) {
-                    $nextParticipant = $this->getNextParticipant($workshop->getId());
-                    if ($nextParticipant) {
-                        $nextParticipant->setWaiting(false);
-                        $this->em->persist($nextParticipant);
-                        $this->em->flush();
-                        return true;
-                    }
+            $this->logger->info("Workshop found");
+            $participants = $this->em->getRepository("CoreEntityBundle:Workshop")->getParticipants($workshopID);
+            if ($participants) {
+                $this->logger->info("Workshop has participants");
+                $nextParticipant = $this->getNextParticipant($workshop->getId());
+                if ($nextParticipant) {
+                    $this->logger->info("Workshop has participants on waiting list", null, null);
+                    $nextParticipant->setWaiting(false);
+                    $this->em->persist($nextParticipant);
+                    $this->em->flush();
+                    $this->logger->info("moved " . $nextParticipant->getParticipant()->getEmail() . " to participant list");
+                    return true;
                 }
             }
         }else{
+            $this->logger->info("Workshop not found");
             return false;
         }
     }
@@ -62,4 +66,8 @@ class Helper{
         $this->em = $entitymanager;
     }
 
+    public function setLogger($logger)
+    {
+        $this->logger = $logger;
+    }
 }
