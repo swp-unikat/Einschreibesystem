@@ -34,8 +34,8 @@ use Core\EntityBundle\Entity\EmailTemplate;
 
 class EmailTemplateController extends FOSRestController implements ClassResourceInterface
 {
-	/**
-	 * returns list of all e-mailtemplates
+    /**
+     * returns list of all e-mail templates
      * @ApiDoc(
      *  resource=true,
      *  description="Returns list of all templates",
@@ -63,8 +63,8 @@ class EmailTemplateController extends FOSRestController implements ClassResource
 	    
     }
     
-    	/**
-    	 * load a e-mailtemplate
+    /**
+     * load an e-mail template
      * @ApiDoc(
      *  resource=true,
      *  description="Load a template",
@@ -102,7 +102,7 @@ class EmailTemplateController extends FOSRestController implements ClassResource
     }
     
     /**
-     * edit a e-mailtemplate
+     * edit an e-mail template
      * @ApiDoc(
      *  resource=true,
      *  description="Edit a template",
@@ -174,7 +174,7 @@ class EmailTemplateController extends FOSRestController implements ClassResource
     }
     
     /**  
-     * create a email-template
+     * create an e-mail template
      * @ApiDoc(
      *  resource=true,
      *  description="Create a template",
@@ -234,7 +234,7 @@ class EmailTemplateController extends FOSRestController implements ClassResource
     }
     
     /**	 
-     * delete a e-mailtemplate
+     * delete an e-mail template
      * @ApiDoc(
      *  resource=true,
      *  description="Delete a template",
