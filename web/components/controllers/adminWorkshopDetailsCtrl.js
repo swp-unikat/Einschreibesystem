@@ -34,7 +34,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
             $alert({
                 title: '',
                 type: 'danger',
-                content: httpReponse.status,
+                content: httpResponse.status,
                 container: '#alert',
                 dismissable: false,
                 show: true

@@ -387,7 +387,7 @@ mainAppCtrls.controller('adminEmailConfirmCtrl',['$scope',"EmailTemplate",'$tran
                 $alert({
                     title: '',
                     type: 'danger',
-                    content: _translations.ALERT_EMAILTEMPLATE_NEW_FAIL + ' (' + httpReponse.status +')',
+                    content: _translations.ALERT_EMAILTEMPLATE_NEW_FAIL + ' (' + httpResponse.status +')',
                     container: '#alert',
                     dismissable: false,
                     show: true
@@ -469,16 +469,17 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
             var _duration = $scope.workshop.duration;
             var _ea = new Date(_sa+_duration + 1000*60*60) ;
             var now = new Date();
-
+            var error = false;
             if($scope.workshop.cost < 0){
                 $alert({
                     title: 'Error',
                     type: 'danger',
-                    content: 'negative cos',
+                    content: 'negative cost',
                     container: '#alert',
                     dismissable: false,
                     show: true
                 });
+                error = true;
             }
 
             if($scope.workshop.max_participants < 0){
@@ -490,6 +491,7 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
                     dismissable: false,
                     show: true
                 });
+                error = true;
             }
 
             if($scope.workshop.start_at < now) {
@@ -501,7 +503,12 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
                     dismissable: false,
                     show: true
                 });
+                error = true;
             }
+
+            if(error)
+                return false;
+
             var data = {
                 title:$scope.workshop.title,
                 description:$scope.workshop.description,
@@ -526,7 +533,7 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
                 $alert({
                     title: '',
                     type: 'danger',
-                    content: _translations.ALERT_WORKSHOP_NEW_FAIL + ' (' + httpReponse.status +')',
+                    content: _translations.ALERT_WORKSHOP_NEW_FAIL + ' (' + httpResponse.status +')',
                     container: '#alert',
                     dismissable: false,
                     show: true
@@ -598,7 +605,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
             $alert({
                 title: '',
                 type: 'danger',
-                content: httpReponse.status,
+                content: httpResponse.status,
                 container: '#alert',
                 dismissable: false,
                 show: true
@@ -813,7 +820,7 @@ mainAppCtrls.controller('adminWorkshopManagementCtrl',['$scope','AdminWorkshop',
                         $scope.myAlert = $alert({
                             title: $scope.errorTitle,
                             type: 'danger',
-                            content: _translations.ALERT_INTERNAL_SERVER_ERROR + ' (' + httpReponse.status +')',
+                            content: _translations.ALERT_INTERNAL_SERVER_ERROR + ' (' + httpResponse.status +')',
                             container: '#alert',
                             dismissable: false,
                             show: true
@@ -1007,7 +1014,7 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin','$alert'
                         $alert({
                             title: '',
                             type: 'danger',
-                            content: _translations.ALERT_BLACKLIST_DELETE_PARTICIPANT_FAIL + ' (' + httpReponse.status +')',
+                            content: _translations.ALERT_BLACKLIST_DELETE_PARTICIPANT_FAIL + ' (' + httpResponse.status +')',
                             container: '#alert',
                             dismissable: false,
                             show: true
@@ -1126,7 +1133,7 @@ mainAppCtrls.controller('EditEmailTemplateCtrl',['$scope','EmailTemplate','$stat
                     $alert({
                         title: '',
                         type: 'danger',
-                        content: _translations.ALERT_EMAILTEMPLATE_EDIT_FAIL + '(' + httpReponse.status +')',
+                        content: _translations.ALERT_EMAILTEMPLATE_EDIT_FAIL + '(' + httpResponse.status +')',
                         container: '#alert',
                         dismissable: true,
                         show: true,
@@ -1293,7 +1300,7 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
                 $alert({
                     title: '',
                     type: 'danger',
-                    content: _translations.ALERT_WORKSHOPTEMPLATE_EDIT_FAIL + '(' + httpReponse.status +')',
+                    content: _translations.ALERT_WORKSHOPTEMPLATE_EDIT_FAIL + '(' + httpResponse.status +')',
                     container: '#alert',
                     dismissable: true,
                     show: true,
@@ -1595,7 +1602,7 @@ mainAppCtrls.controller('NewEmailTemplateCtrl',['$scope',"EmailTemplate",'$trans
                 $alert({
                     title: '',
                     type: 'danger',
-                    content: _translations.ALERT_EMAILTEMPLATE_NEW_FAIL + ' (' + httpReponse.status +')',
+                    content: _translations.ALERT_EMAILTEMPLATE_NEW_FAIL + ' (' + httpResponse.status +')',
                     container: '#alert',
                     dismissable: false,
                     show: true
@@ -2370,7 +2377,7 @@ mainAppCtrls.controller('WorkshopTemplateCtrl', ['$scope', "WorkshopTemplate",'$
                     $alert({
                         title: '',
                         type: 'danger',
-                        content: _translations.ALERT_WORKSHOPTEMPLATE_DELETED_FAIL + ' (' + httpReponse.status +')',
+                        content: _translations.ALERT_WORKSHOPTEMPLATE_DELETED_FAIL + ' (' + httpResponse.status +')',
                         container: '#alert',
                         dismissable: false,
                         show: true
