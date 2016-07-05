@@ -77,7 +77,7 @@
                     <li class="list-group-item"  ng-repeat="p in waitingList">
                         <label>{{p.name}} {{p.surname}}</label> (<span class="small">{{p.email}}</span>)
                         <button type="button" class="btn btn-default btn-xs pull-right" ng-click="overbook(p.id)">
-                            <span class="glyphicon glyphicon-transfer"></span>
+                            <span data-toggle="tooltip" title="{{'BUTTON_ADD_TO_BLACK_LIST' | translate}}" class="glyphicon glyphicon-transfer" aria-hidden="true"></span>
                         </button>
                     </li>
                 </ul>
