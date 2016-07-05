@@ -9,29 +9,29 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm','Admin', '$
         //Get translations for errors and store in array
         var _translations = {};
         //Pass all required translation IDs to translate service
-        $translate(['ALERT_PASSWORD_IDENTICAL', 'AlERT_PASSWORD_EMPTY',]).
+        $translate(['ALERT_PASSWORD_IDENTICAL', 'AlERT_PASSWORD_EMPTY','CHANGE_PERSONAL_INFO','CHANGE_CONTACT_INFO','EDIT_LEGAL_NOTICE']).
         then(function(translations){
             _translations = translations;
+            $scope.tabs = [
+
+                {
+                    title: _translations.CHANGE_PERSONAL_INFO,
+                    page: "resources/views/adminEditPassword.html"
+                },
+                {
+                    title: _translations.CHANGE_CONTACT_INFO,
+                    page: "resources/views/adminEditInfo.html"
+                },
+                {
+                    title: _translations.EDIT_LEGAL_NOTICE,
+                    page: "resources/views/adminEditLegalNotice.html"
+                }
+            ];
         });
         var _originalData = {};
         $scope.form = {};
         $scope.ln = {};
-        //TODO: load i18n for Placeholders and Tabnames
-        $scope.tabs = [
 
-            {
-                title: "Change Personal Info",
-                page: "resources/views/adminEditPassword.html"
-            },
-            {
-                title: "Edit Contact Info",
-                page: "resources/views/adminEditInfo.html"
-            },
-            {
-                title: "Edit Legal Notice",
-                page: "resources/views/adminEditLegalNotice.html"
-            }
-        ];
         $scope.lnToolbar = [
             ['h1', 'h2', 'h3', 'p', 'bold', 'italics'],
             ['ul', 'ol'],
