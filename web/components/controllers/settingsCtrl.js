@@ -9,7 +9,7 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm','Admin', '$
         //Get translations for errors and store in array
         var _translations = {};
         //Pass all required translation IDs to translate service
-        $translate(['ALERT_PASSWORD_IDENTICAL', '',]).
+        $translate(['ALERT_PASSWORD_IDENTICAL', 'AlERT_PASSWORD_EMPTY',]).
         then(function(translations){
             _translations = translations;
         });
@@ -150,10 +150,24 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm','Admin', '$
             var _email_new = $scope.form.email_new;
             var _email_old = $scope.form.email_old;
             if(_email_new == null || _email_new == '') {
-                //error
+                $alert({
+                    title: _translations.TITLE_ERROR,
+                    type: 'danger',
+                    content: _translations.ALERT_EMAIL_EMPTY,
+                    container: '#alertInfo',
+                    dismissable: false,
+                    show: true
+                });
             }
             if(_email_old == null || _email_old == '') {
-                //error
+                $alert({
+                    title: _translations.TITLE_ERROR,
+                    type: 'danger',
+                    content: _translations.ALERT_OLDEMAIL_EMPTY,
+                    container: '#alertInfo',
+                    dismissable: false,
+                    show: true
+                });
             }
             Admin.changeEmail({oldemail: _email_old, newemail: _email_new}).$promise.then(function(response){
                 $scope.emailAlert = $alert({

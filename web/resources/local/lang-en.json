@@ -163,8 +163,15 @@
   "ENROLMENT_CONFIRM": "Enrolment confirm",
   "BUTTON_REMOVE_PARTICIPANT": "Remove participant",
   "UNSUBSCRIBE":"Unsubscribe here",
-  "BLACKLISTED_FROM":"blacklisted from",
+  "BLACKLISTED_FROM":"Blacklisted from",
+  "BLACKLISTED_AT":"Blacklisted at",
   "OPTION":"Option",
+  "SETTINGS":"Settings",
+  "CHANGE_PASSWORD":"Change password",
+  "CHANGE_EMAIL":"Change email",
+  "CHANGE_PERSONAL_INFO":"Change personal info",
+  "CHANGE_CONTACT_INFO":"Change contact info",
+  "EDIT_LEGAL_NOTICE":"Edit legal notice",
   "OLD_EMAIL": "Old email-adress",
   "USERNAME":"Username (optional)",
   "ALERT_NOT_FOUND_WORKSHOP":"Couldn't find the workshop you tried to enroll to.",
@@ -182,7 +189,9 @@
   "ALERT_FAILED_REMOVE_USER": "Failed to remove user",
   "ALERT_PASSWORD_IDENTICAL": "Passwords have to be identical",
   "AlERT_PASSWORD_EMPTY":"Passwords cannot be empty",
-  "AVAILABLE_PLACEHOLDERS": "available placeholders"
+  "AVAILABLE_PLACEHOLDERS": "available placeholders",
+  "ALERT_EMAIL_EMPTY": "E-Mail field cannot be empty!",
+  "ALERT_OLDEMAIL_EMPTY": "E-Mail field for old e-mail cannot be empty!"
 
 
 

@@ -4,143 +4,70 @@
 var mainAppCtrls = angular.module("mainAppCtrls");
 /**
  * @ngdoc controller
- * @name mainAppCtrls.controller:NewWorkshopTemplateCtrl
- * @description Controller initializing the creation of a new workshop template
- * @requires restSvcs.WorkshopTemplate
+ * @name mainAppCtrls.controller:NewEmailTemplateCtrl
+ * @description Controller to create a new email template
+ * @requires restSvcs.EmailTemplate
  */
-mainAppCtrls.controller('NewWorkshopTemplateCtrl',['$scope',"WorkshopTemplate",'$translate','$alert',
-    function($scope, WorkshopTemplate,$translate,$alert) {
-        $scope.workshop = {};
-        $scope.myAlert;
-
+mainAppCtrls.controller('NewEmailTemplateCtrl',['$scope',"EmailTemplate",'$translate','$alert',
+    function($scope, EmailTemplate,$translate,$alert) {
+        
         //Get translations for errors and store in array
         var _translations = {};
         //Pass all required translation IDs to translate service
-        $translate(['ALERT_WORKSHOPTEMPLATE_NEW_SUCCESS',
-            'ALERT_WORKSHOPTEMPLATE_NEW_FAIL','ALERT_WORKSHOPTEMPLATE_NOT_FOUND','ALERT_NEGATIVE_COST','ALERT_NEGATIVE_PARTICIPANTS','ALERT_WORKSHOP_IN_PAST']).
+        $translate(['ALERT_EMAILTEMPLATE_NEW_SUCCESS',
+            'ALERT_EMAILTEMPLATE_NEW_FAIL','ALERT_EMAILTEMPLATE_NOT_FOUND']).
         then(function(translations){
             _translations = translations;
         });
-        $scope.workshop.duration=-3600000;
+        
         /**
          * @ngdoc function
-         * @name mainAppCtrls.controller:NewWorkshopTemplateCtrl#sendInfo
-         * @methodOf mainAppCtrls.controller:NewWorkshopTemplateCtrl
-         * @description Validates the input data and sends a request to create a new Template to the server
-         *
+         * @name mainAppCtrls.controller:NewEmailTemplateCtrl#sendInfo
+         * @description Sends the data of the created email template to the server
+         * @methodOf mainAppCtrls.controller:NewEmailTemplateCtrl
          */
         $scope.sendInfo = function(){
-            //Adjusts the format of the date strings to fit the requirements of the API
-            var reformatDate =  function(_date){
-                if(!_date || _date == null)
-                    return "";
-                var _dateStr = _date.toJSON();
-                if(_dateStr == null)
-                    return "";
-                _dateStr =  _dateStr.slice(0,_dateStr.length-5);
-                return _dateStr.replace('T',' ');
-            };
-
-            //Initialize start_at to calculate duration with end_at
-            var _sa = new Date(0);
-            var _duration = $scope.workshop.duration;
-            var _ea = new Date(_duration);
-            var error = false;
-            if($scope.workshop.cost < 0){
-                $alert({
-                    title: 'Error',
-                    type: 'danger',
-                    content: _translations.ALERT_NEGATIVE_COST,
-                    container: '#alert',
-                    dismissable: false,
-                    show: true
-                });
-                error = true;
+            var data={
+                template_name:$scope.email.template.title,
+                email_subject:$scope.email.template.subject,
+                email_body:$scope.email.template.body
             }
-
-            if($scope.workshop.max_participants < 0){
+            
+            EmailTemplate.put(data).$promise.then(function (httpResponse) {
+                
                 $alert({
-                    title: 'Error',
-                    type: 'danger',
-                    content: _translations.ALERT_NEGATIVE_PARTICIPANTS,
-                    container: '#alert',
-                    dismissable: false,
-                    show: true
-                });
-                error = true;
-            }
-
-            if($scope.workshop.start_at < now) {
-                $alert({
-                    title: 'Error',
-                    type: 'danger',
-                    content: _translations.ALERT_WORKSHOP_IN_PAST,
-                    container: '#alert',
-                    dismissable: false,
-                    show: true
-                });
-                error = true;
-            }
-
-            if(error)
-                return false;
-
-            var data = {
-                title:$scope.workshop.title,
-                description:$scope.workshop.description,
-                cost:$scope.workshop.cost,
-                requirements:$scope.workshop.requirement,
-                location:$scope.workshop.location,
-                start_at:reformatDate(_sa),
-                end_at:reformatDate(_ea),
-                max_participants:$scope.workshop.max_participants
-            };
-
-            if($scope.myAlert != null)
-                $scope.myAlert.hide();
-            WorkshopTemplate.put(data).$promise.then(function(httpResponse){
-                $scope.myAlert = $alert({
-                    container: '#alert',
+                    title: '',
                     type: 'success',
-                    title: '',
-                    content: _translations.ALERT_WORKSHOPTEMPLATE_NEW_SUCCESS + ' \"' + data.title +'\"',
-                    show: true,
-                    dismissable: false
-                });
-            },function(httpResponse){
-                $scope.myAlert = $alert({
+                    content: _translations.ALERT_EMAILTEMPLATE_NEW_SUCCESS + ' \"' + data.template_name +'\"',
                     container: '#alert',
-                    type: 'danger',
+                    dismissable: false,
+                    show: true
+                });
+            }, function (httpResponse) {
+                $alert({
                     title: '',
-                    content:  _translations.ALERT_WORKSHOPTEMPLATE_NEW_FAIL + ' (' + httpResponse.status +')',
-                    show: true,
-                    dismissable: false
+                    type: 'danger',
+                    content: _translations.ALERT_EMAILTEMPLATE_NEW_FAIL + ' (' + httpResponse.status +')',
+                    container: '#alert',
+                    dismissable: false,
+                    show: true
                 });
             });
-        };
+        }
         /**
          * @ngdoc function
-         * @name mainAppCtrls.controller:NewWorkshopTemplateCtrl#discard
-         * @methodOf mainAppCtrls.controller:NewWorkshopTemplateCtrl
-         * @description Discards the input
-         *
+         * @name mainAppCtrls.controller:NewEmailTemplateCtrl#discard
+         * @description Discards all data of the document
+         * @methodOf mainAppCtrls.controller:NewEmailTemplateCtrl
          */
         $scope.discard = function(){
-            $scope.workshop.title= "";
-            $scope.workshop.description= "";
-            $scope.workshop.cost= "";
-            $scope.workshop.requirement= "";
-            $scope.workshop.location= "";
-            $scope.workshop.sharedDate= "";
-            $scope.workshop.duration = "";
-            $scope.workshop.max_participants= "";
-
-
-
+            $scope.email.template.title= "";
+            $scope.email.template.subject= "";
+            $scope.email.template.body= "";
+            
         }
 
-
-
+        
     }
 
 ]);

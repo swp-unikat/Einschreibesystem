@@ -74,7 +74,7 @@ mainAppCtrls.controller('adminWorkshopManagementCtrl',['$scope','AdminWorkshop',
                         $scope.myAlert = $alert({
                             title: $scope.errorTitle,
                             type: 'danger',
-                            content: _translations.ALERT_INTERNAL_SERVER_ERROR + ' (' + httpReponse.status +')',
+                            content: _translations.ALERT_INTERNAL_SERVER_ERROR + ' (' + httpResponse.status +')',
                             container: '#alert',
                             dismissable: false,
                             show: true

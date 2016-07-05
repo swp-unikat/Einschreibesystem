@@ -76,7 +76,7 @@ mainAppCtrls.controller('WorkshopTemplateCtrl', ['$scope', "WorkshopTemplate",'$
                     $alert({
                         title: '',
                         type: 'danger',
-                        content: _translations.ALERT_WORKSHOPTEMPLATE_DELETED_FAIL + ' (' + httpReponse.status +')',
+                        content: _translations.ALERT_WORKSHOPTEMPLATE_DELETED_FAIL + ' (' + httpResponse.status +')',
                         container: '#alert',
                         dismissable: false,
                         show: true

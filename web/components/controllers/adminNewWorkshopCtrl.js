@@ -117,7 +117,7 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
                 $alert({
                     title: '',
                     type: 'danger',
-                    content: _translations.ALERT_WORKSHOP_NEW_FAIL + ' (' + httpReponse.status +')',
+                    content: _translations.ALERT_WORKSHOP_NEW_FAIL + ' (' + httpResponse.status +')',
                     container: '#alert',
                     dismissable: false,
                     show: true

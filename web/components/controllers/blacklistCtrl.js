@@ -63,7 +63,7 @@ var mainAppCtrls = angular.module("mainAppCtrls");
                         $alert({
                             title: '',
                             type: 'danger',
-                            content: _translations.ALERT_BLACKLIST_DELETE_PARTICIPANT_FAIL + ' (' + httpReponse.status +')',
+                            content: _translations.ALERT_BLACKLIST_DELETE_PARTICIPANT_FAIL + ' (' + httpResponse.status +')',
                             container: '#alert',
                             dismissable: false,
                             show: true
