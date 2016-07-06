@@ -175,6 +175,8 @@
   "ALERT_EMAILTEMPLATE_NOT_FOUND": "Die angeforderte E-Mailvorlage konnte nicht gefunden werden",
   "ALERT_EMAILTEMPLATE_EDIT_SUCCESS": "Die E-Mailvorlage wurde erfolgreich geändert",
   "ALERT_EMAILTEMPLATE_EDIT_FAIL": "Fehler beim Bearbeiten der E-Mailvorlage. Fehlercode",
+  "ALERT_EMAILTEMPLATE_DELETE_SUCCESS":"E-Mail Template wurde erfolgreich gelöscht",
+  "ALERT_EMAILTEMPLATE_DELETE_FAIL":"Fehler beim Löschen des E-Mail Templates, da es geschützt ist.",
   "ALERT_WORKSHOPTEMPLATE_NOT_FOUND": "Die angeforderte Workshopvorlage konnte nicht gefunden werden",
   "ALERT_WORKSHOPTEMPLATE_NOT_SUCCESS": "Die Workshopvorlage wurde erfolgreich geändert",
   "ALERT_WORKSHOPTEMPLATE_NOT_FAIL": "Fehler beim Bearbeiten der Workshopvorlage. Fehlercode",
