@@ -136,6 +136,9 @@
   "ALERT_EMAILTEMPLATE_EDIT_FAIL": "Failed to edit E-Mail template. Error code",
   "ALERT_EMAILTEMPLATE_NEW_SUCCESS":"Successfully created new E-mail template",
   "ALERT_EMAILTEMPLATE_NEW_FAIL":"Failed to create E-Mail template. Error code",
+  "ALERT_EMAILTEMPLATE_DELETE_SUCCESS":"Successfully deleted E-Mail template",
+  "ALERT_EMAILTEMPLATE_DELETE_FAIL":"Failed to delete E-Mail template, because it is protected",
+
   "ALERT_WORKSHOPTEMPLATE_NEW_SUCCESS":"Successfully created new Workshop template",
   "ALERT_WORKSHOPTEMPLATE_NEW_FAIL":"Failed to create workshop template. Error code",
   "ALERT_WORKSHOPTEMPLATE_EDIT_SUCCESS": "Successfully edited workshop template ",
