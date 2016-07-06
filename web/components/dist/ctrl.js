@@ -429,8 +429,8 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
  * @description Controller to create a new email template to send a confirmation to the marked participants
  * @requires restSvcs.EmailTemplate
  */
-mainAppCtrls.controller('adminEmailConfirmCtrl',['$scope',"EmailTemplate",'$translate','$alert','$stateParams',
-    function($scope, EmailTemplate,$translate,$alert,$stateParams) {
+mainAppCtrls.controller('adminEmailConfirmCtrl',['$scope',"EmailTemplate",'$translate','$alert','$stateParams','Email',
+    function($scope, EmailTemplate,$translate,$alert,$stateParams,Email) {
         $scope.email = {};
         $scope.workshopid =  $stateParams.id;
         //Get translations for errors and store in array
@@ -460,7 +460,30 @@ mainAppCtrls.controller('adminEmailConfirmCtrl',['$scope',"EmailTemplate",'$tran
          * @methodOf mainAppCtrls.controller:adminEmailConfirmCtrl
          */
         $scope.send = function(){
-
+            var _data = {
+                content : $scope.email.body,
+                subject : $scope.email.subject
+            };
+            Email.sendEmail({id: workshopid},_data).$promise.then(function(response){
+                $alert({
+                    type: 'success',
+                    content: 'Email was send',
+                    title: 'Success',
+                    dissmisable: false,
+                    show: true,
+                    duration: 20
+                });
+            },function(response){
+                $alert({
+                    type: 'danger',
+                    content: 'Email could not be send: '+response.status,
+                    title: 'Error',
+                    dissmisable: false,
+                    show: true,
+                    duration: 20
+                });
+            });
+            
         }
         /**
          * @ngdoc function
@@ -2498,7 +2521,7 @@ mainAppCtrls.controller('WorkshopTemplateCtrl', ['$scope', "WorkshopTemplate",'$
         var _translations = {};
         //Pass all required translation IDs to translate service
         $translate(['ALERT_WORKSHOPTEMPLATE_LIST_EMPTY',
-            'ALERT_WORKSHOPTEMPLATE_DELETED_SUCCESS','ALERT_WORKSHOPTEMPLATE_DELETED_FAIL']).
+            'ALERT_WORKSHOPTEMPLATE_DELETED_SUCCESS','ALERT_WORKSHOPTEMPLATE_DELETED_FAIL','TITLE_SUCCESS','TITLE_ERROR','TITLE_WARNING']).
         then(function(translations){
             _translations = translations;
         });
@@ -2518,9 +2541,9 @@ mainAppCtrls.controller('WorkshopTemplateCtrl', ['$scope', "WorkshopTemplate",'$
 
             }, function (httpResponse) {
                 if(httpResponse.status == 404){
-                    $scope.data = {};
+                    $scope.data = {}
                     $alert({
-                        title: '',
+                        title: _translations.TITLE_WARNING,
                         type: 'warning',
                         container:'#alert',
                         show: true,
@@ -2543,7 +2566,7 @@ mainAppCtrls.controller('WorkshopTemplateCtrl', ['$scope', "WorkshopTemplate",'$
             WorkshopTemplate.delete({id:_id}).$promise.then(function(httpresponse){
                     $alert({
                         title:'',
-                        type: 'success',
+                        type: _translations.TITLE_SUCCESS,
                         container:'#alert',
                         show: true,
                         dismissable: false,
@@ -2554,7 +2577,7 @@ mainAppCtrls.controller('WorkshopTemplateCtrl', ['$scope', "WorkshopTemplate",'$
                 }
                 , function (httpResponse) {
                     $alert({
-                        title: '',
+                        title: _translations.TITLE_ERROR,
                         type: 'danger',
                         content: _translations.ALERT_WORKSHOPTEMPLATE_DELETED_FAIL + ' (' + httpResponse.status +')',
                         container: '#alert',
