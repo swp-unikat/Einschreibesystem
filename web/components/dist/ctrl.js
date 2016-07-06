@@ -2344,7 +2344,8 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
             var _ea = Date.parse($scope.workshop.end_at);
             var _sa = Date.parse($scope.workshop.start_at);
             $scope.workshop.duration = new Date(_ea - _sa);
-
+            console.log($scope.workshop.start_at);
+            console.log(new Date(_sa) + '\n' + new Date());
             $scope.loading = false;
         },function(httpResponse) {
             alert(httpResponse.status + '');
