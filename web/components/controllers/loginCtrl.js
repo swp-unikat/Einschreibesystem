@@ -71,7 +71,7 @@ mainAppCtrls.controller('LoginCtrl',['$scope','$http','store','$state','jwtHelpe
             if(!$scope.reset.email) {
                 $scope.alertReset = $alert({
                     title: _translations.TITLE_ERROR,
-                    content: 'You have to enter a valid Mail-Address',
+                    content: _translations.ALERT_RESET_EMAIL_ERROR,
                     type: 'danger',
                     dismissable: false,
                     show: true,
@@ -83,8 +83,8 @@ mainAppCtrls.controller('LoginCtrl',['$scope','$http','store','$state','jwtHelpe
             Admin.requestReset({email: $scope.reset.email}).$promise.then(function(response){
                 $scope.alertReset.hide();
                 $scope.alertReset = $alert({
-                    title: _translations.TITLE_ERROR,
-                    content: 'A link for password reset was send to the enter e-mail address',
+                    title: _translations.TITLE_SUCCESS,
+                    content: _translations.ALERT_RESET_PASSWORD_SUCCESS,
                     type: 'success',
                     dismissable: false,
                     show: true,
@@ -94,7 +94,7 @@ mainAppCtrls.controller('LoginCtrl',['$scope','$http','store','$state','jwtHelpe
                 $scope.alertReset.hide();
                 $scope.alertReset = $alert({
                     title: _translations.TITLE_ERROR,
-                    content: 'An error occurred ( ' + response.status + ' )',
+                    content: _translations.ALERT_RESET_PASSWORD_ERROR  + response.status ,
                     type: 'danger',
                     dismissable: false,
                     show: true,
