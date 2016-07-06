@@ -1,7 +1,7 @@
 <div class="container">
                 <div class="box-group" ng-repeat="workshop in workshopList">
-                    <div class="box box-default" class="box-title" ng-click="toggle= !toggle">
-                        <div class="box-header with-border">
+                    <div class="box box-default" >
+                        <div class="box-header with-border" class="box-title"  ng-click="toggle= !toggle">
                             <h4 >
                                 {{workshop.title}} <label class="small participants" >({{workshop.numParticipants}}/{{workshop.max_participants}})</label>
                                 <label class="small pull-right" style="margin-right:5%;">{{workshop.start_at|date: "dd/MM/yyyy HH:mm"}}</label>
