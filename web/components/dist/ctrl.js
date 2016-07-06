@@ -1062,7 +1062,7 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin','$alert'
             var _translations = {};
             //Pass all required translation IDs to translate service
             $translate(['ALERT_BLACKLIST_DELETE_PARTICIPANT',
-                'ALERT_BLACKLIST_DELETE_PARTICIPANT_FAIL']).
+                'ALERT_BLACKLIST_DELETE_PARTICIPANT_FAIL','TITLE_SUCCESS','TITLE_ERROR']).
             then(function(translations){
                 _translations = translations;
             });
@@ -1095,7 +1095,7 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin','$alert'
                 Participants.removeBlacklist({id:_id}).$promise.then(function(httpResponse){
                        $scope.deleting = false;
                         $alert({
-                            title:'',
+                            title: _translations.TITLE_SUCCESS,
                             type: 'success',
                             container:'#alert',
                             show: true,
@@ -1108,7 +1108,7 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin','$alert'
                     , function (httpResponse) {
                         $scope.deleting = false;
                         $alert({
-                            title: '',
+                            title: _translations.TITLE_ERROR,
                             type: 'danger',
                             content: _translations.ALERT_BLACKLIST_DELETE_PARTICIPANT_FAIL + ' (' + httpResponse.status +')',
                             container: '#alert',
@@ -2037,7 +2037,7 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm','Admin', '$
         //Get translations for errors and store in array
         var _translations = {};
         //Pass all required translation IDs to translate service
-        $translate(['ALERT_PASSWORD_IDENTICAL', 'AlERT_PASSWORD_EMPTY','CHANGE_PERSONAL_INFO','CHANGE_CONTACT_INFO','EDIT_LEGAL_NOTICE']).
+        $translate(['ALERT_PASSWORD_IDENTICAL', 'AlERT_PASSWORD_EMPTY','CHANGE_PERSONAL_INFO','CHANGE_CONTACT_INFO','EDIT_LEGAL_NOTICE','TITLE_SUCCESS','TITLE_ERROR']).
         then(function(translations){
             _translations = translations;
             $scope.tabs = [
@@ -2096,7 +2096,7 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm','Admin', '$
                 if($scope.pwAlert != null)
                     $scope.pwAlert.hide();
                 $scope.pwAlert = $alert({
-                    title: "Error",
+                    title: _translations.TITLE_ERROR,
                     type: 'danger',
                     content: _translations.ALERT_PASSWORD_IDENTICAL,
                     container: '#pwalert',
@@ -2124,7 +2124,7 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm','Admin', '$
                 if($scope.pwAlert != null)
                     $scope.pwAlert.hide();
                 $scope.pwAlert = $alert({
-                    title: "Error",
+                    title: _translations.TITLE_ERROR,
                     type: 'danger',
                     content: _translations.AlERT_PASSWORD_EMPTY,
                     container: '#pwalert',
@@ -2142,7 +2142,7 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm','Admin', '$
                     $scope.pwAlert.hide();
 
                 $scope.pwAlert = $alert({
-                    title: "Success",
+                    title: _translations.TITLE_SUCCESS,
                     type: 'success',
                     content: value.message,
                     container: '#pwalert',
@@ -2155,7 +2155,7 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm','Admin', '$
                     $scope.pwAlert.hide();
 
                 $scope.pwAlert = $alert({
-                    title: "Error",
+                    title: _translations.TITLE_ALERT,
                     type: 'danger',
                     content: value.data.message,
                     container: '#pwalert',
@@ -2201,7 +2201,7 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm','Admin', '$
                 $scope.emailAlert = $alert({
                    content: response.statusText,
                    type: 'success',
-                   title: 'Success',
+                   title: _translations.TITLE_SUCCESS,
                    show: true,
                    dismissable: false,
                    duration: 30,
@@ -2212,7 +2212,7 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm','Admin', '$
                 $scope.emailAlert = $alert({
                     content: response.statusText,
                     type: 'danger',
-                    title: 'Error',
+                    title: _translations.TITLE_ERROR,
                     show: true,
                     dismissable: false,
                     duration: 30,
@@ -2232,7 +2232,7 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm','Admin', '$
             console.log(_dataToSend.content);
             Admin.editLegalNotice(_dataToSend).$promise.then(function (value) {
                 $alert({
-                    title: "Success",
+                    title: _translations.TITLE_SUCCESS,
                     type: 'success',
                     content: value.statusText,
                     container: '#alertInfo',
@@ -2242,7 +2242,7 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm','Admin', '$
                 $scope.legalNotice = value.content;
             },function (value) {
                 $alert({
-                    title: "Error",
+                    title: _translations.TITLE_ERROR,
                     type: 'danger',
                     content: value.statusText,
                     container: '#alertInfo',
@@ -2283,7 +2283,7 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm','Admin', '$
             Admin.editContact(_dataToSend).$promise.then(
                 function(value){
                     $alert({
-                        title: "Success",
+                        title: _translations.TITLE_SUCCESS,
                         type: 'success',
                         content: value.message,
                         container: '#alertInfo',
@@ -2293,7 +2293,7 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm','Admin', '$
                 },
                 function(value){
                     $alert({
-                        title: "Error",
+                        title: _translations.TITLE_ERROR,
                         type: 'danger',
                         content: value.message,
                         container: '#alertInfo',
@@ -2583,8 +2583,8 @@ mainAppCtrls.controller('WorkshopTemplateCtrl', ['$scope', "WorkshopTemplate",'$
         $scope.delete = function (_id) {
             WorkshopTemplate.delete({id:_id}).$promise.then(function(httpresponse){
                     $alert({
-                        title:'',
-                        type: _translations.TITLE_SUCCESS,
+                        title:_translations.TITLE_SUCCESS,
+                        type: 'success',
                         container:'#alert',
                         show: true,
                         dismissable: false,
