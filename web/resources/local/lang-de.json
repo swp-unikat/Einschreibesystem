@@ -193,6 +193,7 @@
   "BUTTON_SEND_SUBSCRIBE_CONFIRMATION":"Sende Bestätigungse-mail",
   "BUTTON_PRINT_LIST_OF_PARTICIPANTS":"drucke Teilnehmerliste",
   "TITLE_SUCCESS":"Erfolg",
+  "TITLE_WARNING":"Warnung",
   "TITLE_ERROR":"Fehler"
 
 }
