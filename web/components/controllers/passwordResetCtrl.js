@@ -13,7 +13,7 @@ mainAppCtrls.controller('PasswordResetCtrl',['$scope','$alert','$translate','Adm
 
         $scope.form = {};
         var _translations;
-        $translate(['TITLE_ERROR','PASSWORDS_IDENTICAL_ERROR','PASSWORD_EMPTY_ERROR']).then(function(translations){
+        $translate(['TITLE_ERROR','TITLE_SUCCESS','PASSWORDS_IDENTICAL_ERROR','PASSWORD_EMPTY_ERROR']).then(function(translations){
            _translations = translations;
         });
         var pwAlert;
@@ -77,7 +77,7 @@ mainAppCtrls.controller('PasswordResetCtrl',['$scope','$alert','$translate','Adm
             Admin.resetPassword({token: _token,password: $scope.password}).$promise.then(function(httpResponse){
                 pwAlert = $alert({
                     container: '#alert',
-                    title: "Success",
+                    title: _translations.TITLE_SUCCESS,
                     content: _msg,
                     type: "success",
                     show: true,
@@ -94,7 +94,7 @@ mainAppCtrls.controller('PasswordResetCtrl',['$scope','$alert','$translate','Adm
                 }
                 pwAlert = $alert({
                     container: '#alert',
-                    title: "Error",
+                    title: _translations.TITLE_ERROR,
                     content: _msg,
                     type: "danger",
                     show: true,
