@@ -14,7 +14,7 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
         var _translations = {};
         //Pass all required translation IDs to translate service
         $translate(['ALERT_ENROLLMENT_SUCCSESSFULL','ALERT_NO_PARTICIPANTS','FIRST_NAME','LAST_NAME','EMAIL'
-        ,'ALERT_INTERNAL_SERVER_ERROR', 'ALERT_ALREADY_ENROLLED', 'TITLE_SUCCESS','TITLE_ERROR']).
+        ,'ALERT_INTERNAL_SERVER_ERROR', 'ALERT_ALREADY_ENROLLED', 'TITLE_SUCCESS','TITLE_ERROR', 'ALERT_YOU_ARE_ON_BLACKLIST']).
         then(function(translations){
             _translations = translations;
             $scope.placeholder =  {
@@ -66,6 +66,9 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
                 switch(httpResponse.status){
                     case 401:
                         _msg = _translations.ALERT_ALREADY_ENROLLED;
+                        break;
+                    case 403:
+                        _msg = _translations.ALERT_YOU_ARE_ON_BLACKLIST;
                         break;
                     case 500:
                         _msg = _translations.ALERT_INTERNAL_SERVER_ERROR;

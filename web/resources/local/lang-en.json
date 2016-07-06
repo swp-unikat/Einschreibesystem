@@ -198,7 +198,8 @@
   "TITLE_WARNING":"Warning",
   "ALERT_CREATE_ADMIN_SUCCESS": "Successfully created new account",
   "ALERT_CREATE_ADMIN_FAIL": "Failed to create new account",
-  "ALERT_ALREADY_ENROLLED": "You are already enrolled"
+  "ALERT_ALREADY_ENROLLED": "You are already enrolled",
+  "ALERT_YOU_ARE_ON_BLACKLIST": "You are blacklisted, you can´t enroll in workshops anymore!!!"
 
 
 
