@@ -15,7 +15,7 @@ var mainAppCtrls = angular.module("mainAppCtrls");
             var _translations = {};
             //Pass all required translation IDs to translate service
             $translate(['ALERT_BLACKLIST_DELETE_PARTICIPANT',
-                'ALERT_BLACKLIST_DELETE_PARTICIPANT_FAIL']).
+                'ALERT_BLACKLIST_DELETE_PARTICIPANT_FAIL','TITLE_SUCCESS','TITLE_ERROR']).
             then(function(translations){
                 _translations = translations;
             });
@@ -48,7 +48,7 @@ var mainAppCtrls = angular.module("mainAppCtrls");
                 Participants.removeBlacklist({id:_id}).$promise.then(function(httpResponse){
                        $scope.deleting = false;
                         $alert({
-                            title:'',
+                            title: _translations.TITLE_SUCCESS,
                             type: 'success',
                             container:'#alert',
                             show: true,
@@ -61,7 +61,7 @@ var mainAppCtrls = angular.module("mainAppCtrls");
                     , function (httpResponse) {
                         $scope.deleting = false;
                         $alert({
-                            title: '',
+                            title: _translations.TITLE_ERROR,
                             type: 'danger',
                             content: _translations.ALERT_BLACKLIST_DELETE_PARTICIPANT_FAIL + ' (' + httpResponse.status +')',
                             container: '#alert',
