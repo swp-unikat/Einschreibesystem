@@ -38,14 +38,28 @@ mainAppCtrls.controller('EnrollmentConfirmCtrl',['$scope','Workshops','$statePar
             userid: $stateParams.userid,
             token: $stateParams.token
         }).$promise.then(function(value){
-            $alert({
-                container: '#alert',
-                dismissable: false,
-                show: true,
-                title: 'Success',
-                content: _translations.ALERT_SUCCESSFULLY_ENROLLED_WORKSHOP + '\"' + $scope.workshop.title + '\"',
-                type: 'success'
-            });
+            switch (value.status){
+                case 200:
+                    $alert({
+                        container: '#alert',
+                        dismissable: false,
+                        show: true,
+                        title: 'Success',
+                        content: _translations.ALERT_SUCCESSFULLY_ENROLLED_WORKSHOP + '\"' + $scope.workshop.title + '\"',
+                        type: 'success'
+                    });
+                    break;
+                case 201:
+                    $alert({
+                        container: '#alert',
+                        dismissable: false,
+                        show: true,
+                        title: 'Success',
+                        content: value.message + '\"' + $scope.workshop.title + '\"',
+                        type: 'success'
+                    });
+                    break;
+            }
             $scope.loading = false;
         },function(httpResponse){
             switch(httpResponse.status){
