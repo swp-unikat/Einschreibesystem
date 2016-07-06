@@ -276,7 +276,7 @@ restSvcs.factory('EmailTemplate',['$resource',function($resource){
  * @description Provides CRUD operations for Email-functions provided by the API
  */
 restSvcs.factory('Email',['$resource',function($resource){
-    return $resource('/api/admin/email/:workshopid/send',{},{
+    return $resource('/api/admin/email/:id/send',{},{
         /**
          * @ngdoc function
          * @name restSvcs.Email#send
@@ -284,7 +284,7 @@ restSvcs.factory('Email',['$resource',function($resource){
          * @methodOf restSvcs.Email
          * @param {number} workshopid Workshop-ID
          */
-        'sendEmail': {method: 'PATCH',params: {workshopid: '@id'}, isArray: false}
+        'sendEmail': {method: 'POST',params: {id: '@id'}, isArray: false}
     });
 }]);
 /**

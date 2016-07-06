@@ -429,8 +429,8 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
  * @description Controller to create a new email template to send a confirmation to the marked participants
  * @requires restSvcs.EmailTemplate
  */
-mainAppCtrls.controller('adminEmailConfirmCtrl',['$scope',"EmailTemplate",'$translate','$alert','$stateParams',
-    function($scope, EmailTemplate,$translate,$alert,$stateParams) {
+mainAppCtrls.controller('adminEmailConfirmCtrl',['$scope',"EmailTemplate",'$translate','$alert','$stateParams','Email',
+    function($scope, EmailTemplate,$translate,$alert,$stateParams,Email) {
         $scope.email = {};
         $scope.workshopid =  $stateParams.id;
         //Get translations for errors and store in array
@@ -460,7 +460,30 @@ mainAppCtrls.controller('adminEmailConfirmCtrl',['$scope',"EmailTemplate",'$tran
          * @methodOf mainAppCtrls.controller:adminEmailConfirmCtrl
          */
         $scope.send = function(){
-
+            var _data = {
+                content : $scope.email.body,
+                subject : $scope.email.subject
+            };
+            Email.sendEmail({id: workshopid},_data).$promise.then(function(response){
+                $alert({
+                    type: 'success',
+                    content: 'Email was send',
+                    title: 'Success',
+                    dissmisable: false,
+                    show: true,
+                    duration: 20
+                });
+            },function(response){
+                $alert({
+                    type: 'danger',
+                    content: 'Email could not be send: '+response.status,
+                    title: 'Error',
+                    dissmisable: false,
+                    show: true,
+                    duration: 20
+                });
+            });
+            
         }
         /**
          * @ngdoc function
@@ -2310,7 +2333,8 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
         //Get translations for errors and store in array
         var _translations = {};
         //Pass all required translation IDs to translate service
-        $translate(['ALERT_ENROLLMENT_SUCCSESSFULL','ALERT_NO_PARTICIPANTS','FIRST_NAME','LAST_NAME','EMAIL']).
+        $translate(['ALERT_ENROLLMENT_SUCCSESSFULL','ALERT_NO_PARTICIPANTS','FIRST_NAME','LAST_NAME','EMAIL'
+        ,'ALERT_INTERNAL_SERVER_ERROR', 'ALERT_ALREADY_ENROLLED', 'TITLE_SUCCESS','TITLE_ERROR']).
         then(function(translations){
             _translations = translations;
             $scope.placeholder =  {
@@ -2348,7 +2372,7 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
             Workshops.enroll(_params,_data).$promise.then(function(value,httpResponse){
 
                 $alert({
-                    title: 'Success',
+                    title: _translations.TITLE_SUCCESS,
                     type: 'success',
                     content: _translations.ALERT_ENROLLMENT_SUCCSESSFULL ,
                     container: '#alertEnroll',
@@ -2358,11 +2382,21 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
                     animation: 'am-fade-and-slide-top'
                 });
             },function(httpResponse){
-                
+                var _msg = "";
+                switch(httpResponse.status){
+                    case 401:
+                        _msg = _translations.ALERT_ALREADY_ENROLLED;
+                        break;
+                    case 500:
+                        _msg = _translations.ALERT_INTERNAL_SERVER_ERROR;
+                        break;
+                    default:
+                        _msg = httpResponse.status + ':' + httpResponse;
+                }
                 $alert({
-                    title: 'Error',
+                    title: _translations.TITLE_ERROR,
                     type: 'danger',
-                    content: httpResponse.status + ': '+ httpResponse.statusText,
+                    content: msg,
                     container: '#alertEnroll',
                     dismissable: true,
                     duration: 20,
