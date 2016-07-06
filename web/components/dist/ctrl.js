@@ -186,7 +186,7 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
         var _translations = {};
         //Pass all required translation IDs to translate service
         $translate(['ALERT_WORKSHOP_EDIT_SUCCESS',
-            'ALERT_WORKSHOP_EDIT_FAIL','ALERT_WORKSHOP_NOT_FOUND']).
+            'ALERT_WORKSHOP_EDIT_FAIL','ALERT_WORKSHOP_NOT_FOUND','ALERT_WORKSHOP_IN_PAST','ALERT_NEGATIVE_COST','ALERT_NEGATIVE_PARTICIPANTS']).
         then(function(translations){
             _translations = translations;
         });
@@ -247,7 +247,8 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
                     content: _translations.ALERT_NEGATIVE_COST,
                     container: '#alert',
                     dismissable: false,
-                    show: true
+                    show: true,
+                    duration: 30
                 });
                 error = true;
             }
@@ -259,11 +260,13 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
                     content: _translations.ALERT_NEGATIVE_PARTICIPANTS,
                     container: '#alert',
                     dismissable: false,
-                    show: true
+                    show: true,
+                    duration: 30
                 });
                 error = true;
             }
-
+            var now = new Date();
+            console.log($scope.workshop.start_at);
             if($scope.workshop.start_at < now) {
                 $alert({
                     title: 'Error',
@@ -271,7 +274,8 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
                     content: _translations.ALERT_WORKSHOP_IN_PAST,
                     container: '#alert',
                     dismissable: false,
-                    show: true
+                    show: true,
+                    duration: 30
                 });
                 error = true;
             }
@@ -311,6 +315,7 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
                     show: true,
                     duration: 30
                 });
+                //Redirect to Details page
             }, function (httpResponse) {
                 $alert({
                     title: '',
