@@ -18,7 +18,7 @@ mainAppCtrls.controller('WorkshopTemplateCtrl', ['$scope', "WorkshopTemplate",'$
         var _translations = {};
         //Pass all required translation IDs to translate service
         $translate(['ALERT_WORKSHOPTEMPLATE_LIST_EMPTY',
-            'ALERT_WORKSHOPTEMPLATE_DELETED_SUCCESS','ALERT_WORKSHOPTEMPLATE_DELETED_FAIL']).
+            'ALERT_WORKSHOPTEMPLATE_DELETED_SUCCESS','ALERT_WORKSHOPTEMPLATE_DELETED_FAIL','TITLE_SUCCESS','TITLE_ERROR','TITLE_WARNING']).
         then(function(translations){
             _translations = translations;
         });
@@ -38,9 +38,9 @@ mainAppCtrls.controller('WorkshopTemplateCtrl', ['$scope', "WorkshopTemplate",'$
 
             }, function (httpResponse) {
                 if(httpResponse.status == 404){
-                    $scope.data = {};
+                    $scope.data = {}
                     $alert({
-                        title: '',
+                        title: _translations.TITLE_WARNING,
                         type: 'warning',
                         container:'#alert',
                         show: true,
@@ -63,7 +63,7 @@ mainAppCtrls.controller('WorkshopTemplateCtrl', ['$scope', "WorkshopTemplate",'$
             WorkshopTemplate.delete({id:_id}).$promise.then(function(httpresponse){
                     $alert({
                         title:'',
-                        type: 'success',
+                        type: _translations.TITLE_SUCCESS,
                         container:'#alert',
                         show: true,
                         dismissable: false,
@@ -74,7 +74,7 @@ mainAppCtrls.controller('WorkshopTemplateCtrl', ['$scope', "WorkshopTemplate",'$
                 }
                 , function (httpResponse) {
                     $alert({
-                        title: '',
+                        title: _translations.TITLE_ERROR,
                         type: 'danger',
                         content: _translations.ALERT_WORKSHOPTEMPLATE_DELETED_FAIL + ' (' + httpResponse.status +')',
                         container: '#alert',
