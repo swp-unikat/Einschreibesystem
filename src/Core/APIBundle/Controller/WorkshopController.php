@@ -228,9 +228,9 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
                     $this->getDoctrine()->getManager()->flush();
                     //
                     if ($participantWorkshop->isWaiting())
-                        return $this->handleView($this->view(['code' => 200,'message' => $workshop->getTitle()], 200));
+                        return $this->handleView($this->view(['code' => 201,'message' => 'You are on the waiting list'], 201));
                     else
-                        return $this->handleView($this->view(['code' => 201,'message' => 'You are on the waiting list'], 200));
+                        return $this->handleView($this->view(['code' => 200,'message' => $workshop->getTitle()], 200));
                 }
             }else{
                 return $this->handleView($this->view(['code' => 403,'message' => "Token ist not valid"], 403));
