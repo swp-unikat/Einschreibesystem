@@ -2437,9 +2437,10 @@ mainAppCtrls.controller('WorkshopListCtrl',['$scope','Workshops','$alert','$tran
         //Define object to store the alert in
         $scope.myAlert;
         //Get and store translation for alert title.
-        $translate(['TITLE_ERROR', 'ERROR_NO_WORKSHOPS']).then(function (translations) {
+        $translate(['TITLE_ERROR', 'ERROR_NO_WORKSHOPS','ALERT_INTERNAL_SERVER_ERROR']).then(function (translations) {
             $scope.errorTitle = translations.TITLE_ERROR;
             $scope.errorMsg = translations.ERROR_NO_WORKSHOPS;
+            $scope.InternalServerError = translations.ALERT_INTERNAL_SERVER_ERROR;
         });
         $scope.loading = true;
         Workshops.getAll().$promise.then(function(value){
@@ -2451,7 +2452,6 @@ mainAppCtrls.controller('WorkshopListCtrl',['$scope','Workshops','$alert','$tran
                 //Alert for error 404, no workshops available
                 case 404:
                     $scope.myAlert = $alert({
-
                         title: $scope.errorTitle,
                         type: 'danger',
                         content: $scope.errorMsg,
@@ -2464,7 +2464,7 @@ mainAppCtrls.controller('WorkshopListCtrl',['$scope','Workshops','$alert','$tran
                     $scope.myAlert = $alert({
                         title: $scope.errorTitle,
                         type: 'danger',
-                        content: 'Internal server error.',
+                        content: $scope.InternalServerError,
                         container: '#alert',
                         dismissable: false,
                         show: true
@@ -2498,7 +2498,7 @@ mainAppCtrls.controller('WorkshopTemplateCtrl', ['$scope', "WorkshopTemplate",'$
         var _translations = {};
         //Pass all required translation IDs to translate service
         $translate(['ALERT_WORKSHOPTEMPLATE_LIST_EMPTY',
-            'ALERT_WORKSHOPTEMPLATE_DELETED_SUCCESS','ALERT_WORKSHOPTEMPLATE_DELETED_FAIL']).
+            'ALERT_WORKSHOPTEMPLATE_DELETED_SUCCESS','ALERT_WORKSHOPTEMPLATE_DELETED_FAIL','TITLE_SUCCESS','TITLE_ERROR','TITLE_WARNING']).
         then(function(translations){
             _translations = translations;
         });
@@ -2518,9 +2518,9 @@ mainAppCtrls.controller('WorkshopTemplateCtrl', ['$scope', "WorkshopTemplate",'$
 
             }, function (httpResponse) {
                 if(httpResponse.status == 404){
-                    $scope.data = {};
+                    $scope.data = {}
                     $alert({
-                        title: '',
+                        title: _translations.TITLE_WARNING,
                         type: 'warning',
                         container:'#alert',
                         show: true,
@@ -2543,7 +2543,7 @@ mainAppCtrls.controller('WorkshopTemplateCtrl', ['$scope', "WorkshopTemplate",'$
             WorkshopTemplate.delete({id:_id}).$promise.then(function(httpresponse){
                     $alert({
                         title:'',
-                        type: 'success',
+                        type: _translations.TITLE_SUCCESS,
                         container:'#alert',
                         show: true,
                         dismissable: false,
@@ -2554,7 +2554,7 @@ mainAppCtrls.controller('WorkshopTemplateCtrl', ['$scope', "WorkshopTemplate",'$
                 }
                 , function (httpResponse) {
                     $alert({
-                        title: '',
+                        title: _translations.TITLE_ERROR,
                         type: 'danger',
                         content: _translations.ALERT_WORKSHOPTEMPLATE_DELETED_FAIL + ' (' + httpResponse.status +')',
                         container: '#alert',
