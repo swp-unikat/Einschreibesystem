@@ -52,12 +52,12 @@
     <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav navbar-right">
             <li>
-                <button type="button" class="btn btn-default" ng-model="selectedLang" data-html="1" data-toggle="true" bs-options="lang.name for lang in langs" ng-change="changeLang()" bs-select>
+                <button type="button" class="btn btn-default navbar-btn" ng-model="selectedLang" data-html="1" data-toggle="true" bs-options="lang.name for lang in langs" ng-change="changeLang()" bs-select>
                     <span class="caret"></span>
                 </button>
             </li>
             <li ng-show="show_login" ><a href="#login"><button type="button" class="btn btn-link">Login</button></a></li>
-            <li ng-show="show_logout" ><button  type="button-centred" class="btn btn-default" ng-click="logout()">Logout</button></li>
+            <li ng-show="show_logout" ><button  type="button-centred" class="btn btn-default navbar-btn" ng-click="logout()">Logout</button></li>
         </ul>
     </div>
 </div>
