@@ -251,13 +251,15 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      *      404 = "Returned when the data is not found"
      *  }
      * )
-     * @param $workshopId int id of the workshop
-     * @param $email int id of the participant
+     * @Rest\RequestParam(name="workshopId", requirements=".*", description="id of the workshop")
+     * @Rest\RequestParam(name="email", requirements=".*", description="email of the participant")
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\View()
      */
-    public function postUnsubscribeAction($workshopId,$email){
-
+    public function postUnsubscribeAction(ParamFetcher $paramFetcher){
+        $workshopId = $paramFetcher->get("workshopId");
+        $email = $paramFetcher->get("email");
+        
         $participant = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Participants")->findOneBy(['email' => $email]);
 
         if(!$participant){
