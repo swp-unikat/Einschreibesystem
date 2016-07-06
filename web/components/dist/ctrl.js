@@ -164,7 +164,8 @@ mainAppCtrls.controller('EmailTemplateCtrl', ['$scope', "EmailTemplate", '$alert
                         content: _translations.ALERT_EMAILTEMPLATE_DELETE_FAIL + ' (' + httpResponse.status + ')',
                         container: '#alert',
                         dismissable: false,
-                        show: true
+                        show: true,
+                        duration: 20
                     });
                 }
             )
