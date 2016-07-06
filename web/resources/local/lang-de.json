@@ -191,6 +191,8 @@
   "PASSWORDS_IDENTICAL_ERROR": "Passwörter sind nicht identisch",
   "PASSWORD_EMPTY_ERROR": "Passwort darf nicht leer sein",
   "BUTTON_SEND_SUBSCRIBE_CONFIRMATION":"Sende Bestätigungse-mail",
-  "BUTTON_PRINT_LIST_OF_PARTICIPANTS":"drucke Teilnehmerliste"
+  "BUTTON_PRINT_LIST_OF_PARTICIPANTS":"drucke Teilnehmerliste",
+  "TITLE_SUCCESS":"Erfolg",
+  "TITLE_ERROR":"Fehler"
 
 }
