@@ -297,7 +297,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
         /* Sending E-Mail */
 
         $message = \Swift_Message::newInstance()
-            ->setSubject($template->getEmailSubject())
+            ->setSubject($this->get('twig')->createTemplate($template->getEmailSubject())->render(["workshop" => $workshopParticipant->getWorkshop()]))
             ->setFrom($this->container->getParameter('email_sender'))
             ->setTo($workshopParticipant->getParticipant()->getEmail())
             ->setBody($renderTemplate->render(['participant' => $workshopParticipant->getParticipant(),'workshop' => $workshopParticipant->getWorkshop()] ), 'text/html');

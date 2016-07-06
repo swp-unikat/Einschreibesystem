@@ -56,7 +56,7 @@ class Helper{
                     /* Sending E-Mail */
                     
                     $message = \Swift_Message::newInstance()
-                        ->setSubject($template->getEmailSubject())
+                        ->setSubject($this->twig->createTemplate($template->getEmailSubject())->render(["workshop" => $nextParticipant->getWorkshop()]))
                         ->setFrom($this->container->getParameter('email_sender'))
                         ->setTo($nextParticipant->getParticipant()->getEmail())
                         ->setBody($renderTemplate->render(['participant' => $nextParticipant->getParticipant(),'workshop' => $nextParticipant->getWorkshop()] ), 'text/html');
