@@ -110,7 +110,7 @@ mainAppCtrls.controller('AdminCreateCtrl',['$scope', '$stateParams','$alert','$t
  */
 mainAppCtrls.controller('EmailTemplateCtrl', ['$scope', "EmailTemplate", '$alert', '$modal', '$translate',
 
-    function ($scope, EmailTemplate, $alert, $modal, $tramslate) {
+    function ($scope, EmailTemplate, $alert, $modal, $translate) {
 
         //Get translations for errors and store in array
         var _translations = {};
