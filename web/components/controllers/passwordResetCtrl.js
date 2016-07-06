@@ -74,7 +74,7 @@ mainAppCtrls.controller('PasswordResetCtrl',['$scope','$alert','$translate','Adm
             var _msg = "";
             var _type = "";
             var _title = "";
-            Admin.resetPassword({token: _token},{password: $scope.form.password}).$promise.then(function(httpResponse){
+            Admin.resetPassword({token: _token,password: $scope.password}).$promise.then(function(httpResponse){
                 pwAlert = $alert({
                     container: '#alert',
                     title: "Success",
