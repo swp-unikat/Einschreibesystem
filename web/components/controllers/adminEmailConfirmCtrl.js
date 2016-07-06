@@ -8,8 +8,8 @@ var mainAppCtrls = angular.module("mainAppCtrls");
  * @description Controller to create a new email template to send a confirmation to the marked participants
  * @requires restSvcs.EmailTemplate
  */
-mainAppCtrls.controller('adminEmailConfirmCtrl',['$scope',"EmailTemplate",'$translate','$alert','$stateParams',
-    function($scope, EmailTemplate,$translate,$alert,$stateParams) {
+mainAppCtrls.controller('adminEmailConfirmCtrl',['$scope',"EmailTemplate",'$translate','$alert','$stateParams','Email',
+    function($scope, EmailTemplate,$translate,$alert,$stateParams,Email) {
         $scope.email = {};
         $scope.workshopid =  $stateParams.id;
         //Get translations for errors and store in array
@@ -39,7 +39,30 @@ mainAppCtrls.controller('adminEmailConfirmCtrl',['$scope',"EmailTemplate",'$tran
          * @methodOf mainAppCtrls.controller:adminEmailConfirmCtrl
          */
         $scope.send = function(){
-
+            var _data = {
+                content : $scope.email.body,
+                subject : $scope.email.subject
+            };
+            Email.sendEmail({id: workshopid},_data).$promise.then(function(response){
+                $alert({
+                    type: 'success',
+                    content: 'Email was send',
+                    title: 'Success',
+                    dissmisable: false,
+                    show: true,
+                    duration: 20
+                });
+            },function(response){
+                $alert({
+                    type: 'danger',
+                    content: 'Email could not be send: '+response.status,
+                    title: 'Error',
+                    dissmisable: false,
+                    show: true,
+                    duration: 20
+                });
+            });
+            
         }
         /**
          * @ngdoc function
