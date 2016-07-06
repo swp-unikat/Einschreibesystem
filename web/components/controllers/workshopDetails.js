@@ -13,7 +13,8 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
         //Get translations for errors and store in array
         var _translations = {};
         //Pass all required translation IDs to translate service
-        $translate(['ALERT_ENROLLMENT_SUCCSESSFULL','ALERT_NO_PARTICIPANTS','FIRST_NAME','LAST_NAME','EMAIL']).
+        $translate(['ALERT_ENROLLMENT_SUCCSESSFULL','ALERT_NO_PARTICIPANTS','FIRST_NAME','LAST_NAME','EMAIL'
+        ,'ALERT_INTERNAL_SERVER_ERROR', 'ALERT_ALREADY_ENROLLED', 'TITLE_SUCCESS','TITLE_ERROR']).
         then(function(translations){
             _translations = translations;
             $scope.placeholder =  {
@@ -51,7 +52,7 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
             Workshops.enroll(_params,_data).$promise.then(function(value,httpResponse){
 
                 $alert({
-                    title: 'Success',
+                    title: _translations.TITLE_SUCCESS,
                     type: 'success',
                     content: _translations.ALERT_ENROLLMENT_SUCCSESSFULL ,
                     container: '#alertEnroll',
@@ -61,11 +62,21 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
                     animation: 'am-fade-and-slide-top'
                 });
             },function(httpResponse){
-                
+                var _msg = "";
+                switch(httpResponse.status){
+                    case 401:
+                        _msg = _translations.ALERT_ALREADY_ENROLLED;
+                        break;
+                    case 500:
+                        _msg = _translations.ALERT_INTERNAL_SERVER_ERROR;
+                        break;
+                    default:
+                        _msg = httpResponse.status + ':' + httpResponse;
+                }
                 $alert({
-                    title: 'Error',
+                    title: _translations.TITLE_ERROR,
                     type: 'danger',
-                    content: httpResponse.status + ': '+ httpResponse.statusText,
+                    content: msg,
                     container: '#alertEnroll',
                     dismissable: true,
                     duration: 20,

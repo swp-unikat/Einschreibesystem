@@ -2333,7 +2333,8 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
         //Get translations for errors and store in array
         var _translations = {};
         //Pass all required translation IDs to translate service
-        $translate(['ALERT_ENROLLMENT_SUCCSESSFULL','ALERT_NO_PARTICIPANTS','FIRST_NAME','LAST_NAME','EMAIL']).
+        $translate(['ALERT_ENROLLMENT_SUCCSESSFULL','ALERT_NO_PARTICIPANTS','FIRST_NAME','LAST_NAME','EMAIL'
+        ,'ALERT_INTERNAL_SERVER_ERROR', 'ALERT_ALREADY_ENROLLED', 'TITLE_SUCCESS','TITLE_ERROR']).
         then(function(translations){
             _translations = translations;
             $scope.placeholder =  {
@@ -2371,7 +2372,7 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
             Workshops.enroll(_params,_data).$promise.then(function(value,httpResponse){
 
                 $alert({
-                    title: 'Success',
+                    title: _translations.TITLE_SUCCESS,
                     type: 'success',
                     content: _translations.ALERT_ENROLLMENT_SUCCSESSFULL ,
                     container: '#alertEnroll',
@@ -2381,11 +2382,21 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
                     animation: 'am-fade-and-slide-top'
                 });
             },function(httpResponse){
-                
+                var _msg = "";
+                switch(httpResponse.status){
+                    case 401:
+                        _msg = _translations.ALERT_ALREADY_ENROLLED;
+                        break;
+                    case 500:
+                        _msg = _translations.ALERT_INTERNAL_SERVER_ERROR;
+                        break;
+                    default:
+                        _msg = httpResponse.status + ':' + httpResponse;
+                }
                 $alert({
-                    title: 'Error',
+                    title: _translations.TITLE_ERROR,
                     type: 'danger',
-                    content: httpResponse.status + ': '+ httpResponse.statusText,
+                    content: msg,
                     container: '#alertEnroll',
                     dismissable: true,
                     duration: 20,
@@ -2460,9 +2471,10 @@ mainAppCtrls.controller('WorkshopListCtrl',['$scope','Workshops','$alert','$tran
         //Define object to store the alert in
         $scope.myAlert;
         //Get and store translation for alert title.
-        $translate(['TITLE_ERROR', 'ERROR_NO_WORKSHOPS']).then(function (translations) {
+        $translate(['TITLE_ERROR', 'ERROR_NO_WORKSHOPS','ALERT_INTERNAL_SERVER_ERROR']).then(function (translations) {
             $scope.errorTitle = translations.TITLE_ERROR;
             $scope.errorMsg = translations.ERROR_NO_WORKSHOPS;
+            $scope.InternalServerError = translations.ALERT_INTERNAL_SERVER_ERROR;
         });
         $scope.loading = true;
         Workshops.getAll().$promise.then(function(value){
@@ -2474,7 +2486,6 @@ mainAppCtrls.controller('WorkshopListCtrl',['$scope','Workshops','$alert','$tran
                 //Alert for error 404, no workshops available
                 case 404:
                     $scope.myAlert = $alert({
-
                         title: $scope.errorTitle,
                         type: 'danger',
                         content: $scope.errorMsg,
@@ -2487,7 +2498,7 @@ mainAppCtrls.controller('WorkshopListCtrl',['$scope','Workshops','$alert','$tran
                     $scope.myAlert = $alert({
                         title: $scope.errorTitle,
                         type: 'danger',
-                        content: 'Internal server error.',
+                        content: $scope.InternalServerError,
                         container: '#alert',
                         dismissable: false,
                         show: true
