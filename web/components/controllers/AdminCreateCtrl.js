@@ -68,9 +68,25 @@ mainAppCtrls.controller('AdminCreateCtrl',['$scope', '$stateParams','$alert','$t
                   username: $scope.form.username
                 };
                 Admin.createAdmin(_data).$promise.then(function(response){
-
+                    $alert({
+                        title: _translations.TITLE_SUCCESS,
+                        type: 'success',
+                        content: _translations.ALERT_CREATE_ADMIN_SUCCESS,
+                        container: '#alert',
+                        dismissable: true,
+                        show: true,
+                        duration: 15
+                    });
                 },function(response){
-
+                    $alert({
+                        title: _translations.TITLE_ERROR,
+                        type: 'danger',
+                        content: _translations.ALERT_CREATE_ADMIN_FAIL,
+                        container: '#alert',
+                        dismissable: true,
+                        show: true,
+                        duration: 15
+                    });
                 });
                 
             }

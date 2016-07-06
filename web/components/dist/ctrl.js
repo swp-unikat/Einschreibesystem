@@ -86,9 +86,25 @@ mainAppCtrls.controller('AdminCreateCtrl',['$scope', '$stateParams','$alert','$t
                   username: $scope.form.username
                 };
                 Admin.createAdmin(_data).$promise.then(function(response){
-
+                    $alert({
+                        title: _translations.TITLE_SUCCESS,
+                        type: 'success',
+                        content: _translations.ALERT_CREATE_ADMIN_SUCCESS,
+                        container: '#alert',
+                        dismissable: true,
+                        show: true,
+                        duration: 15
+                    });
                 },function(response){
-
+                    $alert({
+                        title: _translations.TITLE_ERROR,
+                        type: 'danger',
+                        content: _translations.ALERT_CREATE_ADMIN_FAIL,
+                        container: '#alert',
+                        dismissable: true,
+                        show: true,
+                        duration: 15
+                    });
                 });
                 
             }
@@ -164,7 +180,8 @@ mainAppCtrls.controller('EmailTemplateCtrl', ['$scope', "EmailTemplate", '$alert
                         content: _translations.ALERT_EMAILTEMPLATE_DELETE_FAIL + ' (' + httpResponse.status + ')',
                         container: '#alert',
                         dismissable: false,
-                        show: true
+                        show: true,
+                        duration: 20
                     });
                 }
             )
@@ -322,7 +339,7 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
 
                 };
                 $alert({
-                    title: '',
+                    title: _translations.TITLE_SUCCESS,
                     type: 'success',
                     content: _translations.ALERT_WORKSHOP_EDIT_SUCCESS + ' \"' + _originalData.title +'\"',
                     container: '#alert',
@@ -333,7 +350,7 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
                 //Redirect to Details page
             }, function (httpResponse) {
                 $alert({
-                    title: '',
+                    title:_translations.TITLE_ERROR,
                     type: 'danger',
                     content: _translations.ALERT_WORKSHOP_EDIT_FAIL + '(' + httpResponse.status +')',
                     container: '#alert',
