@@ -53,9 +53,7 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
                 if(_date.getSeconds() < 10)
                     str += "0";
                 str += _date.getSeconds();
- 
                 return str;
-
             };
             var _sa = Date.parse($scope.workshop.start_at);
             var _duration = $scope.workshop.duration;
@@ -111,8 +109,6 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
                 end_at:reformatDate(_ea),
                 max_participants:$scope.workshop.max_participants
             };
-            console.log($scope.workshop.start_at + "");
-            console.log(data.start_at);
             AdminWorkshop.putWorkshop(data).$promise.then(function(httpResponse){
                 $alert({
                     title: '',
