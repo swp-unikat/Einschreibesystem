@@ -25,8 +25,8 @@ mainAppCtrls.controller('DashboardCtrl',['$scope',
  * @name mainAppCtrls.controller:AdminCreateCtrl
  * @description Initializes the data & function that are being used to create an admin account
  */
-mainAppCtrls.controller('AdminCreateCtrl',['$scope', '$stateParams','$alert','$translate','Admin',
-    function($scope,$stateParams,$alert,$translate,Admin) {
+mainAppCtrls.controller('AdminCreateCtrl',['$scope', '$stateParams','$alert','$translate','Admin', '$state',
+    function($scope,$stateParams,$alert,$translate,Admin, $state) {
         
         //Get translations for errors and store in array
          var _translations = {};
@@ -43,7 +43,7 @@ mainAppCtrls.controller('AdminCreateCtrl',['$scope', '$stateParams','$alert','$t
                 };
                 $scope.form = {};
                 $scope.myAlert = $alert({
-                    title: 'Error',
+                    title: _translations.TITLE_ERROR,
                     type: 'danger',
                     content: _translations.PASSWORDS_IDENTICAL_ERROR,
                     container: '#alert',
@@ -56,7 +56,7 @@ mainAppCtrls.controller('AdminCreateCtrl',['$scope', '$stateParams','$alert','$t
         $scope.form = {};
         $scope.myAlert = $alert({
 
-            title: 'Error',
+            title: _translations.TITLE_ERROR,
             type: 'danger',
             content: _translations.PASSWORDS_IDENTICAL_ERROR,
             container: '#alert',
@@ -87,20 +87,23 @@ mainAppCtrls.controller('AdminCreateCtrl',['$scope', '$stateParams','$alert','$t
                   username: $scope.form.username
                 };
                 Admin.createAdmin(_data).$promise.then(function(response){
-                    $alert({
-                        title: _translations.TITLE_SUCCESS,
-                        type: 'success',
-                        content: _translations.ALERT_CREATE_ADMIN_SUCCESS,
-                        container: '#alert',
-                        dismissable: true,
-                        show: true,
-                        duration: 15
-                    });
+                    $state.go('login');
                 },function(response){
+                    var _msg = "";
+                    switch(httpResponse.status) {
+                        case 400:
+                            _msg = _translations.ALERT_NO_CONTENT;
+                        case 401:
+                            _msg = _translations.ALERT_FALSE_TOKEN;
+                            break;
+                        case 403:
+                            _msg = _translations.ALTERT_CREATE_ADMIN_FAIL;
+                    }
+                            
                     $alert({
                         title: _translations.TITLE_ERROR,
                         type: 'danger',
-                        content: _translations.ALERT_CREATE_ADMIN_FAIL,
+                        content: _msg,
                         container: '#alert',
                         dismissable: true,
                         show: true,
@@ -1062,7 +1065,7 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin','$alert'
             var _translations = {};
             //Pass all required translation IDs to translate service
             $translate(['ALERT_BLACKLIST_DELETE_PARTICIPANT',
-                'ALERT_BLACKLIST_DELETE_PARTICIPANT_FAIL']).
+                'ALERT_BLACKLIST_DELETE_PARTICIPANT_FAIL','TITLE_SUCCESS','TITLE_ERROR']).
             then(function(translations){
                 _translations = translations;
             });
@@ -1095,7 +1098,7 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin','$alert'
                 Participants.removeBlacklist({id:_id}).$promise.then(function(httpResponse){
                        $scope.deleting = false;
                         $alert({
-                            title:'',
+                            title: _translations.TITLE_SUCCESS,
                             type: 'success',
                             container:'#alert',
                             show: true,
@@ -1108,7 +1111,7 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin','$alert'
                     , function (httpResponse) {
                         $scope.deleting = false;
                         $alert({
-                            title: '',
+                            title: _translations.TITLE_ERROR,
                             type: 'danger',
                             content: _translations.ALERT_BLACKLIST_DELETE_PARTICIPANT_FAIL + ' (' + httpResponse.status +')',
                             container: '#alert',
@@ -2403,7 +2406,7 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
                 $alert({
                     title: _translations.TITLE_ERROR,
                     type: 'danger',
-                    content: msg,
+                    content: _msg,
                     container: '#alertEnroll',
                     dismissable: true,
                     duration: 20,
@@ -2583,8 +2586,8 @@ mainAppCtrls.controller('WorkshopTemplateCtrl', ['$scope', "WorkshopTemplate",'$
         $scope.delete = function (_id) {
             WorkshopTemplate.delete({id:_id}).$promise.then(function(httpresponse){
                     $alert({
-                        title:'',
-                        type: _translations.TITLE_SUCCESS,
+                        title:_translations.TITLE_SUCCESS,
+                        type: 'success',
                         container:'#alert',
                         show: true,
                         dismissable: false,

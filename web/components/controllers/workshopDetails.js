@@ -79,7 +79,7 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
                 $alert({
                     title: _translations.TITLE_ERROR,
                     type: 'danger',
-                    content: msg,
+                    content: _msg,
                     container: '#alertEnroll',
                     dismissable: true,
                     duration: 20,
