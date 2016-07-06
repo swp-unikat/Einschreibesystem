@@ -62,8 +62,8 @@ mainAppCtrls.controller('WorkshopTemplateCtrl', ['$scope', "WorkshopTemplate",'$
         $scope.delete = function (_id) {
             WorkshopTemplate.delete({id:_id}).$promise.then(function(httpresponse){
                     $alert({
-                        title:'',
-                        type: _translations.TITLE_SUCCESS,
+                        title:_translations.TITLE_SUCCESS,
+                        type: 'success',
                         container:'#alert',
                         show: true,
                         dismissable: false,
