@@ -154,7 +154,7 @@ class UserController extends FOSRestController implements ClassResourceInterface
     }
 
     /**
-     * Action to change the password
+     * Action to change the email
      * @ApiDoc(
      *  resource=true,
      *  description="Action to change the email",
