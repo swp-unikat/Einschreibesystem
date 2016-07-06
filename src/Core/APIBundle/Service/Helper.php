@@ -47,7 +47,7 @@ class Helper{
                 $this->logger->info("Workshop has participants");
                 $nextParticipant = $this->getNextParticipant($workshop->getId());
                 if ($nextParticipant) {
-                    $this->logger->info("Workshop has participants on waiting list", null, null);
+                    $this->logger->info("Workshop has participants on waiting list");
                     $nextParticipant->setWaiting(false);
                     /* Loading the default E-Mail template*/
                     $template = $this->em->getRepository("CoreEntityBundle:EmailTemplate")->findOneBy(['template_name' => 'Participant']);
@@ -56,7 +56,7 @@ class Helper{
                     /* Sending E-Mail */
                     
                     $message = \Swift_Message::newInstance()
-                        ->setSubject($template->getEmailSubject())
+                        ->setSubject($this->twig->createTemplate($template->getEmailSubject())->render(["workshop" => $nextParticipant->getWorkshop()]))
                         ->setFrom($this->container->getParameter('email_sender'))
                         ->setTo($nextParticipant->getParticipant()->getEmail())
                         ->setBody($renderTemplate->render(['participant' => $nextParticipant->getParticipant(),'workshop' => $nextParticipant->getWorkshop()] ), 'text/html');

@@ -132,7 +132,8 @@ mainAppCtrls.controller('EmailTemplateCtrl', ['$scope', "EmailTemplate", '$alert
         //Get translations for errors and store in array
         var _translations = {};
         //Pass all required translation IDs to translate service
-        $translate(['ALERT_EMAILTEMPLATE_DELETE_SUCCESS', 'ALERT_EMAILTEMPLATE_DELETE_FAIL']).then(function (translations) {
+        $translate(['ALERT_EMAILTEMPLATE_DELETE_SUCCESS', 'ALERT_EMAILTEMPLATE_DELETE_FAIL', 'TITLE_ERROR','TITLE_SUCCESS'
+        ]).then(function (translations) {
             _translations = translations;
         });
 
@@ -164,7 +165,7 @@ mainAppCtrls.controller('EmailTemplateCtrl', ['$scope', "EmailTemplate", '$alert
         $scope.delete = function (_id) {
             EmailTemplate.delete({id: _id}).$promise.then(function (httpResponse) {
                     $alert({
-                        title: 'Success',
+                        title: _translations.TITLE_SUCCESS,
                         type: 'success',
                         container: '#alert',
                         show: true,
@@ -176,7 +177,7 @@ mainAppCtrls.controller('EmailTemplateCtrl', ['$scope', "EmailTemplate", '$alert
                 }
                 , function (httpResponse) {
                     $alert({
-                        title: '',
+                        title: _translations.TITLE_ERROR,
                         type: 'danger',
                         content: _translations.ALERT_EMAILTEMPLATE_DELETE_FAIL + ' (' + httpResponse.status + ')',
                         container: '#alert',
@@ -260,13 +261,19 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
         $scope.confirmChanges = function () {
 
             var reformatDate =  function(_date){
-                if(!_date || _date == null)
+                if(_date == null)
                     return "";
-                var _dateStr = _date.toJSON();
-                if(_dateStr == null)
-                    return "";
-                _dateStr =  _dateStr.slice(0,_dateStr.length-5);
-                return _dateStr.replace('T',' ');
+                var str = _date.getFullYear()+"-"+(_date.getMonth()+1)+"-"+_date.getDate()+" ";
+                if(_date.getHours() < 10)
+                    str += "0";
+                str += _date.getHours()+":";
+                if(_date.getMinutes() < 10)
+                    str += "0";
+                str += _date.getMinutes() +":";
+                if(_date.getSeconds() < 10)
+                    str += "0";
+                str += _date.getSeconds();
+                return str;
             };
             var _sa = Date.parse($scope.workshop.start_at);
             var _duration = $scope.workshop.duration;
@@ -518,13 +525,19 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
         $scope.sendInfo = function(){
             //Adjusts the format of the date strings to fit the requirements of the API
             var reformatDate =  function(_date){
-                if(!_date || _date == null)
+                if(_date == null)
                     return "";
-                var _dateStr = _date.toJSON();
-                if(_dateStr == null)
-                    return "";
-                _dateStr =  _dateStr.slice(0,_dateStr.length-5);
-                return _dateStr.replace('T',' ');
+                var str = _date.getFullYear()+"-"+(_date.getMonth()+1)+"-"+_date.getDate()+" ";
+                if(_date.getHours() < 10)
+                    str += "0";
+                str += _date.getHours()+":";
+                if(_date.getMinutes() < 10)
+                    str += "0";
+                str += _date.getMinutes() +":";
+                if(_date.getSeconds() < 10)
+                    str += "0";
+                str += _date.getSeconds();
+                return str;
             };
             var _sa = Date.parse($scope.workshop.start_at);
             var _duration = $scope.workshop.duration;
@@ -1291,13 +1304,19 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
          */
         $scope.sendInfo = function () {
             var reformatDate =  function(_date){
-                if(!_date || _date == null)
+                if(_date == null)
                     return "";
-                var _dateStr = _date.toJSON();
-                if(_dateStr == null)
-                    return "";
-                _dateStr =  _dateStr.slice(0,_dateStr.length-5);
-                return _dateStr.replace('T',' ');
+                var str = _date.getFullYear()+"-"+(_date.getMonth()+1)+"-"+_date.getDate()+" ";
+                if(_date.getHours() < 10)
+                    str += "0";
+                str += _date.getHours()+":";
+                if(_date.getMinutes() < 10)
+                    str += "0";
+                str += _date.getMinutes() +":";
+                if(_date.getSeconds() < 10)
+                    str += "0";
+                str += _date.getSeconds();
+                return str;
             };
             var _sa = Date.parse($scope.workshop.start_at);
             var _duration = $scope.workshop.duration;
@@ -1749,13 +1768,19 @@ mainAppCtrls.controller('NewWorkshopTemplateCtrl',['$scope',"WorkshopTemplate",'
         $scope.sendInfo = function(){
             //Adjusts the format of the date strings to fit the requirements of the API
             var reformatDate =  function(_date){
-                if(!_date || _date == null)
+                if(_date == null)
                     return "";
-                var _dateStr = _date.toJSON();
-                if(_dateStr == null)
-                    return "";
-                _dateStr =  _dateStr.slice(0,_dateStr.length-5);
-                return _dateStr.replace('T',' ');
+                var str = _date.getFullYear()+"-"+(_date.getMonth()+1)+"-"+_date.getDate()+" ";
+                if(_date.getHours() < 10)
+                    str += "0";
+                str += _date.getHours()+":";
+                if(_date.getMinutes() < 10)
+                    str += "0";
+                str += _date.getMinutes() +":";
+                if(_date.getSeconds() < 10)
+                    str += "0";
+                str += _date.getSeconds();
+                return str;
             };
 
             //Initialize start_at to calculate duration with end_at 
@@ -2366,14 +2391,13 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
         };
         
         $scope.loading = true;
-        Workshops.get({id: workshopid}).$promise.then(function(value,httpResponse){
+        Workshops.get({id: workshopid}).$promise.then(function(value){
             $scope.workshop = value;
-
+            
             var _ea = Date.parse($scope.workshop.end_at);
             var _sa = Date.parse($scope.workshop.start_at);
+            
             $scope.workshop.duration = new Date(_ea - _sa);
-            console.log($scope.workshop.start_at);
-            console.log(new Date(_sa) + '\n' + new Date());
             $scope.loading = false;
         },function(httpResponse) {
             alert(httpResponse.status + '');
@@ -2424,9 +2448,10 @@ mainAppCtrls.controller('WorkshopListCtrl',['$scope','Workshops','$alert','$tran
         //Define object to store the alert in
         $scope.myAlert;
         //Get and store translation for alert title.
-        $translate(['TITLE_ERROR', 'ERROR_NO_WORKSHOPS']).then(function (translations) {
+        $translate(['TITLE_ERROR', 'ERROR_NO_WORKSHOPS','ALERT_INTERNAL_SERVER_ERROR']).then(function (translations) {
             $scope.errorTitle = translations.TITLE_ERROR;
             $scope.errorMsg = translations.ERROR_NO_WORKSHOPS;
+            $scope.InternalServerError = translations.ALERT_INTERNAL_SERVER_ERROR;
         });
         $scope.loading = true;
         Workshops.getAll().$promise.then(function(value){
@@ -2438,7 +2463,6 @@ mainAppCtrls.controller('WorkshopListCtrl',['$scope','Workshops','$alert','$tran
                 //Alert for error 404, no workshops available
                 case 404:
                     $scope.myAlert = $alert({
-
                         title: $scope.errorTitle,
                         type: 'danger',
                         content: $scope.errorMsg,
@@ -2451,7 +2475,7 @@ mainAppCtrls.controller('WorkshopListCtrl',['$scope','Workshops','$alert','$tran
                     $scope.myAlert = $alert({
                         title: $scope.errorTitle,
                         type: 'danger',
-                        content: 'Internal server error.',
+                        content: $scope.InternalServerError,
                         container: '#alert',
                         dismissable: false,
                         show: true
@@ -2485,7 +2509,7 @@ mainAppCtrls.controller('WorkshopTemplateCtrl', ['$scope', "WorkshopTemplate",'$
         var _translations = {};
         //Pass all required translation IDs to translate service
         $translate(['ALERT_WORKSHOPTEMPLATE_LIST_EMPTY',
-            'ALERT_WORKSHOPTEMPLATE_DELETED_SUCCESS','ALERT_WORKSHOPTEMPLATE_DELETED_FAIL']).
+            'ALERT_WORKSHOPTEMPLATE_DELETED_SUCCESS','ALERT_WORKSHOPTEMPLATE_DELETED_FAIL','TITLE_SUCCESS','TITLE_ERROR','TITLE_WARNING']).
         then(function(translations){
             _translations = translations;
         });
@@ -2505,9 +2529,9 @@ mainAppCtrls.controller('WorkshopTemplateCtrl', ['$scope', "WorkshopTemplate",'$
 
             }, function (httpResponse) {
                 if(httpResponse.status == 404){
-                    $scope.data = {};
+                    $scope.data = {}
                     $alert({
-                        title: '',
+                        title: _translations.TITLE_WARNING,
                         type: 'warning',
                         container:'#alert',
                         show: true,
@@ -2530,7 +2554,7 @@ mainAppCtrls.controller('WorkshopTemplateCtrl', ['$scope', "WorkshopTemplate",'$
             WorkshopTemplate.delete({id:_id}).$promise.then(function(httpresponse){
                     $alert({
                         title:'',
-                        type: 'success',
+                        type: _translations.TITLE_SUCCESS,
                         container:'#alert',
                         show: true,
                         dismissable: false,
@@ -2541,7 +2565,7 @@ mainAppCtrls.controller('WorkshopTemplateCtrl', ['$scope', "WorkshopTemplate",'$
                 }
                 , function (httpResponse) {
                     $alert({
-                        title: '',
+                        title: _translations.TITLE_ERROR,
                         type: 'danger',
                         content: _translations.ALERT_WORKSHOPTEMPLATE_DELETED_FAIL + ' (' + httpResponse.status +')',
                         container: '#alert',

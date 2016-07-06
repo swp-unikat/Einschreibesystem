@@ -195,6 +195,7 @@
   "ALERT_EMAIL_EMPTY": "E-Mail field cannot be empty!",
   "ALERT_OLDEMAIL_EMPTY": "E-Mail field for old e-mail cannot be empty!",
   "TITLE_SUCCESS":"Success",
+  "TITLE_WARNING":"Warning",
   "ALERT_CREATE_ADMIN_SUCCESS": "Successfully created new account",
   "ALERT_CREATE_ADMIN_FAIL": "Failed to create new account",
   "ALERT_ALREADY_ENROLLED": "You are already enrolled"

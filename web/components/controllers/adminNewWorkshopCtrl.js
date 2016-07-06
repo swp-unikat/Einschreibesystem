@@ -41,13 +41,19 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
         $scope.sendInfo = function(){
             //Adjusts the format of the date strings to fit the requirements of the API
             var reformatDate =  function(_date){
-                if(!_date || _date == null)
+                if(_date == null)
                     return "";
-                var _dateStr = _date.toJSON();
-                if(_dateStr == null)
-                    return "";
-                _dateStr =  _dateStr.slice(0,_dateStr.length-5);
-                return _dateStr.replace('T',' ');
+                var str = _date.getFullYear()+"-"+(_date.getMonth()+1)+"-"+_date.getDate()+" ";
+                if(_date.getHours() < 10)
+                    str += "0";
+                str += _date.getHours()+":";
+                if(_date.getMinutes() < 10)
+                    str += "0";
+                str += _date.getMinutes() +":";
+                if(_date.getSeconds() < 10)
+                    str += "0";
+                str += _date.getSeconds();
+                return str;
             };
             var _sa = Date.parse($scope.workshop.start_at);
             var _duration = $scope.workshop.duration;
