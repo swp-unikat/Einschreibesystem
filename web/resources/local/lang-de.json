@@ -9,6 +9,7 @@
   "FACEBOOK": "Facebook",
   "CONTACT": "Kontakt",
   "WORKSHOP_DETAILS": "Workshopdetails",
+  "CONFIRM_EMAIL":"Bestätigungs-E-Mail",
   "BUTTON_SHOW_PARTICIPANTS": "zeige Teilnehmer",
   "WORKSHOP_REQUIREMENTS": "Anforderungen",
   "WORKSHOP_DURATION": "Dauer des Workshop",
@@ -190,6 +191,8 @@
   "PASSWORDS_IDENTICAL_ERROR": "Passwörter sind nicht identisch",
   "PASSWORD_EMPTY_ERROR": "Passwort darf nicht leer sein",
   "BUTTON_SEND_SUBSCRIBE_CONFIRMATION":"Sende Bestätigungse-mail",
-  "BUTTON_PRINT_LIST_OF_PARTICIPANTS":"drucke Teilnehmerliste"
+  "BUTTON_PRINT_LIST_OF_PARTICIPANTS":"drucke Teilnehmerliste",
+  "TITLE_SUCCESS":"Erfolg",
+  "TITLE_ERROR":"Fehler"
 
 }

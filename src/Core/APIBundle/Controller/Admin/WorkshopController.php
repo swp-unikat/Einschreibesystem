@@ -289,6 +289,20 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
         $workshopParticipant->setWaiting(0); /** 0 -> im Workshop, 1-> Waiting */
         $this->getDoctrine()->getManager()->persist($workshopParticipant);
         $this->getDoctrine()->getManager()->flush();
+
+        /* Loading the default E-Mail template*/
+        $template = $this->getDoctrine()->getRepository("CoreEntityBundle:EmailTemplate")->findOneBy(['template_name' => 'Participant']);
+        /* Creating Twig template from Database */
+        $renderTemplate = $this->get("twig")->createTemplate($template->getEmailBody());
+        /* Sending E-Mail */
+
+        $message = \Swift_Message::newInstance()
+            ->setSubject($template->getEmailSubject())
+            ->setFrom($this->container->getParameter('email_sender'))
+            ->setTo($workshopParticipant->getParticipant()->getEmail())
+            ->setBody($renderTemplate->render(['participant' => $workshopParticipant->getParticipant(),'workshop' => $workshopParticipant->getWorkshop()] ), 'text/html');
+        $this->get("mailer")->send($message);
+        
         return View::create(null, Codes::HTTP_CREATED);
     }
 

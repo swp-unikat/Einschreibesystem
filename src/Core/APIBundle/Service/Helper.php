@@ -47,7 +47,7 @@ class Helper{
                 $this->logger->info("Workshop has participants");
                 $nextParticipant = $this->getNextParticipant($workshop->getId());
                 if ($nextParticipant) {
-                    $this->logger->info("Workshop has participants on waiting list", null, null);
+                    $this->logger->info("Workshop has participants on waiting list");
                     $nextParticipant->setWaiting(false);
                     /* Loading the default E-Mail template*/
                     $template = $this->em->getRepository("CoreEntityBundle:EmailTemplate")->findOneBy(['template_name' => 'Participant']);

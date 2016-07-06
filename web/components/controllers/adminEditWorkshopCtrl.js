@@ -142,7 +142,7 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
 
                 };
                 $alert({
-                    title: '',
+                    title: _translations.TITLE_SUCCESS,
                     type: 'success',
                     content: _translations.ALERT_WORKSHOP_EDIT_SUCCESS + ' \"' + _originalData.title +'\"',
                     container: '#alert',
@@ -153,7 +153,7 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
                 //Redirect to Details page
             }, function (httpResponse) {
                 $alert({
-                    title: '',
+                    title:_translations.TITLE_ERROR,
                     type: 'danger',
                     content: _translations.ALERT_WORKSHOP_EDIT_FAIL + '(' + httpResponse.status +')',
                     container: '#alert',

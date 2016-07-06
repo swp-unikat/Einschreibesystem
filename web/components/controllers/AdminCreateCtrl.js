@@ -13,7 +13,8 @@ mainAppCtrls.controller('AdminCreateCtrl',['$scope', '$stateParams','$alert','$t
         //Get translations for errors and store in array
          var _translations = {};
         //Pass all required translation IDs to translate service
-        $translate(['PASSWORDS_IDENTICAL_ERROR', 'EMAIL', 'USERNAME', 'NEW_PASSWORD', 'REPEAT_PASSWORD'])
+        $translate(['PASSWORDS_IDENTICAL_ERROR', 'EMAIL', 'USERNAME', 'NEW_PASSWORD', 'REPEAT_PASSWORD',
+            'ALERT_CREATE_ADMIN_FAIL', 'ALERT_CREATE_ADMIN_SUCCESS', 'TITLE_SUCCESS', 'TITLE_ERROR'])
             .then(function(translations){
                 _translations = translations;
                 $scope.placeholder =  {
@@ -68,9 +69,25 @@ mainAppCtrls.controller('AdminCreateCtrl',['$scope', '$stateParams','$alert','$t
                   username: $scope.form.username
                 };
                 Admin.createAdmin(_data).$promise.then(function(response){
-
+                    $alert({
+                        title: _translations.TITLE_SUCCESS,
+                        type: 'success',
+                        content: _translations.ALERT_CREATE_ADMIN_SUCCESS,
+                        container: '#alert',
+                        dismissable: true,
+                        show: true,
+                        duration: 15
+                    });
                 },function(response){
-
+                    $alert({
+                        title: _translations.TITLE_ERROR,
+                        type: 'danger',
+                        content: _translations.ALERT_CREATE_ADMIN_FAIL,
+                        container: '#alert',
+                        dismissable: true,
+                        show: true,
+                        duration: 15
+                    });
                 });
                 
             }
