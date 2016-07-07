@@ -267,7 +267,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
         $participant = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Participants")->findOneBy(['email' => $email]);
 
         if(!$participant){
-            return $this->handleView($this->view(['code' => 404,'message' => "Participant not found"], 404));
+            return $this->handleView($this->view(['code' => 404,'message' => "UNSUBSCRIBE_NOT_ENROLLED"], 404));
 
         }
 
@@ -283,7 +283,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
 
             $template = $this->getDoctrine()->getRepository("CoreEntityBundle:EmailTemplate")->findOneBy(['template_name' => 'Unsubscribe']);
             if(!$template){
-                return $this->handleView($this->view(['code' => 404,'message' => "E-Mail Template not found"], 404));
+                return $this->handleView($this->view(['code' => 404,'message' => "UNSUBSCRIBE_EMAIL_TEMPLATE_NOT_FOUND"], 404));
             }
             /* Creating Twig template from Database */
             $renderTemplate = $this->get('twig')->createTemplate($template->getEmailBody());
@@ -298,7 +298,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
             return View::create(NULL, Codes::HTTP_OK);
 
         } else {
-            return $this->handleView($this->view(['code' => 404,'message' => ""], 404));
+            return $this->handleView($this->view(['code' => 404,'message' => "UNSUBSCRIBE_NOT_ENROLLED"], 404));
         }
 
 
