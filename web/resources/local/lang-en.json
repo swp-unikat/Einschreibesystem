@@ -203,13 +203,18 @@
   "ALERT_FALSE_TOKEN":"Provided token was invalid",
   "ALERT_RESET_EMAIL_ERROR":"You have to enter a valid Mail-Address",
   "ALERT_RESET_PASSWORD_SUCCESS":"A link for password reset was send to the enter e-mail address",
-  "ALERT_RESET_PASSWORD_ERROR":"An error occurred ",
+  "ALERT_RESET_PASSWORD_ERROR":"There is no admin account for this e-mail",
   "ALERT_DELETE_ADMIN_FAILED":"Failed to delete admin",
   "ALERT_DELETE_ADMIN_SUCCESS": "Successfully deleted admin",
   "ALERT_WORKSHOP_DELETE_FAIL":"Failed to delete workshop",
   "TITLE_INFO":"Info",
   "ALERT_EMAILCONFIRM_SEND_SUCCESS":"Email was send",
-  "ALERT_EMAILCONFIRM_SEND_FAIL":"Email could not be send:"
+  "ALERT_EMAILCONFIRM_SEND_FAIL":"Email could not be send:",
+  "ALERT_WORKSHOP_AT_SAME_TIME":"You are already enrolled to a workshop at the same time",
+  "ERROR_UNSUBSCRIBE_FAIL": "Failed to unsubscribe",
+  "UNSUBSCRIBE_SUCCESS": "Successfully unsubscribed",
+  "UNSUBSCRIBE_NOT_ENROLLED":"You need to be enrolled to the workshop to unsubscribe",
+  "UNSUBSCRIBE_EMAIL_TEMPLATE_NOT_FOUND":"Unsubscribe e-mail template was not found"
 
 
 

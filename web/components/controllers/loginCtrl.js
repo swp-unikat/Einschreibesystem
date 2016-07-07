@@ -92,7 +92,7 @@ mainAppCtrls.controller('LoginCtrl',['$scope','$http','store','$state','jwtHelpe
             },function(response){
                 $scope.alertReset = $alert({
                     title: _translations.TITLE_ERROR,
-                    content: _translations.ALERT_RESET_PASSWORD_ERROR  + response.status ,
+                    content: _translations.ALERT_RESET_PASSWORD_ERROR,
                     type: 'danger',
                     dismissable: false,
                     show: true,
