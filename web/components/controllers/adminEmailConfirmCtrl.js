@@ -15,8 +15,8 @@ mainAppCtrls.controller('adminEmailConfirmCtrl',['$scope',"EmailTemplate",'$tran
         //Get translations for errors and store in array
         var _translations = {};
         //Pass all required translation IDs to translate service
-        $translate(['ALERT_EMAILTEMPLATE_NEW_SUCCESS',
-            'ALERT_EMAILTEMPLATE_NEW_FAIL','ALERT_EMAILTEMPLATE_NOT_FOUND']).
+        $translate(['TITLE_SUCCESS','TITLE_ERROR','ALERT_EMAILCONFIRM_SEND_SUCCESS',
+            'ALERT_EMAILCONFIRM_SEND_FAIL']).
         then(function(translations){
             _translations = translations;
         });
@@ -46,8 +46,8 @@ mainAppCtrls.controller('adminEmailConfirmCtrl',['$scope',"EmailTemplate",'$tran
             Email.sendEmail({id: workshopid},_data).$promise.then(function(response){
                 $alert({
                     type: 'success',
-                    content: 'Email was send',
-                    title: 'Success',
+                    content: _translations.ALERT_EMAILCONFIRM_SEND_SUCCESS,
+                    title: _translations.TITLE_SUCCESS,
                     dissmisable: false,
                     show: true,
                     duration: 20
@@ -55,8 +55,8 @@ mainAppCtrls.controller('adminEmailConfirmCtrl',['$scope',"EmailTemplate",'$tran
             },function(response){
                 $alert({
                     type: 'danger',
-                    content: 'Email could not be send: '+response.status,
-                    title: 'Error',
+                    content: _translations.ALERT_EMAILCONFIRM_SEND_FAIL +response.status,
+                    title: _translations.TITLE_ERROR,
                     dissmisable: false,
                     show: true,
                     duration: 20

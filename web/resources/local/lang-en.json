@@ -207,7 +207,9 @@
   "ALERT_DELETE_ADMIN_FAILED":"Failed to delete admin",
   "ALERT_DELETE_ADMIN_SUCCESS": "Successfully deleted admin",
   "ALERT_WORKSHOP_DELETE_FAIL":"Failed to delete workshop",
-  "TITLE_INFO":"Info"
+  "TITLE_INFO":"Info",
+  "ALERT_EMAILCONFIRM_SEND_SUCCESS":"Email was send",
+  "ALERT_EMAILCONFIRM_SEND_FAIL":"Email could not be send:"
 
 
 
