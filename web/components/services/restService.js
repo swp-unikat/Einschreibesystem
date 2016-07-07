@@ -170,7 +170,8 @@ restSvcs.factory('AdminWorkshop',['$resource',function($resource){
          */
         'overbook': {method: 'PATCH',url:'/api/admin/workshops/:id/waitinglist/:participantid' ,params: {id: '@id', participantid: '@participantid'}, isArray: false},
         'participants': {method: 'GET',url:'/api/admin/workshops/:id/participants',params: {id: '@id'},isArray: true},
-        'waitinglist': {method: 'GET',url:'/api/admin/workshops/:id/waitinglist',params: {id: '@id'},isArray: true}
+        'waitinglist': {method: 'GET',url:'/api/admin/workshops/:id/waitinglist',params: {id: '@id'},isArray: true},
+        'confirmParticipation': {method: 'POST',url:'/api/admin/workshops/:id/participated/:participant',params: {id: '@id',participant: '@participant'},isArray: true}
     });
 }]);
 /**

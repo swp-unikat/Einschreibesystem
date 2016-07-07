@@ -23,8 +23,7 @@ var mainApp = angular.module('mainApp',[
     'angular-storage',
     'pascalprecht.translate',
     'textAngular',
-    'prntSvcs',
-    'ngSanitize'
+    'prntSvcs'
 ]);
 /**
  * @name mainAppCtrls
@@ -32,8 +31,9 @@ var mainApp = angular.module('mainApp',[
  * @description Module containing all controller of the application
  * @requires pascalprect.translate
  */
-var mainAppCtrls = angular.module('mainAppCtrls',["pascalprecht.translate"]);
+var mainAppCtrls = angular.module('mainAppCtrls',["pascalprecht.translate",'ngSanitize']);
 
+//ROUTE CONFIGURATION
 mainApp.config(['$urlRouterProvider','$stateProvider',
     function($urlRouterProvider,$stateProvider)
     {
@@ -248,6 +248,7 @@ mainApp.config(['jwtInterceptorProvider','$httpProvider','$urlRouterProvider',fu
     }]);
 
 mainApp.config(['$translateProvider', function($translateProvider) {
+    $translateProvider.useSanitizeValueStrategy('escape');
     $translateProvider.useStaticFilesLoader({
         prefix: 'resources/local/lang-',
         suffix: '.json'

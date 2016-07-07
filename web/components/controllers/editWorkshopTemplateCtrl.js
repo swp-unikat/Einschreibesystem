@@ -92,7 +92,7 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
                 });
                 error = true;
             }
-
+                var now = new Date();
             if($scope.workshop.start_at < now) {
                 $alert({
                     title:  _translations.TITLE_ERROR,

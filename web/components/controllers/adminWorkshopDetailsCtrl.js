@@ -166,7 +166,28 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
         };
         
         
-        
+        //Confirm participantion
+        $scope.confirmUser = function(_workshop,_user){
+            AdminWorkshop.confirmParticipation({id: _workshop,participant: _user}).$promise.then(function(response){
+                $alert({
+                    type: 'success',
+                    duration: 20,
+                    container: '#alert',
+                    content: response.statusText,
+                    show: true,
+                    title: 'Success'
+                });
+            },function(response){
+                $alert({
+                    type: 'danger',
+                    duration: 20,
+                    container: '#alert',
+                    content: response.statusText,
+                    show: true,
+                    title: 'Error'
+                });
+            });
+        }
         
     }
 ]);

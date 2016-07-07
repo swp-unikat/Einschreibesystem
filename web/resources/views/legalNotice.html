@@ -1,14 +1,12 @@
 <div class="container-fluid">
     <div class="col-md-8 col-md-offset-2">
-        <h1><translate>LEGAL_NOTICE</translate></h1>
+        <h1 translate>LEGAL_NOTICE</h1>
         <div class="col-md-2 col-xs-2 pull-right">
         <a ui-sref="workshops">
             <button class="btn btn-default">{{ "BUTTON_BACK" | translate}}</button>
         </a>
         </div>
         <hr>
-        <br><br><br>
-        <div ng-bin-html="legalNotice"></div>
-        <br><br><br>
+        <div ng-bind-html='legalNotice'></div>
     </div>
 </div>
