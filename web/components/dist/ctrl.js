@@ -1414,8 +1414,8 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
             };
             WorkshopTemplate.edit({id: _workshopId}, data).$promise.then(function (value) {
                 $alert({
-                    title: '',
-                    type:  _translations.TITLE_SUCCESS,
+                    title: _translations.TITLE_SUCCESS,
+                    type: 'success',
                     content: _translations.ALERT_WORKSHOPTEMPLATE_EDIT_SUCCESS + ' \"' + _originalData.title +'\"',
                     container: '#alert',
                     dismissable: true,
