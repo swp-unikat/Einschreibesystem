@@ -136,14 +136,17 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
         } else {
             //all workshops which the user were not participating yet
             if ($participant->isBlacklisted()) {
-                return $this->handleView($this->view(['code' => 403,'message' => "You are blacklisted"], 403));
+                return $this->handleView($this->view(['code' => 403,'message' => "ALERT_YOU_ARE_ON_BLACKLIST"], 403));
             }
 
             $workshopParticipants = $this->getDoctrine()->getRepository("CoreEntityBundle:WorkshopParticipants")->findBy(["participant" => $participant, "participated" => 0]);
             //load workshop with start and endtim, iterate over all
             foreach($workshopParticipants as $tupel){
                 if($workshop->getStartAt() >= $tupel->getWorkshop()->getStartAt() && $workshop->getEndAt() <= $tupel->getWorkshop()->getEndAt()){
-                    return $this->handleView($this->view(['code' => 403,'message' => "Already in Workshop at same Time"], 403));
+                    if($workshop->getId() == $tupel->getWorkshop()->getId())
+                        return $this->handleView($this->view(['code' => 403,'message' => "ALERT_ALREADY_ENROLLED"], 403));
+                    else
+                        return $this->handleView($this->view(['code' => 403,'message' => "ALERT_WORKSHOP_AT_SAME_TIME"], 403));
 
                 }
             }
@@ -193,7 +196,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
     {
         $workshopParticipant = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:WorkshopParticipants")->findOneBy(['workshop' => $workshopId,'participant' => $participantsId]);
         if($workshopParticipant){
-            return $this->handleView($this->view(['code' => 403,'message' => "You are already in this workshop"], 403));
+            return $this->handleView($this->view(['code' => 403,'message' => "ALERT_ALREADY_ENROLLED"], 403));
 
         }
 
@@ -257,20 +260,20 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      * @Rest\View()
      */
     public function postUnsubscribeAction(ParamFetcher $paramFetcher){
+
         $workshopId = $paramFetcher->get("workshopId");
         $email = $paramFetcher->get("email");
         
         $participant = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Participants")->findOneBy(['email' => $email]);
 
         if(!$participant){
-            return $this->handleView($this->view(['code' => 404,'message' => "User not found"], 404));
+            return $this->handleView($this->view(['code' => 404,'message' => "Participant not found"], 404));
 
         }
 
         $workshopParticipant = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:WorkshopParticipants")->findOneBy(['workshop' => $workshopId,'participant' => $participant->getId()]);
 
-
-        if ($workshopParticipant != NULL) {
+        if ($workshopParticipant !== NULL) {
             $token = new EmailToken();
             $token->setParticipant($workshopParticipant->getParticipant());
             $this->getDoctrine()->getManager()->persist($token);
@@ -295,7 +298,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
             return View::create(NULL, Codes::HTTP_OK);
 
         } else {
-            return $this->handleView($this->view(['code' => 404,'message' => "workshop,Token or participant not found"], 404));
+            return $this->handleView($this->view(['code' => 404,'message' => ""], 404));
         }
 
 
