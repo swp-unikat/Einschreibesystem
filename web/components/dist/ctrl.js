@@ -2447,12 +2447,12 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
             var _data = {
                 email: $scope.unsub.e_mail,
                 workshopId: workshopid
-            };
+            }
             Workshops.unsubscribe(_data).$promise.then(function(response){
                 $alert({
                    type: 'success',
                    title: _translations.TITLE_SUCCESS,
-                   content: _translation.UNSUBSCRIBE_SUCCESS,
+                   content: _translations.UNSUBSCRIBE_SUCCESS,
                    dismissable: true,
                    duration: 20,
                    show: true,

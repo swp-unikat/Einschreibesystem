@@ -100,7 +100,7 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
                 $alert({
                    type: 'success',
                    title: _translations.TITLE_SUCCESS,
-                   content: _translation.UNSUBSCRIBE_SUCCESS,
+                   content: _translations.UNSUBSCRIBE_SUCCESS,
                    dismissable: true,
                    duration: 20,
                    show: true,
