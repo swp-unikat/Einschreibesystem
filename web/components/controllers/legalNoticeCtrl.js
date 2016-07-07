@@ -11,6 +11,7 @@ mainAppCtrls.controller('LegalNoticeCtrl',['$scope','Admin',
     function($scope,Admin) {
         Admin.getLegalNotice().$promise.then(function(response){
             $scope.legalNotice = response.content;
+            $scope.legalNotice = "<p>Test html</p>";
         },function(response){
 
         });
