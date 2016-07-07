@@ -9,8 +9,10 @@ var mainAppCtrls = angular.module("mainAppCtrls");
  */
 mainAppCtrls.controller('ContactCtrl',['$scope','Admin',
     function($scope,Admin) {
+        $scope.contact = {};
         Admin.getContact().$promise.then(function(response){
-            $scope.contact = response.content;
+            $scope.contact = JSON.parse(response.content);
+            console.log($scope.contact);
         },function(response){
 
         });

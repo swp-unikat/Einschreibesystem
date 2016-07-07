@@ -21,12 +21,15 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
         });
         $scope.loadTemplate = function(){
             $scope.workshop = JSON.parse(JSON.stringify($scope.selectedTemplate));
+            var _ea = Date.parse($scope.workshop.end_at);
+            var _sa = Date.parse($scope.workshop.start_at);
+            $scope.workshop.duration = new Date(_ea - _sa);
         };
         $scope.workshop.duration=-3600000;
         //Get translations for errors and store in array
         var _translations = {};
         //Pass all required translation IDs to translate service
-        $translate(['ALERT_WORKSHOP_NEW_SUCCESS',
+        $translate(['ALERT_WORKSHOP_NEW_SUCCESS','TITLE_SUCCESS','TITLE_ERROR',
             'ALERT_WORKSHOP_NEW_FAIL', 'ALERT_NEGATIVE_COST', 'ALERT_NEGATIVE_PARTICIPANTS', 'ALERT_WORKSHOP_IN_PAST']).
         then(function(translations){
             _translations = translations;
@@ -62,7 +65,7 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
             var error = false;
             if($scope.workshop.cost < 0){
                 $alert({
-                    title: 'Error',
+                    title: _translations.TITLE_ERROR,
                     type: 'danger',
                     content: _translations.ALERT_NEGATIVE_COST,
                     container: '#alert',
@@ -74,7 +77,7 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
 
             if($scope.workshop.max_participants < 0){
                 $alert({
-                    title: 'Error',
+                    title: _translations.TITLE_ERROR,
                     type: 'danger',
                     content: _translations.ALERT_NEGATIVE_PARTICIPANTS,
                     container: '#alert',
@@ -86,7 +89,7 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
 
             if($scope.workshop.start_at < now) {
                 $alert({
-                    title: 'Error',
+                    title: _translations.TITLE_ERROR,
                     type: 'danger',
                     content: _translations.ALERT_WORKSHOP_IN_PAST,
                     container: '#alert',
@@ -111,7 +114,7 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
             };
             AdminWorkshop.putWorkshop(data).$promise.then(function(httpResponse){
                 $alert({
-                    title: '',
+                    title: _translations.TITLE_SUCCESS,
                     type: 'success',
                     content: _translations.ALERT_WORKSHOP_NEW_SUCCESS + ' \"' + data.title +'\"',
                     container: '#alert',
@@ -121,7 +124,7 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
                 
             },function(httpResponse){
                 $alert({
-                    title: '',
+                    title: _translations.TITLE_ERROR,
                     type: 'danger',
                     content: _translations.ALERT_WORKSHOP_NEW_FAIL + ' (' + httpResponse.status +')',
                     container: '#alert',

@@ -438,8 +438,8 @@ mainAppCtrls.controller('adminEmailConfirmCtrl',['$scope',"EmailTemplate",'$tran
         //Get translations for errors and store in array
         var _translations = {};
         //Pass all required translation IDs to translate service
-        $translate(['ALERT_EMAILTEMPLATE_NEW_SUCCESS',
-            'ALERT_EMAILTEMPLATE_NEW_FAIL','ALERT_EMAILTEMPLATE_NOT_FOUND']).
+        $translate(['TITLE_SUCCESS','TITLE_ERROR','ALERT_EMAILCONFIRM_SEND_SUCCESS',
+            'ALERT_EMAILCONFIRM_SEND_FAIL']).
         then(function(translations){
             _translations = translations;
         });
@@ -469,8 +469,8 @@ mainAppCtrls.controller('adminEmailConfirmCtrl',['$scope',"EmailTemplate",'$tran
             Email.sendEmail({id: workshopid},_data).$promise.then(function(response){
                 $alert({
                     type: 'success',
-                    content: 'Email was send',
-                    title: 'Success',
+                    content: _translations.ALERT_EMAILCONFIRM_SEND_SUCCESS,
+                    title: _translations.TITLE_SUCCESS,
                     dissmisable: false,
                     show: true,
                     duration: 20
@@ -478,8 +478,8 @@ mainAppCtrls.controller('adminEmailConfirmCtrl',['$scope',"EmailTemplate",'$tran
             },function(response){
                 $alert({
                     type: 'danger',
-                    content: 'Email could not be send: '+response.status,
-                    title: 'Error',
+                    content: _translations.ALERT_EMAILCONFIRM_SEND_FAIL +response.status,
+                    title: _translations.TITLE_ERROR,
                     dissmisable: false,
                     show: true,
                     duration: 20
@@ -530,12 +530,15 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
         });
         $scope.loadTemplate = function(){
             $scope.workshop = JSON.parse(JSON.stringify($scope.selectedTemplate));
+            var _ea = Date.parse($scope.workshop.end_at);
+            var _sa = Date.parse($scope.workshop.start_at);
+            $scope.workshop.duration = new Date(_ea - _sa);
         };
         $scope.workshop.duration=-3600000;
         //Get translations for errors and store in array
         var _translations = {};
         //Pass all required translation IDs to translate service
-        $translate(['ALERT_WORKSHOP_NEW_SUCCESS',
+        $translate(['ALERT_WORKSHOP_NEW_SUCCESS','TITLE_SUCCESS','TITLE_ERROR',
             'ALERT_WORKSHOP_NEW_FAIL', 'ALERT_NEGATIVE_COST', 'ALERT_NEGATIVE_PARTICIPANTS', 'ALERT_WORKSHOP_IN_PAST']).
         then(function(translations){
             _translations = translations;
@@ -571,7 +574,7 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
             var error = false;
             if($scope.workshop.cost < 0){
                 $alert({
-                    title: 'Error',
+                    title: _translations.TITLE_ERROR,
                     type: 'danger',
                     content: _translations.ALERT_NEGATIVE_COST,
                     container: '#alert',
@@ -583,7 +586,7 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
 
             if($scope.workshop.max_participants < 0){
                 $alert({
-                    title: 'Error',
+                    title: _translations.TITLE_ERROR,
                     type: 'danger',
                     content: _translations.ALERT_NEGATIVE_PARTICIPANTS,
                     container: '#alert',
@@ -595,7 +598,7 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
 
             if($scope.workshop.start_at < now) {
                 $alert({
-                    title: 'Error',
+                    title: _translations.TITLE_ERROR,
                     type: 'danger',
                     content: _translations.ALERT_WORKSHOP_IN_PAST,
                     container: '#alert',
@@ -620,7 +623,7 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
             };
             AdminWorkshop.putWorkshop(data).$promise.then(function(httpResponse){
                 $alert({
-                    title: '',
+                    title: _translations.TITLE_SUCCESS,
                     type: 'success',
                     content: _translations.ALERT_WORKSHOP_NEW_SUCCESS + ' \"' + data.title +'\"',
                     container: '#alert',
@@ -630,7 +633,7 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
                 
             },function(httpResponse){
                 $alert({
-                    title: '',
+                    title: _translations.TITLE_ERROR,
                     type: 'danger',
                     content: _translations.ALERT_WORKSHOP_NEW_FAIL + ' (' + httpResponse.status +')',
                     container: '#alert',
@@ -684,7 +687,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
         //Get translations for errors and store in array
         var _translations = {};
         //Pass all required translation IDs to translate service
-        $translate(['ALERT_NO_PARTICIPANTS', 'ALERT_SUCCESSFUL_OVERBOOK', 'ALERT_FAIL_OVERBOOK', 'ALERT_SUCCESSFUL_REMOVED_USER', 'ALERT_FAILED_REMOVED_USER',]).
+        $translate(['TITLE_SUCCESS','TITLE_ERROR','TITLE_INFO','ALERT_NO_PARTICIPANTS', 'ALERT_SUCCESSFUL_OVERBOOK', 'ALERT_FAIL_OVERBOOK', 'ALERT_SUCCESSFUL_REMOVED_USER', 'ALERT_FAILED_REMOVED_USER']).
         then(function(translations){
             _translations = translations;
         });
@@ -701,7 +704,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
             $scope.loading = false;
         },function(httpResponse) {
             $alert({
-                title: '',
+                title: _translations.TITLE_ERROR,
                 type: 'danger',
                 content: httpResponse.status,
                 container: '#alert',
@@ -726,7 +729,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
                 switch(httpResponse.status){
                     case 404:
                         $alert({
-                            title: '',
+                            title: _translations.TITLE_INFO,
                             type: 'info',
                             content: _translations.ALERT_NO_PARTICIPANTS,
                             container: '#alertParticipant',
@@ -773,7 +776,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
                    container: '#alert',
                    content: _translations.ALERT_SUCCESSFUL_OVERBOOK,
                    show: 'true',
-                    title: 'Success'
+                    title: _translations.TITLE_SUCCESS
                 });
                 loadParticipants();
                 loadWaitinglist();
@@ -784,7 +787,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
                     container: '#alert',
                     content: _translations.ALERT_FAIL_OVERBOOK,
                     show: 'true',
-                    title: 'Error'
+                    title: _translations.TITLE_ERROR
                 });
             });
         };
@@ -798,7 +801,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
                     container: '#alert',
                     content: _translations.ALERT_SUCCESSFUL_BLACKLISTED,
                     show: true,
-                    title: 'Success'
+                    title: _translations.TITLE_SUCCESS
                 });
             },function(response){
                 $alert({
@@ -807,7 +810,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
                     container: '#alert',
                     content: _translations.ALERT_FAILED_BLACKLISTED + '('+response.status+')',
                     show: true,
-                    title: 'Error'
+                    title: _translations.TITLE_ERROR
                 });
             });
         };
@@ -821,7 +824,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
                     container: '#alert',
                     content: _translations.ALERT_SUCCESSFUL_REMOVED_USER,
                     show: true,
-                    title: 'Success'
+                    title: _translations.TITLE_SUCCESS
                 });
             },function(response){
                 $alert({
@@ -830,7 +833,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
                     container: '#alert',
                     content: _translations.ALERT_FAILED_REMOVED_USER + '('+response.status+')',
                     show: true,
-                    title: 'Error'
+                    title: _translations.TITLE_ERROR
                 });
             });
         };
@@ -864,7 +867,7 @@ mainAppCtrls.controller('adminWorkshopManagementCtrl',['$scope','AdminWorkshop',
         var _translations = {};
         //Pass all required translation IDs to translate service
         $translate(['ALERT_WORKSHOP_DELETE_SUCCESS',
-            'ALERT_INTERNAL_SERVER_ERROR']).
+            'ALERT_INTERNAL_SERVER_ERROR','ALERT_WORKSHOP_DELETE_FAIL']).
         then(function(translations){
             _translations = translations;
         });
@@ -883,9 +886,10 @@ mainAppCtrls.controller('adminWorkshopManagementCtrl',['$scope','AdminWorkshop',
            return (d2.getTime()>d1.getTime())
         };
         //Get and store translation for alert title.
-        $translate(['TITLE_ERROR', 'ERROR_NO_WORKSHOPS']).then(function (translations) {
+        $translate(['TITLE_ERROR','ERROR_NO_WORKSHOPS','TITLE_SUCCESS']).then(function (translations) {
             $scope.errorTitle = translations.TITLE_ERROR;
             $scope.errorMsg = translations.ERROR_NO_WORKSHOPS;
+            $scope.successTitle = translations.TITLE_SUCCESS;
         });
         var loadWorkshops = function() {
             $scope.loading = true;
@@ -939,7 +943,7 @@ mainAppCtrls.controller('adminWorkshopManagementCtrl',['$scope','AdminWorkshop',
         $scope.delete = function (_id) {
             AdminWorkshop.delete({id:_id}).$promise.then(function(httpResponse){
                     $alert({
-                        title:'Success',
+                        title: $scope.successTitle,
                         type: 'success',
                         container:'#alert',
                         show: true,
@@ -950,7 +954,15 @@ mainAppCtrls.controller('adminWorkshopManagementCtrl',['$scope','AdminWorkshop',
                     loadWorkshops();
                 }
                 , function (httpResponse) {
-                    alert('Error');
+                    $alert({
+                        title: $scope.errorTitle,
+                        type: 'danger',
+                        container:'#alert',
+                        show: true,
+                        dismissable: true,
+                        content: _translations.ALERT_WORKSHOP_DELETE_FAIL + ' (' + httpResponse.status +')',
+                        duration: 20
+                    });
                 }
             )
 
@@ -976,7 +988,7 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin','$alert'
 
         var _translations = {};
         //Pass all required translation IDs to translate service
-        $translate(['INVITED_ADMINISTRATOR_EMAIL', 'INVITED_ADMINISTRATOR_EMAIL_ERROR', 'ALERT_DELETE_ADMIN_FAILED',
+        $translate(['INVITED_ADMINISTRATOR_EMAIL','TITLE_ERROR','TITLE_SUCCESS','INVITED_ADMINISTRATOR_EMAIL_ERROR', 'ALERT_DELETE_ADMIN_FAILED',
         'ALERT_DELETE_ADMIN_SUCCESS',]).then(function (translations) {
             _translations = translations;
         });
@@ -1033,7 +1045,7 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin','$alert'
         $scope.invite = function () {
             Admin.invite({email: $scope.admin_mail}).$promise.then(function (value) {
                 $alert({
-                    title: '',
+                    title: _translations.TITLE_SUCCESS,
                     type: 'success',
                     content: _translations.INVITED_ADMINISTRATOR_EMAIL,
                     container: '#alert',
@@ -1043,7 +1055,7 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin','$alert'
                 });
             }, function (httpResponse) {
                 $alert({
-                    title: '',
+                    title: _translations.TITLE_ERROR,
                     type: 'danger',
                     content: _translations.INVITED_ADMINISTRATOR_EMAIL_ERROR,
                     container: '#alert',
@@ -1152,8 +1164,10 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin','$alert'
  */
 mainAppCtrls.controller('ContactCtrl',['$scope','Admin',
     function($scope,Admin) {
+        $scope.contact = {};
         Admin.getContact().$promise.then(function(response){
-            $scope.contact = response.content;
+            $scope.contact = JSON.parse(response.content);
+            console.log($scope.contact);
         },function(response){
 
         });
@@ -1181,8 +1195,8 @@ mainAppCtrls.controller('EditEmailTemplateCtrl',['$scope','EmailTemplate','$stat
         //Get translations for errors and store in array
         var _translations = {};
         //Pass all required translation IDs to translate service
-        $translate(['ALERT_WORKSHOPTEMPLATE_EDIT_SUCCESS','TITLE_SUCCESS','TITLE_ERROR',
-            'ALERT_WORKSHOPTEMPLATE_EDIT_FAIL','ALERT_WORKSHOPTEMPLATE_NOT_FOUND','ALERT_NEGATIVE_COST','ALERT_NEGATIVE_PARTICIPANTS','ALERT_WORKSHOP_IN_PAST']).
+        $translate(['ALERT_EMAILTEMPLATE_EDIT_SUCCESS','TITLE_SUCCESS','TITLE_ERROR',
+            'ALERT_EMAILTEMPLATE_EDIT_FAIL','ALERT_EMAILTEMPLATE_NOT_FOUND']).
         then(function(translations){
             _translations = translations;
         });
@@ -1235,7 +1249,7 @@ mainAppCtrls.controller('EditEmailTemplateCtrl',['$scope','EmailTemplate','$stat
                 $alert({
                     title: _translations.TITLE_SUCCESS,
                     type: 'success',
-                    content: _translations.ALERT_WORKSHOPTEMPLATE_EDIT_SUCCESS + ' \"' + _originalData.title +'\"',
+                    content: _translations.ALERT_EMAILTEMPLATE_EDIT_SUCCESS + ' \"' + _originalData.title +'\"',
                     container: '#alert',
                     dismissable: true,
                     show: true,
@@ -1311,7 +1325,7 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
         var _translations = {};
         //Pass all required translation IDs to translate service
         $translate(['ALERT_WORKSHOPTEMPLATE_EDIT_SUCCESS',
-            'ALERT_WORKSHOPTEMPLATE_EDIT_FAIL','ALERT_WORKSHOPTEMPLATE_NOT_FOUND']).
+            'ALERT_WORKSHOPTEMPLATE_EDIT_FAIL','ALERT_WORKSHOPTEMPLATE_NOT_FOUND','TITLE_SUCCESS','TITLE_ERROR']).
         then(function(translations){
             _translations = translations;
         });
@@ -1364,7 +1378,7 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
             var error = false;
             if($scope.workshop.cost < 0){
                 $alert({
-                    title: 'Error',
+                    title:  _translations.TITLE_ERROR,
                     type: 'danger',
                     content: _translations.ALERT_NEGATIVE_COST,
                     container: '#alert',
@@ -1376,7 +1390,7 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
 
             if($scope.workshop.max_participants < 0){
                 $alert({
-                    title: 'Error',
+                    title:  _translations.TITLE_ERROR,
                     type: 'danger',
                     content: _translations.ALERT_NEGATIVE_PARTICIPANTS,
                     container: '#alert',
@@ -1388,7 +1402,7 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
 
             if($scope.workshop.start_at < now) {
                 $alert({
-                    title: 'Error',
+                    title:  _translations.TITLE_ERROR,
                     type: 'danger',
                     content: _translations.ALERT_WORKSHOP_IN_PAST,
                     container: '#alert',
@@ -1414,7 +1428,7 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
             };
             WorkshopTemplate.edit({id: _workshopId}, data).$promise.then(function (value) {
                 $alert({
-                    title: '',
+                    title: _translations.TITLE_SUCCESS,
                     type: 'success',
                     content: _translations.ALERT_WORKSHOPTEMPLATE_EDIT_SUCCESS + ' \"' + _originalData.title +'\"',
                     container: '#alert',
@@ -1424,7 +1438,7 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
                 });
             }, function (httpResponse) {
                 $alert({
-                    title: '',
+                    title: _translations.TITLE_ERROR,
                     type: 'danger',
                     content: _translations.ALERT_WORKSHOPTEMPLATE_EDIT_FAIL + '(' + httpResponse.status +')',
                     container: '#alert',
@@ -1475,7 +1489,7 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
         }, function (httpResponse) {
             if(httpResponse.status === 404)
                 $alert({
-                    title: '',
+                    title:  _translations.TITLE_ERROR,
                     type: 'danger',
                     content: _translations.ALERT_WORKSHOPTEMPLATE_NOT_FOUND,
                     container: '#alert',
@@ -1582,9 +1596,14 @@ mainAppCtrls.controller('EnrollmentConfirmCtrl',['$scope','Workshops','$statePar
  * @name mainAppCtrls.controller:LegalNoticeCtrl
  * @description Controller for showing legal notice
  */
-mainAppCtrls.controller('LegalNoticeCtrl',['$scope',
-    function($scope) {
- 
+mainAppCtrls.controller('LegalNoticeCtrl',['$scope','Admin',
+    function($scope,Admin) {
+        Admin.getLegalNotice().$promise.then(function(response){
+            console.log(response.content);
+            $scope.legalNotice = JSON.parse(response.content);
+        },function(response){
+
+        });
     }
 
 ]);
@@ -1656,11 +1675,9 @@ mainAppCtrls.controller('LoginCtrl',['$scope','$http','store','$state','jwtHelpe
         $scope.showResetPanel = function() {
             $scope.reset_panel = !$scope.reset_panel;
         }
-        $scope.alertReset = {};
+        $scope.alertReset = $alert({});
         $scope.resetPassword = function() {
-
-            if($scope.alertReset != null)
-                $scope.alertReset.hide();
+            $scope.alertReset.hide();
             if(!$scope.reset.email) {
                 $scope.alertReset = $alert({
                     title: _translations.TITLE_ERROR,
@@ -1670,6 +1687,7 @@ mainAppCtrls.controller('LoginCtrl',['$scope','$http','store','$state','jwtHelpe
                     show: true,
                     container: '#reset_alert'
                 });
+                return;
             }
             if($scope.alertReset != null)
                 $scope.alertReset.hide();

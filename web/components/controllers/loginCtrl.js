@@ -64,11 +64,9 @@ mainAppCtrls.controller('LoginCtrl',['$scope','$http','store','$state','jwtHelpe
         $scope.showResetPanel = function() {
             $scope.reset_panel = !$scope.reset_panel;
         }
-        $scope.alertReset = {};
+        $scope.alertReset = $alert({});
         $scope.resetPassword = function() {
-
-            if($scope.alertReset != null)
-                $scope.alertReset.hide();
+            $scope.alertReset.hide();
             if(!$scope.reset.email) {
                 $scope.alertReset = $alert({
                     title: _translations.TITLE_ERROR,
@@ -78,6 +76,7 @@ mainAppCtrls.controller('LoginCtrl',['$scope','$http','store','$state','jwtHelpe
                     show: true,
                     container: '#reset_alert'
                 });
+                return;
             }
             if($scope.alertReset != null)
                 $scope.alertReset.hide();
