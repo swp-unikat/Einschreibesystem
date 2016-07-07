@@ -977,7 +977,8 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin','$alert'
 
         var _translations = {};
         //Pass all required translation IDs to translate service
-        $translate(['INVITED_ADMINISTRATOR_EMAIL', 'INVITED_ADMINISTRATOR_EMAIL_ERROR', 'ALERT_DELETE_ADMIN']).then(function (translations) {
+        $translate(['INVITED_ADMINISTRATOR_EMAIL', 'INVITED_ADMINISTRATOR_EMAIL_ERROR', 'ALERT_DELETE_ADMIN_FAILED',
+        'ALERT_DELETE_ADMIN_SUCCESS',]).then(function (translations) {
             _translations = translations;
         });
         var loadList = function () {
@@ -1002,12 +1003,21 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin','$alert'
             $scope.loading = true;
             Admin.delete({id: _id}).$promise.then(function (value) {
                 loadList();
+                $alert({
+                    title: _translations.ALERT_DELETE_ADMIN_SUCCESS,
+                    type: 'success',
+                    content: _translations.ALERT_DELETE_ADMIN_SUCCESS,
+                    container: '#alert',
+                    dismissable: true,
+                    show: true,
+                    duration: 10
+                });
             }, function (httpResponse) {
                 $scope.loading = false;
                 $alert({
                     type: 'danger',
                     title: 'Error',
-                    content: _translations.ALERT_DELETE_ADMIN,
+                    content: _translations.ALERT_DELETE_ADMIN_FAILED,
                     container: '#alert',
                     show: true,
                     dismissable: false,
