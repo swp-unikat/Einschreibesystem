@@ -1599,8 +1599,7 @@ mainAppCtrls.controller('EnrollmentConfirmCtrl',['$scope','Workshops','$statePar
 mainAppCtrls.controller('LegalNoticeCtrl',['$scope','Admin',
     function($scope,Admin) {
         Admin.getLegalNotice().$promise.then(function(response){
-            console.log(response.content);
-            $scope.legalNotice = JSON.parse(response.content);
+            $scope.legalNotice = response.content;
         },function(response){
 
         });
@@ -2363,11 +2362,13 @@ mainAppCtrls.controller('UnsubscribeCtrl',['$scope',
  */
 mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$stateParams', "$alert","$translate",
     function($scope,Workshops,$stateParams, $alert, $translate) {
+        $scope.unsub = {};
         //Get translations for errors and store in array
         var _translations = {};
         //Pass all required translation IDs to translate service
         $translate(['ALERT_ENROLLMENT_SUCCSESSFULL','ALERT_NO_PARTICIPANTS','FIRST_NAME','LAST_NAME','EMAIL'
-        ,'ALERT_INTERNAL_SERVER_ERROR', 'ALERT_ALREADY_ENROLLED', 'TITLE_SUCCESS','TITLE_ERROR', 'ALERT_YOU_ARE_ON_BLACKLIST']).
+        ,'ALERT_INTERNAL_SERVER_ERROR', 'ALERT_ALREADY_ENROLLED', 'TITLE_SUCCESS','TITLE_ERROR', 'ALERT_YOU_ARE_ON_BLACKLIST','ERROR_UNSUBSCRIBE_FAIL',
+        'UNSUBSCRIBE_SUCCESS']).
         then(function(translations){
             _translations = translations;
             $scope.placeholder =  {
@@ -2427,7 +2428,7 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
                         _msg = _translations.ALERT_INTERNAL_SERVER_ERROR;
                         break;
                     default:
-                        _msg = httpResponse.status + ':' + httpResponse;
+                        _msg = httpResponse.status + ':' + httpResponse.statusText;
                 }
                 $alert({
                     title: _translations.TITLE_ERROR,
@@ -2443,10 +2444,38 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
         };
 
         $scope.unsubscribe= function(){
-            var _params = {
-              workshopId: workshopid,
-                
-            };
+            var _data = $scope.unsub.e_mail;
+            Workshops.unsubscribe(_data).$promise.then(function(response){
+                $alert({
+                   type: 'success',
+                   title: _translations.TITLE_SUCCESS,
+                   content: _translation.UNSUBSCRIBE_SUCCESS,
+                   dismissable: true,
+                   duration: 20,
+                   show: true,
+                   container: '#alertErnroll'
+                });
+            },function(response){
+                var _msg = "";
+               switch(response.status){
+                   case 404:
+                       $translate(response.statusText).then(function(_translation){
+                          _msg =  _translation;
+                       });
+                       break;
+                   default:
+                       _msg = _translations.ERROR_UNSUBSCRIBE_FAIL + ": "+response.statusText;
+               }
+                $alert({
+                    type: 'danger',
+                    title: _translations.TITLE_ERROR,
+                    content: _msg,
+                    show: true,
+                    duration: 20,
+                    container: '#alertEnroll',
+                    dismissable: false
+                });
+            });
         };
         
         $scope.loading = true;

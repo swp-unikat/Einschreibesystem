@@ -52,7 +52,7 @@ restSvcs.factory('Workshops',['$resource',function($resource){
          * @param {number} id Workshop-ID
          * @param {string} token Unsubscribetoken
          */
-        'unsubscribe': {method: 'GET',url:'/api/workshops/:workshopId/unsubscribe/:participantId',params: {workshopId: '@workshopId', participantId: '@participantId'},isArray: false},
+        'unsubscribe': {method: 'POST',url:'/api/workshops/unsubscribe',isArray: false},
         /**
          * @ngdoc funtion
          * @name restSvcs.Workshops#unsubscribeWorkshop
