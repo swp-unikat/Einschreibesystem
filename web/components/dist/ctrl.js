@@ -1004,7 +1004,7 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin','$alert'
             Admin.delete({id: _id}).$promise.then(function (value) {
                 loadList();
                 $alert({
-                    title: _translations.ALERT_DELETE_ADMIN_SUCCESS,
+                    title: _translations.TITLE_SUCCESS,
                     type: 'success',
                     content: _translations.ALERT_DELETE_ADMIN_SUCCESS,
                     container: '#alert',
@@ -1015,7 +1015,7 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin','$alert'
             }, function (httpResponse) {
                 $scope.loading = false;
                 $alert({
-                    type: 'danger',
+                    type: _translations.TITLE_ERROR,
                     title: 'Error',
                     content: _translations.ALERT_DELETE_ADMIN_FAILED,
                     container: '#alert',
