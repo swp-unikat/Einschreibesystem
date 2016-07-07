@@ -1144,7 +1144,7 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin','$alert'
 mainAppCtrls.controller('ContactCtrl',['$scope','Admin',
     function($scope,Admin) {
         Admin.getContact().$promise.then(function(response){
-            $scope.contact = response;
+            $scope.contact = response.content;
         },function(response){
 
         });
