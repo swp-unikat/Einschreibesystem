@@ -107,7 +107,6 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
                 error = true;
             }
             var now = new Date();
-            console.log($scope.workshop.start_at);
             if($scope.workshop.start_at < now) {
                 $alert({
                     title: 'Error',
