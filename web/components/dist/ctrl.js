@@ -1596,13 +1596,11 @@ mainAppCtrls.controller('EnrollmentConfirmCtrl',['$scope','Workshops','$statePar
  * @name mainAppCtrls.controller:LegalNoticeCtrl
  * @description Controller for showing legal notice
  */
-mainAppCtrls.controller('LegalNoticeCtrl',['$scope','Admin',
-    function($scope,Admin) {
+mainAppCtrls.controller('LegalNoticeCtrl',['$scope','Admin','$sanitize',
+    function($scope,Admin,$sanitize) {
         Admin.getLegalNotice().$promise.then(function(response){
             $scope.legalNotice = response.content;
-            $scope.legalNotice = "<p>Test html</p>";
         },function(response){
-
         });
     }
 
