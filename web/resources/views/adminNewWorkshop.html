@@ -39,10 +39,11 @@
             <input type="number" ng-model="workshop.max_participants" class="form-control" placeholder="{{workshop.max_participants}}">
 
             <label>{{ "WORKSHOP_START_TIME" | translate}}</label>
-            <input type="text" size="8" data-length="3" ng-model="workshop.start_at" data-time-format="HH:mm"
-                   data-autoclose="1" placeholder="HH:mm" bs-timepicker class="form-control" data-placement="auto top">
             <input type="text"  size="8" data-date-format="dd-MM-yyyy" ng-model="workshop.start_at"  bs-datepicker placeholder="dd-MM-yyyy"
-                   class="form-control" data-placement="auto top" data-min-date="today">
+                   class="form-control" data-placement="auto top" data-min-date="today" class="span3">
+            <input type="text" size="8" data-length="3" ng-model="workshop.start_at" data-time-format="HH:mm"
+                   data-autoclose="1" placeholder="HH:mm" bs-timepicker class="form-control" data-placement="auto top" class="span3">
+
 
             <label>{{ "WORKSHOP_DURATION" | translate}}</label>
             <input  type="text" size="8" data-length="1" ng-model="workshop.duration" data-time-format="HH:mm" data-time-type="number"
