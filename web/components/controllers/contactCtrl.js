@@ -11,6 +11,7 @@ mainAppCtrls.controller('ContactCtrl',['$scope','Admin',
     function($scope,Admin) {
         Admin.getContact().$promise.then(function(response){
             $scope.contact = response.content;
+            console.log(response.content + "\n" + $scope.contact);
         },function(response){
 
         });
