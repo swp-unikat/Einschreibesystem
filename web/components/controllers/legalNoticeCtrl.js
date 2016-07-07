@@ -7,9 +7,13 @@ var mainAppCtrls = angular.module("mainAppCtrls");
  * @name mainAppCtrls.controller:LegalNoticeCtrl
  * @description Controller for showing legal notice
  */
-mainAppCtrls.controller('LegalNoticeCtrl',['$scope',
-    function($scope) {
- 
+mainAppCtrls.controller('LegalNoticeCtrl',['$scope','Admin',
+    function($scope,Admin) {
+        Admin.getLegalNotice().$promise.then(function(response){
+            $scope.legalNotice = response.content;
+        },function(response){
+
+        });
     }
 
 ]);
