@@ -49,7 +49,7 @@
   "BUTTON_ADD_TO_BLACK_LIST": "zur Blacklist hinzufügen",
   "BUTTON_REMOVE_FROM_BLACKLIST": "von Blacklist entfernen",
   "BUTTON_INVITE_AN_ADMINISTRATOR": "Administrator einladen",
-  "INVITED_ADMINISTRATOR_EMAIL": "E-Mail-Adresse des eingeladenen Administrators",
+  "INVITED_ADMINISTRATOR_EMAIL": "Einladung wurde an E-Mail-Adresse versendet",
   "LIST_OF_ADMINISTRATORS": "Liste von Administratoren",
   "BUTTON_EDIT_ADMINISTRATOR": "Administrator bearbeiten",
   "BUTTON_DEACTIVATE_ADMINISTRATOR": "Administrator deaktivieren",
@@ -201,6 +201,17 @@
   "ALERT_FALSE_TOKEN":"Bereitgestellter Token ist ungültig",
   "ALERT_RESET_EMAIL_ERROR":"Sie müssen eine gültige E-Mail-Adresse eingeben!",
   "ALERT_RESET_PASSWORD_SUCCESS":"Ein Link um Ihr Passwort zurückzusetzen wurde an Ihre E-Mail-Adresse gesendet",
-  "ALERT_RESET_PASSWORD_ERROR":"Ein Fehler ist aufgetreten"
+  "ALERT_RESET_PASSWORD_ERROR":"Für diese E-Mail-Adresse existiert kein Administrator Account",
+  "ALERT_DELETE_ADMIN_FAILED":"Fehler beim Löschen des Admins",
+  "ALERT_DELETE_ADMIN_SUCCESS": "Admin wurde erfolgreich gelöscht",
+  "ALERT_WORKSHOP_DELETE_FAIL":"Fehler beim Löschen des Workshops",
+  "TITLE_INFO":"Info",
+  "ALERT_EMAILCONFIRM_SEND_SUCCESS":"E-Mail wurde versendet",
+  "ALERT_EMAILCONFIRM_SEND_FAIL":"E-Mail konnte nicht versendet werden:",
+  "ALERT_WORKSHOP_AT_SAME_TIME":"Sie sind bereits zu einem Workshop zur selben Zeit eingeschrieben!",
+  "ERROR_UNSUBSCRIBE_FAIL": "Fehler beim Abmelden von Workshop",
+  "UNSUBSCRIBE_SUCCESS": "Erfolgreich von Workshop abgemeldet",
+  "UNSUBSCRIBE_NOT_ENROLLED":"Sie müssen im Workshop eingeschrieben sein, um sich vom Workshop abmelden zu können!",
+  "UNSUBSCRIBE_EMAIL_TEMPLATE_NOT_FOUND":"Abmelde-E-Mail Template wurde nicht gefunden"
 
 }

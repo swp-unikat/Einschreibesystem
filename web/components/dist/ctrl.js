@@ -2447,7 +2447,7 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
             var _data = {
                 email: $scope.unsub.e_mail,
                 workshopId: workshopid
-            };
+            }
             Workshops.unsubscribe(_data).$promise.then(function(response){
                 $alert({
                    type: 'success',
