@@ -356,14 +356,14 @@ restSvcs.factory('Admin',['$resource',function($resource){
          * @description Edits the contact data saved on the server
          * @methodOf restSvcs.Admin
          */
-        'getContact': {url: '/api/admin/user/contact/data',method: 'GET',isArray: false},
+        'getContact': {url: '/api/user/contact/data',method: 'GET',isArray: false},
         /**
          * @ngdoc function
          * @name restSvcs.Admin#editLegalNotice
          * @description Edits the legal Notice saved on the server
          * @methodOf restSvcs.Admin
          */
-        'getLegalNotice': {url: '/api/admin/user/legal/notice',method: 'GET',isArray: false},
+        'getLegalNotice': {url: '/api/user/legal/notice',method: 'GET',isArray: false},
         'changeEmail': {url: '/api/admin/user/email',method: 'PATCH',isArray: false},
         'createAdmin': {url :'/api/user/create/admin',method: 'POST',isArray: false}
     });
