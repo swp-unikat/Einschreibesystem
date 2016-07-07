@@ -206,7 +206,8 @@
   "ALERT_RESET_PASSWORD_ERROR":"An error occurred ",
   "ALERT_DELETE_ADMIN_FAILED":"Failed to delete admin",
   "ALERT_DELETE_ADMIN_SUCCESS": "Successfully deleted admin",
-  "ALERT_WORKSHOP_DELETE_FAIL":"Failed to delete workshop"
+  "ALERT_WORKSHOP_DELETE_FAIL":"Failed to delete workshop",
+  "TITLE_INFO":"Info"
 
 
 
