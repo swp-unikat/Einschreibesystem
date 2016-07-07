@@ -261,11 +261,12 @@ mainApp.config(['$translateProvider', function($translateProvider) {
  */
 mainApp.controller('GlobalCtrl',['$scope','store','jwtHelper','$state','$http','$translate',function($scope,store,jwtHelper,$state,$http,$translate,$translateProvider) {
     $scope.back=function () {
-        if ($scope.show_login)
+        var jwt = store.get('jwt');
+        if (jwt == null || jwtHelper.isTokenExpired(jwt))
             $state.go('workshops');
-        if ($scope.show_logout)
+        if (jwt != null && !jwtHelper.isTokenExpired(jwt))
             $state.go('dashboard');
-        if ($scope.show_logout && $state.current.name == "dashboard")
+        if (jwt != null && !jwtHelper.isTokenExpired(jwt) && $state.current.name == "dashboard")
             $state.go('workshops');
     }
     //Check if token is already saved and is expired
