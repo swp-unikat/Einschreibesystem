@@ -2452,17 +2452,17 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
                 $alert({
                    type: 'success',
                    title: _translations.TITLE_SUCCESS,
-                   content: _translation.UNSUBSCRIBE_SUCCESS,
+                   content: _translations.UNSUBSCRIBE_SUCCESS,
                    dismissable: true,
                    duration: 20,
                    show: true,
-                   container: '#alertErnroll'
+                   container: '#alertEnroll'
                 });
             },function(response){
                 var _msg = "";
                switch(response.status){
                    case 404:
-                       $translate(response.statusText).then(function(_translation){
+                       $translate(response.data.message).then(function(_translation){
                           _msg =  _translation;
                        });
                        break;
