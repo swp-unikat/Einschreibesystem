@@ -1152,6 +1152,7 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin','$alert'
  */
 mainAppCtrls.controller('ContactCtrl',['$scope','Admin',
     function($scope,Admin) {
+        $scope.contact = {};
         Admin.getContact().$promise.then(function(response){
             $scope.contact = response.content;
             console.log(response.content + "\n" + $scope.contact);

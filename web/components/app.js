@@ -23,7 +23,8 @@ var mainApp = angular.module('mainApp',[
     'angular-storage',
     'pascalprecht.translate',
     'textAngular',
-    'prntSvcs'
+    'prntSvcs',
+    'ngSanitize'
 ]);
 /**
  * @name mainAppCtrls
