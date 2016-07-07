@@ -58,7 +58,7 @@
                     <li class="list-group-item"  ng-repeat="p in participants">
                         <label>{{p.name}} {{p.surname}}</label> (<span class="small">{{p.email}}</span>)
 	                           <span class="pull-right">
-		                            <input type="checkbox" value="" ng-click="confirmUser(workshop.id,p.id)">
+		                            <input type="checkbox" value="" ng-change="confirmUser(workshop.id,p.id)">
 		                            <button type="button" ng-click="remove(workshop.id,p.id)" class="btn btn-default btn-xs">
 		                                <span data-toggle="tooltip" title="{{'BUTTON_REMOVE_PARTICIPANT' | translate}}" class="glyphicon glyphicon-trash" aria-hidden="true"></span>
 		                            </button>
