@@ -238,10 +238,10 @@ class UserController extends FOSRestController implements ClassResourceInterface
     {
         $paramFetcher->get('content');
         $path = $this->get('kernel')->getRootDir() . '/../web/resources/data/legalNotice';
-        if(file_put_contents($path,$paramFetcher->get('content'))){
-            return $this->handleView($this->view(['code' => 404,'message' => "Could not write the file.", 'content' => $paramFetcher->get('content')], 404));
+        if(file_put_contents($path,$paramFetcher->get('content')) !== FALSE){
+            return $this->handleView($this->view(['code' => 200,'message' => "saved legal notice"], 200));
         }else{
-            return View::create(NULL, Codes::HTTP_OK);
+            return $this->handleView($this->view(['code' => 404,'message' => "Could not write the file.", 'content' => $paramFetcher->get('content')], 404));
         }
     }
 
@@ -267,7 +267,7 @@ class UserController extends FOSRestController implements ClassResourceInterface
     public function putContactDataAction(ParamFetcher $paramFetcher)
     {
         $path = $this->get('kernel')->getRootDir() . '/../web/resources/data/contactData';
-        if(file_put_contents($path,$paramFetcher->get('content'))){
+        if(file_put_contents($path,$paramFetcher->get('content')) !== FALSE){
             return $this->handleView($this->view(['code' => 200,'message' => "saved contact data"], 200));
         }else{
             return $this->handleView($this->view(['code' => 404,'message' => "Could not write the file.", 'content' => $paramFetcher->get('content')], 401));

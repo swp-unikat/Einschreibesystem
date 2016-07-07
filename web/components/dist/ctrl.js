@@ -1311,7 +1311,7 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
         var _translations = {};
         //Pass all required translation IDs to translate service
         $translate(['ALERT_WORKSHOPTEMPLATE_EDIT_SUCCESS',
-            'ALERT_WORKSHOPTEMPLATE_EDIT_FAIL','ALERT_WORKSHOPTEMPLATE_NOT_FOUND']).
+            'ALERT_WORKSHOPTEMPLATE_EDIT_FAIL','ALERT_WORKSHOPTEMPLATE_NOT_FOUND','TITLE_SUCCESS','TITLE_ERROR']).
         then(function(translations){
             _translations = translations;
         });
@@ -1364,7 +1364,7 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
             var error = false;
             if($scope.workshop.cost < 0){
                 $alert({
-                    title: 'Error',
+                    title:  _translations.TITLE_ERROR,
                     type: 'danger',
                     content: _translations.ALERT_NEGATIVE_COST,
                     container: '#alert',
@@ -1376,7 +1376,7 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
 
             if($scope.workshop.max_participants < 0){
                 $alert({
-                    title: 'Error',
+                    title:  _translations.TITLE_ERROR,
                     type: 'danger',
                     content: _translations.ALERT_NEGATIVE_PARTICIPANTS,
                     container: '#alert',
@@ -1388,7 +1388,7 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
 
             if($scope.workshop.start_at < now) {
                 $alert({
-                    title: 'Error',
+                    title:  _translations.TITLE_ERROR,
                     type: 'danger',
                     content: _translations.ALERT_WORKSHOP_IN_PAST,
                     container: '#alert',
@@ -1415,7 +1415,7 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
             WorkshopTemplate.edit({id: _workshopId}, data).$promise.then(function (value) {
                 $alert({
                     title: '',
-                    type: 'success',
+                    type:  _translations.TITLE_SUCCESS,
                     content: _translations.ALERT_WORKSHOPTEMPLATE_EDIT_SUCCESS + ' \"' + _originalData.title +'\"',
                     container: '#alert',
                     dismissable: true,
@@ -1424,7 +1424,7 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
                 });
             }, function (httpResponse) {
                 $alert({
-                    title: '',
+                    title: _translations.TITLE_ERROR,
                     type: 'danger',
                     content: _translations.ALERT_WORKSHOPTEMPLATE_EDIT_FAIL + '(' + httpResponse.status +')',
                     container: '#alert',
@@ -1475,7 +1475,7 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
         }, function (httpResponse) {
             if(httpResponse.status === 404)
                 $alert({
-                    title: '',
+                    title:  _translations.TITLE_ERROR,
                     type: 'danger',
                     content: _translations.ALERT_WORKSHOPTEMPLATE_NOT_FOUND,
                     container: '#alert',
@@ -1501,7 +1501,7 @@ mainAppCtrls.controller('EnrollmentConfirmCtrl',['$scope','Workshops','$statePar
         //Get translations for errors and store in array
         var _translations = {};
         //Pass all required translation IDs to translate service
-        $translate(['ALERT_NOT_FOUND_WORKSHOP', 'ALERT_SUCCESSFULLY_ENROLLED_WORKSHOP', 'ALERT_INVALID_ENROLMENT_LINK']).
+        $translate(['TITLE_ERROR','TITLE_SUCCESS','ALERT_NOT_FOUND_WORKSHOP', 'ALERT_SUCCESSFULLY_ENROLLED_WORKSHOP', 'ALERT_INVALID_ENROLMENT_LINK']).
         then(function(translations){
             _translations = translations;
         });
@@ -1519,7 +1519,7 @@ mainAppCtrls.controller('EnrollmentConfirmCtrl',['$scope','Workshops','$statePar
                 container: '#alert',
                 dismissable: false,
                 show: true,
-                title: 'Error',
+                title: _translations.TITLE_ERROR,
                 content: _translations.ALERT_NOT_FOUND_WORKSHOP,
                 type: 'danger'
             });
@@ -1536,7 +1536,7 @@ mainAppCtrls.controller('EnrollmentConfirmCtrl',['$scope','Workshops','$statePar
                         container: '#alert',
                         dismissable: false,
                         show: true,
-                        title: 'Success',
+                        title:  _translations.TITLE_SUCCESS,
                         content: _translations.ALERT_SUCCESSFULLY_ENROLLED_WORKSHOP + '\"' + $scope.workshop.title + '\"',
                         type: 'success'
                     });
@@ -1546,7 +1546,7 @@ mainAppCtrls.controller('EnrollmentConfirmCtrl',['$scope','Workshops','$statePar
                         container: '#alert',
                         dismissable: false,
                         show: true,
-                        title: 'Success',
+                        title:  _translations.TITLE_SUCCESS,
                         content: value.message + '\"' + $scope.workshop.title + '\"',
                         type: 'success'
                     });
@@ -1560,7 +1560,7 @@ mainAppCtrls.controller('EnrollmentConfirmCtrl',['$scope','Workshops','$statePar
                         container: '#alert',
                         dismissable: false,
                         show: true,
-                        title: 'Error',
+                        title:  _translations.TITLE_ERROR,
                         content: _translations.ALERT_INVALID_ENROLMENT_LINK,
                         type: 'danger'
                     });
