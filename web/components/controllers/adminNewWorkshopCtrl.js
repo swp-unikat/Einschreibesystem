@@ -21,6 +21,9 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
         });
         $scope.loadTemplate = function(){
             $scope.workshop = JSON.parse(JSON.stringify($scope.selectedTemplate));
+            var _ea = Date.parse($scope.workshop.end_at);
+            var _sa = Date.parse($scope.workshop.start_at);
+            $scope.workshop.duration = new Date(_ea - _sa);
         };
         $scope.workshop.duration=-3600000;
         //Get translations for errors and store in array

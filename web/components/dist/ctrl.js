@@ -530,6 +530,9 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
         });
         $scope.loadTemplate = function(){
             $scope.workshop = JSON.parse(JSON.stringify($scope.selectedTemplate));
+            var _ea = Date.parse($scope.workshop.end_at);
+            var _sa = Date.parse($scope.workshop.start_at);
+            $scope.workshop.duration = new Date(_ea - _sa);
         };
         $scope.workshop.duration=-3600000;
         //Get translations for errors and store in array
@@ -1596,6 +1599,7 @@ mainAppCtrls.controller('EnrollmentConfirmCtrl',['$scope','Workshops','$statePar
 mainAppCtrls.controller('LegalNoticeCtrl',['$scope','Admin',
     function($scope,Admin) {
         Admin.getLegalNotice().$promise.then(function(response){
+            console.log(response.content);
             $scope.legalNotice = JSON.parse(response.content);
         },function(response){
 
