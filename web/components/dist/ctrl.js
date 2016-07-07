@@ -2456,13 +2456,13 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
                    dismissable: true,
                    duration: 20,
                    show: true,
-                   container: '#alertErnroll'
+                   container: '#alertEnroll'
                 });
             },function(response){
                 var _msg = "";
                switch(response.status){
                    case 404:
-                       $translate(response.statusText).then(function(_translation){
+                       $translate(response.data.message).then(function(_translation){
                           _msg =  _translation;
                        });
                        break;
