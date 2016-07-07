@@ -260,6 +260,12 @@ mainApp.config(['$translateProvider', function($translateProvider) {
  * @description Controller applied to the body HTML-Tag to avoid pollution of the rootScope. Provides Information wether login or logout button are to be shown
  */
 mainApp.controller('GlobalCtrl',['$scope','store','jwtHelper','$state','$http','$translate',function($scope,store,jwtHelper,$state,$http,$translate,$translateProvider) {
+    $scope.back=function () {
+        if ($scope.show_login)
+            $state.go('workshops');
+        if ($scope.show_logout)
+            $state.go('dashboard');
+    }
     //Check if token is already saved and is expired
     var jwt = store.get('jwt');
     if(jwt != null && jwtHelper.isTokenExpired(jwt))
