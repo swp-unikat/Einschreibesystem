@@ -538,7 +538,7 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
         //Get translations for errors and store in array
         var _translations = {};
         //Pass all required translation IDs to translate service
-        $translate(['ALERT_WORKSHOP_NEW_SUCCESS',
+        $translate(['ALERT_WORKSHOP_NEW_SUCCESS','TITLE_SUCCESS','TITLE_ERROR',
             'ALERT_WORKSHOP_NEW_FAIL', 'ALERT_NEGATIVE_COST', 'ALERT_NEGATIVE_PARTICIPANTS', 'ALERT_WORKSHOP_IN_PAST']).
         then(function(translations){
             _translations = translations;
@@ -574,7 +574,7 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
             var error = false;
             if($scope.workshop.cost < 0){
                 $alert({
-                    title: 'Error',
+                    title: _translations.TITLE_ERROR,
                     type: 'danger',
                     content: _translations.ALERT_NEGATIVE_COST,
                     container: '#alert',
@@ -586,7 +586,7 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
 
             if($scope.workshop.max_participants < 0){
                 $alert({
-                    title: 'Error',
+                    title: _translations.TITLE_ERROR,
                     type: 'danger',
                     content: _translations.ALERT_NEGATIVE_PARTICIPANTS,
                     container: '#alert',
@@ -598,7 +598,7 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
 
             if($scope.workshop.start_at < now) {
                 $alert({
-                    title: 'Error',
+                    title: _translations.TITLE_ERROR,
                     type: 'danger',
                     content: _translations.ALERT_WORKSHOP_IN_PAST,
                     container: '#alert',
@@ -623,7 +623,7 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
             };
             AdminWorkshop.putWorkshop(data).$promise.then(function(httpResponse){
                 $alert({
-                    title: '',
+                    title: _translations.TITLE_SUCCESS,
                     type: 'success',
                     content: _translations.ALERT_WORKSHOP_NEW_SUCCESS + ' \"' + data.title +'\"',
                     container: '#alert',
@@ -633,7 +633,7 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
                 
             },function(httpResponse){
                 $alert({
-                    title: '',
+                    title: _translations.TITLE_ERROR,
                     type: 'danger',
                     content: _translations.ALERT_WORKSHOP_NEW_FAIL + ' (' + httpResponse.status +')',
                     container: '#alert',
@@ -988,7 +988,7 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin','$alert'
 
         var _translations = {};
         //Pass all required translation IDs to translate service
-        $translate(['INVITED_ADMINISTRATOR_EMAIL', 'INVITED_ADMINISTRATOR_EMAIL_ERROR', 'ALERT_DELETE_ADMIN_FAILED',
+        $translate(['INVITED_ADMINISTRATOR_EMAIL','TITLE_ERROR','TITLE_SUCCESS','INVITED_ADMINISTRATOR_EMAIL_ERROR', 'ALERT_DELETE_ADMIN_FAILED',
         'ALERT_DELETE_ADMIN_SUCCESS',]).then(function (translations) {
             _translations = translations;
         });
@@ -1045,7 +1045,7 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin','$alert'
         $scope.invite = function () {
             Admin.invite({email: $scope.admin_mail}).$promise.then(function (value) {
                 $alert({
-                    title: '',
+                    title: _translations.TITLE_SUCCESS,
                     type: 'success',
                     content: _translations.INVITED_ADMINISTRATOR_EMAIL,
                     container: '#alert',
@@ -1055,7 +1055,7 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin','$alert'
                 });
             }, function (httpResponse) {
                 $alert({
-                    title: '',
+                    title: _translations.TITLE_ERROR,
                     type: 'danger',
                     content: _translations.INVITED_ADMINISTRATOR_EMAIL_ERROR,
                     container: '#alert',
