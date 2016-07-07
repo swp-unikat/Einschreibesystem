@@ -1163,8 +1163,8 @@ mainAppCtrls.controller('ContactCtrl',['$scope','Admin',
     function($scope,Admin) {
         $scope.contact = {};
         Admin.getContact().$promise.then(function(response){
-            $scope.contact = response.content;
-            console.log(response.content + "\n" + $scope.contact);
+            $scope.contact = JSON.parse(response.content);
+            console.log($scope.contact);
         },function(response){
 
         });
@@ -1596,7 +1596,7 @@ mainAppCtrls.controller('EnrollmentConfirmCtrl',['$scope','Workshops','$statePar
 mainAppCtrls.controller('LegalNoticeCtrl',['$scope','Admin',
     function($scope,Admin) {
         Admin.getLegalNotice().$promise.then(function(response){
-            $scope.legalNotice = response.content;
+            $scope.legalNotice = JSON.parse(response.content);
         },function(response){
 
         });

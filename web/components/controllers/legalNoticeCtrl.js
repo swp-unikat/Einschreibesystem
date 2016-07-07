@@ -10,7 +10,7 @@ var mainAppCtrls = angular.module("mainAppCtrls");
 mainAppCtrls.controller('LegalNoticeCtrl',['$scope','Admin',
     function($scope,Admin) {
         Admin.getLegalNotice().$promise.then(function(response){
-            $scope.legalNotice = response.content;
+            $scope.legalNotice = JSON.parse(response.content);
         },function(response){
 
         });
