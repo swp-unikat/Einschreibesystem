@@ -110,22 +110,30 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
                 var _msg = "";
                switch(response.status){
                    case 404:
+                       console.log(response.data.message);
                        $translate(response.data.message).then(function(_translation){
-                          _msg =  _translation;
+                           $alert({
+                               type: 'danger',
+                               title: _translations.TITLE_ERROR,
+                               content: _translation,
+                               show: true,
+                               duration: 20,
+                               container: '#alertEnroll',
+                               dismissable: true
+                           });
                        });
                        break;
                    default:
-                       _msg = _translations.ERROR_UNSUBSCRIBE_FAIL + ": "+response.statusText;
+                       $alert({
+                           type: 'danger',
+                           title: _translations.TITLE_ERROR,
+                           content: _translations.ERROR_UNSUBSCRIBE_FAIL + ": "+response.statusText,
+                           show: true,
+                           duration: 20,
+                           container: '#alertEnroll',
+                           dismissable: true
+                       });
                }
-                $alert({
-                    type: 'danger',
-                    title: _translations.TITLE_ERROR,
-                    content: _msg,
-                    show: true,
-                    duration: 20,
-                    container: '#alertEnroll',
-                    dismissable: true
-                });
             });
         };
         
