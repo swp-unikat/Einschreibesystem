@@ -9,8 +9,8 @@ var mainAppCtrls = angular.module("mainAppCtrls");
  * @requires restSvcs.Workshops
  * @requires restSvcs.AdminWorkshop
  */
-mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorkshop",'WorkshopTemplate','$translate','$alert',
-    function($scope, Workshops, AdminWorkshop,WorkshopTemplate,$translate,$alert) {
+mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorkshop",'WorkshopTemplate','$translate','$alert','$state',
+    function($scope, Workshops, AdminWorkshop,WorkshopTemplate,$translate,$alert,$state) {
         $scope.workshop = {};
 
         //load available Workshoptemplates for list
@@ -121,7 +121,7 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
                     dismissable: false,
                     show: true
                 });
-                
+                $state.go("administrator_workshop_details",{id: httpResponse.id});
             },function(httpResponse){
                 $alert({
                     title: _translations.TITLE_ERROR,

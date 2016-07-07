@@ -24,7 +24,7 @@
                             <div  class="col-sm-10 col-sm-12"><p>{{workshop.cost}} {{ "C" | translate}}</p></div>
                         </div>
 
-                        <div ng-hide="workshop.requierment==null" class="form-group">
+                        <div ng-hide="workshop.requirement==null" class="form-group">
                             <label translate class="col-lg-2 col-sm-12 control-label">WORKSHOP_REQUIREMENTS</label>
                             <div  class="col-sm-10 col-sm-12"><p>{{workshop.requirement}}</p></div>
                         </div>
@@ -85,7 +85,7 @@
         </div>
         <div class="row">
             <div class="col-md-8">
-                <br><br><br><br>
+                <a ui-sref="admin_workshop_edit({id: workshopid})"><button type="button" class="btn btn-default">{{"BUTTON_EDIT_WORKSHOP" | translate}}</button></a>
                 <a ui-sref="admin_email_confirm({id: workshopid})"><button type="button" class="btn btn-default">{{ "BUTTON_SEND_SUBSCRIBE_CONFIRMATION" | translate}}</button></a>
                 <button type="button" class="btn btn-default" ng-click="printList()">{{ "BUTTON_PRINT_LIST_OF_PARTICIPANTS" | translate}}</button>
             </div>

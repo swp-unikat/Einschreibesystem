@@ -211,8 +211,8 @@ mainAppCtrls.controller('EmailTemplateCtrl', ['$scope', "EmailTemplate", '$alert
  * @description Controller for editing a workshop. Initializes resources used to edit a workshop
  * @name mainAppCtrls.controller:AdminEditWorkshopCtrl
  */
-mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWorkshop','$stateParams','$translate','$alert',
-    function($scope,Workshops,AdminWorkshop,$stateParams,$translate,$alert) {
+mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWorkshop','$stateParams','$translate','$alert','$state',
+    function($scope,Workshops,AdminWorkshop,$stateParams,$translate,$alert,$state) {
 
         var _workshopId = $stateParams.id;
 
@@ -246,7 +246,7 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
             $scope.workshop.title = _originalData.title;
             $scope.workshop.description = _originalData.description;
             $scope.workshop.cost = _originalData.cost;
-            $scope.workshop.requirements = _originalData.requirements;
+            $scope.workshop.requirement = _originalData.requirement;
             $scope.workshop.location = _originalData.location;
             $scope.workshop.start_at = _originalData.start_at;
             $scope.workshop.end_at = _originalData.end_at;
@@ -329,7 +329,7 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
                 title:$scope.workshop.title,
                 description:$scope.workshop.description,
                 cost:$scope.workshop.cost,
-                requirements:$scope.workshop.requirements,
+                requirements:$scope.workshop.requirement,
                 location:$scope.workshop.location,
                 start_at:reformatDate((new Date(_sa))),
                 end_at:reformatDate(_ea),
@@ -341,7 +341,7 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
                     title: value.title,
                     description: value.title,
                     cost: value.title,
-                    requirements: value.title,
+                    requirement: value.title,
                     location: value.title,
                     start_at: value.title,
                     end_at: value.end_at,
@@ -358,6 +358,7 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
                     duration: 30
                 });
                 //Redirect to Details page
+                $state.go("administrator_workshop_details",{id: value.id});
             }, function (httpResponse) {
                 $alert({
                     title:_translations.TITLE_ERROR,
@@ -380,7 +381,7 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
                 title: value.title,
                 description: value.description,
                 cost: value.cost,
-                requirements: value.requirements,
+                requirement: value.requirement,
                 location: value.location,
                 start_at: value.start_at,
                 end_at: value.end_at,
@@ -394,7 +395,7 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
             $scope.workshop.title = _originalData.title;
             $scope.workshop.description = _originalData.description;
             $scope.workshop.cost = _originalData.cost;
-            $scope.workshop.requirements = _originalData.requirements;
+            $scope.workshop.requirement = _originalData.requirement;
             $scope.workshop.location = _originalData.location;
             $scope.workshop.start_at = _originalData.start_at;
             $scope.workshop.end_at = _originalData.end_at;
@@ -518,8 +519,8 @@ mainAppCtrls.controller('adminEmailConfirmCtrl',['$scope',"EmailTemplate",'$tran
  * @requires restSvcs.Workshops
  * @requires restSvcs.AdminWorkshop
  */
-mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorkshop",'WorkshopTemplate','$translate','$alert',
-    function($scope, Workshops, AdminWorkshop,WorkshopTemplate,$translate,$alert) {
+mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorkshop",'WorkshopTemplate','$translate','$alert','$state',
+    function($scope, Workshops, AdminWorkshop,WorkshopTemplate,$translate,$alert,$state) {
         $scope.workshop = {};
 
         //load available Workshoptemplates for list
@@ -630,7 +631,7 @@ mainAppCtrls.controller('AdminNewWorkshopCtrl',['$scope',"Workshops","AdminWorks
                     dismissable: false,
                     show: true
                 });
-                
+                $state.go("administrator_workshop_details",{id: httpResponse.id});
             },function(httpResponse){
                 $alert({
                     title: _translations.TITLE_ERROR,
@@ -1207,8 +1208,8 @@ mainAppCtrls.controller('ContactCtrl',['$scope','Admin',
  * @name mainAppCtrls.controller:EditEmailTemplateCtrl
  * @requires restSvcs.EmailTemplate
  */
-mainAppCtrls.controller('EditEmailTemplateCtrl',['$scope','EmailTemplate','$stateParams','$translate','$alert',
-    function($scope,EmailTemplate,$stateParams,$translate,$alert) {
+mainAppCtrls.controller('EditEmailTemplateCtrl',['$scope','EmailTemplate','$stateParams','$translate','$alert','$state',
+    function($scope,EmailTemplate,$stateParams,$translate,$alert,$state) {
         
         var _workshopId = $stateParams.id;
 
@@ -1278,6 +1279,7 @@ mainAppCtrls.controller('EditEmailTemplateCtrl',['$scope','EmailTemplate','$stat
                     show: true,
                     duration: 30
                 });
+                $state.go("email_template")
             }, function (httpResponse) {
                     $alert({
                         title: _translations.TITLE_ERROR,
@@ -1336,8 +1338,8 @@ mainAppCtrls.controller('EditEmailTemplateCtrl',['$scope','EmailTemplate','$stat
  * @name mainAppCtrls.controller:EditWorkshopTemplateCtrl
  * @requires restSvcs.WorkshopTemplate
  */
-mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate','$stateParams','$translate','$alert',
-    function($scope,WorkshopTemplate,$stateParams,$translate,$alert) {
+mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate','$stateParams','$translate','$alert','$state',
+    function($scope,WorkshopTemplate,$stateParams,$translate,$alert,$state) {
 
         var _workshopId = $stateParams.id;
         $scope.workshop = {};
@@ -1443,7 +1445,7 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
                 title:$scope.workshop.title,
                 description:$scope.workshop.description,
                 cost:$scope.workshop.cost,
-                requirements:$scope.workshop.requirement,
+                requirement:$scope.workshop.requirement,
                 location:$scope.workshop.location,
                 start_at:reformatDate((new Date(_sa))),
                 end_at:reformatDate(_ea),
@@ -1459,6 +1461,7 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
                     show: true,
                     duration: 30
                 });
+                $state.go("workshop_template");
             }, function (httpResponse) {
                 $alert({
                     title: _translations.TITLE_ERROR,
@@ -1746,8 +1749,8 @@ mainAppCtrls.controller('LoginCtrl',['$scope','$http','store','$state','jwtHelpe
  * @description Controller to create a new email template
  * @requires restSvcs.EmailTemplate
  */
-mainAppCtrls.controller('NewEmailTemplateCtrl',['$scope',"EmailTemplate",'$translate','$alert',
-    function($scope, EmailTemplate,$translate,$alert) {
+mainAppCtrls.controller('NewEmailTemplateCtrl',['$scope',"EmailTemplate",'$translate','$alert','$state',
+    function($scope, EmailTemplate,$translate,$alert,$state) {
         
         //Get translations for errors and store in array
         var _translations = {};
@@ -1790,6 +1793,7 @@ mainAppCtrls.controller('NewEmailTemplateCtrl',['$scope',"EmailTemplate",'$trans
                     dismissable: false,
                     show: true
                 });
+                $state.go("email_template");
             });
         }
         /**
@@ -1811,9 +1815,6 @@ mainAppCtrls.controller('NewEmailTemplateCtrl',['$scope',"EmailTemplate",'$trans
 ]);
 
 // Source: web/components/controllers/newWorkshopTemplateCtrl.js
-/**
- * Created by hunte on 31/05/2016.
- */
 
 /**
  * @ngdoc controller
@@ -1821,10 +1822,10 @@ mainAppCtrls.controller('NewEmailTemplateCtrl',['$scope',"EmailTemplate",'$trans
  * @description Controller initializing the creation of a new workshop template
  * @requires restSvcs.WorkshopTemplate
  */
-mainAppCtrls.controller('NewWorkshopTemplateCtrl',['$scope',"WorkshopTemplate",'$translate','$alert',
-    function($scope, WorkshopTemplate,$translate,$alert) {
+mainAppCtrls.controller('NewWorkshopTemplateCtrl',['$scope',"WorkshopTemplate",'$translate','$alert','$state',
+    function($scope, WorkshopTemplate,$translate,$alert,$state) {
         $scope.workshop = {};
-        $scope.myAlert;
+        $scope.myAlert = $alert({});
         
         //Get translations for errors and store in array
         var _translations = {};
@@ -1926,6 +1927,7 @@ mainAppCtrls.controller('NewWorkshopTemplateCtrl',['$scope',"WorkshopTemplate",'
                    show: true,
                    dismissable: false
                 });
+                $state.go("workshop_template");
             },function(httpResponse){
                 $scope.myAlert = $alert({
                     container: '#alert',

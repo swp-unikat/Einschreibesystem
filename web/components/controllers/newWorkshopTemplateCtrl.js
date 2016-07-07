@@ -1,6 +1,3 @@
-/**
- * Created by hunte on 31/05/2016.
- */
 var mainAppCtrls = angular.module("mainAppCtrls");
 /**
  * @ngdoc controller
@@ -8,10 +5,10 @@ var mainAppCtrls = angular.module("mainAppCtrls");
  * @description Controller initializing the creation of a new workshop template
  * @requires restSvcs.WorkshopTemplate
  */
-mainAppCtrls.controller('NewWorkshopTemplateCtrl',['$scope',"WorkshopTemplate",'$translate','$alert',
-    function($scope, WorkshopTemplate,$translate,$alert) {
+mainAppCtrls.controller('NewWorkshopTemplateCtrl',['$scope',"WorkshopTemplate",'$translate','$alert','$state',
+    function($scope, WorkshopTemplate,$translate,$alert,$state) {
         $scope.workshop = {};
-        $scope.myAlert;
+        $scope.myAlert = $alert({});
         
         //Get translations for errors and store in array
         var _translations = {};
@@ -113,6 +110,7 @@ mainAppCtrls.controller('NewWorkshopTemplateCtrl',['$scope',"WorkshopTemplate",'
                    show: true,
                    dismissable: false
                 });
+                $state.go("workshop_template");
             },function(httpResponse){
                 $scope.myAlert = $alert({
                     container: '#alert',
