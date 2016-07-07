@@ -2444,7 +2444,10 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
         };
 
         $scope.unsubscribe= function(){
-            var _data = $scope.unsub.e_mail;
+            var _data = {
+                email: $scope.unsub.e_mail,
+                workshopId: workshopid
+            };
             Workshops.unsubscribe(_data).$promise.then(function(response){
                 $alert({
                    type: 'success',
@@ -2473,7 +2476,7 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
                     show: true,
                     duration: 20,
                     container: '#alertEnroll',
-                    dismissable: false
+                    dismissable: true
                 });
             });
         };
