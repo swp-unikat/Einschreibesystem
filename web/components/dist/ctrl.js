@@ -1673,7 +1673,6 @@ mainAppCtrls.controller('LoginCtrl',['$scope','$http','store','$state','jwtHelpe
             if($scope.alertReset != null)
                 $scope.alertReset.hide();
             Admin.requestReset({email: $scope.reset.email}).$promise.then(function(response){
-                $scope.alertReset.hide();
                 $scope.alertReset = $alert({
                     title: _translations.TITLE_SUCCESS,
                     content: _translations.ALERT_RESET_PASSWORD_SUCCESS,
@@ -1683,7 +1682,6 @@ mainAppCtrls.controller('LoginCtrl',['$scope','$http','store','$state','jwtHelpe
                     container: '#reset_alert'
                 });
             },function(response){
-                $scope.alertReset.hide();
                 $scope.alertReset = $alert({
                     title: _translations.TITLE_ERROR,
                     content: _translations.ALERT_RESET_PASSWORD_ERROR  + response.status ,
