@@ -687,7 +687,8 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
         //Get translations for errors and store in array
         var _translations = {};
         //Pass all required translation IDs to translate service
-        $translate(['TITLE_SUCCESS','TITLE_ERROR','TITLE_INFO','ALERT_NO_PARTICIPANTS', 'ALERT_SUCCESSFUL_OVERBOOK', 'ALERT_FAIL_OVERBOOK', 'ALERT_SUCCESSFUL_REMOVED_USER', 'ALERT_FAILED_REMOVED_USER']).
+        $translate(['TITLE_SUCCESS','TITLE_ERROR','TITLE_INFO','ALERT_NO_PARTICIPANTS', 'ALERT_SUCCESSFUL_OVERBOOK', 'ALERT_FAIL_OVERBOOK',
+            'ALERT_SUCCESSFUL_REMOVED_USER', 'ALERT_FAILED_REMOVED_USER','PARTICIPATION_CONFIRM_SUCCESS','PARTICIPATION_CONFIRM_ERROR']).
         then(function(translations){
             _translations = translations;
         });
@@ -841,23 +842,24 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
         
         //Confirm participantion
         $scope.confirmUser = function(_workshop,_user){
+
             AdminWorkshop.confirmParticipation({id: _workshop,participant: _user}).$promise.then(function(response){
                 $alert({
                     type: 'success',
                     duration: 20,
                     container: '#alert',
-                    content: response.statusText,
+                    content: _translations.PARTICIPATION_CONFIRM_SUCCESS,
                     show: true,
-                    title: 'Success'
+                    title: _translations.TITLE_SUCCESS
                 });
             },function(response){
                 $alert({
                     type: 'danger',
                     duration: 20,
                     container: '#alert',
-                    content: response.statusText,
+                    content: _translations.PARTICIPATION_CONFIRM_ERROR + response.statusText,
                     show: true,
-                    title: 'Error'
+                    title: _translations.TITLE_ERROR
                 });
             });
         }

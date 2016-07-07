@@ -215,7 +215,9 @@
   "UNSUBSCRIBE_SUCCESS": "Successfully unsubscribed",
   "UNSUBSCRIBE_NOT_ENROLLED":"You need to be enrolled to the workshop to unsubscribe",
   "UNSUBSCRIBE_EMAIL_TEMPLATE_NOT_FOUND":"Unsubscribe e-mail template was not found",
-  "UNSUBSCRIBE_CONFIRM_ERROR": "Failed to confirm unsubscribe. If you received a broken link via e-mail, please contact an administrator"
+  "UNSUBSCRIBE_CONFIRM_ERROR": "Failed to confirm unsubscribe. If you received a broken link via e-mail, please contact an administrator",
+  "PARTICIPATION_CONFIRM_SUCCESS": "Confirmed participation.",
+  "PARTICIPATION_CONFIRM_ERROR": "Failed to confirm participation: "
 
 
 
