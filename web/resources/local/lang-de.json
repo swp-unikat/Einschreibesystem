@@ -162,7 +162,7 @@
   "ALERT_NEGATIVE_PARTICIPANTS":"negativer Teilnehmer",
   "ALERT_WORKSHOP_IN_PAST":"Workshop liegt in der Vergangenheit",
   "ALERT_SUCCESSFUL_OVERBOOK":"Erfolgreich Workshop überbucht",
-  "ALERT_FAIL_OVERBOOK":"Versuch den Workshop zu überbuchen fehlgeschlagen",
+  "ALERT_FAIL_OVERBOOK":"Fehler beim Überbuchen des Workshops",
   "ALERT_SUCCESSFUL_BLACKLISTED":"Nutzer wurde zur Blacklist hinzugefügt",
   "ALERT_FAILED_BLACKLISTED": "Nutzer auf Blacklist setzen fehlgeschlagen",
   "ALERT_SUCCESSFUL_REMOVED_USER": "Nutzer wurde erfolgreich aus der Liste entfernt",
