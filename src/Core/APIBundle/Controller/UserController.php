@@ -168,4 +168,61 @@ class UserController extends FOSRestController implements ClassResourceInterface
 
         return View::create(NULL, Codes::HTTP_OK);
     }
+       /**
+     * load the content of legal notice
+     * @ApiDoc(
+     *  resource=true,
+     *  description="load the content of legal notice",
+     *  output = "",
+     *  statusCodes = {
+     *      200 = "Returned when successful",
+     *      404 = "Returned when the data is not found"
+     *  }
+     *)
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @return array give the list of all admins
+     * @Rest\View()
+     */
+    public function getLegalNoticeAction()
+    {
+        $path = $this->get('kernel')->getRootDir() . '/../web/resources/data/legalNotice';
+        $content = ['content' => file_get_contents($path)];
+        if($content){
+            $view = $this->view($content,200);
+            return $this->handleView($view);
+        }else{
+            return $this->handleView($this->view(['code' => 404,'message' => "Could not read the file."], 404));
+        }
+    }
+    
+        /**
+     * load the content of contact data
+     * @ApiDoc(
+     *  resource=true,
+     *  description="load the content of contact data",
+     *  output = "",
+     *  statusCodes = {
+     *      200 = "Returned when successful",
+     *      404 = "Returned when the data is not found"
+     *  }
+     *)
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @return array give the list of all admins
+     * @Rest\View()
+     */
+    public function getContactDataAction()
+    {
+        $path = $this->get('kernel')->getRootDir() . '/../web/resources/data/contactData';
+        $content = ['content' => file_get_contents($path)];
+        if($content){
+            $view = $this->view($content,200);
+            return $this->handleView($view);
+        }else{
+            return $this->handleView($this->view(['code' => 404,'message' => "Could not read the file."], 404));
+        }
+    }
+  
  }
+ 

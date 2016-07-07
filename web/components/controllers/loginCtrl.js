@@ -63,7 +63,7 @@ mainAppCtrls.controller('LoginCtrl',['$scope','$http','store','$state','jwtHelpe
         $scope.showResetPanel = function() {
             $scope.reset_panel = !$scope.reset_panel;
         }
-
+        $scope.alertReset = {};
         $scope.resetPassword = function() {
 
             if($scope.alertReset != null)
