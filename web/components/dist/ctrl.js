@@ -2415,9 +2415,9 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
                     show: true,
                     animation: 'am-fade-and-slide-top'
                 });
-            },function(httpResponse){
+            },function(response){
                 var _msg = "";
-                switch(httpResponse.status){
+                switch(response.status){
                     case 403:
                         $translate(response.data.message).then(function(_translation){
                             console.log(response.data.message);
@@ -2457,7 +2457,7 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
                             dismissable: true
                         });
 
-                        _
+                        
                 }
 
             });
