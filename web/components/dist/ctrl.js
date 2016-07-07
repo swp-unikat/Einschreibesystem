@@ -1062,7 +1062,7 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin','$alert'
             var _translations = {};
             //Pass all required translation IDs to translate service
             $translate(['ALERT_BLACKLIST_DELETE_PARTICIPANT',
-                'ALERT_BLACKLIST_DELETE_PARTICIPANT_FAIL']).
+                'ALERT_BLACKLIST_DELETE_PARTICIPANT_FAIL','TITLE_SUCCESS','TITLE_ERROR']).
             then(function(translations){
                 _translations = translations;
             });
@@ -1095,7 +1095,7 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin','$alert'
                 Participants.removeBlacklist({id:_id}).$promise.then(function(httpResponse){
                        $scope.deleting = false;
                         $alert({
-                            title:'',
+                            title: _translations.TITLE_SUCCESS,
                             type: 'success',
                             container:'#alert',
                             show: true,
@@ -1108,7 +1108,7 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin','$alert'
                     , function (httpResponse) {
                         $scope.deleting = false;
                         $alert({
-                            title: '',
+                            title: _translations.TITLE_ERROR,
                             type: 'danger',
                             content: _translations.ALERT_BLACKLIST_DELETE_PARTICIPANT_FAIL + ' (' + httpResponse.status +')',
                             container: '#alert',
@@ -1141,7 +1141,7 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin','$alert'
 mainAppCtrls.controller('ContactCtrl',['$scope','Admin',
     function($scope,Admin) {
         Admin.getContact().$promise.then(function(response){
-            $scope.contact = response;
+            $scope.contact = response.content;
         },function(response){
 
         });
@@ -2580,8 +2580,8 @@ mainAppCtrls.controller('WorkshopTemplateCtrl', ['$scope', "WorkshopTemplate",'$
         $scope.delete = function (_id) {
             WorkshopTemplate.delete({id:_id}).$promise.then(function(httpresponse){
                     $alert({
-                        title:'',
-                        type: _translations.TITLE_SUCCESS,
+                        title:_translations.TITLE_SUCCESS,
+                        type: 'success',
                         container:'#alert',
                         show: true,
                         dismissable: false,
