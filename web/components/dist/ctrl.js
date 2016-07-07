@@ -684,7 +684,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
         //Get translations for errors and store in array
         var _translations = {};
         //Pass all required translation IDs to translate service
-        $translate(['ALERT_NO_PARTICIPANTS', 'ALERT_SUCCESSFUL_OVERBOOK', 'ALERT_FAIL_OVERBOOK', 'ALERT_SUCCESSFUL_REMOVED_USER', 'ALERT_FAILED_REMOVED_USER',]).
+        $translate(['TITLE_SUCCESS','TITLE_ERROR','TITLE_INFO','ALERT_NO_PARTICIPANTS', 'ALERT_SUCCESSFUL_OVERBOOK', 'ALERT_FAIL_OVERBOOK', 'ALERT_SUCCESSFUL_REMOVED_USER', 'ALERT_FAILED_REMOVED_USER']).
         then(function(translations){
             _translations = translations;
         });
@@ -701,7 +701,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
             $scope.loading = false;
         },function(httpResponse) {
             $alert({
-                title: '',
+                title: _translations.TITLE_ERROR,
                 type: 'danger',
                 content: httpResponse.status,
                 container: '#alert',
@@ -726,7 +726,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
                 switch(httpResponse.status){
                     case 404:
                         $alert({
-                            title: '',
+                            title: _translations.TITLE_INFO,
                             type: 'info',
                             content: _translations.ALERT_NO_PARTICIPANTS,
                             container: '#alertParticipant',
@@ -773,7 +773,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
                    container: '#alert',
                    content: _translations.ALERT_SUCCESSFUL_OVERBOOK,
                    show: 'true',
-                    title: 'Success'
+                    title: _translations.TITLE_SUCCESS
                 });
                 loadParticipants();
                 loadWaitinglist();
@@ -784,7 +784,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
                     container: '#alert',
                     content: _translations.ALERT_FAIL_OVERBOOK,
                     show: 'true',
-                    title: 'Error'
+                    title: _translations.TITLE_ERROR
                 });
             });
         };
@@ -798,7 +798,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
                     container: '#alert',
                     content: _translations.ALERT_SUCCESSFUL_BLACKLISTED,
                     show: true,
-                    title: 'Success'
+                    title: _translations.TITLE_SUCCESS
                 });
             },function(response){
                 $alert({
@@ -807,7 +807,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
                     container: '#alert',
                     content: _translations.ALERT_FAILED_BLACKLISTED + '('+response.status+')',
                     show: true,
-                    title: 'Error'
+                    title: _translations.TITLE_ERROR
                 });
             });
         };
@@ -821,7 +821,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
                     container: '#alert',
                     content: _translations.ALERT_SUCCESSFUL_REMOVED_USER,
                     show: true,
-                    title: 'Success'
+                    title: _translations.TITLE_SUCCESS
                 });
             },function(response){
                 $alert({
@@ -830,7 +830,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
                     container: '#alert',
                     content: _translations.ALERT_FAILED_REMOVED_USER + '('+response.status+')',
                     show: true,
-                    title: 'Error'
+                    title: _translations.TITLE_ERROR
                 });
             });
         };
