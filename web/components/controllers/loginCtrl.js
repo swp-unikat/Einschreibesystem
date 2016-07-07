@@ -14,7 +14,8 @@ mainAppCtrls.controller('LoginCtrl',['$scope','$http','store','$state','jwtHelpe
         $scope.reset = {};
         
         var _translations;
-        $translate(['TITLE_ERROR','ALERT_LOGIN_FAIL']).then(function(translation){
+        $translate(['TITLE_ERROR','ALERT_LOGIN_FAIL', 'ALERT_RESET_EMAIL_ERROR', 'TITLE_SUCCESS',
+        'ALERT_RESET_PASSWORD_SUCCESS','ALERT_RESET_PASSWORD_ERROR' ]).then(function(translation){
             _translations = translation;
         })
         

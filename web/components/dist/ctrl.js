@@ -309,7 +309,6 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
                 error = true;
             }
             var now = new Date();
-            console.log($scope.workshop.start_at);
             if($scope.workshop.start_at < now) {
                 $alert({
                     title: 'Error',
@@ -1004,7 +1003,7 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin','$alert'
             Admin.delete({id: _id}).$promise.then(function (value) {
                 loadList();
                 $alert({
-                    title: _translations.ALERT_DELETE_ADMIN_SUCCESS,
+                    title: _translations.TITLE_SUCCESS,
                     type: 'success',
                     content: _translations.ALERT_DELETE_ADMIN_SUCCESS,
                     container: '#alert',
@@ -1015,7 +1014,7 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin','$alert'
             }, function (httpResponse) {
                 $scope.loading = false;
                 $alert({
-                    type: 'danger',
+                    type: _translations.TITLE_ERROR,
                     title: 'Error',
                     content: _translations.ALERT_DELETE_ADMIN_FAILED,
                     container: '#alert',
@@ -1607,7 +1606,8 @@ mainAppCtrls.controller('LoginCtrl',['$scope','$http','store','$state','jwtHelpe
         $scope.reset = {};
         
         var _translations;
-        $translate(['TITLE_ERROR','ALERT_LOGIN_FAIL']).then(function(translation){
+        $translate(['TITLE_ERROR','ALERT_LOGIN_FAIL', 'ALERT_RESET_EMAIL_ERROR', 'TITLE_SUCCESS',
+        'ALERT_RESET_PASSWORD_SUCCESS','ALERT_RESET_PASSWORD_ERROR' ]).then(function(translation){
             _translations = translation;
         })
         
@@ -1851,7 +1851,7 @@ mainAppCtrls.controller('NewWorkshopTemplateCtrl',['$scope',"WorkshopTemplate",'
                 });
                 error = true;
             }
-
+            var now = new Date();
             if($scope.workshop.start_at < now) {
                 $alert({
                     title: _translations.TITLE_ERROR,
