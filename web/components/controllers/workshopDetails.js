@@ -66,28 +66,48 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
             },function(httpResponse){
                 var _msg = "";
                 switch(httpResponse.status){
-                    case 401:
-                        _msg = _translations.ALERT_ALREADY_ENROLLED;
-                        break;
                     case 403:
-                        _msg = _translations.ALERT_YOU_ARE_ON_BLACKLIST;
+                        $translate(response.data.message).then(function(_translation){
+                            console.log(response.data.message);
+                            $translate(response.data.message).then(function(_translation){
+                                $alert({
+                                    type: 'danger',
+                                    title: _translations.TITLE_ERROR,
+                                    content: _translation,
+                                    show: true,
+                                    duration: 20,
+                                    container: '#alertEnroll',
+                                    dismissable: true
+                                });
+                            });
+                        });
                         break;
                     case 500:
-                        _msg = _translations.ALERT_INTERNAL_SERVER_ERROR;
+                        $alert({
+                            type: 'danger',
+                            title: _translations.TITLE_ERROR,
+                            content: _translations.ALERT_INTERNAL_SERVER_ERROR,
+                            show: true,
+                            duration: 20,
+                            container: '#alertEnroll',
+                            dismissable: true
+                        });
+                        ;
                         break;
                     default:
-                        _msg = httpResponse.status + ':' + httpResponse.statusText;
+                        $alert({
+                            type: 'danger',
+                            title: _translations.TITLE_ERROR,
+                            content: response.data.message,
+                            show: true,
+                            duration: 20,
+                            container: '#alertEnroll',
+                            dismissable: true
+                        });
+
+                        _
                 }
-                $alert({
-                    title: _translations.TITLE_ERROR,
-                    type: 'danger',
-                    content: _msg,
-                    container: '#alertEnroll',
-                    dismissable: true,
-                    duration: 20,
-                    show: true,
-                    animation: 'am-fade-and-slide-top'
-                });
+
             });
         };
 
