@@ -71,7 +71,7 @@ restSvcs.factory('Workshops',['$resource',function($resource){
          * @param {string} token Confirmtoken
          */
         'confirmEnroll': {method: 'GET',url:'/api/workshops/:id/enroll/:userid/confirm/:token',params: {id: '@id',userid: '@userid',token: '@token'},isArray: false},
-        'unsubscribeConfirm': {method: 'GET',url: '/api/workshops/:id/unsubscribe/:token/confirm/:participantId'}
+        'unsubscribeConfirm': {method: 'GET',url: '/api/workshops/:id/unsubscribe/:token/confirmation/:participantId'}
     });
 }]);
 /**
