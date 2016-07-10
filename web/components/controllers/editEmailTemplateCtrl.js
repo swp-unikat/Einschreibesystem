@@ -6,8 +6,8 @@ var mainAppCtrls = angular.module("mainAppCtrls");
  * @name mainAppCtrls.controller:EditEmailTemplateCtrl
  * @requires restSvcs.EmailTemplate
  */
-mainAppCtrls.controller('EditEmailTemplateCtrl',['$scope','EmailTemplate','$stateParams','$translate','$alert',
-    function($scope,EmailTemplate,$stateParams,$translate,$alert) {
+mainAppCtrls.controller('EditEmailTemplateCtrl',['$scope','EmailTemplate','$stateParams','$translate','$alert','$state',
+    function($scope,EmailTemplate,$stateParams,$translate,$alert,$state) {
         
         var _workshopId = $stateParams.id;
 
@@ -17,7 +17,7 @@ mainAppCtrls.controller('EditEmailTemplateCtrl',['$scope','EmailTemplate','$stat
         //Get translations for errors and store in array
         var _translations = {};
         //Pass all required translation IDs to translate service
-        $translate(['ALERT_EMAILTEMPLATE_EDIT_SUCCESS',
+        $translate(['ALERT_EMAILTEMPLATE_EDIT_SUCCESS','TITLE_SUCCESS','TITLE_ERROR',
             'ALERT_EMAILTEMPLATE_EDIT_FAIL','ALERT_EMAILTEMPLATE_NOT_FOUND']).
         then(function(translations){
             _translations = translations;
@@ -69,7 +69,7 @@ mainAppCtrls.controller('EditEmailTemplateCtrl',['$scope','EmailTemplate','$stat
                     }
                 };
                 $alert({
-                    title: '',
+                    title: _translations.TITLE_SUCCESS,
                     type: 'success',
                     content: _translations.ALERT_EMAILTEMPLATE_EDIT_SUCCESS + ' \"' + _originalData.title +'\"',
                     container: '#alert',
@@ -77,11 +77,12 @@ mainAppCtrls.controller('EditEmailTemplateCtrl',['$scope','EmailTemplate','$stat
                     show: true,
                     duration: 30
                 });
+                $state.go("email_template")
             }, function (httpResponse) {
                     $alert({
-                        title: '',
+                        title: _translations.TITLE_ERROR,
                         type: 'danger',
-                        content: _translations.ALERT_EMAILTEMPLATE_EDIT_FAIL + '(' + httpReponse.status +')',
+                        content: _translations.ALERT_EMAILTEMPLATE_EDIT_FAIL + '(' + httpResponse.status +')',
                         container: '#alert',
                         dismissable: true,
                         show: true,
@@ -113,7 +114,7 @@ mainAppCtrls.controller('EditEmailTemplateCtrl',['$scope','EmailTemplate','$stat
         }, function (httpResponse) {
             if(httpResponse.status === 404)
                 $alert({
-                    title: '',
+                    title: _translations.TITLE_ERROR,
                     type: 'danger',
                     content: _translations.ALERT_EMAILTEMPLATE_NOT_FOUND,
                     container: '#alert',

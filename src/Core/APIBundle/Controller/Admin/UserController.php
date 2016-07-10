@@ -26,7 +26,7 @@ use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
  * Class RestController.
  * This Controller provides methods for the private part. The functions to invite, create, delete and patch an administrator, to get a list of all administrator and to put and patch the legalnotice and the contactdata are provided.
  */
-class AdminController extends FOSRestController implements ClassResourceInterface
+class UserController extends FOSRestController implements ClassResourceInterface
 {
     /**
      * Action to invite new Admin
@@ -42,6 +42,7 @@ class AdminController extends FOSRestController implements ClassResourceInterfac
      *
      *
      * @return \Symfony\Component\HttpFoundation\Response
+     * @param $paramFetcher ParamFetcher
      * @Rest\RequestParam(name="email", requirements=".*", description="email")
      * @Rest\View()
      */
@@ -54,12 +55,14 @@ class AdminController extends FOSRestController implements ClassResourceInterfac
 
         $invitation = new Invitation();
         /* Loading the default E-Mail template*/
-        $template = $this->getDoctrine()->getRepository("CoreEntityBundle:EmailTemplate")->find(2);
+        $template = $this->getDoctrine()->getRepository("CoreEntityBundle:EmailTemplate")->findOneBy(['template_name' => 'Invitation']);
         /* Creating Twig template from Database */
         $renderTemplate = $this->get('twig')->createTemplate($template->getEmailBody());
         /* Sending E-Mail */
         $invitation->setEmail($email);
+
         $url = $this->generateUrl('core_frontend_default_index',[],TRUE)."#/admin/create/".$invitation->getCode();
+
         $message = \Swift_Message::newInstance()
             ->setSubject($template->getEmailSubject())
             ->setFrom($this->getParameter('email_sender'))
@@ -97,12 +100,13 @@ class AdminController extends FOSRestController implements ClassResourceInterfac
      */
     public function deleteAction($adminID)
     {
-        $admin = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle')->find($adminID);
+        $admin = $this->get('fos_user.user_manager')->findUserBy(['id' => $adminID]);
         if (!$admin) {
-            throw $this->createNotFoundException("Admin not found");
+            return $this->handleView($this->view(['code' => 404, 'message' => "Admin not found"], 404));
         } else {
             $admin->setEnabled(false);
         }
+        $this->get('fos_user.user_manager')->updateUser($admin);
         $this->getDoctrine()->getManager()->persist($admin);
         $this->getDoctrine()->getManager()->flush();
         return View::create(null, Codes::HTTP_OK);
@@ -117,23 +121,19 @@ class AdminController extends FOSRestController implements ClassResourceInterfac
      *  statusCodes = {
      *      200 = "Returned when successful",
      *      404 = "Returned when the data is not found"
-     *  },requirements={{
-     *        "name"="adminId",
-     *        "dataType"="integer",
-     *        "requirement"="\d+",
-     *        "description"="Admin ID"
-     *}}
+     *  }
+     * 
      * )
-     * @param $paramfetcher params of admin
+     * @param $paramFetcher ParamFetcher
      * @return \Symfony\Component\HttpFoundation\Response
-     * @Rest\RequestParam(name="oldpassword", requirements=".*", description="json object of workshop")
-     * @Rest\RequestParam(name="newpassword", requirements=".*", description="json object of workshop")
+     * @Rest\RequestParam(name="oldpassword", requirements=".*", description="old password of a admin")
+     * @Rest\RequestParam(name="newpassword", requirements=".*", description="new password of a admin")
      * @Rest\View()
      */
-    public function patchAction(ParamFetcher $paramfetcher)
+    public function patchAction(ParamFetcher $paramFetcher)
     {
         //get all params
-        $params = $paramfetcher->all();
+        $params = $paramFetcher->all();
         //get current user
         $admin = $this->getUser();
         //needed for encoding the current password
@@ -141,15 +141,49 @@ class AdminController extends FOSRestController implements ClassResourceInterfac
         $encoder = $encoder_service->getEncoder($admin);
         //check if old password input equals the current password in database
         if ($encoder->isPasswordValid($admin->getPassword(), $params['oldpassword'], $admin->getSalt())) {
-            //set new password
             $admin->setPlainPassword($params['newpassword']);
+            $this->get('fos_user.user_manager')->updateUser($admin);
         } else {
-            //old password is wrong
-            throw $this->createAccessDeniedException("The old password is incorrect");
+            return $this->handleView($this->view(['code' => 403,'message' => "Old password is wrong"], 403));
         }
         $this->getDoctrine()->getManager()->persist($admin);
-        $this->getDoctrine()->getManager()->fluch();
+        $this->getDoctrine()->getManager()->flush();
 
+        return $this->handleView($this->view(['code' => 200,'message' => "Password successful changed"], 200));
+
+    }
+
+    /**
+     * Action to change the email
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Action to change the email",
+     *  output = "",
+     *  statusCodes = {
+     *      200 = "Returned when successful",
+     *      404 = "Returned when the data is not found"
+     *  }
+     * )
+     * @param $paramFetcher ParamFetcher
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Rest\RequestParam(name="oldemail", requirements=".*", description="old email")
+     * @Rest\RequestParam(name="newemail", requirements=".*", description="new email")
+     * @Rest\View()
+     */
+    public function patchEmailAction(ParamFetcher $paramFetcher)
+    {
+        //get all params
+        $params = $paramFetcher->all();
+        //get current user
+        $admin = $this->getUser();
+        //check if old password input equals the current password in database
+        if ($admin->getEmail() == $params['oldemail'])
+            $admin->setEmail($params['newemail']);
+        else
+            return $this->handleView($this->view(['code' => 403,'message' => "E-Mail not found"], 403));
+
+        $this->getDoctrine()->getManager()->persist($admin);
+        $this->getDoctrine()->getManager()->flush();
         return View::create(null, Codes::HTTP_OK);
     }
 
@@ -172,9 +206,9 @@ class AdminController extends FOSRestController implements ClassResourceInterfac
      */
     public function getListAction()
     {
-        $admin = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:User")->findAll();
+        $admin = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:User")->findBy(["enabled" => 1]);
         if (!$admin) {
-            throw $this->createNotFoundException("No admin was found");
+            return $this->handleView($this->view(['code' => 404, 'message' => "No admins found"], 404));
         } else {
             $view = $this->view($admin, 200);
             return $this->handleView($view);
@@ -182,37 +216,9 @@ class AdminController extends FOSRestController implements ClassResourceInterfac
 
     }
 
-
     /**
-     * load the content of legal notice
-     * @ApiDoc(
-     *  resource=true,
-     *  description="load the content of legal notice",
-     *  output = "",
-     *  statusCodes = {
-     *      200 = "Returned when successful",
-     *      404 = "Returned when the data is not found"
-     *  }
-     *)
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     * @return array give the list of all admins
-     * @Rest\View()
-     */
-    public function getLegalNoticeAction()
-    {
-        $path = $this->get('kernel')->getRootDir() . '/../web/resources/data/legalNotice';
-        $content = ['content' => file_get_contents($path)];
-        if($content){
-            $view = $this->view($content,200);
-            return $this->handleView($view);
-        }else{
-            return $this->handleView($this->view(['code' => 404,'message' => "Could not read the file."], 404));
-        }
-    }
-
-    /**
-     * modify legal notice
+     * modify legal
+     * notice
      * @ApiDoc(
      *  resource=true,
      *  description="modify legal notice",
@@ -232,40 +238,14 @@ class AdminController extends FOSRestController implements ClassResourceInterfac
     {
         $paramFetcher->get('content');
         $path = $this->get('kernel')->getRootDir() . '/../web/resources/data/legalNotice';
-        if(file_put_contents($path,$paramFetcher->get('content'))){
-            return $this->handleView($this->view(['code' => 401,'message' => "Could not write the file.", 'content' => $paramFetcher->get('content')], 401));
+        if(file_put_contents($path,$paramFetcher->get('content')) !== FALSE){
+            return $this->handleView($this->view(['code' => 200,'message' => "saved legal notice"], 200));
         }else{
-            return View::create(NULL, Codes::HTTP_OK);
+            return $this->handleView($this->view(['code' => 404,'message' => "Could not write the file.", 'content' => $paramFetcher->get('content')], 404));
         }
     }
 
-    /**
-     * load the content of contact data
-     * @ApiDoc(
-     *  resource=true,
-     *  description="load the content of contact data",
-     *  output = "",
-     *  statusCodes = {
-     *      200 = "Returned when successful",
-     *      404 = "Returned when the data is not found"
-     *  }
-     *)
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     * @return array give the list of all admins
-     * @Rest\View()
-     */
-    public function getContactDataAction()
-    {
-        $path = $this->get('kernel')->getRootDir() . '/../web/resources/data/contactData';
-        $content = ['content' => file_get_contents($path)];
-        if($content){
-            $view = $this->view($content,200);
-            return $this->handleView($view);
-        }else{
-            return $this->handleView($this->view(['code' => 404,'message' => "Could not read the file."], 404));
-        }
-    }
+  
 
     /**
      * modify contact data
@@ -286,12 +266,11 @@ class AdminController extends FOSRestController implements ClassResourceInterfac
      */
     public function putContactDataAction(ParamFetcher $paramFetcher)
     {
-        $paramFetcher->get('content');
         $path = $this->get('kernel')->getRootDir() . '/../web/resources/data/contactData';
-        if(file_put_contents($path,$paramFetcher->get('content'))){
-            return $this->handleView($this->view(['code' => 404,'message' => "Could not write the file.", 'content' => $paramFetcher->get('content')], 401));
+        if(file_put_contents($path,$paramFetcher->get('content')) !== FALSE){
+            return $this->handleView($this->view(['code' => 200,'message' => "saved contact data"], 200));
         }else{
-            return View::create(NULL, Codes::HTTP_OK);
+            return $this->handleView($this->view(['code' => 404,'message' => "Could not write the file.", 'content' => $paramFetcher->get('content')], 401));
         }
     }
 

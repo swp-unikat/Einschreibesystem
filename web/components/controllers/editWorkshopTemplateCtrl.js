@@ -6,8 +6,8 @@ var mainAppCtrls = angular.module("mainAppCtrls");
  * @name mainAppCtrls.controller:EditWorkshopTemplateCtrl
  * @requires restSvcs.WorkshopTemplate
  */
-mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate','$stateParams','$translate','$alert',
-    function($scope,WorkshopTemplate,$stateParams,$translate,$alert) {
+mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate','$stateParams','$translate','$alert','$state',
+    function($scope,WorkshopTemplate,$stateParams,$translate,$alert,$state) {
 
         var _workshopId = $stateParams.id;
         $scope.workshop = {};
@@ -18,7 +18,7 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
         var _translations = {};
         //Pass all required translation IDs to translate service
         $translate(['ALERT_WORKSHOPTEMPLATE_EDIT_SUCCESS',
-            'ALERT_WORKSHOPTEMPLATE_EDIT_FAIL','ALERT_WORKSHOPTEMPLATE_NOT_FOUND']).
+            'ALERT_WORKSHOPTEMPLATE_EDIT_FAIL','ALERT_WORKSHOPTEMPLATE_NOT_FOUND','TITLE_SUCCESS','TITLE_ERROR']).
         then(function(translations){
             _translations = translations;
         });
@@ -39,7 +39,7 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
             $scope.workshop.start_at = _originalData.start_at;
             $scope.workshop.end_at = _originalData.end_at;
             $scope.workshop.max_participants = _originalData.max_participants;
-        }
+        };
 
 
         /**
@@ -49,65 +49,79 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
          * @methodOf mainAppCtrls.controller:EditWorkshopTemplateCtrl
          */
         $scope.sendInfo = function () {
-            var _dataToSend = {
-                title: '',
-                description: '',
-                cost: '',
-                requirements: '',
-                location: '',
-                start_at: '',
-                end_at: '',
-                max_participants: ''
-                
+            var reformatDate =  function(_date){
+                if(_date == null)
+                    return "";
+                var str = _date.getFullYear()+"-"+(_date.getMonth()+1)+"-"+_date.getDate()+" ";
+                if(_date.getHours() < 10)
+                    str += "0";
+                str += _date.getHours()+":";
+                if(_date.getMinutes() < 10)
+                    str += "0";
+                str += _date.getMinutes() +":";
+                if(_date.getSeconds() < 10)
+                    str += "0";
+                str += _date.getSeconds();
+                return str;
             };
-            var _sa = new Date(_originalData.start_at);
+            var _sa = Date.parse($scope.workshop.start_at);
             var _duration = $scope.workshop.duration;
-            var _ea = new Date(_duration + 1000*60*60);
-            var _changedData = {
-                
-                title: $scope.workshop.title,
-                description: $scope.workshop.description,
-                cost: $scope.workshop.cost,
-                requirements: $scope.workshop.requirements,
-                location: $scope.workshop.location,
-                start_at: $scope.workshop.start_at,
-                end_at: $scope.workshop.end_at,
-                max_participants: $scope.workshop.max_participants
-            };
-
-            //compare all properties of both objects
-            if (_changedData.title != _originalData.title)
-                _dataToSend.title = _changedData.title;
-            if (_changedData.description != _originalData.description)
-                _dataToSend.description = _changedData.description;
-            if (_changedData.cost != _originalData.cost)
-                _dataToSend.cost = _changedData.cost;
-            if (_changedData.location != _originalData.location)
-                _dataToSend.location = _changedData.location;
-            if (_changedData.start_at != _originalData.start_at)
-                _dataToSend.start_at = _changedData.start_at;
-            if (_changedData.end_at != _originalData.end_at)
-                _dataToSend.end_at = _changedData.end_at;
-            if (_changedData.max_participants != _originalData.max_participants)
-                _dataToSend.max_participants = _changedData.max_participants;
-
-
-
-            WorkshopTemplate.edit({id: _workshopId}, _dataToSend).$promise.then(function (value) {
-                //Store answer from server
-                _originalData = {
-                    title: value.title,
-                    description: value.title,
-                    cost: value.title,
-                    requirements: value.title,
-                    location: value.title,
-                    start_at: value.title,
-                    end_at: value.end_at,
-                    max_participants: value.max_participants
-                    
-                };
+            var _ea = new Date(_sa+_duration) ;
+            
+            var error = false;
+            if($scope.workshop.cost < 0){
                 $alert({
-                    title: '',
+                    title:  _translations.TITLE_ERROR,
+                    type: 'danger',
+                    content: _translations.ALERT_NEGATIVE_COST,
+                    container: '#alert',
+                    dismissable: false,
+                    show: true
+                });
+                error = true;
+            }
+
+            if($scope.workshop.max_participants < 0){
+                $alert({
+                    title:  _translations.TITLE_ERROR,
+                    type: 'danger',
+                    content: _translations.ALERT_NEGATIVE_PARTICIPANTS,
+                    container: '#alert',
+                    dismissable: false,
+                    show: true
+                });
+                error = true;
+            }
+                var now = new Date();
+            if($scope.workshop.start_at < now) {
+                $alert({
+                    title:  _translations.TITLE_ERROR,
+                    type: 'danger',
+                    content: _translations.ALERT_WORKSHOP_IN_PAST,
+                    container: '#alert',
+                    dismissable: false,
+                    show: true
+                });
+                error = true;
+            }
+
+            if(error)
+                return false;
+
+
+            var data = {
+                title:$scope.workshop.title,
+                description:$scope.workshop.description,
+                cost:$scope.workshop.cost,
+                requirement:$scope.workshop.requirement,
+                location:$scope.workshop.location,
+                start_at:reformatDate((new Date(_sa))),
+                end_at:reformatDate(_ea),
+                max_participants:$scope.workshop.max_participants
+            };
+            WorkshopTemplate.edit({id: _workshopId}, data).$promise.then(function (value) {
+                $alert({
+                    title: _translations.TITLE_SUCCESS,
                     type: 'success',
                     content: _translations.ALERT_WORKSHOPTEMPLATE_EDIT_SUCCESS + ' \"' + _originalData.title +'\"',
                     container: '#alert',
@@ -115,18 +129,19 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
                     show: true,
                     duration: 30
                 });
+                $state.go("workshop_template");
             }, function (httpResponse) {
                 $alert({
-                    title: '',
+                    title: _translations.TITLE_ERROR,
                     type: 'danger',
-                    content: _translations.ALERT_WORKSHOPTEMPLATE_EDIT_FAIL + '(' + httpReponse.status +')',
+                    content: _translations.ALERT_WORKSHOPTEMPLATE_EDIT_FAIL + '(' + httpResponse.status +')',
                     container: '#alert',
                     dismissable: true,
                     show: true,
                     duration: 60
                 });
             });
-        }
+        };
 
         //Fetch data from API
         $scope.loading = true;
@@ -141,9 +156,11 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
                 title: value.title,
                 description: value.description,
                 cost: value.cost,
-                requirements: value.requirements,
+                requirement: value.requirement,
                 location: value.location,
                 duration: _duration,
+                start_at: value.start_at,
+                end_at: value.end_at,
                 max_participants: value.max_participants
 
             };
@@ -152,9 +169,11 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
             $scope.workshop.title = _originalData.title;
             $scope.workshop.description = _originalData.description;
             $scope.workshop.cost = _originalData.cost;
-            $scope.workshop.requirements = _originalData.requirements;
+            $scope.workshop.requirement = _originalData.requirement;
             $scope.workshop.location = _originalData.location;
             $scope.workshop.duration = _originalData.duration;
+            $scope.workshop.start_at = _originalData.start_at;
+            $scope.workshop.end_at = _originalData.end_at;
             $scope.workshop.max_participants = _originalData.max_participants;
             
 
@@ -164,7 +183,7 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
         }, function (httpResponse) {
             if(httpResponse.status === 404)
                 $alert({
-                    title: '',
+                    title:  _translations.TITLE_ERROR,
                     type: 'danger',
                     content: _translations.ALERT_WORKSHOPTEMPLATE_NOT_FOUND,
                     container: '#alert',

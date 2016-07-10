@@ -31,8 +31,9 @@ var mainApp = angular.module('mainApp',[
  * @description Module containing all controller of the application
  * @requires pascalprect.translate
  */
-var mainAppCtrls = angular.module('mainAppCtrls',["pascalprecht.translate"]);
+var mainAppCtrls = angular.module('mainAppCtrls',["pascalprecht.translate",'ngSanitize']);
 
+//ROUTE CONFIGURATION
 mainApp.config(['$urlRouterProvider','$stateProvider',
     function($urlRouterProvider,$stateProvider)
     {
@@ -159,6 +160,16 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                     requiresLogin: true
                 }
             })
+
+            .state('admin_email_confirm', {
+                url: '/workshop/management/details/:id/confirm',
+                controller: 'adminEmailConfirmCtrl',
+                templateUrl: prefix.concat('adminEmailConfirm.html'),
+                data: {
+                    requiresLogin: true
+                }
+            })
+
             .state('admin_workshop_management',{
                 url: '/workshop/management',
                 controller: 'adminWorkshopManagementCtrl',
@@ -193,6 +204,7 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                 }
             })
 
+
             .state('admininvite',{
                 url: '/admin/create/:token',
                 controller: 'AdminCreateCtrl',
@@ -217,6 +229,7 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
     }
 ]);
 
+//CALLED ON EVERY ROUTE CHANGE. USED TO CHECK IF TOKEN IS EXPIRED CONSTANTLY
 mainApp.config(['jwtInterceptorProvider','$httpProvider','$urlRouterProvider',function(jwtInterceptorProvider,$httpProvider,$urlRouterProvider){
     jwtInterceptorProvider.tokenGetter = function(store) {
         return store.get('jwt');
@@ -228,6 +241,8 @@ mainApp.config(['jwtInterceptorProvider','$httpProvider','$urlRouterProvider',fu
         $rootScope.$on('$stateChangeStart', function(e, to) {
             if (to.data && to.data.requiresLogin) {
                 if (!store.get('jwt') || jwtHelper.isTokenExpired(store.get('jwt'))) {
+                    if(store.get('jwt'))
+                        store.remove('jwt');
                     e.preventDefault();
                     $state.go('login');
                 }
@@ -235,7 +250,9 @@ mainApp.config(['jwtInterceptorProvider','$httpProvider','$urlRouterProvider',fu
         });
     }]);
 
+//CONFIGURES TRANSLATION
 mainApp.config(['$translateProvider', function($translateProvider) {
+    $translateProvider.useSanitizeValueStrategy('escape');
     $translateProvider.useStaticFilesLoader({
         prefix: 'resources/local/lang-',
         suffix: '.json'
@@ -248,8 +265,34 @@ mainApp.config(['$translateProvider', function($translateProvider) {
  * @name mainApp.controller:GlobalCtrl
  * @description Controller applied to the body HTML-Tag to avoid pollution of the rootScope. Provides Information wether login or logout button are to be shown
  */
-mainApp.controller('GlobalCtrl',['$scope','store','jwtHelper','$state',function($scope,store,jwtHelper,$state) {
+mainApp.controller('GlobalCtrl',['$scope','store','jwtHelper','$state','$http','$translate',function($scope,store,jwtHelper,$state,$http,$translate,$translateProvider) {
+    $scope.back=function () {
+        if ($scope.show_login)
+            $state.go('workshops');
+        if ($scope.show_logout)
+            $state.go('dashboard');
+        if ($scope.show_logout && $state.current.name == "dashboard" )
+            $state.go('workshops');
+        if($state.current.name == "login")
+            $state.go('workshops');
+    }
+    //Check if token is already saved and is expired
+    var jwt = store.get('jwt');
+    if(jwt != null && jwtHelper.isTokenExpired(jwt))
+        store.remove('jwt');
+    //Get language config
+    $http.get("resources/local/config.json").then(function(response){
+        //save available languages
+        $scope.langs = response.data.lang;
+        //set default language
+        $translate.use(response.data.default);
+        for(var i=0;i<$scope.langs.length;i++) {
+            if(response.data.default === $scope.langs[i].code)
+                $scope.selectedLang = $scope.langs[i];
+        }
+    },function(response){
 
+    });
     $scope.show_login = true;
     $scope.show_logout = false;
     //Function called on every state change. Takes care of the buttons to be shown correctly
@@ -271,6 +314,9 @@ mainApp.controller('GlobalCtrl',['$scope','store','jwtHelper','$state',function(
                 $scope.show_logout = false;
             }
         }
+        //delete token if available and expired
+        if(jwt != null && jwtHelper.isTokenExpired(jwt))
+            store.remove(jwt);
     });
     /**
      * @ngdoc function
@@ -291,6 +337,11 @@ mainApp.controller('GlobalCtrl',['$scope','store','jwtHelper','$state',function(
             $scope.show_login = true;
             $scope.show_logout = false;
         }
+    };
+    
+    //change language
+    $scope.changeLang = function() {
+        $translate.use($scope.selectedLang.code);
     };
 }
 ]);

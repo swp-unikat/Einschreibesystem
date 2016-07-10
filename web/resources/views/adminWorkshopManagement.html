@@ -1,6 +1,4 @@
-<div>
-    <div class="col-md-8 col-md-offset-2">
-
+<div class="container">
         <h1>{{ "CURRENT_WORKSHOPS" | translate}}</h1>
         <div class="btn-group pull-right" role="group">
             <a ui-sref="dashboard"> <button class="btn btn-default">{{ "BUTTON_BACK_TO_DASHBOARD" | translate}}</button></a>
@@ -13,13 +11,13 @@
         <hr>
         <br>
         <div id="alert" bs-alert></div>
-        <div class="col-lg-12 col-xs-12">
-            <div class="col-lg-12 col-xs-12">
-                <div class="box-group" ng-repeat="workshop in currentList">
-                    <div class="box box-default">
-                        <div class="box-header with-border">
-                            <h4 class="box-title">{{workshop.title}} <label class="small participants" >(5/{{workshop.max_participants}})</label></h4>
-                            <!--{{participant.number}}/{{max.participants}}-->
+            <div class="box-group" ng-repeat="workshop in currentList">
+                <div class="box box-default" >
+                        <div class="box-header with-border" class="box-title"  ng-click="toggle= !toggle">
+                            <h4>
+                                {{workshop.title}} <label class="small participants" >({{workshop.numParticipants}}/{{workshop.max_participants}})</label>
+                                <label class="small pull-right" style="margin-right:5%;">{{workshop.start_at|date: "dd/MM/yyyy HH:mm"}}</label>
+                            </h4>
 
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" ng-click="toggle = !toggle">
@@ -56,22 +54,17 @@
 
                         <!-- /.box-body -->
                     </div>
-
                     <!-- /.box -->
-                </div>
             </div>
 
-        </div>
         <h1>{{ "ELAPSED_WORKSHOPS" | translate}}</h1>
         <hr>
         <br>
-        <div class="col-lg-12 col-xs-12">
-            <div class="col-lg-12 col-xs-12">
-                <div class="box-group" ng-repeat="workshop in elapsedList">
-                    <div class="box box-default">
-                        <div class="box-header with-border">
-                            <h4 class="box-title">{{workshop.title}} <label class="small participants" >(5/{{workshop.max_participants}})</label></h4>
-                            <!--{{participant.number}}/{{max.participants}}-->
+        <div class="box-group" ng-repeat="workshop in elapsedList">
+            <div class="box box-default" >
+                <div class="box-header with-border" class="box-title"  ng-click="toggle= !toggle">
+                            <h4 class="box-title">{{workshop.title}} <label class="small participants" >({{workshop.numParticipants}}/{{workshop.max_participants}})</label></h4>
+
 
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" ng-click="toggle = !toggle">
@@ -81,36 +74,30 @@
                             <!-- /.box-tools -->
                         </div>
                         <!-- /.box-header -->
-                        <div class="box-body " ng-show="toggle">
-                            <div class="form-group">
-                                <label translate class="col-lg-2 col-sm-12 control-label">WORKSHOP_DESCRIPTION</label>
-                                <div class="col-sm-10 col-sm-12" ng-bind-html="workshop.description"></div>
-                            </div>
-                            <div class="form-group">
+                <div class="box-body " ng-show="toggle">
+                    <div class="form-group">
+                        <label translate class="control-label">WORKSHOP_DESCRIPTION</label>
+                        <div ng-bind-html="workshop.description"></div>
+                    </div>
+                    <div class="form-group">
                                 <label translate class="col-lg-2 col-sm-12 control-label">WORKSHOP_COST</label>
                                 <div class="col-sm-10 col-sm-12"><label>{{workshop.cost}}</label></div>
                             </div>
-                            <div class="btn pull-right">
+                    <div class="btn pull-right">
 
                                 <a ui-sref="administrator_workshop_details({id: workshop.id})"><button type="button" translate class="btn btn-secondary span4">BUTTON_DETAILS</button></a>
                                 <button ng-click="delete(workshop.id)" type="button" translate class="btn btn-danger span4">{{ "BUTTON_DELETE_WORKSHOP" | translate}}
                                 </button>
                             </div>
-                        </div>
-                        <!-- /.box-body -->
-                    </div>
-
-                    <!-- /.box -->
                 </div>
+                        <!-- /.box-body -->
             </div>
-
-    </div>
+                    <!-- /.box -->
+        </div>
         <!-- loading -->
         <div ng-show="loading">
             <span class="glyphicon glyphicon-refresh glyphicon-spin" style="font-size: 5.0em;"></span>
         </div>
 
         <!-- loading end -->
-    </div>
-
 </div>

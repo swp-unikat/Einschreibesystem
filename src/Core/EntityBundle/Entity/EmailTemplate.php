@@ -39,21 +39,40 @@ class EmailTemplate{
      * @Serializer\SerializedName("email_subject")
      */
     public $email_subject;
+
     /**
      * body of e-mailtemplate
      * @var string
-     * @ORM\Column(name="email_body", type="string", nullable=false)
+     * @ORM\Column(name="email_body", type="text", nullable=false)
      * @Serializer\Expose
      * @Serializer\SerializedName("email_body")
      */
     public $email_body;
 
     /**
+     * placeholder
+     * @var string
+     * @ORM\Column(name="placeholder", type="string", nullable=true)
+     * @Serializer\Expose
+     * @Serializer\SerializedName("placeholder")
+     */
+    public $placeholder;
+
+    /**
+     * routes
+     * @var string
+     * @ORM\Column(name="routes", type="string", nullable=true)
+     * @Serializer\Expose
+     * @Serializer\SerializedName("routes")
+     */
+    public $routes;
+
+    /**
      * protection
      * @var boolean
      * @ORM\Column(name="protected", type="boolean", nullable=false)
      * @Serializer\Expose
-     * @Serializer\SerializedName("email_body")
+     * @Serializer\SerializedName("protected")
      */
     public $protected;
 
@@ -148,6 +167,22 @@ class EmailTemplate{
     public function setProtected($protected)
     {
         $this->protected = $protected;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPlaceholder()
+    {
+        return $this->placeholder;
+    }
+
+    /**
+     * @param string $placeholder
+     */
+    public function setPlaceholder($placeholder)
+    {
+        $this->placeholder = $placeholder;
     }
     
     

@@ -15,6 +15,7 @@ use Core\EntityBundle\Repository\WorkshopRepository;
 use Core\EntityBundle\Entity\EmailTemplate;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\MonologBundle\MonologBundle;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Class to load E-Mail Template and send E-Mail
@@ -25,13 +26,15 @@ class MailController extends Controller{
     protected $twig;
     protected $logger;
     protected $mailer;
+    protected $container;
 
-    public function __construct(EntityManager $em,\Twig_Extension $twig,MonologBundle $logger,\Swift_Mailer $mailer)
+    public function __construct(EntityManager $em, $twig, $logger, $mailer,$container)
     {
-        $this->em		= $em;
-        $this->twig		= $twig;
-        $this->logger	= $logger;
-        $this->mailer  	= $mailer;
+        $this->em		    = $em;
+        $this->twig		    = $twig;
+        $this->logger	    = $logger;
+        $this->mailer  	    = $mailer;
+        $this->container    = $container;
     }
 
     /**
@@ -43,13 +46,14 @@ class MailController extends Controller{
         $workshops = $this->em->getRepository("CoreEntityBundle:Workshop")->getWorkshopsForNotificationEmail();
         if(!$workshops){
             $this->logger->info("No Workshops to notify.");
-            return 0;
+            return $count;
         }
+
         foreach ($workshops as $id) {
             /* Load Workshop object */
             $workshop = $this->em->getRepository("CoreEntityBundle:Workshop")->find($id['id']);
             /* Load Workshop Participants*/
-            $participants = $this->em->getRepository("CoreEntityBundle:Workshop")->getParticipants($workshop->getId());
+            $participants = $this->em->getRepository("CoreEntityBundle:WorkshopParticipants")->findBy(['workshop' => $workshop, "waiting" => false]);
             if($participants){
                 $count += $this->sendMail($participants,$workshop);
                 $workshop->setNotified(true);
@@ -71,16 +75,20 @@ class MailController extends Controller{
     protected function sendMail($participants,$workshop){
         $counter = 0;
         /* Loading the default E-Mail template*/
-        $template = $this->em->getRepository("CoreEntityBundle:EmailTemplate")->find(1);
+        $template = $this->em->getRepository("CoreEntityBundle:EmailTemplate")->findOneBy(['template_name' => 'Reminder']);
+        if(!$template){
+            $this->logger->error("E-Mail Template not found");
+            return 0;
+        }
         /* Creating Twig template from Database */
         $renderTemplate = $this->twig->createTemplate($template->getEmailBody());
-        foreach ($participants as $participant){
+        foreach ($participants as $wp){
             /* Sending E-Mail */
             $message = \Swift_Message::newInstance()
-                ->setSubject($template->getEmailSubject())
-                ->setFrom($this->getParameter('email_sender'))
-                ->setTo($participant['email'])
-                ->setBody($renderTemplate->render(["workshop" => $workshop,"participant" => $participant]),'text/html');
+                ->setSubject($this->get('twig')->createTemplate($template->getEmailSubject())->render(["workshop" => $workshop]))
+                ->setFrom($this->container->getParameter('email_sender'))
+                ->setTo($wp->getParticipant()->getEmail())
+                ->setBody($renderTemplate->render(["workshop" => $workshop,"participant" => $wp->getParticipant()]),'text/html');
             $this->mailer->send($message);
             $counter++;
         }

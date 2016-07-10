@@ -1,5 +1,4 @@
 <div class="container">
-
     <h1>
         <translate>NEW_EMAIL_TEMPLATE</translate>
     </h1>
@@ -9,42 +8,59 @@
         </a>
     </div>
     <hr>
-    <br>
+    <div class="col-md-6">
+        <div class="form-group">
 
-</div>
+            <label>{{ "EMAIL_TEMPLATE_TITLE" | translate}}</label>
+            <input type="text" ng-model="email.template.title" class="form-control ">
 
-<div>
-    <body data-spy="scroll" data-target=".navbar">
-    <form role="search">
+            <label>{{ "EMAIL_SUBJECT" | translate}}</label>
+            <input type="text" ng-model="email.template.subject" class="form-control ">
 
-
-        <div class="col-md-6">
-            <div class="form-group">
-
-                <label>{{ "EMAIL_TEMPLATE_TITLE" | translate}}</label>
-                <input type="text" ng-model="email.template.title" class="form-control ">
-
-                <label>{{ "EMAIL_SUBJECT" | translate}}</label>
-                <input type="text" ng-model="email.template.subject" class="form-control ">
-
-                <label>{{ "EMAIL_BODY" | translate}}</label>
-                <div text-angular ng-model="email.template.body"></div>
+            <label>{{ "EMAIL_BODY" | translate}}</label>
+            <div text-angular ng-model="email.template.body"></div>
 
 
-                <div class="form-group row text-right">
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-info" ng-click="discard()">{{ "BUTTON_DISCARD" | translate}}</button>
-                        <button type="button" class="btn btn-info" ng-click="sendInfo()">{{ "BUTTON_CONFIRM" | translate}}</button>
-                    </div>
+            <div class="form-group row text-right">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-info" ng-click="discard()">{{ "BUTTON_DISCARD" | translate}}
+                    </button>
+                    <button type="button" class="btn btn-info" ng-click="sendInfo()">{{ "BUTTON_CONFIRM" | translate}}
+                    </button>
                 </div>
             </div>
         </div>
-            <br>
-            <br>
-        <div class="col-md-6" id="alert" bs-alert></div>
+    </div>
+    <div class="col-md-6" id="alert" bs-alert></div>
 
-    </form>
-    </body>
+    <div class="col-md-6">
+        <div class="container">
+
+            <div class="col-md-3">
+                <h3>
+                    <translate>AVAILABLE_PLACEHOLDERS</translate>
+                </h3>
+                <ul class="list-group">
+                    <li class="list-group-item"><strong>workshop :</strong></li>
+                    <li class="list-group-item"><span class="indent"></span>title</li>
+                    <li class="list-group-item"><span class="indent"></span>cost</li>
+                    <li class="list-group-item"><span class="indent"></span>requirements</li>
+                    <li class="list-group-item"><span class="indent"></span>description</li>
+                    <li class="list-group-item"><span class="indent"></span>location</li>
+                    <li class="list-group-item"><span class="indent"></span>start_at</li>
+                    <li class="list-group-item"><span class="indent"></span>max_participants</li>
+                </ul>
+                <ul class="list-group">
+                    <li class="list-group-item"><strong>participant :</strong></li>
+                    <li class="list-group-item"><span class="indent"></span>name</li>
+                    <li class="list-group-item"><span class="indent"></span>surname</li>
+                    <li class="list-group-item"><span class="indent"></span>email</li>
+                </ul>
+            </div>
+        </div>
+
+
+    </div>
 </div>
 
 

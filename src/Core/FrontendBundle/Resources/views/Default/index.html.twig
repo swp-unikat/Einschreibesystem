@@ -5,24 +5,24 @@
     <title>{% block title %}Welcome!{% endblock %}</title>
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
 
-    <script src="{{ asset('vendor/jquery/dist/jquery.js') }}"></script>
-    <script src="{{ asset('vendor/angular/angular.js') }}"></script>
-    <script src="{{ asset('vendor/angular-route/angular-route.js') }}"></script>
+    <script src="{{ asset('vendor/jquery/dist/jquery.min.js') }}"></script>
+    <script src="{{ asset('vendor/angular/angular.min.js') }}"></script>
+    <script src="{{ asset('vendor/angular-route/angular-route.min.js') }}"></script>
 
-    <script src="{{ asset('vendor/angular-resource/angular-resource.js') }}"></script>
-    <script src="{{ asset('vendor/angular-touch/angular-touch.js') }}"></script>
-    <script src="{{ asset('vendor/angular-translate/angular-translate.js') }}"></script>
-    <script src="{{ asset('vendor/angular-translate-loader-static-files/angular-translate-loader-static-files.js') }}"></script>
+    <script src="{{ asset('vendor/angular-resource/angular-resource.min.js') }}"></script>
+    <script src="{{ asset('vendor/angular-touch/angular-touch.min.js') }}"></script>
+    <script src="{{ asset('vendor/angular-translate/angular-translate.min.js') }}"></script>
+    <script src="{{ asset('vendor/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js') }}"></script>
 
     <link href="{{ asset('vendor/bootstrap/dist/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('resources/styles/main.css') }}" rel="stylesheet" type="text/css" />
 
-    <script src="{{ asset('vendor/angular-animate/angular-animate.js') }}"></script>
-    <script src="{{ asset('vendor/angular-strap/dist/angular-strap.js') }}"></script>
-    <script src="{{ asset('vendor/angular-strap/dist/angular-strap.tpl.js') }}"></script>
-    <script src="{{ asset('vendor/angular-ui-router/release/angular-ui-router.js') }}"></script>
-    <script src="{{ asset('vendor/angular-jwt/dist/angular-jwt.js') }}"></script>
-    <script src="{{ asset('vendor/a0-angular-storage/dist/angular-storage.js') }}"></script>
+    <script src="{{ asset('vendor/angular-animate/angular-animate.min.js') }}"></script>
+    <script src="{{ asset('vendor/angular-strap/dist/angular-strap.min.js') }}"></script>
+    <script src="{{ asset('vendor/angular-strap/dist/angular-strap.tpl.min.js') }}"></script>
+    <script src="{{ asset('vendor/angular-ui-router/release/angular-ui-router.min.js') }}"></script>
+    <script src="{{ asset('vendor/angular-jwt/dist/angular-jwt.min.js') }}"></script>
+    <script src="{{ asset('vendor/a0-angular-storage/dist/angular-storage.min.js') }}"></script>
 
     <link rel='stylesheet' href="{{ asset('vendor/textAngular/dist/textAngular.css') }}">
     <script src="{{ asset('vendor/textAngular/dist/textAngular-rangy.min.js') }}"></script>
@@ -30,50 +30,46 @@
     <script src='{{ asset('vendor/textAngular/dist/textAngular.min.js') }}'></script>
     <link rel="stylesheet" href="{{ asset('vendor/font-awesome/css/font-awesome.min.css') }}" />
 
-    <script src="{{ asset('components/app.js') }}"></script>
-    <script src="{{ asset('components/services/restService.js') }}"></script>
-    <script src="{{ asset('components/services/printService.js') }}"></script>
-    <script src="{{ asset('components/dist/ctrl.js') }}"></script>
+    <script src="{{ asset('components/dist/app.min.js') }}"></script>
+    <script src="{{ asset('components/dist/ctrl.min.js') }}"></script>
+    <script src="{{ asset('components/dist/srvcs.min.js') }}"></script>
 
 
     <style>
         .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
     </style>
 </head>
-<body data-spy="scroll" data-target=".navbar" ng-controller="GlobalCtrl">
+<body ng-controller="GlobalCtrl">
 
 <nav class="navbar navbar-default">
     <div class="container-fluid">
 
             <ul class="nav navbar-nav navbar-left">
-                <img alt="Titel" src="resources/images/logo.svg" width="100"/>
+               <img ng-click="back()" alt="Titel" src="resources/images/logo.svg" width="100">
             </ul>
-
-
-
-    <div class="col-sm-offset-5 col-sm-2 text-center">
-
-    </div>
 
     <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav navbar-right">
-            <li ng-show="show_login" ><a href="#login"><button type="button" class="btn btn-link">Login</button></a></li>
-            <li ng-show="show_logout" ><button  type="button" class="btn btn-default" ng-click="logout()">Logout</button></li>
+            <li>
+                <button type="button" class="btn btn-default navbar-btn btn-sm" ng-model="selectedLang" data-html="1" data-toggle="true" bs-options="lang.name for lang in langs" ng-change="changeLang()" bs-select>
+                    <span class="caret"></span>
+                </button>
+            </li>
+            <li ng-show="show_login" ><a href="#login"><button type="button" class="btn btn-link navbar-link">Login</button></a></li>
+            <li ng-show="show_logout" ><button  type="button" class="btn btn-default navbar-btn btn-sm" ng-click="logout()">Logout</button></li>
         </ul>
     </div>
 </div>
 </nav>
+<div ui-view=""></div>
 
+<footer class="footer">
+        <div class="container text-center">
+            <a ui-sref="legalnotice"><button translate type="button" class="btn btn-link">LEGAL_NOTICE</button></a>
+            <a ui-sref="contact"><button translate type="button" class="btn btn-link">CONTACT</button></a>
+        </div>
+</footer>
 
-<div style="margin-bottom: 200px;" ui-view=""></div>
-
-<nav class="navbar navbar-inverse navbar-fixed-bottom">
-    <div class="row text-center">
-        <hr class="top-buffer">
-        <a ui-sref="legalnotice"><button translate type="button" class="btn btn-link">LEGAL_NOTICE</button></a>
-        <a ui-sref="contact"><button translate type="button" class="btn btn-link">CONTACT</button></a>
-    </div>
-</nav>
 
 </body>
 </html>

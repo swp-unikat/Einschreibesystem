@@ -14,17 +14,21 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin','$alert'
 
         var _translations = {};
         //Pass all required translation IDs to translate service
-        $translate(['INVITED_ADMINISTRATOR_EMAIL','INVITED_ADMINISTRATOR_EMAIL_ERROR']).then(function(translations){
+        $translate(['INVITED_ADMINISTRATOR_EMAIL','TITLE_ERROR','TITLE_SUCCESS','INVITED_ADMINISTRATOR_EMAIL_ERROR', 'ALERT_DELETE_ADMIN_FAILED',
+        'ALERT_DELETE_ADMIN_SUCCESS',]).then(function (translations) {
             _translations = translations;
         });
-
-        Admin.list().$promise.then(function(value){
-            $scope.admins = value;
-            $scope.loading = false;
-        },function(httpResponse){
-            alert(httpResponse.status);
-            $scope.loading = false;
-        });
+        var loadList = function () {
+            $scope.loading = true;
+            Admin.list().$promise.then(function (value) {
+                $scope.admins = value;
+                $scope.loading = false;
+            }, function (httpResponse) {
+                alert(httpResponse.status);
+                $scope.loading = false;
+            });
+        };
+        loadList();
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:AdministratorManagementCtrl#delete
@@ -32,25 +36,42 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin','$alert'
          * @param {number} _id ID of the admin to delete
          * @methodOf mainAppCtrls.controller:AdministratorManagementCtrl
          */
-        $scope.delete = function(_id) {
-            Admin.delete({id: _id}).$promise.then(function(value){
-
-            },function(httpResponse){
-
-
+        $scope.deleteAdmin = function (_id) {
+            $scope.loading = true;
+            Admin.delete({id: _id}).$promise.then(function (value) {
+                loadList();
+                $alert({
+                    title: _translations.TITLE_SUCCESS,
+                    type: 'success',
+                    content: _translations.ALERT_DELETE_ADMIN_SUCCESS,
+                    container: '#alert',
+                    dismissable: true,
+                    show: true,
+                    duration: 10
+                });
+            }, function (httpResponse) {
+                $scope.loading = false;
+                $alert({
+                    type: _translations.TITLE_ERROR,
+                    title: 'Error',
+                    content: _translations.ALERT_DELETE_ADMIN_FAILED,
+                    container: '#alert',
+                    show: true,
+                    dismissable: false,
+                    duration: 30
+                });
             });
-        };
-
+        }
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:AdministratorManagementCtrl#delete
          * @description invites a new admin
          * @methodOf mainAppCtrls.controller:AdministratorManagementCtrl
          */
-        $scope.invite = function() {
-            Admin.invite({email: $scope.email}).$promise.then(function(value){
+        $scope.invite = function () {
+            Admin.invite({email: $scope.admin_mail}).$promise.then(function (value) {
                 $alert({
-                    title: '',
+                    title: _translations.TITLE_SUCCESS,
                     type: 'success',
                     content: _translations.INVITED_ADMINISTRATOR_EMAIL,
                     container: '#alert',
@@ -58,9 +79,9 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin','$alert'
                     show: true,
                     duration: 30
                 });
-            },function(httpResponse){
+            }, function (httpResponse) {
                 $alert({
-                    title: '',
+                    title: _translations.TITLE_ERROR,
                     type: 'danger',
                     content: _translations.INVITED_ADMINISTRATOR_EMAIL_ERROR,
                     container: '#alert',
@@ -71,5 +92,4 @@ mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin','$alert'
             });
         }
     }
-
 ]);

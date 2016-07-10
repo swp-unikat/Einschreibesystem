@@ -7,6 +7,8 @@
  */
 namespace Core\APIBundle\Controller\Admin;
 
+use Core\EntityBundle\Entity\Participants;
+use Core\EntityBundle\Entity\WorkshopParticipants;
 use Doctrine\Common\Collections\Criteria;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Request\ParamFetcher;
@@ -48,33 +50,34 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
      *
      * @return \Symfony\Component\HttpFoundation\Response
      * @return give the list of all participants
-     * @var Participants $participants
      * @Rest\View()
      */  
     public function getAllAction()
     {
        $participants = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:Participants')->findAll();
         if (!$participants) {
-            throw $this->createNotFoundException("No Participants found");
+            return $this->handleView($this->view(['code' => 404,'message' => "No Participants found"], 404));
         } 
         $view = $this->view($participants, 200);
         return $this->handleView($view);	    
     }
-    	/**
-    	 * returns list of all participants that are blacklisted
+
+    /**
+     * returns list of all participants that are blacklisted
      * @ApiDoc(
      *  resource=true,
      *  description="Returns list of all participants that are blacklisted",
-     *  output = "Core\EntityBundle\Entity\Participants",
-     *  statusCodes = {
+     *  output = {
+     *      "class"="Core\EntityBundle\Entity\WorkshopParticipants",
+     *      "groups"={"names"}
+     *  },statusCodes = {
      *      200 = "Returned when successful",
      *      404 = "Returned when the data is not found"
      *  }
      * )
      * )
      *
-     * @return \Symfony\Component\HttpFoundation\Response
-     * @return list of all participants that are blacklisted
+     * @return \Symfony\Component\HttpFoundation\Response list of all participants that are blacklisted
      * @var Participants $participantsBlacklist
      * @Rest\View()
      */
@@ -82,13 +85,19 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
     {
         $participantsBlacklist = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:Participants')->findBy(['blacklisted' => TRUE]);
         if (!$participantsBlacklist) {
-            throw $this->createNotFoundException("No Participant on Blacklist found");
+            return $this->handleView($this->view(['code' => 404,'message' => "No Participants on Blacklist found"], 404));
         }
-        $view = $this->view($participantsBlacklist, 200);
+        
+        foreach($participantsBlacklist as $participant){
+            $result[] = ['id' => $participant->getId(),'email' => $participant->getEmail(),'surname' => $participant->getSurname(),'name' => $participant->getName(),'blacklisted_at' => $participant->getBlacklistedAt(),'blacklisted_from' => $participant->getBlacklistedFrom()->getEmail()];
+        }
+
+        $view = $this->view($result, 200);
         return $this->handleView($view);
     }
-    	/**
-    	 * add participant to blacklist
+
+    /**
+     * add participant to blacklist
      * @ApiDoc(
      *  resource=true,
      *  description="Add participants to blacklist ",
@@ -116,17 +125,40 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
     {
         $participant = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:Participants')->find($id);
         if (!$participant) {
-            throw $this->createNotFoundException("No User found");
+            return $this->handleView($this->view(['code' => 404,'message' => "No User found"], 404));
         } else {
             $participant->setBlacklisted(true);
             $participant->setBlacklistedAt(new \DateTime("now"));
-            /* ToDO Add User to Database who blacklisted the participant */
+            $participant->setBlacklistedFrom($this->getUser());
 
+            $workshops = $this->getDoctrine()->getRepository("CoreEntityBundle:WorkshopParticipants")->findBy(['participant' => $participant,'participated' => false]);
+            /* remove from all workshops*/
+            foreach ($workshops as $w){
+                $this->getDoctrine()->getManager()->remove($w);
+                // check if participant moves from waiting list to participant list
+                $this->container->get('helper')->checkParticipantList($w->getWorkshop()->getId());
+            }
+            /* Load E-Mail-Template*/
+            $template = $this->getDoctrine()->getRepository("CoreEntityBundle:EmailTemplate")->findOneBy(['template_name' => 'Blacklisting']);
+            if (!$template) {
+                return $this->handleView($this->view(['code' => 404, 'message' => "E-Mail Template not found"], 404));
+            }
+            /* Creating Twig template from Database */
+            $renderTemplate = $this->get('twig')->createTemplate($template->getEmailBody());
+            /* Send Mail */
+            $message = \Swift_Message::newInstance()
+                ->setSubject($template->getEmailSubject())
+                ->setFrom($this->getParameter('email_sender'))
+                ->setTo($participant->getEmail())
+                ->setBody($renderTemplate->render(["participant" => $participant]), 'text/html');
+            $this->get('mailer')->send($message);
+            /* persist to database*/
             $this->getDoctrine()->getManager()->persist($participant);
             $this->getDoctrine()->getManager()->flush();
 
             return View::create(null, Codes::HTTP_NO_CONTENT);
         }
+
     }
     
     /**
@@ -159,8 +191,24 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
     {
        $participantsBlacklist = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Participants")->find($id);
         if (!$participantsBlacklist) {
-            throw $this->createNotFoundException("No Participant on Blacklist found");
+            return $this->handleView($this->view(['code' => 404,'message' => "No Participants on Blacklist found"], 404));
         }
+
+        /* Load E-Mail-Template*/
+        $template = $this->getDoctrine()->getRepository("CoreEntityBundle:EmailTemplate")->findOneBy(['template_name' => 'Blacklistremoved']);
+        if (!$template) {
+            return $this->handleView($this->view(['code' => 404, 'message' => "E-Mail Template not found"], 404));
+        }
+        /* Creating Twig template from Database */
+        $renderTemplate = $this->get('twig')->createTemplate($template->getEmailBody());
+        /* Send Mail */
+        $message = \Swift_Message::newInstance()
+            ->setSubject($template->getEmailSubject())
+            ->setFrom($this->getParameter('email_sender'))
+            ->setTo($participantsBlacklist->getEmail())
+            ->setBody($renderTemplate->render(["participant" => $participantsBlacklist]), 'text/html');
+        $this->get('mailer')->send($message);
+
         $participantsBlacklist->setBlacklisted(false);
         $this->getDoctrine()->getManager()->persist($participantsBlacklist);
         $this->getDoctrine()->getManager()->flush();
@@ -196,11 +244,44 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
     {
         $participantsBlacklist = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:Participants')->find($id);
         if (!$participantsBlacklist) {
-            throw $this->createNotFoundException("No User found");
+            return $this->handleView($this->view(['code' => 404,'message' => "No User found"], 404));
          } else {
             $view = $this->view($participantsBlacklist, 200);
             return $this->handleView($view);
          }
+    }
+
+
+    /**
+     * delete user from participants list
+     * @ApiDoc(
+     *  resource=true,
+     *  description="",
+     *  output = "",
+     *  statusCodes = {
+     *      200 = "Returned when successful",
+     *      404 = "Returned when the data is not found"
+     *  }
+     * )
+     * @param $participant int id of participant
+     * @param  $workshop int id of workshop
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Rest\View()
+     */
+    public function deleteRemoveAction($workshop,$participant)
+    {
+        $participantAtWorkshop = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:WorkshopParticipants")->findOneBy(['participant'=>$participant,'workshop' => $workshop]);
+        if (!$participantAtWorkshop){
+            return $this->handleView($this->view(['code' => 404,'message' => "Participant at Workshop not found"], 404));
+        }else{
+            // check if participant moves from waiting list to participant list
+            $this->container->get('helper')->checkParticipantList($workshop);
+
+            $this->getDoctrine()->getManager()->remove($participantAtWorkshop);
+            $this->getDoctrine()->getManager()->flush();
+            return $this->handleView($this->view(['code' => 200,'message' => "Remove participant from workshop"], 200));
+
+        }
     }
 }
 

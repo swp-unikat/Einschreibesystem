@@ -53,7 +53,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
         $workshopRepo = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:Workshop');
         $workshops = $workshopRepo->getAllActiveWorkshops();
         if (!$workshops) {
-            throw $this->createNotFoundException("No Workshops found");
+            return $this->handleView($this->view(['code' => 404,'message' => "No workshop was found"], 404));
         }
         $view = $this->view($workshops, 200);
         return $this->handleView($view);
@@ -85,7 +85,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
     {
         $workshop = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:Workshop')->find($id);
         if (!$workshop) {
-            throw $this->createNotFoundException("This workshop was not found");
+            return $this->handleView($this->view(['code' => 404,'message' => "This workshop was not found"], 404));
         } else {
             $view = $this->view($workshop, 200);
             return $this->handleView($view);
@@ -105,9 +105,9 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      * )
      *
      * @return \Symfony\Component\HttpFoundation\Response
-     * @Rest\RequestParam(name="name", requirements=".*", description="json object of workshop")
-     * @Rest\RequestParam(name="surname", requirements=".*", description="json object of workshop")
-     * @Rest\RequestParam(name="email", requirements=".*", description="json object of workshop")
+     * @Rest\RequestParam(name="name", requirements=".*", description="name of the participant")
+     * @Rest\RequestParam(name="surname", requirements=".*", description="surname of the participant")
+     * @Rest\RequestParam(name="email", requirements=".*", description="email of the participant")
      * @param $id int id of the workshop the user wants to enroll
      * @param $paramFetcher ParamFetcher Helper to get the params from the post request
      * @Rest\View()
@@ -118,9 +118,9 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
 
         $workshop = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Workshop")->find($id);
         $participant = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Participants")->findOneBy(["email" => $params["email"]]);
-        
+
         if (!$workshop) {
-            throw $this->createNotFoundException("Workshop not found");
+            return $this->handleView($this->view(['code' => 404,'message' => "Workshop not found"], 404));
         }
 
         if ($participant == NULL){
@@ -129,24 +129,25 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
             $participant->setEmail($params["email"]);
             $participant->setName($params["name"]);
             $participant->setSurname($params["surname"]);
-
-
+            
             $this->getDoctrine()->getManager()->persist($participant);
             $this->getDoctrine()->getManager()->flush();
 
         } else {
             //all workshops which the user were not participating yet
             if ($participant->isBlacklisted()) {
-                throw $this->createAccessDeniedException("You are blacklisted");
+                return $this->handleView($this->view(['code' => 403,'message' => "ALERT_YOU_ARE_ON_BLACKLIST"], 403));
             }
 
             $workshopParticipants = $this->getDoctrine()->getRepository("CoreEntityBundle:WorkshopParticipants")->findBy(["participant" => $participant, "participated" => 0]);
             //load workshop with start and endtim, iterate over all
-
             foreach($workshopParticipants as $tupel){
-                $tempWorkshop = $this->getDoctrine()->getRepository("Workshop")->find($tupel->getId());
-                if($workshop->getStartAt() >= $tempWorkshop->getStartAt() && $workshop->getEndAt() <= $tempWorkshop->getEndAt()){
-                    throw $this->createAccessDeniedException("Already in Workshop at same Time");
+                if($workshop->getStartAt() >= $tupel->getWorkshop()->getStartAt() && $workshop->getEndAt() <= $tupel->getWorkshop()->getEndAt()){
+                    if($workshop->getId() == $tupel->getWorkshop()->getId())
+                        return $this->handleView($this->view(['code' => 403,'message' => "ALERT_ALREADY_ENROLLED"], 403));
+                    else
+                        return $this->handleView($this->view(['code' => 403,'message' => "ALERT_WORKSHOP_AT_SAME_TIME"], 403));
+
                 }
             }
         }
@@ -155,12 +156,11 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
         $token->setParticipant($participant);
         $this->getDoctrine()->getManager()->persist($token);
         $this->getDoctrine()->getManager()->flush();
-        
+
         $url = $this->generateUrl('core_frontend_default_index',[],TRUE)."#/enrollment/confirm/".$workshop->getId()."/".$participant->getId()."/".$token->getToken();
-
-
-        //load Template for confirment
-        $template = $this->getDoctrine()->getRepository("CoreEntityBundle:EmailTemplate")->find(2);
+        $unsubscribe = $this->generateUrl('core_frontend_default_index',[],TRUE)."#/unsubscribe/".$workshop->getId()."/".$participant->getId();
+        //load Template for conferment
+        $template = $this->getDoctrine()->getRepository("CoreEntityBundle:EmailTemplate")->findOneBy(['template_name' => 'Enrollment']);
         /* Creating Twig template from Database */
         $renderTemplate = $this->get('twig')->createTemplate($template->getEmailBody());
         /* Sending E-Mail with Confirmation Link*/
@@ -168,12 +168,11 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
             ->setSubject($this->get('twig')->createTemplate($template->getEmailSubject())->render(["workshop" => $workshop]))
             ->setFrom($this->getParameter('email_sender'))
             ->setTo($participant->getEmail())
-            ->setBody($renderTemplate->render(["workshop" => $workshop,"participant" => $participant,'url' => $url]),'text/html');
+            ->setBody($renderTemplate->render(["workshop" => $workshop,"participant" => $participant,'url' => $url,'unsubscribe' => $unsubscribe]),'text/html');
         $this->get('mailer')->send($message);
 
         return View::create(NULL, Codes::HTTP_OK);
     }
-
     /**
      * Action to confirm enrollment on a workshop
      * @ApiDoc(
@@ -182,6 +181,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      *  output = "",
      *  statusCodes = {
      *      200 = "Returned when successful",
+     *      401 = "Return when errors at content level",
      *      404 = "Returned when the data is not found"
      *  }
      * )
@@ -194,6 +194,12 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      */
     public function getEnrollConfirmAction($workshopId,$participantsId,$token)
     {
+        $workshopParticipant = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:WorkshopParticipants")->findOneBy(['workshop' => $workshopId,'participant' => $participantsId]);
+        if($workshopParticipant){
+            return $this->handleView($this->view(['code' => 403,'message' => "ALERT_ALREADY_ENROLLED"], 403));
+
+        }
+
         $workshop = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Workshop")->find($workshopId);
         $token = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:EmailToken")->findOneBy(['token' => $token]);
         $participant = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Participants")->find($participantsId);
@@ -201,10 +207,10 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
         // Workshop & Token & participant are valid
         if($workshop != NULL  && $token != NULL && $participant != NULL){
             // Check if Token is not older then 30 min
-            if($token->getValidUntil() <= new \DateTime('now')){
+            if($token->getValidUntil() >= new \DateTime('now') && $token->getUsedAt() == NULL){
                 // Check if this token is dedicated to user
                 if($token->getParticipant() != $participant){
-                    throw $this->createAccessDeniedException("User does not match");
+                    return $this->handleView($this->view(['code' => 403,'message' => "User does not match"], 403));
                 }else{
                     $participantWorkshop = new WorkshopParticipants();
                     $participantWorkshop->setWorkshop($workshop);
@@ -214,22 +220,26 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
                     // Get Participants
                     $participants = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Workshop")->getParticipants($workshopId);
                     // Check if a waitinglist ist requiered
-                    if($participants > $workshop->getMaxParticipants())
-                        $participantWorkshop->setWaiting(true);
-                    else
+                    if($workshop->getMaxParticipants() > $participants)
                         $participantWorkshop->setWaiting(false);
+                    else
+                        $participantWorkshop->setWaiting(true);
                     $token->setUsedAt(new \DateTime('now'));
                     // save to database
                     $this->getDoctrine()->getManager()->persist($token);
                     $this->getDoctrine()->getManager()->persist($participantWorkshop);
                     $this->getDoctrine()->getManager()->flush();
-                    return View::create(null, Codes::HTTP_ACCEPTED);
+                    //
+                    if ($participantWorkshop->isWaiting())
+                        return $this->handleView($this->view(['code' => 201,'message' => 'You are on the waiting list'], 201));
+                    else
+                        return $this->handleView($this->view(['code' => 200,'message' => $workshop->getTitle()], 200));
                 }
             }else{
-                throw $this->createAccessDeniedException("Token ist not valid");
+                return $this->handleView($this->view(['code' => 403,'message' => "Token ist not valid"], 403));
             }
         }else{
-            throw $this->createNotFoundException("Workshop or Token not found");
+            return $this->handleView($this->view(['code' => 404,'message' => "workshop,Token or participant not found"], 404));
         }
     }
 
@@ -244,39 +254,97 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      *      404 = "Returned when the data is not found"
      *  }
      * )
-     * @param $id int id of the workshop
-     * @param $token string token to identify the user
-     * @param $participantsID int id of the participant
+     * @Rest\RequestParam(name="workshopId", requirements=".*", description="id of the workshop")
+     * @Rest\RequestParam(name="email", requirements=".*", description="email of the participant")
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\View()
      */
-    public function getUnsubscribeAction($id,$token, $participantsID)
+    public function postUnsubscribeAction(ParamFetcher $paramFetcher){
+
+        $workshopId = $paramFetcher->get("workshopId");
+        $email = $paramFetcher->get("email");
+        
+        $participant = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Participants")->findOneBy(['email' => $email]);
+
+        if(!$participant){
+            return $this->handleView($this->view(['code' => 404,'message' => "UNSUBSCRIBE_NOT_ENROLLED"], 404));
+
+        }
+
+        $workshopParticipant = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:WorkshopParticipants")->findOneBy(['workshop' => $workshopId,'participant' => $participant->getId()]);
+
+        if ($workshopParticipant !== NULL) {
+            $token = new EmailToken();
+            $token->setParticipant($workshopParticipant->getParticipant());
+            $this->getDoctrine()->getManager()->persist($token);
+            $this->getDoctrine()->getManager()->flush();
+
+            $url = $this->generateUrl('core_frontend_default_index',[],TRUE)."#/unsubscribe/".$workshopParticipant->getParticipant()->getId()."/".$workshopParticipant->getWorkshop()->getId()."/".$token->getToken();
+
+            $template = $this->getDoctrine()->getRepository("CoreEntityBundle:EmailTemplate")->findOneBy(['template_name' => 'Unsubscribe']);
+            if(!$template){
+                return $this->handleView($this->view(['code' => 404,'message' => "UNSUBSCRIBE_EMAIL_TEMPLATE_NOT_FOUND"], 404));
+            }
+            /* Creating Twig template from Database */
+            $renderTemplate = $this->get('twig')->createTemplate($template->getEmailBody());
+            /* Sending E-Mail with Confirmation Link*/
+            $message = \Swift_Message::newInstance()
+                ->setSubject($this->get('twig')->createTemplate($template->getEmailSubject())->render(["workshop" => $workshopParticipant->getWorkshop()]))
+                ->setFrom($this->getParameter('email_sender'))
+                ->setTo($workshopParticipant->getParticipant()->getEmail())
+                ->setBody($renderTemplate->render(["workshop" => $workshopParticipant->getWorkshop(),"participant" => $workshopParticipant->getParticipant(),'url' => $url]),'text/html');
+            $this->get('mailer')->send($message);
+
+            return View::create(NULL, Codes::HTTP_OK);
+
+        } else {
+            return $this->handleView($this->view(['code' => 404,'message' => "UNSUBSCRIBE_NOT_ENROLLED"], 404));
+        }
+
+
+    }
+
+    /**
+     * action to confirme unsubscribe a
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Action to unsubscribe a Workshop",
+     *  output = "",
+     *  statusCodes = {
+     *      200 = "Returned when successful",
+     *      404 = "Returned when the data is not found"
+     *  }
+     * )
+     * @param $id int id of the workshop
+     * @param $token string token to identify the user
+     * @param $participantId int id of the participant
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Rest\View()
+     */
+    public function getUnsubscribeConfirmationAction($id,$token, $participantId)
     {
-        $workshop = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Workshop")->find($id);
-        /*@var $token Core\EntityBundle\Entity\EmailToken */
         $token = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:EmailToken")->findOneBy(['token' => $token]);
-        $participant = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Participants")->find($participantsID);
+        $workshopParticipant = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:WorkshopParticipants")->findOneBy(['workshop' => $id,'participant' => $participantId]);
 
-        $workshopParticipant = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:WorkshopParticipants")->findById($id, $participantsID);
-
-        if ($workshop != NULL && $token != NULL && $participant != NULL) {
-            if ($token->getValidUntil() <= new \DateTime('now')) {
-                if ($token->getParticipant() != $participant) {
-                    throw $this->createAccessDeniedException("User does not match");
+        if ($token != NULL  && $workshopParticipant != NULL) {
+            if ($token->getValidUntil() >= new \DateTime('now') && $token->getUsedAt() == NULL) {
+                if ($token->getParticipant() != $workshopParticipant->getParticipant()) {
+                    return $this->handleView($this->view(['code' => 403,'message' => "User does not match"], 403));
                 } else {
-                    $workshopParticipant->setWorkshop($id);
-                    $workshopParticipant->setParticipant($participant);
 
                     $token->setUsedAt(new \DateTime('now'));
+                    // check if participant moves from waiting list to participant list
+                    $this->container->get('helper')->checkParticipantList($id);
                     $this->getDoctrine()->getManager()->persist($token);
                     $this->getDoctrine()->getManager()->remove($workshopParticipant);
                     $this->getDoctrine()->getManager()->flush();
                 }
             } else {
-                throw $this->createAccessDeniedException("Token ist not valid");
+                return $this->handleView($this->view(['code' => 403,'message' => "Token ist not valid"], 403));
+
             }
         } else {
-            return $this->handleView($this->view(['code' => 404,'message' => "Workshop or Token not found"], 404));
+            return $this->handleView($this->view(['code' => 404,'message' => "workshop,Token or participant not found"], 404));
         }
     }
 
@@ -306,7 +374,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      */
     public function getWaitinglistAction($id)
     {
-        $waitingList = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:WorkshopParticipants')->findBy(['workshop' => $id,'waiting' => 1],['enrollment' => "DESC"]);
+        $waitingList = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:WorkshopParticipants')->findBy(['workshop' => $id,'waiting' => true],['enrollment' => "DESC"]);
         if (!$waitingList) {
             return $this->handleView($this->view(['code' => 404,'message' => "No waitinglist for workshop"], 404));
         }
@@ -322,6 +390,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
         $view = $this->view($waiting, 200);
         return $this->handleView($view);
     }
+    
     /**
      * Returns the list of participants
      * @ApiDoc(
@@ -346,7 +415,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      */
      public function getParticipantsAction($id)
     {  
-	    $participantsList = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:WorkshopParticipants')->findBy(['workshop' => $id],['enrollment' => "DESC"]);
+	    $participantsList = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:WorkshopParticipants')->findBy(['workshop' => $id, 'waiting' => false],['enrollment' => "DESC"]);
 	    if (!$participantsList) {
             return $this->handleView($this->view(['code' => 404,'message' => "No Participant in Workshop found"], 404));
          }

@@ -21,33 +21,32 @@ module.exports = function(grunt) {
         uglify: {
             dist: {
                 files: {
-                    'web/components/**/*.js': ['web/components/min/**/*.js']
+                    './web/components/dist/ctrl.min.js': ['./web/components/ctrl.js'],
+                    './web/components/dist/app.min.js': ['./web/components/app.js'],
+                    './web/components/dist/srvcs.min.js': ['./web/components/srvcs.js']
                 }
             },
             options: {
-                mangle: false
+                mangle: false,
+                beautify: false
             }
         },
         watch: {
             dev: {
                 files: ['Gruntfile.js', 'web/components/controllers/*.js'],
-                tasks: ['concat:controllers']
+                tasks: ['concat:controllers','concat:services']
             }
         },
         concat: {
-            options: {
-                // Replace all 'use strict' statements in the code with a single one at the top
-                banner: "'use strict';\nvar mainAppCtrls = angular.module(\"mainAppCtrls\");",
-                process: function (src, filepath) {
-                    return '\n// Source: ' + filepath + '\n' +
-                        src.replace('var mainAppCtrls = angular.module(\"mainAppCtrls\");', '');
-                }
-            },
             controllers: {
                 src: ['web/components/controllers/dashboardCtrl.js',
                     'web/components/controllers/*.js'
                 ],
-                dest: 'web/components/dist/ctrl.js'
+                dest: 'web/components/ctrl.js'
+            },
+            services: {
+                src:['web/components/services/*.js'],
+                dest: 'web/components/srvcs.js'
             }
         },
         ngdocs: {
@@ -68,6 +67,18 @@ module.exports = function(grunt) {
              ]
             },
             all: ['web/components/app.js','web/components/controllers/*.js','web/components/services/*.js']
+        },
+        ngAnnotate: {
+            options: {
+                singleQuotes: true
+            },
+            app: {
+                files: {
+                    './public/min-safe/js/appFactory.js': ['./public/js/appFactory.js'],
+                    './public/min-safe/js/FormController.js': ['./public/js/FormController.js'],
+                    './public/min-safe/app.js': ['./public/js/app.js']
+                }
+            }
         }
     });
     //Loading and registering tasks
@@ -79,7 +90,9 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks("grunt-contrib-watch");
     grunt.loadNpmTasks("grunt-contrib-concat");
     grunt.loadNpmTasks('grunt-ngdocs');
+    grunt.loadNpmTasks('grunt-ng-annotate');
     grunt.registerTask('dev', ['watch:dev']);
     grunt.registerTask('doc',['ngdocs:all']);
+    grunt.registerTask('compile',['concat:services','concat:controllers','uglify']);
 };
 

@@ -23,6 +23,7 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Routing\ClassResourceInterface;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Debug\Exception\FatalErrorException;
 /**
  * Class RestController.
  * This class provides the private actions of a workshop.
@@ -49,9 +50,9 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      */
     public function historyAction()
     {
-        $workshops = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:Workshop')->findAll();
+        $workshops = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Workshop")->getAllWorkshops();
         if (!$workshops) {
-            throw $this->createNotFoundException("No Workshops found");
+            return $this->handleView($this->view(['code' => 404,'message' => "No Workshops found"], 404));
         }
         $view = $this->view($workshops, 200);
         return $this->handleView($view);
@@ -73,19 +74,11 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      * @Rest\RequestParam(name="title", requirements=".*", description="title of the workshop")
      * @Rest\RequestParam(name="description", requirements=".*", description="description of the workshop")
      * @Rest\RequestParam(name="cost", requirements=".*", description="cost of the workshop")
-     * @Rest\RequestParam(name="requirements", requirements=".*", description="requirements of the workshop")
+     * @Rest\RequestParam(name="requirements", requirements=".*", description="requirements of the workshop",default=null,nullable=true)
      * @Rest\RequestParam(name="location", requirements=".*", description="location of the workshop")
      * @Rest\RequestParam(name="start_at", requirements=".*", description="starttime of the workshop")
      * @Rest\RequestParam(name="end_at", requirements=".*", description="endtime of the workshop")
      * @Rest\RequestParam(name="max_participants", requirements=".*", description="maximum number of participants")
-     * @param string $title title of the workshop
-     * @param string $description description of the workshop
-     * @param float $cost cost of the workshop
-     * @param string $requirements requirements of the workshop
-     * @param string $location location of the workshop
-     * @param DateTime $start_at starttime of the workshop
-     * @param DateTime $end_at endtime of the workshop
-     * @param integer $max_participants maximum number of participants
      * @return action to create a new Workshop
      * @var Workshop $workshop
      * @Rest\View()
@@ -141,14 +134,6 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      * @Rest\RequestParam(name="start_at", requirements=".*", description="starttime of the workshop",default=null,nullable=true)
      * @Rest\RequestParam(name="end_at", requirements=".*", description="endtime of the workshop",default=null,nullable=true)
      * @Rest\RequestParam(name="max_participants", requirements=".*", description="maximum number of participants",default=null,nullable=true )
-     * @param string $title title of the workshop
-     * @param string $description description of the workshop
-     * @param float $cost cost of the workshop
-     * @param string $requirements requirements of the workshop
-     * @param string $location location of the workshop
-     * @param DateTime $start_at starttime of the workshop
-     * @param DateTime $end_at endtime of the workshop
-     * @param integer $max_participants maximum number of participants
      * @return array information of a workshop
      * @var Workshop $workshop
      * @Rest\View()
@@ -158,7 +143,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
         $params = $paramFetcher->all();
         $workshop = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:Workshop')->find($id);
         if (!$workshop) {
-            throw $this->createNotFoundException("This workshop was not found");
+            return $this->handleView($this->view(['code' => 404,'message' => "This workshop was not found"], 404));
         }
         if($params["title"] != NULL)
             $workshop->setTitle($params["title"]);
@@ -176,6 +161,28 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
             $workshop->setEndAt(\DateTime::createFromFormat('Y-m-d H:i:s',$params["end_at"]));
         if($params["max_participants"] != NULL)
             $workshop->setMaxParticipants($params["max_participants"]);
+        
+        $template = $this->getDoctrine()->getRepository("CoreEntityBundle:EmailTemplate")->findOneBy(['template_name' => 'Changed Workshopdetails']);
+        if(!$template){
+            return $this->handleView($this->view(['code' => 404,'message' => "E-Mail Template not found"], 404));
+        }
+        /* Creating Twig template from Database */
+        $renderTemplate = $this->get('twig')->createTemplate($template->getEmailBody());
+
+        $url = $this->generateUrl('core_frontend_default_index',[],TRUE)."http://swp.sky-lab.de/#/workshops/details/".$workshop->getId();
+
+        $workshopParticipants = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:WorkshopParticipants')->findBy(['workshop' => $workshop]);
+
+        foreach($workshopParticipants as $wp)
+        {
+            $message = \Swift_Message::newInstance()
+                ->setSubject($this->get('twig')->createTemplate($template->getEmailSubject())->render(["workshop" => $workshop]))
+                ->setFrom($this->getParameter('email_sender'))
+                ->setTo($wp->getParticipant()->getEmail())
+                ->setBody($renderTemplate->render(["workshop" => $workshop , "participant" => $wp->getParticipant(),'url' => $url]), 'text/html');
+            $this->get('mailer')->send($message);
+        }
+        
         $this->getDoctrine()->getManager()->persist($workshop);
         $this->getDoctrine()->getManager()->flush();
         $view = $this->view($workshop,201);
@@ -210,12 +217,35 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
     {
         $workshop = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Workshop")->find($id);
         if (!$workshop) {
-            throw $this->createNotFoundException("Workshop not found");
+            return $this->handleView($this->view(['code' => 404,'message' => "No Workshop found"], 404));
         }
-        $this->getDoctrine()->getManager()->remove($workshop);
-        $this->getDoctrine()->getManager()->flush($workshop);
 
-        return View::create(null, Codes::HTTP_OK);
+        $workshopParticipants = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:WorkshopParticipants')->findBy(['workshop' => $workshop]);
+
+        $template = $this->getDoctrine()->getRepository("CoreEntityBundle:EmailTemplate")->findOneBy(['template_name' => 'Workshop Cancel']);
+        if(!$template){
+            return $this->handleView($this->view(['code' => 404,'message' => "E-Mail Template not found"], 404));
+        }
+        /* Creating Twig template from Database */
+        $renderTemplate = $this->get('twig')->createTemplate($template->getEmailBody());
+
+        foreach($workshopParticipants as $wp)
+        {
+            $message = \Swift_Message::newInstance()
+                ->setSubject($this->get('twig')->createTemplate($template->getEmailSubject())->render(["workshop" => $workshop]))
+                ->setFrom($this->getParameter('email_sender'))
+                ->setTo($wp->getParticipant()->getEmail())
+                ->setBody($renderTemplate->render(["workshop" => $workshop , "participant" => $wp->getParticipant()]), 'text/html');
+            $this->get('mailer')->send($message);
+            $this->getDoctrine()->getManager()->remove($wp);
+
+        }
+
+        $this->getDoctrine()->getManager()->remove($workshop);
+        $this->getDoctrine()->getManager()->flush();
+
+
+        return $this->handleView($this->view(['code' => 200,'message' => "Deleted & Mail send"], 200));
     }
     
     
@@ -244,7 +274,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      * )
      *
      * @param $id int id of the workshop
-     * @param $participantID int id of the workshopparticipants
+     * @param $participantId int id of the workshopparticipants
      * @return \Symfony\Component\HttpFoundation\Response
      * @var WorkshopParticipants $workshopParticipant
      * @Rest\View()
@@ -254,19 +284,33 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
         //relation between workshop and participant
         $workshopParticipant = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:WorkshopParticipants")->findOneBy([ "workshop"=>$id,"participant"=>$participantId]);
         if (!$workshopParticipant) {
-            throw $this->createNotFoundException("No participant on waiting list found");
+            return $this->handleView($this->view(['code' => 404,'message' => "No Participants on waiting list found"], 404));
         }
         $workshopParticipant->setWaiting(0); /** 0 -> im Workshop, 1-> Waiting */
         $this->getDoctrine()->getManager()->persist($workshopParticipant);
         $this->getDoctrine()->getManager()->flush();
+
+        /* Loading the default E-Mail template*/
+        $template = $this->getDoctrine()->getRepository("CoreEntityBundle:EmailTemplate")->findOneBy(['template_name' => 'Participant']);
+        /* Creating Twig template from Database */
+        $renderTemplate = $this->get("twig")->createTemplate($template->getEmailBody());
+        /* Sending E-Mail */
+
+        $message = \Swift_Message::newInstance()
+            ->setSubject($this->get('twig')->createTemplate($template->getEmailSubject())->render(["workshop" => $workshopParticipant->getWorkshop()]))
+            ->setFrom($this->container->getParameter('email_sender'))
+            ->setTo($workshopParticipant->getParticipant()->getEmail())
+            ->setBody($renderTemplate->render(['participant' => $workshopParticipant->getParticipant(),'workshop' => $workshopParticipant->getWorkshop()] ), 'text/html');
+        $this->get("mailer")->send($message);
+        
         return View::create(null, Codes::HTTP_CREATED);
     }
 
     /**
-     * action to overbook a workshop
+     * action to confirm participation
      * @ApiDoc(
      *  resource=true,
-     *  description="overbook a workshop",
+     *  description="action to confirm participation",
      *  output = "",
      *  statusCodes = {
      *      200 = "Returned when successful",
@@ -297,7 +341,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
         $workshopParticipant = $this->getDoctrine()->getRepository("CoreEntityBundle:WorkshopParticipants")->findOneBy(["workshop" => $id,"participant" => $participantId]);
 
         if(!$workshopParticipant){
-            throw $this->createNotFoundException("User not found in this Workshop");
+            return $this->handleView($this->view(['code' => 404,'message' => "User not found in this workshop"], 404));
         }
 
         $workshopParticipant->setParticipated(true);
@@ -305,5 +349,79 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
         $this->getDoctrine()->getManager()->flush();
         return View::create(null, Codes::HTTP_OK);
 
+    }
+
+    /**
+     * Returns the waiting list of a workshop
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Returns the waiting list of a workshop",
+     *  output = "Core\EntityBundle\Entity\Participants",
+     *  statusCodes = {
+     *      200 = "Returned when successful",
+     *      404 = "Returned when the data is not found"
+     *  },requirements={
+     *      {
+     *          "name"="id",
+     *          "dataType"="integer",
+     *          "requirement"="\d+",
+     *          "description"="Workshop ID"
+     *      }
+     *  }
+     * )
+     * @param $id int id of workshop
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Rest\View()
+     */
+    public function getWaitinglistAction($id)
+    {
+        $waitingList = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:WorkshopParticipants')->findBy(['workshop' => $id,'waiting' => true],['enrollment' => "DESC"]);
+        if (!$waitingList) {
+            return $this->handleView($this->view(['code' => 404,'message' => "No waitinglist for workshop"], 404));
+        }
+        $list = [];
+        foreach($waitingList as $p){
+            $list[] =$p->getParticipant();
+        }
+        $view = $this->view($list, 200);
+        return $this->handleView($view);
+    }
+
+    /**
+     * Returns the list of participants
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Returns the list of participants",
+     *  output = "Core\EntityBundle\Entity\Participants",
+     *	statusCodes = {
+     *      200 = "Returned when successful",
+     *      404 = "Returned when the data is not found"
+     *  },requirements={
+     *      {
+     *          "name"="id",
+     *          "dataType"="integer",
+     *          "requirement"="\d+",
+     *          "description"="Workshop ID"
+     *      }
+     *  }
+     * )
+     * @param $id int id of workshop
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Rest\View()
+     */
+    public function getParticipantsAction($id)
+    {
+        $participantsList = $this->getDoctrine()->getManager()->getRepository('CoreEntityBundle:WorkshopParticipants')->findBy(['workshop' => $id, 'waiting' => false],['enrollment' => "DESC"]);
+        if (!$participantsList) {
+            return $this->handleView($this->view(['code' => 404, 'message' => "No Participant in Workshop found"], 404));
+
+        }
+        $list = [];
+        foreach($participantsList as $p){
+            $list[] = ['id' => $p->getParticipant()->getId(),'name' => $p->getParticipant()->getName(),'surname' => $p->getParticipant()->getSurname(),'email' => $p->getParticipant()->getEmail(),'participated' => $p->isParticipated()];
+
+        }
+        $view = $this->view($list, 200);
+        return $this->handleView($view);
     }
 }

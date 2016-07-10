@@ -85,7 +85,7 @@ class UserController extends FOSRestController implements ClassResourceInterface
          /** @var $user User */
          $user = $this->get('fos_user.user_manager')->findUserByUsernameOrEmail($paramFetcher->get("email"));
          if (null === $user) {
-             $this->createNotFoundException("Username not found");
+             return $this->handleView($this->view(['code' => 404,'message' => "Username not found"], 404));
          }
 
          if (null === $user->getConfirmationToken()) {
@@ -100,7 +100,7 @@ class UserController extends FOSRestController implements ClassResourceInterface
          }
 
          $url = $this->generateUrl('core_frontend_default_index',[],TRUE)."#/password/reset/".$user->getConfirmationToken();
-         $template = $this->getDoctrine()->getRepository("CoreEntityBundle:EmailTemplate")->find(3);
+         $template = $this->getDoctrine()->getRepository("CoreEntityBundle:EmailTemplate")->findOneBy(['template_name' => 'Invitation']);
          /* Creating Twig template from Database */
          $renderTemplate = $this->get('twig')->createTemplate($template->getEmailBody());
          /* Sending E-Mail */
@@ -141,12 +141,12 @@ class UserController extends FOSRestController implements ClassResourceInterface
         //$params is array with E-Mail Password and Token (Code)
         $params = $paramFetcher->all();
         //find invitation in database
-        if($params['username'] == NULL){
+        if($params['username'] === NULL){
             $params['username'] = uniqid();
         }
         $invitation = $this->getDoctrine()->getManager()->getRepository("CoreEntityBundle:Invitation")->findOneBy(['code' => $params['code']]);
         //check if invitation parameter sended is true
-        if ($invitation->getSent() && $invitation->getUsed() != true) {
+        if ($invitation->getSent() && $invitation->getUsed() !== true) {
             //FOSUserBundle
             $UserManager = $this->get('fos_user.user_manager');
 
@@ -158,7 +158,8 @@ class UserController extends FOSRestController implements ClassResourceInterface
             $admin->setEnabled(true);
             $invitation->setUsed(true);
         } else {
-            throw $this->createAccessDeniedException("No invitation was sended or the invitation was already used");
+            return $this->handleView($this->view(['code' => 403,'message' => "No invitation was sended or the invitation was already used"], 403));
+
         }
 
         $this->getDoctrine()->getManager()->persist($admin);
@@ -167,4 +168,61 @@ class UserController extends FOSRestController implements ClassResourceInterface
 
         return View::create(NULL, Codes::HTTP_OK);
     }
+       /**
+     * load the content of legal notice
+     * @ApiDoc(
+     *  resource=true,
+     *  description="load the content of legal notice",
+     *  output = "",
+     *  statusCodes = {
+     *      200 = "Returned when successful",
+     *      404 = "Returned when the data is not found"
+     *  }
+     *)
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @return array give the list of all admins
+     * @Rest\View()
+     */
+    public function getLegalNoticeAction()
+    {
+        $path = $this->get('kernel')->getRootDir() . '/../web/resources/data/legalNotice';
+        $content = ['content' => file_get_contents($path)];
+        if($content){
+            $view = $this->view($content,200);
+            return $this->handleView($view);
+        }else{
+            return $this->handleView($this->view(['code' => 404,'message' => "Could not read the file."], 404));
+        }
+    }
+    
+        /**
+     * load the content of contact data
+     * @ApiDoc(
+     *  resource=true,
+     *  description="load the content of contact data",
+     *  output = "",
+     *  statusCodes = {
+     *      200 = "Returned when successful",
+     *      404 = "Returned when the data is not found"
+     *  }
+     *)
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @return array give the list of all admins
+     * @Rest\View()
+     */
+    public function getContactDataAction()
+    {
+        $path = $this->get('kernel')->getRootDir() . '/../web/resources/data/contactData';
+        $content = ['content' => json_decode(file_get_contents($path),TRUE)];
+        if($content){
+            $view = $this->view($content,200);
+            return $this->handleView($view);
+        }else{
+            return $this->handleView($this->view(['code' => 404,'message' => "Could not read the file."], 404));
+        }
+    }
+  
  }
+ 

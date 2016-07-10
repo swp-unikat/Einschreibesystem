@@ -65,6 +65,7 @@ openssl rsa -passin pass:unikat -pubout -in app/var/jwt/private.pem -out app/var
 #composer
 cd /var/www
 composer install
+composer update
 
 #Doctrine
 php app/console doctrine:database:create
@@ -78,4 +79,5 @@ service apache2 restart
 service mysql restart
 service php7.0-fpm restart
 
+chmod 777 /var/www/* -R
 

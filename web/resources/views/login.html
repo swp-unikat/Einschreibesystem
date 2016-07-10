@@ -7,7 +7,7 @@
             <h3 translate class="panel-title">LOGIN</h3>
         </div>
         <div class="panel-body">
-            <form role="form">
+            <form ng-submit="sendInfo()">
                 <div class="row">
                     <div>
                         <div class="form-group">
@@ -17,12 +17,12 @@
                     <div class ="row">
                     <div>
                         <div class="form-group">
-                            <input type="password" name="pass" ng-model="password" class="form-control input-sm" placeholder="Password" ng-keyup="$event.keyCode == 13 && sendInfo()">
+                            <input type="password" name="pass" ng-model="password" class="form-control input-sm" placeholder="Password">
                         </div>
                     </div>
                 </div>
 
-                <button type="button" translate class="btn btn-info btn-block" ng-click="sendInfo()">BUTTON_LOGIN</button>
+                <button type="submit" translate class="btn btn-info btn-block">BUTTON_LOGIN</button>
             </form>
 
             <div class="login-help">
@@ -37,16 +37,19 @@
 
         </div>
     </div>
-    <div ng-show="reset_panel" class="panel panel-default">
-        <div class="panel-heading text-center">
-            {{ 'ENTER_MAIL_RESET' | translate }}
-        </div>
-        <div class="panel-body">
-            <input ng-model="e_mail_for_reset" type="email" class="form-control" placeholder="Enter your E-Mail"/>
-            <button type="button" class="btn btn-primary" ng-click="resetPassword(e_mail_for_reset)" translate>RESET_PASSWORD</button>
-            <div id="reset_alert" bs-alert></div>
+    <div ng-show="reset_panel">
+        <div class="panel panel-default">
+            <div class="panel-heading text-center">
+                {{ 'ENTER_MAIL_RESET' | translate }}
+            </div>
+            <div class="panel-body">
+                <input ng-model="reset.email" type="email" class="form-control" placeholder="Enter your E-Mail"/>
+                <button type="button" class="btn btn-primary" ng-click="resetPassword()" translate>RESET_PASSWORD</button>
+                <div id="reset_alert" bs-alert></div>
+            </div>
         </div>
     </div>
+
 </div>
 </div>
 </div>

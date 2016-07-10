@@ -9,9 +9,10 @@
 </style>
 <div class="row">
     <div class="col-md-2 col-md-offset-5 text-center">
-        <input type="text" class="form-control" ng-model="username" placeholder="{{placeholder.username}}"/>
-        <input type="password" class="form-control" ng-model="password" placeholder="{{placeholder.password}}"/>
-        <input type="password" class="form-control" ng-model="password_confirm" placeholder="{{placeholder.confirm_password}}"/>
+        <input type="email" class="form-control"    ng-model="form.email" placeholder="{{placeholder.email}}"/>
+        <input type="text" class="form-control"     ng-model="form.username" placeholder="{{placeholder.username}}"/>
+        <input type="password" class="form-control" ng-model="form.password" placeholder="{{placeholder.password}}"/>
+        <input type="password" class="form-control" ng-model="form.password_confirm" placeholder="{{placeholder.confirm_password}}"/>
         <div bs-alert id="alert"></div>
         <button translate type="button" class="btn btn-primary" ng-click="sendInfo()">BUTTON_CREATE_ACCOUNT</button>
     </div>

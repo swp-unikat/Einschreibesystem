@@ -15,6 +15,16 @@ mainAppCtrls.controller('adminWorkshopManagementCtrl',['$scope','AdminWorkshop',
         $scope.myAlert;
         $scope.currentList = [];
         $scope.elapsedList = [];
+
+        //Get translations for errors and store in array
+        var _translations = {};
+        //Pass all required translation IDs to translate service
+        $translate(['ALERT_WORKSHOP_DELETE_SUCCESS',
+            'ALERT_INTERNAL_SERVER_ERROR','ALERT_WORKSHOP_DELETE_FAIL']).
+        then(function(translations){
+            _translations = translations;
+        });
+        
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:adminWorkshopManagementCtrl#compareToCurrent
@@ -29,9 +39,10 @@ mainAppCtrls.controller('adminWorkshopManagementCtrl',['$scope','AdminWorkshop',
            return (d2.getTime()>d1.getTime())
         };
         //Get and store translation for alert title.
-        $translate(['TITLE_ERROR', 'ERROR_NO_WORKSHOPS']).then(function (translations) {
+        $translate(['TITLE_ERROR','ERROR_NO_WORKSHOPS','TITLE_SUCCESS']).then(function (translations) {
             $scope.errorTitle = translations.TITLE_ERROR;
             $scope.errorMsg = translations.ERROR_NO_WORKSHOPS;
+            $scope.successTitle = translations.TITLE_SUCCESS;
         });
         var loadWorkshops = function() {
             $scope.loading = true;
@@ -64,7 +75,7 @@ mainAppCtrls.controller('adminWorkshopManagementCtrl',['$scope','AdminWorkshop',
                         $scope.myAlert = $alert({
                             title: $scope.errorTitle,
                             type: 'danger',
-                            content: 'Internal server error.',
+                            content: _translations.ALERT_INTERNAL_SERVER_ERROR + ' (' + httpResponse.status +')',
                             container: '#alert',
                             dismissable: false,
                             show: true
@@ -85,18 +96,26 @@ mainAppCtrls.controller('adminWorkshopManagementCtrl',['$scope','AdminWorkshop',
         $scope.delete = function (_id) {
             AdminWorkshop.delete({id:_id}).$promise.then(function(httpResponse){
                     $alert({
-                        title:'Success',
+                        title: $scope.successTitle,
                         type: 'success',
                         container:'#alert',
                         show: true,
                         dismissable: true,
-                        content: 'Successfully deleted',
+                        content: _translations.ALERT_WORKSHOP_DELETE_SUCCESS,
                         duration: 20
                     });
                     loadWorkshops();
                 }
                 , function (httpResponse) {
-                    alert('Error');
+                    $alert({
+                        title: $scope.errorTitle,
+                        type: 'danger',
+                        container:'#alert',
+                        show: true,
+                        dismissable: true,
+                        content: _translations.ALERT_WORKSHOP_DELETE_FAIL + ' (' + httpResponse.status +')',
+                        duration: 20
+                    });
                 }
             )
 

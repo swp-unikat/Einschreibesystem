@@ -4,20 +4,29 @@
 var mainAppCtrls = angular.module("mainAppCtrls");
 /**
  * @ngdoc controller
-* @name mainAppCtrls.controller:EmailTemplateCtrl
-* @description Module containing all email templates
+ * @name mainAppCtrls.controller:EmailTemplateCtrl
+ * @description Module containing all email templates
  * @requires restSvscs.EmailTemplate
-*/
-mainAppCtrls.controller('EmailTemplateCtrl', ['$scope', "EmailTemplate",'$alert','$modal',
-    
-    function ($scope, EmailTemplate, $alert,$modal) {
+ */
+mainAppCtrls.controller('EmailTemplateCtrl', ['$scope', "EmailTemplate", '$alert', '$modal', '$translate',
+
+    function ($scope, EmailTemplate, $alert, $modal, $translate) {
+
+        //Get translations for errors and store in array
+        var _translations = {};
+        //Pass all required translation IDs to translate service
+        $translate(['ALERT_EMAILTEMPLATE_DELETE_SUCCESS', 'ALERT_EMAILTEMPLATE_DELETE_FAIL', 'TITLE_ERROR','TITLE_SUCCESS'
+        ]).then(function (translations) {
+            _translations = translations;
+        });
+
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:EmailTemplateCtrl#loadTemplates
          * @methodOf mainAppCtrls.controller:EmailTemplateCtrl
          * @description Function loads the actual list of all email templates
          */
-        var loadTemplates = function() {
+        var loadTemplates = function () {
             $scope.loading = true;
             EmailTemplate.getAll()
                 .$promise.then(function (value) {
@@ -37,20 +46,28 @@ mainAppCtrls.controller('EmailTemplateCtrl', ['$scope', "EmailTemplate",'$alert'
          * @params {number} _id email template id, which should be removed
          */
         $scope.delete = function (_id) {
-            EmailTemplate.delete({id:_id}).$promise.then(function(httpResponse){
+            EmailTemplate.delete({id: _id}).$promise.then(function (httpResponse) {
                     $alert({
-                        title:'Success',
+                        title: _translations.TITLE_SUCCESS,
                         type: 'success',
-                        container:'#alert',
+                        container: '#alert',
                         show: true,
                         dismissable: false,
-                        content: 'Successfully deleted',
+                        content: _translations.ALERT_EMAILTEMPLATE_DELETE_SUCCESS,
                         duration: 20
                     });
-                loadTemplates();
-            }
+                    loadTemplates();
+                }
                 , function (httpResponse) {
-                    alert('Error');
+                    $alert({
+                        title: _translations.TITLE_ERROR,
+                        type: 'danger',
+                        content: _translations.ALERT_EMAILTEMPLATE_DELETE_FAIL + ' (' + httpResponse.status + ')',
+                        container: '#alert',
+                        dismissable: false,
+                        show: true,
+                        duration: 20
+                    });
                 }
             )
 

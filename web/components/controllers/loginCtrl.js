@@ -7,13 +7,15 @@ var mainAppCtrls = angular.module("mainAppCtrls");
  * @name mainAppCtrls.controller:LoginCtrl
  * @description Controller handling the login process. Associated with the login view
  */
-mainAppCtrls.controller('LoginCtrl',['$scope','$http','store','$state','jwtHelper','$alert','$translate',
-    function($scope,$http,store,$state,jwtHelper,$alert,$translate) {
+mainAppCtrls.controller('LoginCtrl',['$scope','$http','store','$state','jwtHelper','$alert','$translate','Admin',
+    function($scope,$http,store,$state,jwtHelper,$alert,$translate,Admin) {
         $scope.reset_panel = false;
         var jwt = store.get('jwt');
+        $scope.reset = {};
         
         var _translations;
-        $translate(['TITLE_ERROR','ALERT_LOGIN_FAIL']).then(function(translation){
+        $translate(['TITLE_ERROR','ALERT_LOGIN_FAIL', 'ALERT_RESET_EMAIL_ERROR', 'TITLE_SUCCESS',
+        'ALERT_RESET_PASSWORD_SUCCESS','ALERT_RESET_PASSWORD_ERROR' ]).then(function(translation){
             _translations = translation;
         })
         
@@ -61,22 +63,42 @@ mainAppCtrls.controller('LoginCtrl',['$scope','$http','store','$state','jwtHelpe
          */
         $scope.showResetPanel = function() {
             $scope.reset_panel = !$scope.reset_panel;
-            console.log($scope.reset_panel);
         }
-
-        $scope.resetPassword = function(e_mail_for_reset) {
-            if($scope.alertReset != null)
-                $scope.alertReset.hide();
-            if(!e_mail_for_reset.$valid) {
+        $scope.alertReset = $alert({});
+        $scope.resetPassword = function() {
+            $scope.alertReset.hide();
+            if(!$scope.reset.email) {
                 $scope.alertReset = $alert({
                     title: _translations.TITLE_ERROR,
-                    content: '',
+                    content: _translations.ALERT_RESET_EMAIL_ERROR,
                     type: 'danger',
                     dismissable: false,
                     show: true,
                     container: '#reset_alert'
                 });
+                return;
             }
+            if($scope.alertReset != null)
+                $scope.alertReset.hide();
+            Admin.requestReset({email: $scope.reset.email}).$promise.then(function(response){
+                $scope.alertReset = $alert({
+                    title: _translations.TITLE_SUCCESS,
+                    content: _translations.ALERT_RESET_PASSWORD_SUCCESS,
+                    type: 'success',
+                    dismissable: false,
+                    show: true,
+                    container: '#reset_alert'
+                });
+            },function(response){
+                $scope.alertReset = $alert({
+                    title: _translations.TITLE_ERROR,
+                    content: _translations.ALERT_RESET_PASSWORD_ERROR,
+                    type: 'danger',
+                    dismissable: false,
+                    show: true,
+                    container: '#reset_alert'
+                });
+            });
         }
     }
 ]);
