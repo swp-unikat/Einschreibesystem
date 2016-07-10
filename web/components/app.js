@@ -23,8 +23,7 @@ var mainApp = angular.module('mainApp',[
     'angular-storage',
     'pascalprecht.translate',
     'textAngular',
-    'prntSvcs',
-    'ngSanitize'
+    'prntSvcs'
 ]);
 /**
  * @name mainAppCtrls
@@ -32,8 +31,9 @@ var mainApp = angular.module('mainApp',[
  * @description Module containing all controller of the application
  * @requires pascalprect.translate
  */
-var mainAppCtrls = angular.module('mainAppCtrls',["pascalprecht.translate"]);
+var mainAppCtrls = angular.module('mainAppCtrls',["pascalprecht.translate",'ngSanitize']);
 
+//ROUTE CONFIGURATION
 mainApp.config(['$urlRouterProvider','$stateProvider',
     function($urlRouterProvider,$stateProvider)
     {
@@ -229,6 +229,7 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
     }
 ]);
 
+//CALLED ON EVERY ROUTE CHANGE. USED TO CHECK IF TOKEN IS EXPIRED CONSTANTLY
 mainApp.config(['jwtInterceptorProvider','$httpProvider','$urlRouterProvider',function(jwtInterceptorProvider,$httpProvider,$urlRouterProvider){
     jwtInterceptorProvider.tokenGetter = function(store) {
         return store.get('jwt');
@@ -240,6 +241,8 @@ mainApp.config(['jwtInterceptorProvider','$httpProvider','$urlRouterProvider',fu
         $rootScope.$on('$stateChangeStart', function(e, to) {
             if (to.data && to.data.requiresLogin) {
                 if (!store.get('jwt') || jwtHelper.isTokenExpired(store.get('jwt'))) {
+                    if(store.get('jwt'))
+                        store.remove('jwt');
                     e.preventDefault();
                     $state.go('login');
                 }
@@ -247,7 +250,9 @@ mainApp.config(['jwtInterceptorProvider','$httpProvider','$urlRouterProvider',fu
         });
     }]);
 
+//CONFIGURES TRANSLATION
 mainApp.config(['$translateProvider', function($translateProvider) {
+    $translateProvider.useSanitizeValueStrategy('escape');
     $translateProvider.useStaticFilesLoader({
         prefix: 'resources/local/lang-',
         suffix: '.json'
@@ -309,6 +314,7 @@ mainApp.controller('GlobalCtrl',['$scope','store','jwtHelper','$state','$http','
                 $scope.show_logout = false;
             }
         }
+        //delete token if available and expired
         if(jwt != null && jwtHelper.isTokenExpired(jwt))
             store.remove(jwt);
     });

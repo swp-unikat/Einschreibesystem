@@ -6,8 +6,8 @@ var mainAppCtrls = angular.module("mainAppCtrls");
  * @name mainAppCtrls.controller:EditEmailTemplateCtrl
  * @requires restSvcs.EmailTemplate
  */
-mainAppCtrls.controller('EditEmailTemplateCtrl',['$scope','EmailTemplate','$stateParams','$translate','$alert',
-    function($scope,EmailTemplate,$stateParams,$translate,$alert) {
+mainAppCtrls.controller('EditEmailTemplateCtrl',['$scope','EmailTemplate','$stateParams','$translate','$alert','$state',
+    function($scope,EmailTemplate,$stateParams,$translate,$alert,$state) {
         
         var _workshopId = $stateParams.id;
 
@@ -77,6 +77,7 @@ mainAppCtrls.controller('EditEmailTemplateCtrl',['$scope','EmailTemplate','$stat
                     show: true,
                     duration: 30
                 });
+                $state.go("email_template")
             }, function (httpResponse) {
                     $alert({
                         title: _translations.TITLE_ERROR,

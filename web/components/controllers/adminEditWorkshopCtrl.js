@@ -9,8 +9,8 @@ var mainAppCtrls = angular.module("mainAppCtrls");
  * @description Controller for editing a workshop. Initializes resources used to edit a workshop
  * @name mainAppCtrls.controller:AdminEditWorkshopCtrl
  */
-mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWorkshop','$stateParams','$translate','$alert',
-    function($scope,Workshops,AdminWorkshop,$stateParams,$translate,$alert) {
+mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWorkshop','$stateParams','$translate','$alert','$state',
+    function($scope,Workshops,AdminWorkshop,$stateParams,$translate,$alert,$state) {
 
         var _workshopId = $stateParams.id;
 
@@ -44,7 +44,7 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
             $scope.workshop.title = _originalData.title;
             $scope.workshop.description = _originalData.description;
             $scope.workshop.cost = _originalData.cost;
-            $scope.workshop.requirements = _originalData.requirements;
+            $scope.workshop.requirement = _originalData.requirement;
             $scope.workshop.location = _originalData.location;
             $scope.workshop.start_at = _originalData.start_at;
             $scope.workshop.end_at = _originalData.end_at;
@@ -127,7 +127,7 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
                 title:$scope.workshop.title,
                 description:$scope.workshop.description,
                 cost:$scope.workshop.cost,
-                requirements:$scope.workshop.requirements,
+                requirements:$scope.workshop.requirement,
                 location:$scope.workshop.location,
                 start_at:reformatDate((new Date(_sa))),
                 end_at:reformatDate(_ea),
@@ -139,7 +139,7 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
                     title: value.title,
                     description: value.title,
                     cost: value.title,
-                    requirements: value.title,
+                    requirement: value.title,
                     location: value.title,
                     start_at: value.title,
                     end_at: value.end_at,
@@ -156,6 +156,7 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
                     duration: 30
                 });
                 //Redirect to Details page
+                $state.go("administrator_workshop_details",{id: value.id});
             }, function (httpResponse) {
                 $alert({
                     title:_translations.TITLE_ERROR,
@@ -178,7 +179,7 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
                 title: value.title,
                 description: value.description,
                 cost: value.cost,
-                requirements: value.requirements,
+                requirement: value.requirement,
                 location: value.location,
                 start_at: value.start_at,
                 end_at: value.end_at,
@@ -192,7 +193,7 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
             $scope.workshop.title = _originalData.title;
             $scope.workshop.description = _originalData.description;
             $scope.workshop.cost = _originalData.cost;
-            $scope.workshop.requirements = _originalData.requirements;
+            $scope.workshop.requirement = _originalData.requirement;
             $scope.workshop.location = _originalData.location;
             $scope.workshop.start_at = _originalData.start_at;
             $scope.workshop.end_at = _originalData.end_at;

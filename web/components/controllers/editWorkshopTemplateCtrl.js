@@ -6,8 +6,8 @@ var mainAppCtrls = angular.module("mainAppCtrls");
  * @name mainAppCtrls.controller:EditWorkshopTemplateCtrl
  * @requires restSvcs.WorkshopTemplate
  */
-mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate','$stateParams','$translate','$alert',
-    function($scope,WorkshopTemplate,$stateParams,$translate,$alert) {
+mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate','$stateParams','$translate','$alert','$state',
+    function($scope,WorkshopTemplate,$stateParams,$translate,$alert,$state) {
 
         var _workshopId = $stateParams.id;
         $scope.workshop = {};
@@ -92,7 +92,7 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
                 });
                 error = true;
             }
-
+                var now = new Date();
             if($scope.workshop.start_at < now) {
                 $alert({
                     title:  _translations.TITLE_ERROR,
@@ -113,7 +113,7 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
                 title:$scope.workshop.title,
                 description:$scope.workshop.description,
                 cost:$scope.workshop.cost,
-                requirements:$scope.workshop.requirement,
+                requirement:$scope.workshop.requirement,
                 location:$scope.workshop.location,
                 start_at:reformatDate((new Date(_sa))),
                 end_at:reformatDate(_ea),
@@ -129,6 +129,7 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
                     show: true,
                     duration: 30
                 });
+                $state.go("workshop_template");
             }, function (httpResponse) {
                 $alert({
                     title: _translations.TITLE_ERROR,

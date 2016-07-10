@@ -8,8 +8,8 @@ var mainAppCtrls = angular.module("mainAppCtrls");
  * @description Controller to create a new email template
  * @requires restSvcs.EmailTemplate
  */
-mainAppCtrls.controller('NewEmailTemplateCtrl',['$scope',"EmailTemplate",'$translate','$alert',
-    function($scope, EmailTemplate,$translate,$alert) {
+mainAppCtrls.controller('NewEmailTemplateCtrl',['$scope',"EmailTemplate",'$translate','$alert','$state',
+    function($scope, EmailTemplate,$translate,$alert,$state) {
         
         //Get translations for errors and store in array
         var _translations = {};
@@ -52,6 +52,7 @@ mainAppCtrls.controller('NewEmailTemplateCtrl',['$scope',"EmailTemplate",'$trans
                     dismissable: false,
                     show: true
                 });
+                $state.go("email_template");
             });
         }
         /**

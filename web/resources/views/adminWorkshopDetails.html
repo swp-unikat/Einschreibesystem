@@ -24,7 +24,7 @@
                             <div  class="col-sm-10 col-sm-12"><p>{{workshop.cost}} {{ "C" | translate}}</p></div>
                         </div>
 
-                        <div ng-hide="workshop.requierment==null" class="form-group">
+                        <div ng-hide="workshop.requirement==null" class="form-group">
                             <label translate class="col-lg-2 col-sm-12 control-label">WORKSHOP_REQUIREMENTS</label>
                             <div  class="col-sm-10 col-sm-12"><p>{{workshop.requirement}}</p></div>
                         </div>
@@ -58,7 +58,7 @@
                     <li class="list-group-item"  ng-repeat="p in participants">
                         <label>{{p.name}} {{p.surname}}</label> (<span class="small">{{p.email}}</span>)
 	                           <span class="pull-right">
-		                            <input type="checkbox" value="" ng-click="confirmUser()">
+		                            <input type="checkbox" value="" ng-change="confirmUser(workshop.id,p.id)" ng-model="p.participated" ng-disabled="p.participated == true">
 		                            <button type="button" ng-click="remove(workshop.id,p.id)" class="btn btn-default btn-xs">
 		                                <span data-toggle="tooltip" title="{{'BUTTON_REMOVE_PARTICIPANT' | translate}}" class="glyphicon glyphicon-trash" aria-hidden="true"></span>
 		                            </button>
@@ -85,7 +85,7 @@
         </div>
         <div class="row">
             <div class="col-md-8">
-                <br><br><br><br>
+                <a ui-sref="admin_workshop_edit({id: workshopid})"><button type="button" class="btn btn-default">{{"BUTTON_EDIT_WORKSHOP" | translate}}</button></a>
                 <a ui-sref="admin_email_confirm({id: workshopid})"><button type="button" class="btn btn-default">{{ "BUTTON_SEND_SUBSCRIBE_CONFIRMATION" | translate}}</button></a>
                 <button type="button" class="btn btn-default" ng-click="printList()">{{ "BUTTON_PRINT_LIST_OF_PARTICIPANTS" | translate}}</button>
             </div>

@@ -215,7 +215,7 @@ class UserController extends FOSRestController implements ClassResourceInterface
     public function getContactDataAction()
     {
         $path = $this->get('kernel')->getRootDir() . '/../web/resources/data/contactData';
-        $content = ['content' => file_get_contents($path)];
+        $content = ['content' => json_decode(file_get_contents($path),TRUE)];
         if($content){
             $view = $this->view($content,200);
             return $this->handleView($view);

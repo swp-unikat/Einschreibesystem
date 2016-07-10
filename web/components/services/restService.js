@@ -71,7 +71,7 @@ restSvcs.factory('Workshops',['$resource',function($resource){
          * @param {string} token Confirmtoken
          */
         'confirmEnroll': {method: 'GET',url:'/api/workshops/:id/enroll/:userid/confirm/:token',params: {id: '@id',userid: '@userid',token: '@token'},isArray: false},
-        'unsubscribeConfirm': {method: 'GET',url: '/api/workshops/:id/unsubscribe/:token/confirm/:participantId'}
+        'unsubscribeConfirm': {method: 'GET',url: '/api/workshops/:id/unsubscribe/:token/confirmation/:participantId'}
     });
 }]);
 /**
@@ -170,7 +170,8 @@ restSvcs.factory('AdminWorkshop',['$resource',function($resource){
          */
         'overbook': {method: 'PATCH',url:'/api/admin/workshops/:id/waitinglist/:participantid' ,params: {id: '@id', participantid: '@participantid'}, isArray: false},
         'participants': {method: 'GET',url:'/api/admin/workshops/:id/participants',params: {id: '@id'},isArray: true},
-        'waitinglist': {method: 'GET',url:'/api/admin/workshops/:id/waitinglist',params: {id: '@id'},isArray: true}
+        'waitinglist': {method: 'GET',url:'/api/admin/workshops/:id/waitinglist',params: {id: '@id'},isArray: true},
+        'confirmParticipation': {method: 'POST',url:'/api/admin/workshops/:id/participated/:participant',params: {id: '@id',participant: '@participant'},isArray: true}
     });
 }]);
 /**
