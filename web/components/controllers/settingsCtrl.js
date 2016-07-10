@@ -46,14 +46,28 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm','Admin', '$
                 $scope.ln.legalNotice = value.content;
                 _originalNotice = value.content;
             },function(value){
-
+                $alert({
+                    title: _translations.TITLE_ERROR,
+                    type: 'danger',
+                    content: value.message,
+                    container: '#alertInfo',
+                    dismissable: false,
+                    show: true
+                });
             });
 
         Admin.getContact().$promise.then(
             function(value){
                 $scope.form = value.content;
             },function(value){
-                alert(value.message);
+                $alert({
+                    title: _translations.TITLE_ERROR,
+                    type: 'danger',
+                    content: value.message,
+                    container: '#alertInfo',
+                    dismissable: false,
+                    show: true
+                });
             }
         );
 
