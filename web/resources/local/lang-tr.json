@@ -210,7 +210,7 @@
   "ALERT_EMAILCONFIRM_SEND_FAIL":"E-Mail gönderilemedi:",
   "ALERT_WORKSHOP_AT_SAME_TIME":"Aynı zamana başka bir Kursa kayıtlısınız!",
   "ERROR_UNSUBSCRIBE_FAIL": "Kurstan çıkışta hata oluştu",
-  "UNSUBSCRIBE_SUCCESS": "Kurstan başarılı çıkış yapıldı",
+  "UNSUBSCRIBE_SUCCESS": "Kurstan başarılı çıkış yapıldı. Lütfen E-Mailinize bakın",
   "UNSUBSCRIBE_NOT_ENROLLED":"Kurstan çıkabilmeniz için Kursta kayıtlı olmanız gerek!",
   "UNSUBSCRIBE_EMAIL_TEMPLATE_NOT_FOUND":"Çıkış E-Mail Şablonu bulunamadı",
   "UNSUBSCRIBE_CONFIRM_ERROR":"Kurstan çıkışda hata oluştu. Eger bozuk Linkli E Mail aldıysanız lütfen bir Yöneticiye başvurun!",
