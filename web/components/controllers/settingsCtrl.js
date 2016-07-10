@@ -49,7 +49,13 @@ mainAppCtrls.controller('SettingsCtrl',['$scope','$alert','$confirm','Admin', '$
 
             });
 
-
+        Admin.getContact().$promise.then(
+            function(value){
+                $scope.form = value.content;
+            },function(value){
+                alert(value.message);
+            }
+        );
 
         $scope.pwAlert = null;
         $scope.emailAlert = null;
