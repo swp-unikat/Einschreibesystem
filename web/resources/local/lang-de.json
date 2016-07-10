@@ -212,6 +212,8 @@
   "ERROR_UNSUBSCRIBE_FAIL": "Fehler beim Abmelden von Workshop",
   "UNSUBSCRIBE_SUCCESS": "Erfolgreich von Workshop abgemeldet. Bitte überprüfe deine E-Mails!",
   "UNSUBSCRIBE_NOT_ENROLLED":"Sie müssen im Workshop eingeschrieben sein, um sich vom Workshop abmelden zu können!",
-  "UNSUBSCRIBE_EMAIL_TEMPLATE_NOT_FOUND":"Abmelde-E-Mail Template wurde nicht gefunden"
-
+  "UNSUBSCRIBE_EMAIL_TEMPLATE_NOT_FOUND":"Abmelde-E-Mail Template wurde nicht gefunden",
+  "UNSUBSCRIBE_CONFIRM_ERROR":"Fehler beim Abmelden von Workshop. Wenn Sie einen defekten Link per E-Mail erhalten haben, wenden Sie sich bitte an einen Administrator!",
+  "PARTICIPATION_CONFIRM_SUCCESS":"Teilnahmebestätigung!",
+  "PARTICIPATION_CONFIRM_ERROR":"Fehler bei der Bestätigung der Teilnahme: "
 }
