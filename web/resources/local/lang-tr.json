@@ -212,6 +212,9 @@
   "ERROR_UNSUBSCRIBE_FAIL": "Kurstan çıkışta hata oluştu",
   "UNSUBSCRIBE_SUCCESS": "Kurstan başarılı çıkış yapıldı",
   "UNSUBSCRIBE_NOT_ENROLLED":"Kurstan çıkabilmeniz için Kursta kayıtlı olmanız gerek!",
-  "UNSUBSCRIBE_EMAIL_TEMPLATE_NOT_FOUND":"Çıkış E-Mail Şablonu bulunamadı"
+  "UNSUBSCRIBE_EMAIL_TEMPLATE_NOT_FOUND":"Çıkış E-Mail Şablonu bulunamadı",
+  "UNSUBSCRIBE_CONFIRM_ERROR":"Kurstan çıkışda hata oluştu. Eger bozuk Linkli E Mail aldıysanız lütfen bir Yöneticiye başvurun!",
+  "PARTICIPATION_CONFIRM_SUCCESS":"Katılımcı onayı",
+  "PARTICIPATION_CONFIRM_ERROR":"Katılım onayında hata oluştu: "
 
 }
