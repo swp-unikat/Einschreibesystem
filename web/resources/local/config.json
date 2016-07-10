@@ -7,7 +7,12 @@
     {
       "code": "de",
       "name": "Deutsch"
+    },
+    {
+      "code": "tr",
+      "name": "Türkçe"
     }
+
   ],
   "default": "en"
 }
