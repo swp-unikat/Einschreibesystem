@@ -210,7 +210,7 @@
   "ALERT_EMAILCONFIRM_SEND_FAIL":"E-Mail konnte nicht versendet werden:",
   "ALERT_WORKSHOP_AT_SAME_TIME":"Sie sind bereits zu einem Workshop zur selben Zeit eingeschrieben!",
   "ERROR_UNSUBSCRIBE_FAIL": "Fehler beim Abmelden von Workshop",
-  "UNSUBSCRIBE_SUCCESS": "Erfolgreich von Workshop abgemeldet",
+  "UNSUBSCRIBE_SUCCESS": "Erfolgreich von Workshop abgemeldet. Bitte überprüfe deine E-Mails!",
   "UNSUBSCRIBE_NOT_ENROLLED":"Sie müssen im Workshop eingeschrieben sein, um sich vom Workshop abmelden zu können!",
   "UNSUBSCRIBE_EMAIL_TEMPLATE_NOT_FOUND":"Abmelde-E-Mail Template wurde nicht gefunden"
 

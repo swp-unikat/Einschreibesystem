@@ -212,7 +212,7 @@
   "ALERT_EMAILCONFIRM_SEND_FAIL":"Email could not be send:",
   "ALERT_WORKSHOP_AT_SAME_TIME":"You are already enrolled to a workshop at the same time",
   "ERROR_UNSUBSCRIBE_FAIL": "Failed to unsubscribe",
-  "UNSUBSCRIBE_SUCCESS": "Successfully unsubscribed",
+  "UNSUBSCRIBE_SUCCESS": "Successfully unsubscribed. Please check your emails!",
   "UNSUBSCRIBE_NOT_ENROLLED":"You need to be enrolled to the workshop to unsubscribe",
   "UNSUBSCRIBE_EMAIL_TEMPLATE_NOT_FOUND":"Unsubscribe e-mail template was not found",
   "UNSUBSCRIBE_CONFIRM_ERROR": "Failed to confirm unsubscribe. If you received a broken link via e-mail, please contact an administrator",
