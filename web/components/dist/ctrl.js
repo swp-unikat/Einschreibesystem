@@ -467,7 +467,7 @@ mainAppCtrls.controller('adminEmailConfirmCtrl',['$scope',"EmailTemplate",'$tran
                 content : $scope.email.body,
                 subject : $scope.email.subject
             };
-            Email.sendEmail({id: workshopid},_data).$promise.then(function(response){
+            Email.sendEmail({id: $scope.workshopid},_data).$promise.then(function(response){
                 $alert({
                     type: 'success',
                     content: _translations.ALERT_EMAILCONFIRM_SEND_SUCCESS,
