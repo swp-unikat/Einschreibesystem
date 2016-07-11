@@ -217,9 +217,7 @@
   "UNSUBSCRIBE_EMAIL_TEMPLATE_NOT_FOUND":"Unsubscribe e-mail template was not found",
   "UNSUBSCRIBE_CONFIRM_ERROR": "Failed to confirm unsubscribe. If you received a broken link via e-mail, please contact an administrator",
   "PARTICIPATION_CONFIRM_SUCCESS": "Confirmed participation.",
-  "PARTICIPATION_CONFIRM_ERROR": "Failed to confirm participation: "
-
-
-
+  "PARTICIPATION_CONFIRM_ERROR": "Failed to confirm participation: ",
+  "UNSUBSCRIBE_CONFIRM_SUCCESS": "Unsubscribed form the workshop"
 
 }
