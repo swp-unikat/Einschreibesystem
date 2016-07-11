@@ -8,7 +8,7 @@
                             </h4>
 
                             <div class="box-tools pull-right">
-                                <button type="button" class="btn btn-box-tool" ng-click="toggle = !toggle">
+                                <button type="button" class="btn btn-box-tool" ng-click="toggle = !toggle; §event.stopPropagation()">
                                     <span ng-class="{'glyphicon glyphicon-menu-down': !toggle, 'glyphicon glyphicon-menu-up': toggle }"></span>
                                 </button>
                             </div>
