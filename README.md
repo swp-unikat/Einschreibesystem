@@ -47,6 +47,10 @@ openssl rsa -pubout -in app/var/jwt/private.pem -out app/var/jwt/public.pem
 php composer install
 ```
 
+Developer Documentation
+------------------------
+You will find our developer documentation [here](https://github.com/swp-unikat/Einschreibesystem/wiki).
+
 Licence
 ------------------------
 
