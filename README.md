@@ -56,6 +56,11 @@ php app/console doctrine:fixtures:load
 php app/console fos:user:create
 ```
 
+6) Create Cron
+```bash
+*/5     *       *       *       *        php /path/to/project/app/console cron:email
+```
+
 Developer Documentation
 ------------------------
 You will find our developer documentation [here](https://github.com/swp-unikat/Einschreibesystem/wiki).
