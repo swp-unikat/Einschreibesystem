@@ -46,6 +46,15 @@ openssl rsa -pubout -in app/var/jwt/private.pem -out app/var/jwt/public.pem
 ```bash
 php composer install
 ```
+5) Load default data
+```bash
+php app/console doctrine:fixtures:load
+```
+
+6) Create first admin
+```bash
+php app/console fos:user:create
+```
 
 Developer Documentation
 ------------------------
