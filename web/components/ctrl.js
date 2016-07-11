@@ -1167,8 +1167,8 @@ mainAppCtrls.controller('ContactCtrl',['$scope','Admin',
     function($scope,Admin) {
         $scope.contact = {};
         Admin.getContact().$promise.then(function(response){
-            $scope.contact = JSON.parse(response.content);
-            console.log($scope.contact);
+            if(response.status != 204)
+                $scope.contact = response.content;
         },function(response){
 
         });
