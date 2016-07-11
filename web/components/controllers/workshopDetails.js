@@ -14,7 +14,7 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
         //Get translations for errors and store in array
         var _translations = {};
         //Pass all required translation IDs to translate service
-        $translate(['ALERT_ENROLLMENT_SUCCSESSFULL','ALERT_NO_PARTICIPANTS','FIRST_NAME','LAST_NAME','EMAIL'
+        $translate(['ALERT_ENROLLMENT_SUCCESSFULL','ALERT_NO_PARTICIPANTS','FIRST_NAME','LAST_NAME','EMAIL'
         ,'ALERT_INTERNAL_SERVER_ERROR', 'ALERT_ALREADY_ENROLLED', 'TITLE_SUCCESS','TITLE_ERROR', 'ALERT_YOU_ARE_ON_BLACKLIST','ERROR_UNSUBSCRIBE_FAIL',
         'UNSUBSCRIBE_SUCCESS']).
         then(function(translations){
@@ -56,7 +56,7 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
                 $alert({
                     title: _translations.TITLE_SUCCESS,
                     type: 'success',
-                    content: _translations.ALERT_ENROLLMENT_SUCCSESSFULL ,
+                    content: _translations.ALERT_ENROLLMENT_SUCCESSFULL ,
                     container: '#alertEnroll',
                     dismissable: true,
                     duration: 20,

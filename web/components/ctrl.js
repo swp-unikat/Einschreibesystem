@@ -1167,8 +1167,8 @@ mainAppCtrls.controller('ContactCtrl',['$scope','Admin',
     function($scope,Admin) {
         $scope.contact = {};
         Admin.getContact().$promise.then(function(response){
-            $scope.contact = JSON.parse(response.content);
-            console.log($scope.contact);
+            if(response.status != 204)
+                $scope.contact = response.content;
         },function(response){
 
         });
@@ -2357,7 +2357,7 @@ mainAppCtrls.controller('UnsubscribeCtrl',['$scope','Workshops','$stateParams','
 
         //get and store translations for errors
         var _translations = {};
-        $translate(['TITLE_ERROR','TITLE_SUCCESS','ALERT_WORKSHOP_NOT_FOUND','UNSUBSCRIBE_CONFIRM_ERROR']).then(function(translations){
+        $translate(['TITLE_ERROR','TITLE_SUCCESS','ALERT_WORKSHOP_NOT_FOUND','UNSUBSCRIBE_CONFIRM_ERROR','UNSUBSCRIBE_CONFIRM_SUCCESS']).then(function(translations){
             _translations = translations;
         });
         $scope.confirm = function() {
@@ -2368,6 +2368,15 @@ mainAppCtrls.controller('UnsubscribeCtrl',['$scope','Workshops','$stateParams','
             };
             $scope.working = true;
             Workshops.unsubscribeConfirm(_params).$promise.then(function(response){
+                $scope.alertUnsub.hide();
+                $scope.alertUnsub = $alert({
+                    title: _translations.TITLE_SUCCESS,
+                    type: 'success',
+                    content: _translations.UNSUBSCRIBE_CONFIRM_SUCCESS,
+                    show: true,
+                    container: '#alert',
+                    dismissable: false
+                });
                 $scope.working = false;
             },function(response){
                 $scope.alertUnsub.hide();
@@ -2424,7 +2433,7 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
         //Get translations for errors and store in array
         var _translations = {};
         //Pass all required translation IDs to translate service
-        $translate(['ALERT_ENROLLMENT_SUCCSESSFULL','ALERT_NO_PARTICIPANTS','FIRST_NAME','LAST_NAME','EMAIL'
+        $translate(['ALERT_ENROLLMENT_SUCCESSFULL','ALERT_NO_PARTICIPANTS','FIRST_NAME','LAST_NAME','EMAIL'
         ,'ALERT_INTERNAL_SERVER_ERROR', 'ALERT_ALREADY_ENROLLED', 'TITLE_SUCCESS','TITLE_ERROR', 'ALERT_YOU_ARE_ON_BLACKLIST','ERROR_UNSUBSCRIBE_FAIL',
         'UNSUBSCRIBE_SUCCESS']).
         then(function(translations){
@@ -2466,7 +2475,7 @@ mainAppCtrls.controller('WorkshopDetailsCtrl',['$scope','Workshops', '$statePara
                 $alert({
                     title: _translations.TITLE_SUCCESS,
                     type: 'success',
-                    content: _translations.ALERT_ENROLLMENT_SUCCSESSFULL ,
+                    content: _translations.ALERT_ENROLLMENT_SUCCESSFULL ,
                     container: '#alertEnroll',
                     dismissable: true,
                     duration: 20,
