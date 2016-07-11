@@ -18,20 +18,20 @@
             <tbody>
             <tr>
                 <td class="row-header"><h4 translate>WEBSITE</h4></td>
-                <td>{{contact.website}}</td>
+                <a ng-href="{{contact.website}}"><td>{{contact.website}}</td></a>
 
             </tr>
             <tr>
                 <td class="row-header"><h4 translate>EMAIL</h4></td>
-                <td>{{contact.email}}</td>
+                <a ng-href="mailto:{{contact.email}}><td>{{contact.email}}</td></a>
             </tr>
             <tr>
                 <td class="row-header"><h4 translate>FACEBOOK</h4></td>
-                <td>{{contact.facebook}}</td>
+                <a ng-href="{{contact.facebook}}"><td>{{contact.facebook}}</td></a>
             </tr>
             <tr>
                 <td class="row-header"><h4 translate>ADDRESS</h4></td>
-                <td>{{contact.address}}</td>
+                <td ng-bind-html="contact.address"></td>
             </tr>
             <tr>
                 <td class="row-header"><h4 translate>TELEPHONE</h4></td>
