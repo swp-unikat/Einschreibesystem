@@ -20,7 +20,7 @@ mainAppCtrls.controller('UnsubscribeCtrl',['$scope','Workshops','$stateParams','
 
         //get and store translations for errors
         var _translations = {};
-        $translate(['TITLE_ERROR','TITLE_SUCCESS','ALERT_WORKSHOP_NOT_FOUND','UNSUBSCRIBE_CONFIRM_ERROR']).then(function(translations){
+        $translate(['TITLE_ERROR','TITLE_SUCCESS','ALERT_WORKSHOP_NOT_FOUND','UNSUBSCRIBE_CONFIRM_ERROR','UNSUBSCRIBE_CONFIRM_SUCCESS']).then(function(translations){
             _translations = translations;
         });
         $scope.confirm = function() {
@@ -31,6 +31,15 @@ mainAppCtrls.controller('UnsubscribeCtrl',['$scope','Workshops','$stateParams','
             };
             $scope.working = true;
             Workshops.unsubscribeConfirm(_params).$promise.then(function(response){
+                $scope.alertUnsub.hide();
+                $scope.alertUnsub = $alert({
+                    title: _translations.TITLE_SUCCESS,
+                    type: 'success',
+                    content: _translations.UNSUBSCRIBE_CONFIRM_SUCCESS,
+                    show: true,
+                    container: '#alert',
+                    dismissable: false
+                });
                 $scope.working = false;
             },function(response){
                 $scope.alertUnsub.hide();
