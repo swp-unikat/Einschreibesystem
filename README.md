@@ -1,5 +1,6 @@
 Einschreibesystem
 ================
+This software was initial developed for [UNIKAT](https://github.com/UNIKAT-ILMENAU) during the "Software Projekt 2016" at the [TU Ilmenau](http://tu-ilmenau.de/).
 
 Install for development
 -----------------------
