@@ -48,9 +48,11 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
          * @description Function to load a list of remaining Participants
          */
         var loadParticipants = function (){
+            $scope.loading = true;
             AdminWorkshop.participants({id:  $scope.workshopid}).$promise.then(function(value,httpResponse){
                 $scope.participants = value;
 
+                $scope.loading = false;
             },function(httpResponse) {
                 switch(httpResponse.status){
                     case 404:
@@ -64,13 +66,17 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
                             animation: 'am-fade-and-slide-top'
                         });
                 }
+                $scope.loading = false;
             });
 
         };
         var loadWaitinglist = function() {
+            $scope.loading = true;
             AdminWorkshop.waitinglist({id:  $scope.workshopid}).$promise.then(function(response){
                 $scope.waitingList = response;
+                $scope.loading = false;
             },function(response){
+                $scope.loading = false;
             });
         };
 
