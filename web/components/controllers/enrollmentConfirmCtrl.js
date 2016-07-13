@@ -34,7 +34,7 @@ mainAppCtrls.controller('EnrollmentConfirmCtrl',['$scope','Workshops','$statePar
             });
         });
         Workshops.confirmEnroll({
-            id: $stateParams.workshopid,
+            id: $stateParams.workshopid, 
             userid: $stateParams.userid,
             token: $stateParams.token
         }).$promise.then(function(value){

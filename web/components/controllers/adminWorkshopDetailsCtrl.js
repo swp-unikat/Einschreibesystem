@@ -14,7 +14,7 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
         //Get translations for errors and store in array
         var _translations = {};
         //Pass all required translation IDs to translate service
-        $translate(['TITLE_SUCCESS','TITLE_ERROR','TITLE_INFO','ALERT_NO_PARTICIPANTS', 'ALERT_SUCCESSFUL_OVERBOOK', 'ALERT_FAIL_OVERBOOK',
+        $translate(['TITLE_SUCCESS','TITLE_ERROR','TITLE_INFO','ALERT_NO_PARTICIPANTS', 'ALERT_SUCCESSFUL_OVERBOOK', 'ALERT_FAIL_OVERBOOK','ALERT_SUCCESSFUL_BLACKLISTED',
             'ALERT_SUCCESSFUL_REMOVED_USER', 'ALERT_FAILED_REMOVED_USER','PARTICIPATION_CONFIRM_SUCCESS','PARTICIPATION_CONFIRM_ERROR']).
         then(function(translations){
             _translations = translations;
@@ -131,6 +131,8 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
                     show: true,
                     title: _translations.TITLE_SUCCESS
                 });
+                loadParticipants();
+                loadWaitinglist();
             },function(response){
                 $alert({
                     type: 'danger',
@@ -154,6 +156,8 @@ mainAppCtrls.controller('adminWorkshopDetailsCtrl',['$scope','Workshops','Partic
                     show: true,
                     title: _translations.TITLE_SUCCESS
                 });
+                loadParticipants();
+                loadWaitinglist();
             },function(response){
                 $alert({
                     type: 'danger',
