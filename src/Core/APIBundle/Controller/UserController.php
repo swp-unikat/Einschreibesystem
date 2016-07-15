@@ -40,6 +40,9 @@ class UserController extends FOSRestController implements ClassResourceInterface
      * )
      * @Rest\RequestParam(name="token", requirements=".*", description="token")
      * @Rest\RequestParam(name="password", requirements=".*", description="password")
+     *
+     * @param \FOS\RestBundle\Request\ParamFetcher $paramFetcher
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\View()
      */
@@ -76,8 +79,9 @@ class UserController extends FOSRestController implements ClassResourceInterface
      * }}
      * )
      *
-     * @param $email string E-Mail
+     * @param \FOS\RestBundle\Request\ParamFetcher $paramFetcher
      *
+     * @internal param string $email E-Mail
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\RequestParam(name="email", requirements=".*", description="email")
      * @Rest\View()
