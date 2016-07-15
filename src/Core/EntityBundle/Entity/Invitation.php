@@ -17,7 +17,8 @@ class Invitation
 {
     /**
      * token to identify a user
-     * @ORM\Id @ORM\Column(type="string", length=64)
+     * @ORM\Id
+     * @ORM\Column(type="string", length=64)
      */
     protected $code;
 
@@ -50,7 +51,7 @@ class Invitation
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getCode()
     {
@@ -58,7 +59,7 @@ class Invitation
     }
 
     /**
-     * @param mixed $code
+     * @param string $code
      */
     public function setCode($code)
     {
@@ -66,7 +67,7 @@ class Invitation
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getEmail()
     {
@@ -74,7 +75,7 @@ class Invitation
     }
 
     /**
-     * @param mixed $email
+     * @param string $email
      */
     public function setEmail($email)
     {
@@ -82,7 +83,7 @@ class Invitation
     }
 
     /**
-     * @return mixed
+     * @return boolean
      */
     public function getSent()
     {
@@ -90,7 +91,7 @@ class Invitation
     }
 
     /**
-     * @param mixed $sent
+     * @param boolean $sent
      */
     public function setSent($sent)
     {
@@ -98,7 +99,7 @@ class Invitation
     }
 
     /**
-     * @return mixed
+     * @return boolean
      */
     public function getUsed()
     {
@@ -106,12 +107,10 @@ class Invitation
     }
 
     /**
-     * @param mixed $used
+     * @param boolean $used
      */
     public function setUsed($used)
     {
         $this->used = $used;
     }
-
-
 }

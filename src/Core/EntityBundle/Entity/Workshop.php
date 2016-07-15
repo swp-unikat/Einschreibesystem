@@ -26,6 +26,7 @@ class Workshop
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+
     /**
      * title of a workshop
      * @var string
@@ -34,6 +35,7 @@ class Workshop
      * @Serializer\SerializedName("title")
      */
     protected $title;
+
     /**
      * cost of a workshop
      * @var int
@@ -42,6 +44,7 @@ class Workshop
      * @Serializer\SerializedName("cost")
      */
     protected $cost;
+
     /**
      * requirements of a workshop
      * @var string
@@ -50,6 +53,7 @@ class Workshop
      * @Serializer\SerializedName("requirement")
      */
     protected $requirements;
+
     /**
      * description of a workshop
      * @var string
@@ -58,6 +62,7 @@ class Workshop
      * @Serializer\SerializedName("description")
      */
     protected $description;
+
     /**
      * location of a workshop
      * @var string
@@ -66,6 +71,7 @@ class Workshop
      * @Serializer\SerializedName("location")
      */
     protected $location;
+
     /**
      * starttime and date of a workshop
      * @var \DateTime
@@ -74,6 +80,7 @@ class Workshop
      * @Serializer\SerializedName("start_at")
      */
     protected $start_at;
+
     /**
      * endtime and date of a workshop
      * @var \DateTime
@@ -82,6 +89,7 @@ class Workshop
      * @Serializer\SerializedName("end_at")
      */
     protected $end_at;
+
     /**
      * maximum participants of a workshop
      * @var int
@@ -90,6 +98,7 @@ class Workshop
      * @Serializer\SerializedName("max_participants")
      */
     protected $max_participants;
+
     /**
      * date and time when workshop created
      * @var \DateTime
@@ -98,6 +107,7 @@ class Workshop
      * @Serializer\SerializedName("created")
      */
     protected $created;
+
     /**
      * state of workshop
      * @var boolean
@@ -321,6 +331,4 @@ class Workshop
     {
         $this->notified = $notified;
     }
-
-
 }
