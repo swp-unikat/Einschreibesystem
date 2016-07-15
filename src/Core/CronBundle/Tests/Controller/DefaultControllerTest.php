@@ -8,6 +8,7 @@
 namespace Core\CronBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+
 /**
  * Class DefaultController
  */

@@ -8,14 +8,14 @@ var mainAppCtrls = angular.module("mainAppCtrls");
  * @descirption Controller for managing administrator list
  * @requires restSvcs.Admin
  */
-mainAppCtrls.controller('AdministratorManagementCtrl',['$scope','Admin','$alert','$translate',
-    function($scope,Admin,$alert,$translate) {
+mainAppCtrls.controller('AdministratorManagementCtrl', ['$scope', 'Admin', '$alert', '$translate',
+    function ($scope, Admin, $alert, $translate) {
         $scope.loading = true;
 
         var _translations = {};
         //Pass all required translation IDs to translate service
-        $translate(['INVITED_ADMINISTRATOR_EMAIL','TITLE_ERROR','TITLE_SUCCESS','INVITED_ADMINISTRATOR_EMAIL_ERROR', 'ALERT_DELETE_ADMIN_FAILED',
-        'ALERT_DELETE_ADMIN_SUCCESS',]).then(function (translations) {
+        $translate(['INVITED_ADMINISTRATOR_EMAIL', 'TITLE_ERROR', 'TITLE_SUCCESS', 'INVITED_ADMINISTRATOR_EMAIL_ERROR', 'ALERT_DELETE_ADMIN_FAILED',
+            'ALERT_DELETE_ADMIN_SUCCESS', ]).then(function (translations) {
             _translations = translations;
         });
         var loadList = function () {

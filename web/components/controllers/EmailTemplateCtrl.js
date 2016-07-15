@@ -15,7 +15,7 @@ mainAppCtrls.controller('EmailTemplateCtrl', ['$scope', "EmailTemplate", '$alert
         //Get translations for errors and store in array
         var _translations = {};
         //Pass all required translation IDs to translate service
-        $translate(['ALERT_EMAILTEMPLATE_DELETE_SUCCESS', 'ALERT_EMAILTEMPLATE_DELETE_FAIL', 'TITLE_ERROR','TITLE_SUCCESS'
+        $translate(['ALERT_EMAILTEMPLATE_DELETE_SUCCESS', 'ALERT_EMAILTEMPLATE_DELETE_FAIL', 'TITLE_ERROR', 'TITLE_SUCCESS'
         ]).then(function (translations) {
             _translations = translations;
         });
@@ -30,12 +30,12 @@ mainAppCtrls.controller('EmailTemplateCtrl', ['$scope', "EmailTemplate", '$alert
             $scope.loading = true;
             EmailTemplate.getAll()
                 .$promise.then(function (value) {
-                $scope.data = value;
-                $scope.loading = false;
+                    $scope.data = value;
+                    $scope.loading = false;
 
-            }, function (httpResponse) {
-                $scope.loading = false;
-            });
+                }, function (httpResponse) {
+                    $scope.loading = false;
+                });
         };
         loadTemplates();
         /**
@@ -72,7 +72,6 @@ mainAppCtrls.controller('EmailTemplateCtrl', ['$scope', "EmailTemplate", '$alert
             )
 
         }
-
 
     }
 

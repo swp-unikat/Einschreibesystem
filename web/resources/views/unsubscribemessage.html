@@ -2,18 +2,28 @@
 <hr>
 <div class="container">
     <div class="col-md-10 col-xs-10" ng-hide="loading || error">
-        <h3>{{ "UNSUBSCRIBE_TEXT" | translate }}<ins>{{workshop.title}}</ins></h3>
+        <h3>{{ "UNSUBSCRIBE_TEXT" | translate }}
+            <ins>{{workshop.title}}</ins>
+        </h3>
         <hr>
-        <h4>{{ "WORKSHOP_DATE" | translate }}</h4><p>{{workshop.start_at|date: "dd/MM/yyyy HH:mm"}}</p>
-        <h4>{{ "WORKSHOP_DURATION" | translate }}</h4><p>{{workshop.duration | date: "HH:mm"}}</p>
-        <h4>{{ "WORKSHOP_LOCATION" | translate }}</h4><p>{{workshop.location}}</p>
+        <h4>{{ "WORKSHOP_DATE" | translate }}</h4>
+
+        <p>{{workshop.start_at|date: "dd/MM/yyyy HH:mm"}}</p>
+        <h4>{{ "WORKSHOP_DURATION" | translate }}</h4>
+
+        <p>{{workshop.duration | date: "HH:mm"}}</p>
+        <h4>{{ "WORKSHOP_LOCATION" | translate }}</h4>
+
+        <p>{{workshop.location}}</p>
 
 
         <button type="button" ng-click="confirm()" class="btn btn-primary pull-right">
             {{ "BUTTON_UNSUBSCRIBE" | translate }}
             <span ng-show="working" class="glyphicon glyphicon-refresh glyphicon-spin centered-form"></span>
         </button>
-        <a ui-sref="workshops"> <button class="btn btn-default pull-right">{{ "BUTTON_BACK_TO_WORKSHOPLIST" | translate}}</button></a>
+        <a ui-sref="workshops">
+            <button class="btn btn-default pull-right">{{ "BUTTON_BACK_TO_WORKSHOPLIST" | translate}}</button>
+        </a>
     </div>
     <div class="col-md-10 col-xs-10" style="margin-top: 2%;">
         <div id="alert" bs-alert></div>

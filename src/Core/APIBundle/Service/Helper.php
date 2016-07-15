@@ -13,7 +13,8 @@ use Core\EntityBundle\Entity\Workshop;
 use Core\EntityBundle\Entity\Participants;
 use Doctrine\ORM\Query;
 
-class Helper{
+class Helper
+{
 
     /**
      * @var EntityManager
@@ -35,12 +36,14 @@ class Helper{
      *@var mailer 
      */
     protected $mailer;
+
     /*
      * @param Workshop $workshop
      */
-    public function checkParticipantList($workshopID){
+    public function checkParticipantList($workshopID)
+    {
         $workshop = $this->em->getRepository("CoreEntityBundle:Workshop")->find($workshopID);
-        if($workshop){
+        if ($workshop) {
             $this->logger->info("Workshop found");
             $participants = $this->em->getRepository("CoreEntityBundle:Workshop")->getParticipants($workshopID);
             if ($participants) {
@@ -50,25 +53,41 @@ class Helper{
                     $this->logger->info("Workshop has participants on waiting list");
                     $nextParticipant->setWaiting(false);
                     /* Loading the default E-Mail template*/
-                    $template = $this->em->getRepository("CoreEntityBundle:EmailTemplate")->findOneBy(['template_name' => 'Participant']);
+                    $template = $this->em->getRepository("CoreEntityBundle:EmailTemplate")->findOneBy(
+                        ['template_name' => 'Participant']
+                    );
                     /* Creating Twig template from Database */
                     $renderTemplate = $this->twig->createTemplate($template->getEmailBody());
                     /* Sending E-Mail */
-                    
+
                     $message = \Swift_Message::newInstance()
-                        ->setSubject($this->twig->createTemplate($template->getEmailSubject())->render(["workshop" => $nextParticipant->getWorkshop()]))
+                        ->setSubject(
+                            $this->twig->createTemplate($template->getEmailSubject())->render(
+                                ["workshop" => $nextParticipant->getWorkshop()]
+                            )
+                        )
                         ->setFrom($this->container->getParameter('email_sender'))
                         ->setTo($nextParticipant->getParticipant()->getEmail())
-                        ->setBody($renderTemplate->render(['participant' => $nextParticipant->getParticipant(),'workshop' => $nextParticipant->getWorkshop()] ), 'text/html');
+                        ->setBody(
+                            $renderTemplate->render(
+                                [
+                                    'participant' => $nextParticipant->getParticipant(),
+                                    'workshop'    => $nextParticipant->getWorkshop()
+                                ]
+                            ),
+                            'text/html'
+                        );
                     $this->mailer->send($message);
 
                     $this->em->persist($nextParticipant);
                     $this->em->flush();
-                    $this->logger->info("moved " . $nextParticipant->getParticipant()->getEmail() . " to participant list");
+                    $this->logger->info(
+                        "moved " . $nextParticipant->getParticipant()->getEmail() . " to participant list"
+                    );
                     return true;
                 }
             }
-        }else{
+        } else {
             $this->logger->info("Workshop not found");
             return false;
         }
@@ -77,10 +96,13 @@ class Helper{
 
     private function getNextParticipant($id)
     {
-        $participant = $this->em->getRepository('CoreEntityBundle:WorkshopParticipants')->findOneBy(['workshop' => $id,'waiting' => true],['enrollment' => "ASC"]);
-        if($participant){
+        $participant = $this->em->getRepository('CoreEntityBundle:WorkshopParticipants')->findOneBy(
+            ['workshop' => $id, 'waiting' => true],
+            ['enrollment' => "ASC"]
+        );
+        if ($participant) {
             return $participant;
-        }else{
+        } else {
             return false;
         }
     }
@@ -97,16 +119,19 @@ class Helper{
     {
         $this->logger = $logger;
     }
-    
-    public function setTwig($twig){
+
+    public function setTwig($twig)
+    {
         $this->twig = $twig;
     }
-    
-    public function setContainer($container){
+
+    public function setContainer($container)
+    {
         $this->container = $container;
     }
 
-    public function setMailer($mailer){
+    public function setMailer($mailer)
+    {
         $this->mailer = $mailer;
     }
 }

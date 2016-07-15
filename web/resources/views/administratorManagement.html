@@ -1,51 +1,60 @@
 <div class="col-md-8 col-md-offset-2">
-    <h1><translate>ADMINISTRATOR_MANAGEMENT</translate></h1>
-<div class="col-md-2 col-xs-2 pull-right">
-    <a ui-sref="dashboard"> <button translate class="btn btn-default">{{ "BUTTON_BACK_TO_DASHBOARD" | translate}}</button></a>
-</div>
-<hr>
-<br>
+    <h1>
+        <translate>ADMINISTRATOR_MANAGEMENT</translate>
+    </h1>
+    <div class="col-md-2 col-xs-2 pull-right">
+        <a ui-sref="dashboard">
+            <button translate class="btn btn-default">{{ "BUTTON_BACK_TO_DASHBOARD" | translate}}</button>
+        </a>
+    </div>
+    <hr>
+    <br>
 </div>
 
 <div class="container">
-        <div class="row">
-            <div class="col-md-10 col-xs-10">
-                <h2><translate>LIST_OF_ADMINISTRATORS</translate></h2>
-                <div class="list-group" ng-repeat="admin in administratorList">
-                    <a href="#" class="list-group-item active">
-                        <button type="button" class="btn btn-default btn-xs pull-right">
-                            <span class="glyphicon glyphicon-remove"></span>
-                        </button>
-                    </a>
-                </div>
-                <br>
-                <div class="col-md-6 col-xs-6 ">
-                    <div class="input-group">
-                        <input type="email" class="form-control" ng-model="admin_mail">
+    <div class="row">
+        <div class="col-md-10 col-xs-10">
+            <h2>
+                <translate>LIST_OF_ADMINISTRATORS</translate>
+            </h2>
+            <div class="list-group" ng-repeat="admin in administratorList">
+                <a href="#" class="list-group-item active">
+                    <button type="button" class="btn btn-default btn-xs pull-right">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                </a>
+            </div>
+            <br>
+
+            <div class="col-md-6 col-xs-6 ">
+                <div class="input-group">
+                    <input type="email" class="form-control" ng-model="admin_mail">
                         <span class="input-group-btn">
-                            <button translate type="button" class="btn btn-default" ng-click="invite()">BUTTON_INVITE_AN_ADMINISTRATOR</button>
+                            <button translate type="button" class="btn btn-default" ng-click="invite()">
+                                BUTTON_INVITE_AN_ADMINISTRATOR
+                            </button>
                         </span>
 
-                    </div>
-                    <br>
-                    <!-- loading -->
-                    <div ng-show="loading" style="margin-left:50%;">
-                        <span class="glyphicon glyphicon-refresh glyphicon-spin" style="font-size: 5.0em;"></span>
-                    </div>
-                    <!-- loading -->
-                    <div class="list-group-item" ng-repeat="a in admins" ng-hide="loading">
-                        {{a.email}}
-                        <button type="button"ng-click="deleteAdmin(a.id)"  class="btn btn-default btn-xs pull-right" >
-                            <span class="glyphicon glyphicon-remove"></span>
-                        </button>
-                    </div>
-                    <div id="alert" bs-alert></div>
                 </div>
-                <div class="col-md-2 col-xs-2">
-                    <div ng-show="inviting" style="marign-left: 10%;">
-                        <span class="glyphicon glyphicon-refresh glyphicon-spin" style="font-size: 2.0em;"></span>
-                    </div>
+                <br>
+                <!-- loading -->
+                <div ng-show="loading" style="margin-left:50%;">
+                    <span class="glyphicon glyphicon-refresh glyphicon-spin" style="font-size: 5.0em;"></span>
+                </div>
+                <!-- loading -->
+                <div class="list-group-item" ng-repeat="a in admins" ng-hide="loading">
+                    {{a.email}}
+                    <button type="button" ng-click="deleteAdmin(a.id)" class="btn btn-default btn-xs pull-right">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                </div>
+                <div id="alert" bs-alert></div>
+            </div>
+            <div class="col-md-2 col-xs-2">
+                <div ng-show="inviting" style="marign-left: 10%;">
+                    <span class="glyphicon glyphicon-refresh glyphicon-spin" style="font-size: 2.0em;"></span>
                 </div>
             </div>
         </div>
+    </div>
 </div>

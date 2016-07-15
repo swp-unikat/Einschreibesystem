@@ -1,56 +1,64 @@
 <div class="container">
-<div class="row">
+    <div class="row">
 
-<div class="col-sm-offset-5 col-sm-3">
-    <div class="panel panel-default">
-        <div class="panel-heading text-center">
-            <h3 translate class="panel-title">LOGIN</h3>
-        </div>
-        <div class="panel-body">
-            <form ng-submit="sendInfo()">
-                <div class="row">
-                    <div>
-                        <div class="form-group">
-                            <input type="text" name="user" ng-model="e_mail" class="form-control input-sm" placeholder="Email">
+        <div class="col-sm-offset-5 col-sm-3">
+            <div class="panel panel-default">
+                <div class="panel-heading text-center">
+                    <h3 translate class="panel-title">LOGIN</h3>
+                </div>
+                <div class="panel-body">
+                    <form ng-submit="sendInfo()">
+                        <div class="row">
+                            <div>
+                                <div class="form-group">
+                                    <input type="text" name="user" ng-model="e_mail" class="form-control input-sm"
+                                           placeholder="Email">
+                                </div>
+                            </div>
                         </div>
-                    </div></div>
-                    <div class ="row">
-                    <div>
-                        <div class="form-group">
-                            <input type="password" name="pass" ng-model="password" class="form-control input-sm" placeholder="Password">
+                        <div class="row">
+                            <div>
+                                <div class="form-group">
+                                    <input type="password" name="pass" ng-model="password" class="form-control input-sm"
+                                           placeholder="Password">
+                                </div>
+                            </div>
                         </div>
+
+                        <button type="submit" translate class="btn btn-info btn-block">BUTTON_LOGIN</button>
+                    </form>
+
+                    <div class="login-help">
+                        <div class="col-xs-6 col-sm-6 col-md-6">
+                            <button type="button" class="btn btn-link" translate ng-click="showResetPanel()">
+                                BUTTON_FORGOT_PASSWORD
+                            </button>
+                        </div>
+                        <div ng-show="loading" class=" col-xs-6 col-sm-6 col-md-6" style="margin-top: 10px;">
+                            <span class="glyphicon glyphicon-refresh glyphicon-spin" style="margin-left:90%"></span>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12" id="alert" bs-alert></div>
+                    </div>
+
+                </div>
+            </div>
+            <div ng-show="reset_panel">
+                <div class="panel panel-default">
+                    <div class="panel-heading text-center">
+                        {{ 'ENTER_MAIL_RESET' | translate }}
+                    </div>
+                    <div class="panel-body">
+                        <input ng-model="reset.email" type="email" class="form-control"
+                               placeholder="Enter your E-Mail"/>
+                        <button type="button" class="btn btn-primary" ng-click="resetPassword()" translate>
+                            RESET_PASSWORD
+                        </button>
+                        <div id="reset_alert" bs-alert></div>
                     </div>
                 </div>
-
-                <button type="submit" translate class="btn btn-info btn-block">BUTTON_LOGIN</button>
-            </form>
-
-            <div class="login-help">
-                <div class="col-xs-6 col-sm-6 col-md-6">
-                    <button type="button" class="btn btn-link"translate ng-click="showResetPanel()">BUTTON_FORGOT_PASSWORD</button>
-                </div>
-                <div ng-show="loading" class=" col-xs-6 col-sm-6 col-md-6" style="margin-top: 10px;">
-                    <span class="glyphicon glyphicon-refresh glyphicon-spin" style="margin-left:90%"></span>
-                </div>
-                <div class="col-xs-12 col-sm-12 col-md-12" id="alert" bs-alert></div>
             </div>
 
         </div>
     </div>
-    <div ng-show="reset_panel">
-        <div class="panel panel-default">
-            <div class="panel-heading text-center">
-                {{ 'ENTER_MAIL_RESET' | translate }}
-            </div>
-            <div class="panel-body">
-                <input ng-model="reset.email" type="email" class="form-control" placeholder="Enter your E-Mail"/>
-                <button type="button" class="btn btn-primary" ng-click="resetPassword()" translate>RESET_PASSWORD</button>
-                <div id="reset_alert" bs-alert></div>
-            </div>
-        </div>
-    </div>
-
-</div>
-</div>
 </div>
 

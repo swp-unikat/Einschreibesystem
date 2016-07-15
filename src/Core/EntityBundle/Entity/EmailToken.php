@@ -10,12 +10,14 @@ namespace Core\EntityBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
+
 /**
  * @ORM\Entity()
  * @ORM\Table(name="email_token")
  * this class provides all entitys of e-mailtoken and all functions of e-mailtoken
  */
-class EmailToken{
+class EmailToken
+{
     /**
      * id of a e-mail
      * @var int
@@ -65,6 +67,7 @@ class EmailToken{
      * @Serializer\SerializedName("used_at")
      */
     public $used_at;
+
     /**
      * function to construct a e-mailtoken
      */
@@ -73,7 +76,7 @@ class EmailToken{
         $this->created = new \DateTime("now");
         $this->valid_until = new \DateTime("now");
         $this->valid_until->add(new \DateInterval('PT30M'));
-        $this->token = hash("sha512",bin2hex(openssl_random_pseudo_bytes(255)));
+        $this->token = hash("sha512", bin2hex(openssl_random_pseudo_bytes(255)));
     }
 
     /**
@@ -87,6 +90,7 @@ class EmailToken{
 
     /**
      * function to set id
+     *
      * @param int $id
      */
     public function setId($id)
@@ -105,6 +109,7 @@ class EmailToken{
 
     /**
      * function to set participant
+     *
      * @param Participants $participant
      */
     public function setParticipant($participant)
@@ -123,6 +128,7 @@ class EmailToken{
 
     /**
      * function to set token
+     *
      * @param string $token
      */
     public function setToken($token)
@@ -141,6 +147,7 @@ class EmailToken{
 
     /**
      * function to set creattime and date of a token
+     *
      * @param \DateTime $created
      */
     public function setCreated($created)
@@ -159,6 +166,7 @@ class EmailToken{
 
     /**
      * function to set time and date since the token is valid
+     *
      * @param \DateTime $valid_until
      */
     public function setValidUntil($valid_until)
@@ -177,6 +185,7 @@ class EmailToken{
 
     /**
      * function to set the time and date when the token is used
+     *
      * @param \DateTime $used_at
      */
     public function setUsedAt($used_at)

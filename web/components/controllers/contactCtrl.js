@@ -7,13 +7,13 @@ var mainAppCtrls = angular.module("mainAppCtrls");
  * @name mainAppCtrls.controller:ContactCtrl
  * @description Controller for showing contacts
  */
-mainAppCtrls.controller('ContactCtrl',['$scope','Admin',
-    function($scope,Admin) {
+mainAppCtrls.controller('ContactCtrl', ['$scope', 'Admin',
+    function ($scope, Admin) {
         $scope.contact = {};
-        Admin.getContact().$promise.then(function(response){
-            if(response.status != 204)
+        Admin.getContact().$promise.then(function (response) {
+            if (response.status != 204)
                 $scope.contact = response.content;
-        },function(response){
+        }, function (response) {
 
         });
     }

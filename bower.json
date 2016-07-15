@@ -1,38 +1,38 @@
 {
-  "name": "swp-unikat",
-  "description": "Einschrebesystem UNIKAT",
-  "main": "index.js",
-  "authors": [
-    "Valentin Schaefer"
-  ],
-  "license": "BSD-2-Clause",
-  "homepage": "https://github.com/swp-unikat/Einschreibesystem",
-  "private": true,
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "test",
-    "tests"
-  ],
-  "dependencies": {
-    "angular": "1.5.x",
-    "bootstrap": ">=3.1.x",
-    "angular-route": "1.5.x",
-    "angular-resource": "1.5.x",
-    "angular-animate": "1.5.x",
-    "angular-touch": "1.5.x",
-    "jquery": "~2.1.1",
-    "angular-translate-loader-static-files": "^2.11.0",
-    "angular-translate": "^2.11.0",
-    "angular-strap": "^2.3.8",
-    "angular-motion": "^0.4.4",
-    "angular-sanitize": "^1.5.5",
-    "angular-ui-router": "^0.3.0",
-    "angular-jwt": "^0.0.9",
-    "a0-angular-storage": "^0.0.15"
-  },
-  "devDependencies": {
-    "textAngular": "^1.5.1"
-  }
+    "name": "swp-unikat",
+    "description": "Einschrebesystem UNIKAT",
+    "main": "index.js",
+    "authors": [
+        "Valentin Schaefer"
+    ],
+    "license": "BSD-2-Clause",
+    "homepage": "https://github.com/swp-unikat/Einschreibesystem",
+    "private": true,
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components",
+        "test",
+        "tests"
+    ],
+    "dependencies": {
+        "angular": "1.5.x",
+        "bootstrap": ">=3.1.x",
+        "angular-route": "1.5.x",
+        "angular-resource": "1.5.x",
+        "angular-animate": "1.5.x",
+        "angular-touch": "1.5.x",
+        "jquery": "~2.1.1",
+        "angular-translate-loader-static-files": "^2.11.0",
+        "angular-translate": "^2.11.0",
+        "angular-strap": "^2.3.8",
+        "angular-motion": "^0.4.4",
+        "angular-sanitize": "^1.5.5",
+        "angular-ui-router": "^0.3.0",
+        "angular-jwt": "^0.0.9",
+        "a0-angular-storage": "^0.0.15"
+    },
+    "devDependencies": {
+        "textAngular": "^1.5.1"
+    }
 }
