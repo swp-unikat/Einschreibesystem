@@ -47,7 +47,10 @@ class WorkshopRepository extends EntityRepository
     /**
      * function to get participants of a workshop
      *
-     * @param $workshopID int id of a workshop
+     * @param $workshopId
+     *
+     * @return
+     * @internal param int $workshopID id of a workshop
      */
     public function getParticipants($workshopId)
     {
@@ -91,7 +94,6 @@ class WorkshopRepository extends EntityRepository
     public function getWorkshopsForNotificationEmail()
     {
         $now = new \DateTime("now");
-        $then = new \DateTime("+24 hour");
         $qb = $this->getEntityManager()->createQueryBuilder();
         $q = $qb->select(["workshop.id"])
             ->from("CoreEntityBundle:Workshop", "workshop")
