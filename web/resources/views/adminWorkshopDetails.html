@@ -1,6 +1,8 @@
 <h1>{{ "WORKSHOP_DETAILS" | translate}}</h1>
 <div class="col-md-2 col-xs-2 pull-right">
-    <a ui-sref="admin_workshop_management"> <button class="btn btn-default">{{ "BUTTON_BACK" | translate}}</button></a>
+    <a ui-sref="admin_workshop_management">
+        <button class="btn btn-default">{{ "BUTTON_BACK" | translate}}</button>
+    </a>
 </div>
 <hr>
 <br>
@@ -16,31 +18,37 @@
                     <div class="box-body">
                         <div class="form-group">
                             <label translate class="col-lg-2 col-sm-12 control-label">WORKSHOP_DESCRIPTION</label>
+
                             <div class="col-sm-10 col-sm-12" ng-bind-html="workshop.description"></div>
                         </div>
 
                         <div class="form-group">
                             <label translate class="col-lg-2 col-sm-12 control-label">WORKSHOP_COST</label>
-                            <div  class="col-sm-10 col-sm-12"><p>{{workshop.cost}} {{ "C" | translate}}</p></div>
+
+                            <div class="col-sm-10 col-sm-12"><p>{{workshop.cost}} {{ "C" | translate}}</p></div>
                         </div>
 
                         <div ng-hide="workshop.requirement==null" class="form-group">
                             <label translate class="col-lg-2 col-sm-12 control-label">WORKSHOP_REQUIREMENTS</label>
-                            <div  class="col-sm-10 col-sm-12"><p>{{workshop.requirement}}</p></div>
+
+                            <div class="col-sm-10 col-sm-12"><p>{{workshop.requirement}}</p></div>
                         </div>
 
                         <div class="form-group">
                             <label translate class="col-lg-2 col-sm-12 control-label">WORKSHOP_LOCATION</label>
+
                             <div class="col-sm-10 col-sm-12"><p>{{workshop.location}}</p></div>
                         </div>
 
                         <div class="form-group">
                             <label translate class="col-lg-2 col-sm-12 control-label">WORKSHOP_START_TIME</label>
+
                             <div class="col-sm-10 col-sm-12"><p>{{workshop.start_at|date: "dd/MM/yyyy HH:mm"}}</p></div>
                         </div>
 
                         <div class="form-group">
                             <label translate class="col-lg-2 col-sm-12 control-label">WORKSHOP_DURATION</label>
+
                             <div class="col-sm-10 col-sm-12"><p>{{workshop.duration|date: "hh:mm"}}</p></div>
                         </div>
 
@@ -55,16 +63,20 @@
                     <li class="list-group-item text-center">
                         <h4 translate>PARTICIPANTS</h4>
                     </li>
-                    <li class="list-group-item"  ng-repeat="p in participants">
+                    <li class="list-group-item" ng-repeat="p in participants">
                         <label>{{p.name}} {{p.surname}}</label> (<span class="small">{{p.email}}</span>)
 	                           <span class="pull-right">
-		                            <input type="checkbox" value="" ng-change="confirmUser(workshop.id,p.id)" ng-model="p.participated" ng-disabled="p.participated == true">
-		                            <button type="button" ng-click="remove(workshop.id,p.id)" class="btn btn-default btn-xs">
-		                                <span data-toggle="tooltip" title="{{'BUTTON_REMOVE_PARTICIPANT' | translate}}" class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-		                            </button>
+		                            <input type="checkbox" value="" ng-change="confirmUser(workshop.id,p.id)"
+                                           ng-model="p.participated" ng-disabled="p.participated == true">
+		                            <button type="button" ng-click="remove(workshop.id,p.id)"
+                                            class="btn btn-default btn-xs">
+                                        <span data-toggle="tooltip" title="{{'BUTTON_REMOVE_PARTICIPANT' | translate}}"
+                                              class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                    </button>
 		                            <button type="button" ng-click="blacklistUser(p.id)" class="btn btn-default btn-xs">
-		                                <span data-toggle="tooltip" title="{{'BUTTON_ADD_TO_BLACK_LIST' | translate}}" class="fa fa-user-times" aria-hidden="true"></span>
-		                            </button>
+                                        <span data-toggle="tooltip" title="{{'BUTTON_ADD_TO_BLACK_LIST' | translate}}"
+                                              class="fa fa-user-times" aria-hidden="true"></span>
+                                    </button>
 							</span>
                     </li>
                 </ul>
@@ -74,10 +86,11 @@
                     <li class="list-group-item text-center">
                         <h4 translate>WAITINGLIST</h4>
                     </li>
-                    <li class="list-group-item"  ng-repeat="p in waitingList">
+                    <li class="list-group-item" ng-repeat="p in waitingList">
                         <label>{{p.name}} {{p.surname}}</label> (<span class="small">{{p.email}}</span>)
                         <button type="button" class="btn btn-default btn-xs pull-right" ng-click="overbook(p.id)">
-                            <span data-toggle="tooltip" title="{{'BUTTON_WORKSHOP_OVERBOOK' | translate}}" class="glyphicon glyphicon-transfer" aria-hidden="true"></span>
+                            <span data-toggle="tooltip" title="{{'BUTTON_WORKSHOP_OVERBOOK' | translate}}"
+                                  class="glyphicon glyphicon-transfer" aria-hidden="true"></span>
                         </button>
                     </li>
                 </ul>
@@ -85,9 +98,17 @@
         </div>
         <div class="row">
             <div class="col-md-8">
-                <a ui-sref="admin_workshop_edit({id: workshopid})"><button type="button" class="btn btn-default">{{"BUTTON_EDIT_WORKSHOP" | translate}}</button></a>
-                <a ui-sref="admin_email_confirm({id: workshopid})"><button type="button" class="btn btn-default">{{ "BUTTON_SEND_SUBSCRIBE_CONFIRMATION" | translate}}</button></a>
-                <button type="button" class="btn btn-default" ng-click="printList()">{{ "BUTTON_PRINT_LIST_OF_PARTICIPANTS" | translate}}</button>
+                <a ui-sref="admin_workshop_edit({id: workshopid})">
+                    <button type="button" class="btn btn-default">{{"BUTTON_EDIT_WORKSHOP" | translate}}</button>
+                </a>
+                <a ui-sref="admin_email_confirm({id: workshopid})">
+                    <button type="button" class="btn btn-default">{{ "BUTTON_SEND_SUBSCRIBE_CONFIRMATION" |
+                        translate}}
+                    </button>
+                </a>
+                <button type="button" class="btn btn-default" ng-click="printList()">{{
+                    "BUTTON_PRINT_LIST_OF_PARTICIPANTS" | translate}}
+                </button>
             </div>
         </div>
     </div>

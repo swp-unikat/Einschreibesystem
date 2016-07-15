@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by IntelliJ IDEA.
- * Authors: Leon Bergmann, Marco Hanisch 
+ * Authors: Leon Bergmann, Marco Hanisch
  * Date: 29.04.2016
  * Time: 15:56
  */
@@ -104,9 +104,9 @@ class Workshop
      * @ORM\Column(name="notified", type="boolean", nullable=false)
      */
     protected $notified;
-    
+
     /**
-     * function to create 
+     * function to create
      */
     public function __construct()
     {
@@ -124,6 +124,7 @@ class Workshop
 
     /**
      * function to set an id to a workshop
+     *
      * @param int $id
      */
     public function setId($id)
@@ -142,6 +143,7 @@ class Workshop
 
     /**
      * function to est a title to a workshop
+     *
      * @param string $title
      */
     public function setTitle($title)
@@ -160,6 +162,7 @@ class Workshop
 
     /**
      * function to set the cost of a workshop
+     *
      * @param int $cost
      */
     public function setCost($cost)
@@ -178,6 +181,7 @@ class Workshop
 
     /**
      * function to set the requirements of a workshop
+     *
      * @param string $requirements
      */
     public function setRequirements($requirements)
@@ -196,6 +200,7 @@ class Workshop
 
     /**
      * function to set the location of a workshop
+     *
      * @param string $location
      */
     public function setLocation($location)
@@ -214,6 +219,7 @@ class Workshop
 
     /**
      * function to set the starttime and date of a workshop
+     *
      * @param \DateTime $start_at
      */
     public function setStartAt($start_at)
@@ -232,6 +238,7 @@ class Workshop
 
     /**
      * function to set the endtime and date of a workshop
+     *
      * @param \DateTime $end_at
      */
     public function setEndAt($end_at)
@@ -250,6 +257,7 @@ class Workshop
 
     /**
      * function to set the maximum participants of a workshop
+     *
      * @param int $max_participants
      */
     public function setMaxParticipants($max_participants)
@@ -268,6 +276,7 @@ class Workshop
 
     /**
      * function to set the createdtime of a workshop
+     *
      * @param \DateTime $created
      */
     public function setCreated($created)
@@ -286,6 +295,7 @@ class Workshop
 
     /**
      * function to set the description of a workshop
+     *
      * @param string $description
      */
     public function setDescription($description)
@@ -304,6 +314,7 @@ class Workshop
 
     /**
      * function to set notifiedstate of a workshop
+     *
      * @param boolean $notified
      */
     public function setNotified($notified)

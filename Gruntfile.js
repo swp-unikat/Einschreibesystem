@@ -1,7 +1,7 @@
 /**
  * Created by Valle on 18.05.2016.
  */
-module.exports = function(grunt) {
+module.exports = function (grunt) {
 //Task configuration
     grunt.initConfig({
         pkg: grunt.file.readJSON("package.json"),
@@ -34,7 +34,7 @@ module.exports = function(grunt) {
         watch: {
             dev: {
                 files: ['Gruntfile.js', 'web/components/controllers/*.js'],
-                tasks: ['concat:controllers','concat:services']
+                tasks: ['concat:controllers', 'concat:services']
             }
         },
         concat: {
@@ -45,7 +45,7 @@ module.exports = function(grunt) {
                 dest: 'web/components/ctrl.js'
             },
             services: {
-                src:['web/components/services/*.js'],
+                src: ['web/components/services/*.js'],
                 dest: 'web/components/srvcs.js'
             }
         },
@@ -64,9 +64,9 @@ module.exports = function(grunt) {
                     'web/vendor/angular-ui-router/release/angular-ui-router.js',
                     'web/vendor/textAngular/dist/textAngular.js',
                     'web/vendor/angular-strap/dist/angular-strap.js'
-             ]
+                ]
             },
-            all: ['web/components/app.js','web/components/controllers/*.js','web/components/services/*.js']
+            all: ['web/components/app.js', 'web/components/controllers/*.js', 'web/components/services/*.js']
         },
         ngAnnotate: {
             options: {
@@ -92,7 +92,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-ngdocs');
     grunt.loadNpmTasks('grunt-ng-annotate');
     grunt.registerTask('dev', ['watch:dev']);
-    grunt.registerTask('doc',['ngdocs:all']);
-    grunt.registerTask('compile',['concat:services','concat:controllers','uglify']);
+    grunt.registerTask('doc', ['ngdocs:all']);
+    grunt.registerTask('compile', ['concat:services', 'concat:controllers', 'uglify']);
 };
 

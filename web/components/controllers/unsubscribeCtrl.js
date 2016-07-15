@@ -7,8 +7,8 @@ var mainAppCtrls = angular.module("mainAppCtrls");
  * @name mainAppCtrls.controller:UnsubscribeCtrl
  * @description Providing resources used to complete unsubscription from a workshop
  */
-mainAppCtrls.controller('UnsubscribeCtrl',['$scope','Workshops','$stateParams','$translate','$alert',
-    function($scope,Workshops,$stateParams,$translate,$alert) {
+mainAppCtrls.controller('UnsubscribeCtrl', ['$scope', 'Workshops', '$stateParams', '$translate', '$alert',
+    function ($scope, Workshops, $stateParams, $translate, $alert) {
 
         //Define used variables
         var _userId = $stateParams.id;
@@ -20,17 +20,17 @@ mainAppCtrls.controller('UnsubscribeCtrl',['$scope','Workshops','$stateParams','
 
         //get and store translations for errors
         var _translations = {};
-        $translate(['TITLE_ERROR','TITLE_SUCCESS','ALERT_WORKSHOP_NOT_FOUND','UNSUBSCRIBE_CONFIRM_ERROR','UNSUBSCRIBE_CONFIRM_SUCCESS']).then(function(translations){
+        $translate(['TITLE_ERROR', 'TITLE_SUCCESS', 'ALERT_WORKSHOP_NOT_FOUND', 'UNSUBSCRIBE_CONFIRM_ERROR', 'UNSUBSCRIBE_CONFIRM_SUCCESS']).then(function (translations) {
             _translations = translations;
         });
-        $scope.confirm = function() {
-            var _params =  {
+        $scope.confirm = function () {
+            var _params = {
                 id: _workshopId,
                 token: _token,
                 participantId: _userId
             };
             $scope.working = true;
-            Workshops.unsubscribeConfirm(_params).$promise.then(function(response){
+            Workshops.unsubscribeConfirm(_params).$promise.then(function (response) {
                 $scope.alertUnsub.hide();
                 $scope.alertUnsub = $alert({
                     title: _translations.TITLE_SUCCESS,
@@ -41,7 +41,7 @@ mainAppCtrls.controller('UnsubscribeCtrl',['$scope','Workshops','$stateParams','
                     dismissable: false
                 });
                 $scope.working = false;
-            },function(response){
+            }, function (response) {
                 $scope.alertUnsub.hide();
                 $scope.alertUnsub = $alert({
                     title: _translations.TITLE_ERROR,
@@ -58,22 +58,22 @@ mainAppCtrls.controller('UnsubscribeCtrl',['$scope','Workshops','$stateParams','
         //Load workshop to display additional data
         $scope.loading = true;
         $scope.error = false;
-        Workshops.getWorkshop({id: _workshopId}).$promise.then(function(response){
+        Workshops.getWorkshop({id: _workshopId}).$promise.then(function (response) {
             $scope.workshop = response;
             var _ea = Date.parse($scope.workshop.end_at);
             var _sa = Date.parse($scope.workshop.start_at);
 
             $scope.workshop.duration = new Date(_ea - _sa);
             $scope.loading = false;
-        },function(response){
+        }, function (response) {
             $scope.alertUnsub.hide();
             $scope.alertUnsub = $alert({
-               title: _translations.TITLE_ERROR,
-               type: 'danger',
-               content: _translations.ALERT_WORKSHOP_NOT_FOUND,
-               show: true,
-               container: '#alert',
-               dismissable: false
+                title: _translations.TITLE_ERROR,
+                type: 'danger',
+                content: _translations.ALERT_WORKSHOP_NOT_FOUND,
+                show: true,
+                container: '#alert',
+                dismissable: false
             });
             $scope.loading = false;
             $scope.error = true;

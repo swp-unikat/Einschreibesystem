@@ -72,7 +72,7 @@ class WorkshopParticipants
     protected $participated;
 
     /**
-     * function for construct enrollment 
+     * function for construct enrollment
      */
     public function __construct()
     {
@@ -80,7 +80,7 @@ class WorkshopParticipants
     }
 
     /**
-     * function to get the id 
+     * function to get the id
      * @return int
      */
     public function getId()
@@ -90,6 +90,7 @@ class WorkshopParticipants
 
     /**
      *function to set the id
+     *
      * @param int $id
      */
     public function setId($id)
@@ -108,6 +109,7 @@ class WorkshopParticipants
 
     /**
      * fuction to set a participant
+     *
      * @param Participants $participant
      */
     public function setParticipant($participant)
@@ -126,6 +128,7 @@ class WorkshopParticipants
 
     /**
      * function to set a workshop
+     *
      * @param Workshop $workshop
      */
     public function setWorkshop($workshop)
@@ -144,6 +147,7 @@ class WorkshopParticipants
 
     /**
      * function to set an enrollment
+     *
      * @param \DateTime $enrollment
      */
     public function setEnrollment($enrollment)
@@ -162,6 +166,7 @@ class WorkshopParticipants
 
     /**
      * function to set a state from a participant to "waiting"
+     *
      * @param boolean $waiting
      */
     public function setWaiting($waiting)
@@ -180,6 +185,7 @@ class WorkshopParticipants
 
     /**
      * function to set the state from a participant to "participated"
+     *
      * @param boolean $participated
      */
     public function setParticipated($participated)

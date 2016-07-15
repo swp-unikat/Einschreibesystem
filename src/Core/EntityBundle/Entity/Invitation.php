@@ -11,45 +11,42 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * this class provides the entitys and methods for the invitation
- * @ORM\Entity 
-*/
+ * @ORM\Entity
+ */
 class Invitation
 {
-    /** 
+    /**
      * token to identify a user
-     *@ORM\Id @ORM\Column(type="string", length=64) 
+     * @ORM\Id @ORM\Column(type="string", length=64)
      */
     protected $code;
 
     /**
      * e-mail of invitation
-     * @ORM\Column(type="string", length=256) 
-    */
+     * @ORM\Column(type="string", length=256)
+     */
     protected $email;
 
     /**
      * When sending invitation set this value to 'true'
-     *
      * It prevents sending invitations twice
-     *
      * @ORM\Column(type="boolean")
      */
     protected $sent = false;
     /**
      * When received invitation set this value to 'true'
-     *
      * It prevents by using the invitation twice
-     *
      * @ORM\Column(type="boolean")
      */
     protected $used = false;
+
     /**
      * function to construct an invitation
      */
     public function __construct()
     {
         //generate identifier only once, here a 64 characters length code
-        $this->code = substr(hash('sha512',bin2hex(openssl_random_pseudo_bytes(64))), 0, 64);
+        $this->code = substr(hash('sha512', bin2hex(openssl_random_pseudo_bytes(64))), 0, 64);
     }
 
     /**
@@ -116,6 +113,5 @@ class Invitation
         $this->used = $used;
     }
 
-    
 
 }

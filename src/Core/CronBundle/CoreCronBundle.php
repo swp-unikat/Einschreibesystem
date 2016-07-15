@@ -9,6 +9,7 @@
 namespace Core\CronBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
+
 /**
  * Class CronBundle
  */

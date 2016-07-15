@@ -9,30 +9,30 @@ var mainAppCtrls = angular.module("mainAppCtrls");
  * @description Controller for editing a workshop. Initializes resources used to edit a workshop
  * @name mainAppCtrls.controller:AdminEditWorkshopCtrl
  */
-mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWorkshop','$stateParams','$translate','$alert','$state',
-    function($scope,Workshops,AdminWorkshop,$stateParams,$translate,$alert,$state) {
+mainAppCtrls.controller('AdminEditWorkshopCtrl', ['$scope', 'Workshops', 'AdminWorkshop', '$stateParams', '$translate', '$alert', '$state',
+    function ($scope, Workshops, AdminWorkshop, $stateParams, $translate, $alert, $state) {
 
         var _workshopId = $stateParams.id;
 
         //Initialize _originalData
         var _originalData = {};
-        $scope.workshop ={};
+        $scope.workshop = {};
         //Get translations for errors and store in array
         var _translations = {};
         //Pass all required translation IDs to translate service
-        $translate(['ALERT_WORKSHOP_EDIT_SUCCESS','TITLE_SUCCESS','TITLE_ERROR',
-            'ALERT_WORKSHOP_EDIT_FAIL','ALERT_WORKSHOP_NOT_FOUND','ALERT_WORKSHOP_IN_PAST','ALERT_NEGATIVE_COST','ALERT_NEGATIVE_PARTICIPANTS']).
-        then(function(translations){
-            _translations = translations;
-        });
-        var reformatDate =  function(_date){
-            if(!_date || _date == null)
+        $translate(['ALERT_WORKSHOP_EDIT_SUCCESS', 'TITLE_SUCCESS', 'TITLE_ERROR',
+            'ALERT_WORKSHOP_EDIT_FAIL', 'ALERT_WORKSHOP_NOT_FOUND', 'ALERT_WORKSHOP_IN_PAST', 'ALERT_NEGATIVE_COST', 'ALERT_NEGATIVE_PARTICIPANTS']).
+            then(function (translations) {
+                _translations = translations;
+            });
+        var reformatDate = function (_date) {
+            if (!_date || _date == null)
                 return "";
             var _dateStr = _date.toJSON();
-            if(_dateStr == null)
+            if (_dateStr == null)
                 return "";
-            _dateStr =  _dateStr.slice(0,_dateStr.length-5);
-            return _dateStr.replace('T',' ');
+            _dateStr = _dateStr.slice(0, _dateStr.length - 5);
+            return _dateStr.replace('T', ' ');
         };
         /**
          * @ngdoc function
@@ -61,27 +61,27 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
          */
         $scope.confirmChanges = function () {
 
-            var reformatDate =  function(_date){
-                if(_date == null)
+            var reformatDate = function (_date) {
+                if (_date == null)
                     return "";
-                var str = _date.getFullYear()+"-"+(_date.getMonth()+1)+"-"+_date.getDate()+" ";
-                if(_date.getHours() < 10)
+                var str = _date.getFullYear() + "-" + (_date.getMonth() + 1) + "-" + _date.getDate() + " ";
+                if (_date.getHours() < 10)
                     str += "0";
-                str += _date.getHours()+":";
-                if(_date.getMinutes() < 10)
+                str += _date.getHours() + ":";
+                if (_date.getMinutes() < 10)
                     str += "0";
-                str += _date.getMinutes() +":";
-                if(_date.getSeconds() < 10)
+                str += _date.getMinutes() + ":";
+                if (_date.getSeconds() < 10)
                     str += "0";
                 str += _date.getSeconds();
                 return str;
             };
             var _sa = Date.parse($scope.workshop.start_at);
             var _duration = $scope.workshop.duration;
-            var _ea = new Date(_sa+_duration + 1000*60*60) ;
+            var _ea = new Date(_sa + _duration + 1000 * 60 * 60);
 
             var error = false;
-            if($scope.workshop.cost < 0){
+            if ($scope.workshop.cost < 0) {
                 $alert({
                     title: _translations.TITLE_ERROR,
                     type: 'danger',
@@ -94,7 +94,7 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
                 error = true;
             }
 
-            if($scope.workshop.max_participants < 0){
+            if ($scope.workshop.max_participants < 0) {
                 $alert({
                     title: _translations.TITLE_ERROR,
                     type: 'danger',
@@ -107,7 +107,7 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
                 error = true;
             }
             var now = new Date();
-            if($scope.workshop.start_at < now) {
+            if ($scope.workshop.start_at < now) {
                 $alert({
                     title: _translations.TITLE_ERROR,
                     type: 'danger',
@@ -120,18 +120,18 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
                 error = true;
             }
 
-            if(error)
+            if (error)
                 return false;
 
             var _dataToSend = {
-                title:$scope.workshop.title,
-                description:$scope.workshop.description,
-                cost:$scope.workshop.cost,
-                requirements:$scope.workshop.requirement,
-                location:$scope.workshop.location,
-                start_at:reformatDate((new Date(_sa))),
-                end_at:reformatDate(_ea),
-                max_participants:$scope.workshop.max_participants
+                title: $scope.workshop.title,
+                description: $scope.workshop.description,
+                cost: $scope.workshop.cost,
+                requirements: $scope.workshop.requirement,
+                location: $scope.workshop.location,
+                start_at: reformatDate((new Date(_sa))),
+                end_at: reformatDate(_ea),
+                max_participants: $scope.workshop.max_participants
             };
             AdminWorkshop.edit({id: _workshopId}, _dataToSend).$promise.then(function (value) {
                 //Store answer from server
@@ -149,19 +149,19 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
                 $alert({
                     title: _translations.TITLE_SUCCESS,
                     type: 'success',
-                    content: _translations.ALERT_WORKSHOP_EDIT_SUCCESS + ' \"' + _originalData.title +'\"',
+                    content: _translations.ALERT_WORKSHOP_EDIT_SUCCESS + ' \"' + _originalData.title + '\"',
                     container: '#alert',
                     dismissable: true,
                     show: true,
                     duration: 30
                 });
                 //Redirect to Details page
-                $state.go("administrator_workshop_details",{id: value.id});
+                $state.go("administrator_workshop_details", {id: value.id});
             }, function (httpResponse) {
                 $alert({
-                    title:_translations.TITLE_ERROR,
+                    title: _translations.TITLE_ERROR,
                     type: 'danger',
-                    content: _translations.ALERT_WORKSHOP_EDIT_FAIL + '(' + httpResponse.status +')',
+                    content: _translations.ALERT_WORKSHOP_EDIT_FAIL + '(' + httpResponse.status + ')',
                     container: '#alert',
                     dismissable: true,
                     show: true,
@@ -200,11 +200,9 @@ mainAppCtrls.controller('AdminEditWorkshopCtrl',['$scope','Workshops','AdminWork
             $scope.workshop.duration = _originalData.duration;
             $scope.workshop.max_participants = _originalData.max_participants;
 
-
-
             $scope.loading = false;
         }, function (httpResponse) {
-            if(httpResponse.status === 404)
+            if (httpResponse.status === 404)
                 $alert({
                     title: _translations.TITLE_ERROR,
                     type: 'danger',

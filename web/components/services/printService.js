@@ -6,13 +6,13 @@
  * @name prntSvcs
  * @description Module containing print service and helper functions
  */
-var prntSvcs = angular.module("prntSvcs",[]);
+var prntSvcs = angular.module("prntSvcs", []);
 /**
  * @ngdoc service
  * @name prntSvcs.printer
  * @description Providing a function to print a html-template
  */
-prntSvcs.factory('printer',['$rootScope','$compile','$http','$timeout','$q', function($rootScope, $compile, $http, $timeout ,$q){
+prntSvcs.factory('printer', ['$rootScope', '$compile', '$http', '$timeout', '$q', function ($rootScope, $compile, $http, $timeout, $q) {
     /**
      * @ngdoc function
      * @name prntSvcs.printer#printHtml
@@ -36,19 +36,19 @@ prntSvcs.factory('printer',['$rootScope','$compile','$http','$timeout','$q', fun
      * @param {string} templateUrl URL to the template to be rendered
      * @param {object} data data to be rendered in the template
      */
-    var print = function (templateUrl, data,workshop) {
-        $http.get(templateUrl).success(function(template){
+    var print = function (templateUrl, data, workshop) {
+        $http.get(templateUrl).success(function (template) {
             var printScope = $rootScope.$new();
             var _data = {
-                data : {
+                data: {
                     participants: data,
                     workshop: workshop
                 }
             };
             angular.extend(printScope, _data);
             var element = $compile($('<div>' + template + '</div>'))(printScope);
-            var waitForRenderAndPrint = function() {
-                if(printScope.$$phase || $http.pendingRequests.length) {
+            var waitForRenderAndPrint = function () {
+                if (printScope.$$phase || $http.pendingRequests.length) {
                     $timeout(waitForRenderAndPrint);
                 } else {
                     printHtml(element.html());
@@ -68,14 +68,14 @@ prntSvcs.factory('printer',['$rootScope','$compile','$http','$timeout','$q', fun
      */
     var printFromScope = function (templateUrl, scope) {
         $rootScope.isBeingPrinted = true;
-        $http.get(templateUrl).success(function(template){
+        $http.get(templateUrl).success(function (template) {
             var printScope = scope;
             var element = $compile($('<div>' + template + '</div>'))(printScope);
-            var waitForRenderAndPrint = function() {
+            var waitForRenderAndPrint = function () {
                 if (printScope.$$phase || $http.pendingRequests.length) {
                     $timeout(waitForRenderAndPrint);
                 } else {
-                    printHtml(element.html()).then(function() {
+                    printHtml(element.html()).then(function () {
                         $rootScope.isBeingPrinted = false;
                     });
 
@@ -86,7 +86,7 @@ prntSvcs.factory('printer',['$rootScope','$compile','$http','$timeout','$q', fun
     };
     return {
         'print': print,
-        'printFromScope':printFromScope
+        'printFromScope': printFromScope
     }
 }]);
 

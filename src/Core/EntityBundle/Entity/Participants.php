@@ -86,6 +86,7 @@ class Participants
 
     /**
      * function to set the id of a participant
+     *
      * @param int $id
      */
     public function setId($id)
@@ -104,6 +105,7 @@ class Participants
 
     /**
      * function to set name of a participant
+     *
      * @param string $name
      */
     public function setName($name)
@@ -122,6 +124,7 @@ class Participants
 
     /**
      * function to set surname of participant
+     *
      * @param string $surname
      */
     public function setSurname($surname)
@@ -140,6 +143,7 @@ class Participants
 
     /**
      * function to set e-mail of participant
+     *
      * @param string $email
      */
     public function setEmail($email)
@@ -148,7 +152,7 @@ class Participants
     }
 
     /**
-     * function to get blacklistedstate 
+     * function to get blacklistedstate
      * @return boolean
      */
     public function isBlacklisted()
@@ -158,6 +162,7 @@ class Participants
 
     /**
      * function to set participant to state blacklisted
+     *
      * @param boolean $blacklisted
      */
     public function setBlacklisted($blacklisted)
@@ -176,6 +181,7 @@ class Participants
 
     /**
      * function to set time and date since participant is blacklisted
+     *
      * @param \DateTime $blacklisted_at
      */
     public function setBlacklistedAt($blacklisted_at)
@@ -194,6 +200,7 @@ class Participants
 
     /**
      * function to set administrator which blacklisted participant
+     *
      * @param User $blacklisted_from
      */
     public function setBlacklistedFrom($blacklisted_from)

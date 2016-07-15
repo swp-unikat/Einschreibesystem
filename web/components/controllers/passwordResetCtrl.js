@@ -8,13 +8,13 @@ var mainAppCtrls = angular.module("mainAppCtrls");
  * @description To reset your password and create a new password
  * @requires restSvcs.Admin
  */
-mainAppCtrls.controller('PasswordResetCtrl',['$scope','$alert','$translate','Admin','$stateParams',
-    function($scope,$alert,$translate,Admin,$stateParams) {
+mainAppCtrls.controller('PasswordResetCtrl', ['$scope', '$alert', '$translate', 'Admin', '$stateParams',
+    function ($scope, $alert, $translate, Admin, $stateParams) {
 
         $scope.form = {};
         var _translations;
-        $translate(['TITLE_ERROR','TITLE_SUCCESS','PASSWORDS_IDENTICAL_ERROR','PASSWORD_EMPTY_ERROR']).then(function(translations){
-           _translations = translations;
+        $translate(['TITLE_ERROR', 'TITLE_SUCCESS', 'PASSWORDS_IDENTICAL_ERROR', 'PASSWORD_EMPTY_ERROR']).then(function (translations) {
+            _translations = translations;
         });
         var pwAlert;
         var _token = $stateParams.token;
@@ -27,7 +27,7 @@ mainAppCtrls.controller('PasswordResetCtrl',['$scope','$alert','$translate','Adm
         $scope.validatePW = function () {
             var pw = $scope.password;
             var pwc = $scope.password_confirm;
-            if(pwAlert != null){
+            if (pwAlert != null) {
                 pwAlert.hide();
                 pwAlert.destroy();
             }
@@ -42,7 +42,7 @@ mainAppCtrls.controller('PasswordResetCtrl',['$scope','$alert','$translate','Adm
                 });
                 return false;
             } else {
-                if(pwAlert != null) {
+                if (pwAlert != null) {
                     pwAlert.hide();
                     pwAlert.destroy();
                 }
@@ -56,11 +56,11 @@ mainAppCtrls.controller('PasswordResetCtrl',['$scope','$alert','$translate','Adm
          * @description checks validity and sends a request to change the password to the server
          */
         $scope.sendInfo = function () {
-            if(!$scope.validatePW())
+            if (!$scope.validatePW())
                 return;
 
             var pw = $scope.password;
-            if(pw == '' || pw == null){
+            if (pw == '' || pw == null) {
                 pwAlert = $alert({
                     container: '#alert',
                     title: _translations.TITLE_ERROR,
@@ -74,7 +74,7 @@ mainAppCtrls.controller('PasswordResetCtrl',['$scope','$alert','$translate','Adm
             var _msg = "";
             var _type = "";
             var _title = "";
-            Admin.resetPassword({token: _token,password: $scope.password}).$promise.then(function(httpResponse){
+            Admin.resetPassword({token: _token, password: $scope.password}).$promise.then(function (httpResponse) {
                 pwAlert = $alert({
                     container: '#alert',
                     title: _translations.TITLE_SUCCESS,
@@ -83,8 +83,8 @@ mainAppCtrls.controller('PasswordResetCtrl',['$scope','$alert','$translate','Adm
                     show: true,
                     dismissable: false
                 });
-            },function(httpResponse){
-                switch(httpResponse.status){
+            }, function (httpResponse) {
+                switch (httpResponse.status) {
                     case 404:
                         _msg = "Invalid token";
                         break;

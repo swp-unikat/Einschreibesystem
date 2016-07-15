@@ -6,8 +6,8 @@ var mainAppCtrls = angular.module("mainAppCtrls");
  * @name mainAppCtrls.controller:EditWorkshopTemplateCtrl
  * @requires restSvcs.WorkshopTemplate
  */
-mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate','$stateParams','$translate','$alert','$state',
-    function($scope,WorkshopTemplate,$stateParams,$translate,$alert,$state) {
+mainAppCtrls.controller('EditWorkshopTemplateCtrl', ['$scope', 'WorkshopTemplate', '$stateParams', '$translate', '$alert', '$state',
+    function ($scope, WorkshopTemplate, $stateParams, $translate, $alert, $state) {
 
         var _workshopId = $stateParams.id;
         $scope.workshop = {};
@@ -18,10 +18,10 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
         var _translations = {};
         //Pass all required translation IDs to translate service
         $translate(['ALERT_WORKSHOPTEMPLATE_EDIT_SUCCESS',
-            'ALERT_WORKSHOPTEMPLATE_EDIT_FAIL','ALERT_WORKSHOPTEMPLATE_NOT_FOUND','TITLE_SUCCESS','TITLE_ERROR']).
-        then(function(translations){
-            _translations = translations;
-        });
+            'ALERT_WORKSHOPTEMPLATE_EDIT_FAIL', 'ALERT_WORKSHOPTEMPLATE_NOT_FOUND', 'TITLE_SUCCESS', 'TITLE_ERROR']).
+            then(function (translations) {
+                _translations = translations;
+            });
 
         /**
          * @ngdoc function
@@ -30,7 +30,7 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
          * @methodOf mainAppCtrls.controller:EditWorkshopTemplateCtrl
          */
         $scope.discard = function () {
-            
+
             $scope.workshop.title = _originalData.title;
             $scope.workshop.description = _originalData.description;
             $scope.workshop.cost = _originalData.cost;
@@ -41,7 +41,6 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
             $scope.workshop.max_participants = _originalData.max_participants;
         };
 
-
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:EditWorkshopTemplateCtrl#sendInfo
@@ -49,29 +48,29 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
          * @methodOf mainAppCtrls.controller:EditWorkshopTemplateCtrl
          */
         $scope.sendInfo = function () {
-            var reformatDate =  function(_date){
-                if(_date == null)
+            var reformatDate = function (_date) {
+                if (_date == null)
                     return "";
-                var str = _date.getFullYear()+"-"+(_date.getMonth()+1)+"-"+_date.getDate()+" ";
-                if(_date.getHours() < 10)
+                var str = _date.getFullYear() + "-" + (_date.getMonth() + 1) + "-" + _date.getDate() + " ";
+                if (_date.getHours() < 10)
                     str += "0";
-                str += _date.getHours()+":";
-                if(_date.getMinutes() < 10)
+                str += _date.getHours() + ":";
+                if (_date.getMinutes() < 10)
                     str += "0";
-                str += _date.getMinutes() +":";
-                if(_date.getSeconds() < 10)
+                str += _date.getMinutes() + ":";
+                if (_date.getSeconds() < 10)
                     str += "0";
                 str += _date.getSeconds();
                 return str;
             };
             var _sa = Date.parse($scope.workshop.start_at);
             var _duration = $scope.workshop.duration;
-            var _ea = new Date(_sa+_duration) ;
-            
+            var _ea = new Date(_sa + _duration);
+
             var error = false;
-            if($scope.workshop.cost < 0){
+            if ($scope.workshop.cost < 0) {
                 $alert({
-                    title:  _translations.TITLE_ERROR,
+                    title: _translations.TITLE_ERROR,
                     type: 'danger',
                     content: _translations.ALERT_NEGATIVE_COST,
                     container: '#alert',
@@ -81,9 +80,9 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
                 error = true;
             }
 
-            if($scope.workshop.max_participants < 0){
+            if ($scope.workshop.max_participants < 0) {
                 $alert({
-                    title:  _translations.TITLE_ERROR,
+                    title: _translations.TITLE_ERROR,
                     type: 'danger',
                     content: _translations.ALERT_NEGATIVE_PARTICIPANTS,
                     container: '#alert',
@@ -92,10 +91,10 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
                 });
                 error = true;
             }
-                var now = new Date();
-            if($scope.workshop.start_at < now) {
+            var now = new Date();
+            if ($scope.workshop.start_at < now) {
                 $alert({
-                    title:  _translations.TITLE_ERROR,
+                    title: _translations.TITLE_ERROR,
                     type: 'danger',
                     content: _translations.ALERT_WORKSHOP_IN_PAST,
                     container: '#alert',
@@ -105,25 +104,24 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
                 error = true;
             }
 
-            if(error)
+            if (error)
                 return false;
 
-
             var data = {
-                title:$scope.workshop.title,
-                description:$scope.workshop.description,
-                cost:$scope.workshop.cost,
-                requirement:$scope.workshop.requirement,
-                location:$scope.workshop.location,
-                start_at:reformatDate((new Date(_sa))),
-                end_at:reformatDate(_ea),
-                max_participants:$scope.workshop.max_participants
+                title: $scope.workshop.title,
+                description: $scope.workshop.description,
+                cost: $scope.workshop.cost,
+                requirement: $scope.workshop.requirement,
+                location: $scope.workshop.location,
+                start_at: reformatDate((new Date(_sa))),
+                end_at: reformatDate(_ea),
+                max_participants: $scope.workshop.max_participants
             };
             WorkshopTemplate.edit({id: _workshopId}, data).$promise.then(function (value) {
                 $alert({
                     title: _translations.TITLE_SUCCESS,
                     type: 'success',
-                    content: _translations.ALERT_WORKSHOPTEMPLATE_EDIT_SUCCESS + ' \"' + _originalData.title +'\"',
+                    content: _translations.ALERT_WORKSHOPTEMPLATE_EDIT_SUCCESS + ' \"' + _originalData.title + '\"',
                     container: '#alert',
                     dismissable: true,
                     show: true,
@@ -134,7 +132,7 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
                 $alert({
                     title: _translations.TITLE_ERROR,
                     type: 'danger',
-                    content: _translations.ALERT_WORKSHOPTEMPLATE_EDIT_FAIL + '(' + httpResponse.status +')',
+                    content: _translations.ALERT_WORKSHOPTEMPLATE_EDIT_FAIL + '(' + httpResponse.status + ')',
                     container: '#alert',
                     dismissable: true,
                     show: true,
@@ -175,15 +173,12 @@ mainAppCtrls.controller('EditWorkshopTemplateCtrl',['$scope','WorkshopTemplate',
             $scope.workshop.start_at = _originalData.start_at;
             $scope.workshop.end_at = _originalData.end_at;
             $scope.workshop.max_participants = _originalData.max_participants;
-            
-
-
 
             $scope.loading = false;
         }, function (httpResponse) {
-            if(httpResponse.status === 404)
+            if (httpResponse.status === 404)
                 $alert({
-                    title:  _translations.TITLE_ERROR,
+                    title: _translations.TITLE_ERROR,
                     type: 'danger',
                     content: _translations.ALERT_WORKSHOPTEMPLATE_NOT_FOUND,
                     container: '#alert',

@@ -9,12 +9,11 @@
 namespace Core\EntityBundle\Entity;
 
 
-
-
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Core\EntityBundle\Entity\Invitation;
+
 /**
  * this class provides entitys and methods from the user
  * @ORM\Entity
@@ -31,12 +30,13 @@ class User extends BaseUser
     protected $id;
 
     /**
-     * invitation of user 
+     * invitation of user
      * @ORM\OneToOne(targetEntity="Invitation")
      * @ORM\JoinColumn(referencedColumnName="code")
      * @Assert\NotNull(message="Your invitation is wrong", groups={"Registration"})
      */
     protected $invitation;
+
     /**
      * function to construct user
      */
@@ -45,6 +45,7 @@ class User extends BaseUser
         parent::__construct();
         // your own logic
     }
+
     /**
      * function to set invitation
      */
@@ -52,6 +53,7 @@ class User extends BaseUser
     {
         $this->invitation = $invitation;
     }
+
     /**
      * function to get invitation
      */
@@ -59,8 +61,6 @@ class User extends BaseUser
     {
         return $this->invitation;
     }
-
-
 
 
 }

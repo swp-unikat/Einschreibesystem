@@ -23,26 +23,30 @@
 </div>
 
 <div class="col-md-2" bs-alert></div>
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="form-group">
-                    <label>{{ "EMAIL_SUBJECT" | translate}}</label>
-                    <input type="text" ng-model="email.subject" class="form-control ">
+<div class="row">
+    <div class="col-lg-6">
+        <div class="form-group">
+            <label>{{ "EMAIL_SUBJECT" | translate}}</label>
+            <input type="text" ng-model="email.subject" class="form-control ">
 
-                    <label>{{ "EMAIL_BODY" | translate}}</label>
-                    <div text-angular ng-model="email.body"></div>
+            <label>{{ "EMAIL_BODY" | translate}}</label>
 
-                    <br>
-                    <div class="form-group row text-left">
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-info" ng-click="discard()">{{ "BUTTON_DISCARD" | translate}}</button>
-                            <button type="button" class="btn btn-info" ng-click="send()">{{ "BUTTON_CONFIRM" | translate}}</button>
-                        </div>
-                    </div>
+            <div text-angular ng-model="email.body"></div>
+
+            <br>
+
+            <div class="form-group row text-left">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-info" ng-click="discard()">{{ "BUTTON_DISCARD" | translate}}
+                    </button>
+                    <button type="button" class="btn btn-info" ng-click="send()">{{ "BUTTON_CONFIRM" | translate}}
+                    </button>
                 </div>
             </div>
-            <div class="col-md-6" id="alert" bs-alert></div>
         </div>
+    </div>
+    <div class="col-md-6" id="alert" bs-alert></div>
+</div>
 </div>
 
 
