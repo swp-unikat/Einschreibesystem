@@ -48,6 +48,8 @@ class User extends BaseUser
 
     /**
      * function to set invitation
+     *
+     * @param Invitation $invitation
      */
     public function setInvitation(Invitation $invitation)
     {
@@ -56,6 +58,7 @@ class User extends BaseUser
 
     /**
      * function to get invitation
+     * @return Invitation
      */
     public function getInvitation()
     {

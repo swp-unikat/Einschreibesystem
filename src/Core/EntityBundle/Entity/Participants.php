@@ -25,6 +25,7 @@ class Participants
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+
     /**
      * name of the participant
      * @var string
@@ -33,6 +34,7 @@ class Participants
      * @Serializer\SerializedName("name")
      */
     protected $name;
+
     /**
      * surname of a participant
      * @var string
@@ -41,6 +43,7 @@ class Participants
      * @Serializer\SerializedName("surname")
      */
     protected $surname;
+
     /**
      * e-mail of a participant
      * @var string
@@ -49,6 +52,7 @@ class Participants
      * @Serializer\SerializedName("email")
      */
     protected $email;
+
     /**
      * state of a participant, if he is blacklisted
      * @var bool
@@ -57,6 +61,7 @@ class Participants
      * @Serializer\SerializedName("blacklisted")
      */
     protected $blacklisted;
+
     /**
      * time and date since a participant is blacklisted
      * @var \DateTime
@@ -65,6 +70,7 @@ class Participants
      * @Serializer\SerializedName("blacklisted_at")
      */
     protected $blacklisted_at;
+
     /**
      * administrator which blacklisted a participant
      * @var \Core\EntityBundle\Entity\User

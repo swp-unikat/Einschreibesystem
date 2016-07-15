@@ -28,6 +28,7 @@ class WorkshopTemplates
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+
     /**
      * title of a workshoptemplate
      * @var string
@@ -36,6 +37,7 @@ class WorkshopTemplates
      * @Serializer\SerializedName("title")
      */
     protected $title;
+
     /**
      * description of a workshoptemplate
      * @var string
@@ -44,6 +46,7 @@ class WorkshopTemplates
      * @Serializer\SerializedName("description")
      */
     protected $description;
+
     /**
      * cost of a workshoptemplate
      * @var int
@@ -52,6 +55,7 @@ class WorkshopTemplates
      * @Serializer\SerializedName("cost")
      */
     protected $cost;
+
     /**
      * requirements of a workshoptemplate
      * @var string
@@ -60,6 +64,7 @@ class WorkshopTemplates
      * @Serializer\SerializedName("requirement")
      */
     protected $requirements;
+
     /**
      * location of a workshoptemplate
      * @var string
@@ -68,6 +73,7 @@ class WorkshopTemplates
      * @Serializer\SerializedName("location")
      */
     protected $location;
+
     /**
      * starttime and date of a workshoptemplate
      * @var \DateTime
@@ -76,6 +82,7 @@ class WorkshopTemplates
      * @Serializer\SerializedName("start_at")
      */
     protected $start_at;
+
     /**
      * endtime and date of a workshoptemplate
      * @var \DateTime
@@ -84,6 +91,7 @@ class WorkshopTemplates
      * @Serializer\SerializedName("end_at")
      */
     protected $end_at;
+
     /**
      * maximum participants of a workshoptemplate
      * @var int
@@ -92,6 +100,7 @@ class WorkshopTemplates
      * @Serializer\SerializedName("max_participants")
      */
     protected $max_participants;
+
     /**
      * datetime when workshoptemplate was created
      * @var \DateTime
@@ -298,6 +307,4 @@ class WorkshopTemplates
     {
         $this->created = $created;
     }
-
-
 }

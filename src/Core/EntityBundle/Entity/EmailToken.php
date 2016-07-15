@@ -26,6 +26,7 @@ class EmailToken
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     public $id;
+
     /**
      * id of a participant
      * @var \Core\EntityBundle\Entity\Participants
@@ -35,6 +36,7 @@ class EmailToken
      * @Serializer\SerializedName("participant")
      */
     public $participant;
+
     /**
      * token of a e-mail
      * @var string
@@ -43,6 +45,7 @@ class EmailToken
      * @Serializer\SerializedName("token")
      */
     public $token;
+
     /**
      * creattime and date of emailtoken
      * @var \DateTime
@@ -51,6 +54,7 @@ class EmailToken
      * @Serializer\SerializedName("email_subject")
      */
     public $created;
+
     /**
      * time and date since the token is valid
      * @var \DateTime
@@ -59,6 +63,7 @@ class EmailToken
      * @Serializer\SerializedName("valid_until")
      */
     public $valid_until;
+
     /**
      * time and date when the token is used
      * @var \DateTime

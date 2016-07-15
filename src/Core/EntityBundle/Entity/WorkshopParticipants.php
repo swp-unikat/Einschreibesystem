@@ -27,6 +27,7 @@ class WorkshopParticipants
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+
     /**
      * id of a participant
      * @var \Core\EntityBundle\Entity\Participants
@@ -37,6 +38,7 @@ class WorkshopParticipants
      * @Serializer\Groups({"names"})
      */
     protected $participant;
+
     /**
      * id of the workshop
      * @var \Core\EntityBundle\Entity\Workshop
@@ -46,6 +48,7 @@ class WorkshopParticipants
      * @Serializer\SerializedName("workshop")
      */
     protected $workshop;
+
     /**
      * date of enrollment
      * @var \DateTime
@@ -54,6 +57,7 @@ class WorkshopParticipants
      * @Serializer\SerializedName("enrollment")
      */
     protected $enrollment;
+
     /**
      * state of participant if he is an the waitinglist
      * @var boolean
@@ -62,6 +66,7 @@ class WorkshopParticipants
      * @Serializer\SerializedName("waiting")
      */
     protected $waiting;
+
     /**
      * state of participant if he is succesfull enroll
      * @var boolean
@@ -192,6 +197,4 @@ class WorkshopParticipants
     {
         $this->participated = $participated;
     }
-
-
 }
