@@ -21,12 +21,10 @@ class WorkshopParticipantsRepository extends EntityRepository
     /**
      * function to find participants of a workshop
      *
-     * @param $workshopId
-     * @param $participantId
+     * @param int $workshopId id of a workshop
+     * @param int $participantId id of a participant
      *
      * @return WorkshopParticipants
-     * @internal param int $workshopID id of a workshop
-     * @internal param int $participantID id of a participant
      */
     public function findById($workshopId, $participantId)
     {
