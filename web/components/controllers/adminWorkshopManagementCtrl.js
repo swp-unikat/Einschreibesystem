@@ -39,10 +39,11 @@ mainAppCtrls.controller('adminWorkshopManagementCtrl', ['$scope', 'AdminWorkshop
             return (d2.getTime() > d1.getTime())
         };
         //Get and store translation for alert title.
-        $translate(['TITLE_ERROR', 'ERROR_NO_WORKSHOPS', 'TITLE_SUCCESS']).then(function (translations) {
+        $translate(['TITLE_ERROR', 'ERROR_NO_WORKSHOPS', 'EMPTY_WORKSHOP', 'TITLE_SUCCESS']).then(function (translations) {
             $scope.errorTitle = translations.TITLE_ERROR;
             $scope.errorMsg = translations.ERROR_NO_WORKSHOPS;
             $scope.successTitle = translations.TITLE_SUCCESS;
+            $scope.emptyMsg = translations.EMPTY_WORKSHOP;
         });
         var loadWorkshops = function () {
             $scope.loading = true;
@@ -60,6 +61,16 @@ mainAppCtrls.controller('adminWorkshopManagementCtrl', ['$scope', 'AdminWorkshop
             }, function (httpResponse) {
                 //switch through all possible errors
                 switch (httpResponse.status) {
+                    case 204:
+                        $scope.myAlert = $alert({
+                            title: $scope.errorTitle,
+                            type: 'danger',
+                            content: $scope.emptyMsg,
+                            container: '#alert',
+                            dismissable: false,
+                            show: true
+                        });
+                        break;
                     //Alert for error 404, no workshops available
                     case 404:
                         $scope.myAlert = $alert({
@@ -71,6 +82,7 @@ mainAppCtrls.controller('adminWorkshopManagementCtrl', ['$scope', 'AdminWorkshop
                             dismissable: false,
                             show: true
                         });
+                        break;
                     case 500:
                         $scope.myAlert = $alert({
                             title: $scope.errorTitle,
@@ -79,7 +91,7 @@ mainAppCtrls.controller('adminWorkshopManagementCtrl', ['$scope', 'AdminWorkshop
                             container: '#alert',
                             dismissable: false,
                             show: true
-                        })
+                        });
                         break;
                 }
                 $scope.loading = false;

@@ -439,6 +439,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
      *      "groups"={"names"}
      *  },statusCodes = {
      *      200 = "Returned when successful",
+     *      204 = "No Content in waitinglist",
      *      404 = "Returned when the data is not found"
      *  },requirements={
      *      {
@@ -472,7 +473,11 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
             ];
         }
 
-        $view = $this->view($waiting, 200);
+        if (empty($waiting)) {
+            $view = $this->view($waiting, 204);
+        } else {
+            $view = $this->view($waiting, 200);
+        }
         return $this->handleView($view);
     }
 
