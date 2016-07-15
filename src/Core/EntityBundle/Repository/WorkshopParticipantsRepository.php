@@ -9,6 +9,7 @@
 namespace Core\EntityBundle\Repository;
 
 
+use Core\EntityBundle\Entity\WorkshopParticipants;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
 
@@ -20,8 +21,10 @@ class WorkshopParticipantsRepository extends EntityRepository
     /**
      * function to find participants of a workshop
      *
-     * @param int $workshopID id of a workshop
-     * @param int $participantID id of a participant
+     * @param int $workshopId id of a workshop
+     * @param int $participantId id of a participant
+     *
+     * @return WorkshopParticipants
      */
     public function findById($workshopId, $participantId)
     {
