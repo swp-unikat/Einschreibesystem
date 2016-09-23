@@ -11,7 +11,7 @@ use FOS\RestBundle\Inflector\InflectorInterface;
 
 /**
  * Inflector class
- *
+
  */
 class NoopInflector implements InflectorInterface
 {

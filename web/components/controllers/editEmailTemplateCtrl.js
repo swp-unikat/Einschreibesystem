@@ -6,9 +6,9 @@ var mainAppCtrls = angular.module("mainAppCtrls");
  * @name mainAppCtrls.controller:EditEmailTemplateCtrl
  * @requires restSvcs.EmailTemplate
  */
-mainAppCtrls.controller('EditEmailTemplateCtrl',['$scope','EmailTemplate','$stateParams','$translate','$alert','$state',
-    function($scope,EmailTemplate,$stateParams,$translate,$alert,$state) {
-        
+mainAppCtrls.controller('EditEmailTemplateCtrl', ['$scope', 'EmailTemplate', '$stateParams', '$translate', '$alert', '$state',
+    function ($scope, EmailTemplate, $stateParams, $translate, $alert, $state) {
+
         var _workshopId = $stateParams.id;
 
         //Initialize _originalData
@@ -17,11 +17,11 @@ mainAppCtrls.controller('EditEmailTemplateCtrl',['$scope','EmailTemplate','$stat
         //Get translations for errors and store in array
         var _translations = {};
         //Pass all required translation IDs to translate service
-        $translate(['ALERT_EMAILTEMPLATE_EDIT_SUCCESS','TITLE_SUCCESS','TITLE_ERROR',
-            'ALERT_EMAILTEMPLATE_EDIT_FAIL','ALERT_EMAILTEMPLATE_NOT_FOUND']).
-        then(function(translations){
-            _translations = translations;
-        });
+        $translate(['ALERT_EMAILTEMPLATE_EDIT_SUCCESS', 'TITLE_SUCCESS', 'TITLE_ERROR',
+            'ALERT_EMAILTEMPLATE_EDIT_FAIL', 'ALERT_EMAILTEMPLATE_NOT_FOUND']).
+            then(function (translations) {
+                _translations = translations;
+            });
 
         /**
          * @ngdoc function
@@ -71,7 +71,7 @@ mainAppCtrls.controller('EditEmailTemplateCtrl',['$scope','EmailTemplate','$stat
                 $alert({
                     title: _translations.TITLE_SUCCESS,
                     type: 'success',
-                    content: _translations.ALERT_EMAILTEMPLATE_EDIT_SUCCESS + ' \"' + _originalData.title +'\"',
+                    content: _translations.ALERT_EMAILTEMPLATE_EDIT_SUCCESS + ' \"' + _originalData.title + '\"',
                     container: '#alert',
                     dismissable: true,
                     show: true,
@@ -79,15 +79,15 @@ mainAppCtrls.controller('EditEmailTemplateCtrl',['$scope','EmailTemplate','$stat
                 });
                 $state.go("email_template")
             }, function (httpResponse) {
-                    $alert({
-                        title: _translations.TITLE_ERROR,
-                        type: 'danger',
-                        content: _translations.ALERT_EMAILTEMPLATE_EDIT_FAIL + '(' + httpResponse.status +')',
-                        container: '#alert',
-                        dismissable: true,
-                        show: true,
-                        duration: 60
-                    });
+                $alert({
+                    title: _translations.TITLE_ERROR,
+                    type: 'danger',
+                    content: _translations.ALERT_EMAILTEMPLATE_EDIT_FAIL + '(' + httpResponse.status + ')',
+                    container: '#alert',
+                    dismissable: true,
+                    show: true,
+                    duration: 60
+                });
             });
         }
 
@@ -112,7 +112,7 @@ mainAppCtrls.controller('EditEmailTemplateCtrl',['$scope','EmailTemplate','$stat
             };
             $scope.loading = false;
         }, function (httpResponse) {
-            if(httpResponse.status === 404)
+            if (httpResponse.status === 404)
                 $alert({
                     title: _translations.TITLE_ERROR,
                     type: 'danger',

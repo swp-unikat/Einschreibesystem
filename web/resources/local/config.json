@@ -1,18 +1,18 @@
 {
-  "lang": [
-    {
-      "code": "en",
-      "name": "English"
-    },
-    {
-      "code": "de",
-      "name": "Deutsch"
-    },
-    {
-      "code": "tr",
-      "name": "Türkçe"
-    }
+    "lang": [
+        {
+            "code": "en",
+            "name": "English"
+        },
+        {
+            "code": "de",
+            "name": "Deutsch"
+        },
+        {
+            "code": "tr",
+            "name": "Türkçe"
+        }
 
-  ],
-  "default": "en"
+    ],
+    "default": "en"
 }

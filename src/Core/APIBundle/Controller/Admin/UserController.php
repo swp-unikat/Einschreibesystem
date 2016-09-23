@@ -39,9 +39,8 @@ class UserController extends FOSRestController implements ClassResourceInterface
      *      404 = "Returned when the data is not found"
      *  }
      * )
-     *
-     *
      * @return \Symfony\Component\HttpFoundation\Response
+     *
      * @param $paramFetcher ParamFetcher
      * @Rest\RequestParam(name="email", requirements=".*", description="email")
      * @Rest\View()
@@ -49,19 +48,24 @@ class UserController extends FOSRestController implements ClassResourceInterface
     public function postInviteAction(ParamFetcher $paramFetcher)
     {
         $email = $paramFetcher->get("email");
-        if($this->get('fos_user.user_manager')->findUserByUsernameOrEmail($email))
-            return $this->handleView($this->view(['code' => 404,'message' => "INVITED_ADMINISTRATOR_EMAIL_ERROR"], 404));
+        if ($this->get('fos_user.user_manager')->findUserByUsernameOrEmail($email)) {
+            return $this->handleView(
+                $this->view(['code' => 404, 'message' => "INVITED_ADMINISTRATOR_EMAIL_ERROR"], 404)
+            );
+        }
 
 
         $invitation = new Invitation();
         /* Loading the default E-Mail template*/
-        $template = $this->getDoctrine()->getRepository("CoreEntityBundle:EmailTemplate")->findOneBy(['template_name' => 'Invitation']);
+        $template = $this->getDoctrine()->getRepository("CoreEntityBundle:EmailTemplate")->findOneBy(
+            ['template_name' => 'Invitation']
+        );
         /* Creating Twig template from Database */
         $renderTemplate = $this->get('twig')->createTemplate($template->getEmailBody());
         /* Sending E-Mail */
         $invitation->setEmail($email);
 
-        $url = $this->generateUrl('core_frontend_default_index',[],TRUE)."#/admin/create/".$invitation->getCode();
+        $url = $this->generateUrl('core_frontend_default_index', [], true) . "#/admin/create/" . $invitation->getCode();
 
         $message = \Swift_Message::newInstance()
             ->setSubject($template->getEmailSubject())
@@ -77,7 +81,7 @@ class UserController extends FOSRestController implements ClassResourceInterface
 
     }
 
-    
+
     /**
      * Action to disable an Admin
      * @ApiDoc(
@@ -94,7 +98,9 @@ class UserController extends FOSRestController implements ClassResourceInterface
      *        "description"="Admin ID"
      * }}
      * )
+     *
      * @param $adminID integer adminID
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\View()
      */
@@ -122,9 +128,11 @@ class UserController extends FOSRestController implements ClassResourceInterface
      *      200 = "Returned when successful",
      *      404 = "Returned when the data is not found"
      *  }
-     * 
+     *
      * )
+     *
      * @param $paramFetcher ParamFetcher
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\RequestParam(name="oldpassword", requirements=".*", description="old password of a admin")
      * @Rest\RequestParam(name="newpassword", requirements=".*", description="new password of a admin")
@@ -144,12 +152,12 @@ class UserController extends FOSRestController implements ClassResourceInterface
             $admin->setPlainPassword($params['newpassword']);
             $this->get('fos_user.user_manager')->updateUser($admin);
         } else {
-            return $this->handleView($this->view(['code' => 403,'message' => "Old password is wrong"], 403));
+            return $this->handleView($this->view(['code' => 403, 'message' => "Old password is wrong"], 403));
         }
         $this->getDoctrine()->getManager()->persist($admin);
         $this->getDoctrine()->getManager()->flush();
 
-        return $this->handleView($this->view(['code' => 200,'message' => "Password successful changed"], 200));
+        return $this->handleView($this->view(['code' => 200, 'message' => "Password successful changed"], 200));
 
     }
 
@@ -164,7 +172,9 @@ class UserController extends FOSRestController implements ClassResourceInterface
      *      404 = "Returned when the data is not found"
      *  }
      * )
+     *
      * @param $paramFetcher ParamFetcher
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\RequestParam(name="oldemail", requirements=".*", description="old email")
      * @Rest\RequestParam(name="newemail", requirements=".*", description="new email")
@@ -177,10 +187,11 @@ class UserController extends FOSRestController implements ClassResourceInterface
         //get current user
         $admin = $this->getUser();
         //check if old password input equals the current password in database
-        if ($admin->getEmail() == $params['oldemail'])
+        if ($admin->getEmail() == $params['oldemail']) {
             $admin->setEmail($params['newemail']);
-        else
-            return $this->handleView($this->view(['code' => 403,'message' => "E-Mail not found"], 403));
+        } else {
+            return $this->handleView($this->view(['code' => 403, 'message' => "E-Mail not found"], 403));
+        }
 
         $this->getDoctrine()->getManager()->persist($admin);
         $this->getDoctrine()->getManager()->flush();
@@ -199,7 +210,6 @@ class UserController extends FOSRestController implements ClassResourceInterface
      *      404 = "Returned when the data is not found"
      *  }
      *)
-     *
      * @return \Symfony\Component\HttpFoundation\Response
      * @return array give the list of all admins
      * @Rest\View()
@@ -228,9 +238,9 @@ class UserController extends FOSRestController implements ClassResourceInterface
      *      404 = "Returned when the data is not found"
      *  }
      *)
-     *
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\RequestParam(name="content", requirements=".*", description="content of contact data",default=null,nullable=true )
+     *
      * @param $paramFetcher ParamFetcher
      * @Rest\View()
      */
@@ -238,14 +248,22 @@ class UserController extends FOSRestController implements ClassResourceInterface
     {
         $paramFetcher->get('content');
         $path = $this->get('kernel')->getRootDir() . '/../web/resources/data/legalNotice';
-        if(file_put_contents($path,$paramFetcher->get('content')) !== FALSE){
-            return $this->handleView($this->view(['code' => 200,'message' => "saved legal notice"], 200));
-        }else{
-            return $this->handleView($this->view(['code' => 404,'message' => "Could not write the file.", 'content' => $paramFetcher->get('content')], 404));
+        if (file_put_contents($path, $paramFetcher->get('content')) !== false) {
+            return $this->handleView($this->view(['code' => 200, 'message' => "saved legal notice"], 200));
+        } else {
+            return $this->handleView(
+                $this->view(
+                    [
+                        'code'    => 404,
+                        'message' => "Could not write the file.",
+                        'content' => $paramFetcher->get('content')
+                    ],
+                    404
+                )
+            );
         }
     }
 
-  
 
     /**
      * modify contact data
@@ -258,19 +276,28 @@ class UserController extends FOSRestController implements ClassResourceInterface
      *      404 = "Returned when the data is not found"
      *  }
      *)
-     *
      * @return \Symfony\Component\HttpFoundation\Response
      * @Rest\RequestParam(name="content", requirements=".*", description="content of contact data",default=null,nullable=true )
+     *
      * @param $paramFetcher ParamFetcher
      * @Rest\View()
      */
     public function putContactDataAction(ParamFetcher $paramFetcher)
     {
         $path = $this->get('kernel')->getRootDir() . '/../web/resources/data/contactData';
-        if(file_put_contents($path,$paramFetcher->get('content')) !== FALSE){
-            return $this->handleView($this->view(['code' => 200,'message' => "saved contact data"], 200));
-        }else{
-            return $this->handleView($this->view(['code' => 404,'message' => "Could not write the file.", 'content' => $paramFetcher->get('content')], 401));
+        if (file_put_contents($path, $paramFetcher->get('content')) !== false) {
+            return $this->handleView($this->view(['code' => 200, 'message' => "saved contact data"], 200));
+        } else {
+            return $this->handleView(
+                $this->view(
+                    [
+                        'code'    => 404,
+                        'message' => "Could not write the file.",
+                        'content' => $paramFetcher->get('content')
+                    ],
+                    401
+                )
+            );
         }
     }
 

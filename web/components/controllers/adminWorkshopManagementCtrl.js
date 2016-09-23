@@ -8,8 +8,8 @@ var mainAppCtrls = angular.module("mainAppCtrls");
  * @description Shows a list of past and future workshops
  * @requires restSvcs.AdminWorkshop
  */
-mainAppCtrls.controller('adminWorkshopManagementCtrl',['$scope','AdminWorkshop','$alert','$translate',
-    function($scope,AdminWorkshop,$alert,$translate) {
+mainAppCtrls.controller('adminWorkshopManagementCtrl', ['$scope', 'AdminWorkshop', '$alert', '$translate',
+    function ($scope, AdminWorkshop, $alert, $translate) {
 
         //Define object to store the alert in
         $scope.myAlert;
@@ -20,11 +20,11 @@ mainAppCtrls.controller('adminWorkshopManagementCtrl',['$scope','AdminWorkshop',
         var _translations = {};
         //Pass all required translation IDs to translate service
         $translate(['ALERT_WORKSHOP_DELETE_SUCCESS',
-            'ALERT_INTERNAL_SERVER_ERROR','ALERT_WORKSHOP_DELETE_FAIL']).
-        then(function(translations){
-            _translations = translations;
-        });
-        
+            'ALERT_INTERNAL_SERVER_ERROR', 'ALERT_WORKSHOP_DELETE_FAIL']).
+            then(function (translations) {
+                _translations = translations;
+            });
+
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:adminWorkshopManagementCtrl#compareToCurrent
@@ -33,18 +33,19 @@ mainAppCtrls.controller('adminWorkshopManagementCtrl',['$scope','AdminWorkshop',
          * @description Compares the give date to the current date
          * @returns {boolean} Returns true if passed date lies in the future
          **/
-        var compareToCurrent = function (a){
-           var  d1 = new Date();
-           var  d2 = new Date(a);
-           return (d2.getTime()>d1.getTime())
+        var compareToCurrent = function (a) {
+            var d1 = new Date();
+            var d2 = new Date(a);
+            return (d2.getTime() > d1.getTime())
         };
         //Get and store translation for alert title.
-        $translate(['TITLE_ERROR','ERROR_NO_WORKSHOPS','TITLE_SUCCESS']).then(function (translations) {
+        $translate(['TITLE_ERROR', 'ERROR_NO_WORKSHOPS', 'EMPTY_WORKSHOP', 'TITLE_SUCCESS']).then(function (translations) {
             $scope.errorTitle = translations.TITLE_ERROR;
             $scope.errorMsg = translations.ERROR_NO_WORKSHOPS;
             $scope.successTitle = translations.TITLE_SUCCESS;
+            $scope.emptyMsg = translations.EMPTY_WORKSHOP;
         });
-        var loadWorkshops = function() {
+        var loadWorkshops = function () {
             $scope.loading = true;
             AdminWorkshop.gethistory().$promise.then(function (value) {
                 var workshopList = value;
@@ -60,6 +61,16 @@ mainAppCtrls.controller('adminWorkshopManagementCtrl',['$scope','AdminWorkshop',
             }, function (httpResponse) {
                 //switch through all possible errors
                 switch (httpResponse.status) {
+                    case 204:
+                        $scope.myAlert = $alert({
+                            title: $scope.errorTitle,
+                            type: 'danger',
+                            content: $scope.emptyMsg,
+                            container: '#alert',
+                            dismissable: false,
+                            show: true
+                        });
+                        break;
                     //Alert for error 404, no workshops available
                     case 404:
                         $scope.myAlert = $alert({
@@ -71,15 +82,16 @@ mainAppCtrls.controller('adminWorkshopManagementCtrl',['$scope','AdminWorkshop',
                             dismissable: false,
                             show: true
                         });
+                        break;
                     case 500:
                         $scope.myAlert = $alert({
                             title: $scope.errorTitle,
                             type: 'danger',
-                            content: _translations.ALERT_INTERNAL_SERVER_ERROR + ' (' + httpResponse.status +')',
+                            content: _translations.ALERT_INTERNAL_SERVER_ERROR + ' (' + httpResponse.status + ')',
                             container: '#alert',
                             dismissable: false,
                             show: true
-                        })
+                        });
                         break;
                 }
                 $scope.loading = false;
@@ -94,11 +106,11 @@ mainAppCtrls.controller('adminWorkshopManagementCtrl',['$scope','AdminWorkshop',
          * @params {number} _id workshop id, which should be removed
          */
         $scope.delete = function (_id) {
-            AdminWorkshop.delete({id:_id}).$promise.then(function(httpResponse){
+            AdminWorkshop.delete({id: _id}).$promise.then(function (httpResponse) {
                     $alert({
                         title: $scope.successTitle,
                         type: 'success',
-                        container:'#alert',
+                        container: '#alert',
                         show: true,
                         dismissable: true,
                         content: _translations.ALERT_WORKSHOP_DELETE_SUCCESS,
@@ -110,10 +122,10 @@ mainAppCtrls.controller('adminWorkshopManagementCtrl',['$scope','AdminWorkshop',
                     $alert({
                         title: $scope.errorTitle,
                         type: 'danger',
-                        container:'#alert',
+                        container: '#alert',
                         show: true,
                         dismissable: true,
-                        content: _translations.ALERT_WORKSHOP_DELETE_FAIL + ' (' + httpResponse.status +')',
+                        content: _translations.ALERT_WORKSHOP_DELETE_FAIL + ' (' + httpResponse.status + ')',
                         duration: 20
                     });
                 }

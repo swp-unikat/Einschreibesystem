@@ -6,9 +6,9 @@
          backupGlobals="false"
          colors="true"
          bootstrap="autoload.php"
->
+        >
     <php>
-        <ini name="error_reporting" value="-1" />
+        <ini name="error_reporting" value="-1"/>
         <!--
             <server name="KERNEL_DIR" value="/path/to/your/app/" />
         -->

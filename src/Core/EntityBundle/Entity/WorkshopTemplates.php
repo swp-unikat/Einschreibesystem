@@ -10,13 +10,15 @@ namespace Core\EntityBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
+
 /**
  * this class provides entitys and methods for workshoptemplates
  * @ORM\Entity()
  * @ORM\Table(name="workshop_templates")
  * this class provides the entitys of the workshoptemplates and the methods of the workshoptemplates
  */
-class WorkshopTemplates{
+class WorkshopTemplates
+{
 
     /**
      * id of a workshoptemplate
@@ -26,6 +28,7 @@ class WorkshopTemplates{
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+
     /**
      * title of a workshoptemplate
      * @var string
@@ -34,6 +37,7 @@ class WorkshopTemplates{
      * @Serializer\SerializedName("title")
      */
     protected $title;
+
     /**
      * description of a workshoptemplate
      * @var string
@@ -42,6 +46,7 @@ class WorkshopTemplates{
      * @Serializer\SerializedName("description")
      */
     protected $description;
+
     /**
      * cost of a workshoptemplate
      * @var int
@@ -50,6 +55,7 @@ class WorkshopTemplates{
      * @Serializer\SerializedName("cost")
      */
     protected $cost;
+
     /**
      * requirements of a workshoptemplate
      * @var string
@@ -58,6 +64,7 @@ class WorkshopTemplates{
      * @Serializer\SerializedName("requirement")
      */
     protected $requirements;
+
     /**
      * location of a workshoptemplate
      * @var string
@@ -66,6 +73,7 @@ class WorkshopTemplates{
      * @Serializer\SerializedName("location")
      */
     protected $location;
+
     /**
      * starttime and date of a workshoptemplate
      * @var \DateTime
@@ -74,6 +82,7 @@ class WorkshopTemplates{
      * @Serializer\SerializedName("start_at")
      */
     protected $start_at;
+
     /**
      * endtime and date of a workshoptemplate
      * @var \DateTime
@@ -82,6 +91,7 @@ class WorkshopTemplates{
      * @Serializer\SerializedName("end_at")
      */
     protected $end_at;
+
     /**
      * maximum participants of a workshoptemplate
      * @var int
@@ -90,6 +100,7 @@ class WorkshopTemplates{
      * @Serializer\SerializedName("max_participants")
      */
     protected $max_participants;
+
     /**
      * datetime when workshoptemplate was created
      * @var \DateTime
@@ -98,6 +109,7 @@ class WorkshopTemplates{
      * @Serializer\SerializedName("created")
      */
     protected $created;
+
     /**
      * function to construct a workshoptemplate
      */
@@ -117,6 +129,7 @@ class WorkshopTemplates{
 
     /**
      * function to set a workshoptemplate
+     *
      * @param int $id
      */
     public function setId($id)
@@ -135,12 +148,14 @@ class WorkshopTemplates{
 
     /**
      * function to set the title of a workshoptemplate
+     *
      * @param string $title
      */
     public function setTitle($title)
     {
         $this->title = $title;
     }
+
     /**
      * function to get the description of a workshoptemplate
      * @return string
@@ -152,12 +167,14 @@ class WorkshopTemplates{
 
     /**
      * function to set the description of a workshoptemplate
+     *
      * @param string $description
      */
     public function setDescription($description)
     {
         $this->description = $description;
     }
+
     /**
      * function to get the cost of a workshoptemplate
      * @return int
@@ -169,6 +186,7 @@ class WorkshopTemplates{
 
     /**
      * function to set the cost of a workshoptemplate
+     *
      * @param int $cost
      */
     public function setCost($cost)
@@ -187,6 +205,7 @@ class WorkshopTemplates{
 
     /**
      * function to set the requirements of a workshoptemplate
+     *
      * @param string $requirements
      */
     public function setRequirements($requirements)
@@ -205,6 +224,7 @@ class WorkshopTemplates{
 
     /**
      * function to set the location of a workshoptemplate
+     *
      * @param string $location
      */
     public function setLocation($location)
@@ -223,6 +243,7 @@ class WorkshopTemplates{
 
     /**
      * function to set the starttime and date of a workshoptemplate
+     *
      * @param \DateTime $start_at
      */
     public function setStartAt($start_at)
@@ -241,6 +262,7 @@ class WorkshopTemplates{
 
     /**
      * function to set the endtime and date of a workshoptemplate
+     *
      * @param \DateTime $end_at
      */
     public function setEndAt($end_at)
@@ -259,6 +281,7 @@ class WorkshopTemplates{
 
     /**
      * function to set the maximum participants of a workshoptemplate
+     *
      * @param int $max_participants
      */
     public function setMaxParticipants($max_participants)
@@ -277,12 +300,11 @@ class WorkshopTemplates{
 
     /**
      * function to set the creatdate of a workshoptemplate
+     *
      * @param \DateTime $created
      */
     public function setCreated($created)
     {
         $this->created = $created;
     }
-
-
 }

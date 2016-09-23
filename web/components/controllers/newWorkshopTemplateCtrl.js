@@ -5,20 +5,20 @@ var mainAppCtrls = angular.module("mainAppCtrls");
  * @description Controller initializing the creation of a new workshop template
  * @requires restSvcs.WorkshopTemplate
  */
-mainAppCtrls.controller('NewWorkshopTemplateCtrl',['$scope',"WorkshopTemplate",'$translate','$alert','$state',
-    function($scope, WorkshopTemplate,$translate,$alert,$state) {
+mainAppCtrls.controller('NewWorkshopTemplateCtrl', ['$scope', "WorkshopTemplate", '$translate', '$alert', '$state',
+    function ($scope, WorkshopTemplate, $translate, $alert, $state) {
         $scope.workshop = {};
         $scope.myAlert = $alert({});
-        
+
         //Get translations for errors and store in array
         var _translations = {};
         //Pass all required translation IDs to translate service
         $translate(['ALERT_WORKSHOPTEMPLATE_NEW_SUCCESS',
-            'ALERT_WORKSHOPTEMPLATE_NEW_FAIL','ALERT_WORKSHOPTEMPLATE_NOT_FOUND','TITLE_ERROR','TITLE_SUCCESS']).
-        then(function(translations){
-            _translations = translations;
-        });
-        $scope.workshop.duration=-3600000;
+            'ALERT_WORKSHOPTEMPLATE_NEW_FAIL', 'ALERT_WORKSHOPTEMPLATE_NOT_FOUND', 'TITLE_ERROR', 'TITLE_SUCCESS']).
+            then(function (translations) {
+                _translations = translations;
+            });
+        $scope.workshop.duration = -3600000;
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:NewWorkshopTemplateCtrl#sendInfo
@@ -26,19 +26,19 @@ mainAppCtrls.controller('NewWorkshopTemplateCtrl',['$scope',"WorkshopTemplate",'
          * @description Validates the input data and sends a request to create a new Template to the server
          *
          */
-        $scope.sendInfo = function(){
+        $scope.sendInfo = function () {
             //Adjusts the format of the date strings to fit the requirements of the API
-            var reformatDate =  function(_date){
-                if(_date == null)
+            var reformatDate = function (_date) {
+                if (_date == null)
                     return "";
-                var str = _date.getFullYear()+"-"+(_date.getMonth()+1)+"-"+_date.getDate()+" ";
-                if(_date.getHours() < 10)
+                var str = _date.getFullYear() + "-" + (_date.getMonth() + 1) + "-" + _date.getDate() + " ";
+                if (_date.getHours() < 10)
                     str += "0";
-                str += _date.getHours()+":";
-                if(_date.getMinutes() < 10)
+                str += _date.getHours() + ":";
+                if (_date.getMinutes() < 10)
                     str += "0";
-                str += _date.getMinutes() +":";
-                if(_date.getSeconds() < 10)
+                str += _date.getMinutes() + ":";
+                if (_date.getSeconds() < 10)
                     str += "0";
                 str += _date.getSeconds();
                 return str;
@@ -49,7 +49,7 @@ mainAppCtrls.controller('NewWorkshopTemplateCtrl',['$scope',"WorkshopTemplate",'
             var _duration = $scope.workshop.duration;
             var _ea = new Date(_duration);
             var error = false;
-            if($scope.workshop.cost < 0){
+            if ($scope.workshop.cost < 0) {
                 $alert({
                     title: _translations.TITLE_ERROR,
                     type: 'danger',
@@ -61,7 +61,7 @@ mainAppCtrls.controller('NewWorkshopTemplateCtrl',['$scope',"WorkshopTemplate",'
                 error = true;
             }
 
-            if($scope.workshop.max_participants < 0){
+            if ($scope.workshop.max_participants < 0) {
                 $alert({
                     title: _translations.TITLE_ERROR,
                     type: 'danger',
@@ -73,7 +73,7 @@ mainAppCtrls.controller('NewWorkshopTemplateCtrl',['$scope',"WorkshopTemplate",'
                 error = true;
             }
             var now = new Date();
-            if($scope.workshop.start_at < now) {
+            if ($scope.workshop.start_at < now) {
                 $alert({
                     title: _translations.TITLE_ERROR,
                     type: 'danger',
@@ -85,38 +85,38 @@ mainAppCtrls.controller('NewWorkshopTemplateCtrl',['$scope',"WorkshopTemplate",'
                 error = true;
             }
 
-            if(error)
+            if (error)
                 return false;
 
             var data = {
-                title:$scope.workshop.title,
-                description:$scope.workshop.description,
-                cost:$scope.workshop.cost,
-                requirements:$scope.workshop.requirement,
-                location:$scope.workshop.location,
-                start_at:reformatDate(_sa),
-                end_at:reformatDate(_ea),
-                max_participants:$scope.workshop.max_participants
+                title: $scope.workshop.title,
+                description: $scope.workshop.description,
+                cost: $scope.workshop.cost,
+                requirements: $scope.workshop.requirement,
+                location: $scope.workshop.location,
+                start_at: reformatDate(_sa),
+                end_at: reformatDate(_ea),
+                max_participants: $scope.workshop.max_participants
             };
 
-            if($scope.myAlert != null)
+            if ($scope.myAlert != null)
                 $scope.myAlert.hide();
-            WorkshopTemplate.put(data).$promise.then(function(httpResponse){
+            WorkshopTemplate.put(data).$promise.then(function (httpResponse) {
                 $scope.myAlert = $alert({
-                   container: '#alert',
-                   type: 'success',
-                   title: _translations.TITLE_SUCCESS,
-                   content: _translations.ALERT_WORKSHOPTEMPLATE_NEW_SUCCESS + ' \"' + data.title +'\"',
-                   show: true,
-                   dismissable: false
+                    container: '#alert',
+                    type: 'success',
+                    title: _translations.TITLE_SUCCESS,
+                    content: _translations.ALERT_WORKSHOPTEMPLATE_NEW_SUCCESS + ' \"' + data.title + '\"',
+                    show: true,
+                    dismissable: false
                 });
                 $state.go("workshop_template");
-            },function(httpResponse){
+            }, function (httpResponse) {
                 $scope.myAlert = $alert({
                     container: '#alert',
                     type: 'danger',
                     title: _translations.TITLE_ERROR,
-                    content:  _translations.ALERT_WORKSHOPTEMPLATE_NEW_FAIL + ' (' + httpResponse.status +')',
+                    content: _translations.ALERT_WORKSHOPTEMPLATE_NEW_FAIL + ' (' + httpResponse.status + ')',
                     show: true,
                     dismissable: false
                 });
@@ -129,21 +129,17 @@ mainAppCtrls.controller('NewWorkshopTemplateCtrl',['$scope',"WorkshopTemplate",'
          * @description Discards the input
          *
          */
-        $scope.discard = function(){
-            $scope.workshop.title= "";
-            $scope.workshop.description= "";
-            $scope.workshop.cost= "";
-            $scope.workshop.requirement= "";
-            $scope.workshop.location= "";
-            $scope.workshop.sharedDate= "";
+        $scope.discard = function () {
+            $scope.workshop.title = "";
+            $scope.workshop.description = "";
+            $scope.workshop.cost = "";
+            $scope.workshop.requirement = "";
+            $scope.workshop.location = "";
+            $scope.workshop.sharedDate = "";
             $scope.workshop.duration = "";
-            $scope.workshop.max_participants= "";
-
-
+            $scope.workshop.max_participants = "";
 
         }
-
-
 
     }
 

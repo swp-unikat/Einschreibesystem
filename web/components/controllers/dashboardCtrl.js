@@ -4,9 +4,9 @@ var mainAppCtrls = angular.module("mainAppCtrls");
  * @name mainAppCtrls.controller:DashboardCtrl
  * @description Controller for showing administrator functions
  */
-mainAppCtrls.controller('DashboardCtrl',['$scope',
-    function($scope) {
-        
+mainAppCtrls.controller('DashboardCtrl', ['$scope',
+    function ($scope) {
+
     }
 
 ]);

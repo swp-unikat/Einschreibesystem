@@ -13,7 +13,7 @@
  * @requires textAngular
  * @requires prntSvcs
  */
-var mainApp = angular.module('mainApp',[
+var mainApp = angular.module('mainApp', [
     'ngRoute',
     'mainAppCtrls',
     'mgcrea.ngStrap',
@@ -31,51 +31,50 @@ var mainApp = angular.module('mainApp',[
  * @description Module containing all controller of the application
  * @requires pascalprect.translate
  */
-var mainAppCtrls = angular.module('mainAppCtrls',["pascalprecht.translate",'ngSanitize']);
+var mainAppCtrls = angular.module('mainAppCtrls', ["pascalprecht.translate", 'ngSanitize']);
 
 //ROUTE CONFIGURATION
-mainApp.config(['$urlRouterProvider','$stateProvider',
-    function($urlRouterProvider,$stateProvider)
-    {
+mainApp.config(['$urlRouterProvider', '$stateProvider',
+    function ($urlRouterProvider, $stateProvider) {
         var prefix = "resources/views/";
 
         $stateProvider
-            .state('workshops',{
+            .state('workshops', {
                 url: '/workshops',
                 controller: 'WorkshopListCtrl',
                 templateUrl: prefix.concat('workshopList.html')
             })
-            .state('workshopsdetails',{
+            .state('workshopsdetails', {
                 url: '/workshops/details/:id',
                 controller: 'WorkshopDetailsCtrl',
                 templateUrl: prefix.concat('workshopDetails.html')
             })
 
-            .state('login',{
+            .state('login', {
                 url: '/login',
                 controller: 'LoginCtrl',
                 templateUrl: prefix.concat('login.html')
             })
 
-            .state('enrollment_confirm',{
+            .state('enrollment_confirm', {
                 url: '/enrollment/confirm/:workshopid/:userid/:token',
                 templateUrl: prefix.concat('enrollmentConfirm.html'),
                 controller: 'EnrollmentConfirmCtrl'
             })
 
-            .state('unsubscribe',{
+            .state('unsubscribe', {
                 url: '/unsubscribe/:id/:workshopid/:token',
                 templateUrl: prefix.concat('unsubscribemessage.html'),
                 controller: 'UnsubscribeCtrl'
             })
 
-            .state('password_reset',{
+            .state('password_reset', {
                 url: '/password/reset/:token',
                 templateUrl: prefix.concat('passwordReset.html'),
                 controller: 'PasswordResetCtrl'
             })
 
-            .state('dashboard',{
+            .state('dashboard', {
                 url: '/dashboard',
                 controller: 'DashboardCtrl',
                 templateUrl: prefix.concat('adminDashboard.html'),
@@ -84,9 +83,9 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                 }
             })
 
-            .state('workshop_template',{
-                url:'/workshop/template',
-                controller:'WorkshopTemplateCtrl',
+            .state('workshop_template', {
+                url: '/workshop/template',
+                controller: 'WorkshopTemplateCtrl',
                 templateUrl: prefix.concat('adminWorkshopTemplate.html'),
                 data: {
                     requiresLogin: true
@@ -134,7 +133,7 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                 }
             })
 
-            .state('blacklist',{
+            .state('blacklist', {
                 url: '/blacklist',
                 controller: 'BlacklistCtrl',
                 templateUrl: prefix.concat('adminBlacklist.html'),
@@ -170,7 +169,7 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                 }
             })
 
-            .state('admin_workshop_management',{
+            .state('admin_workshop_management', {
                 url: '/workshop/management',
                 controller: 'adminWorkshopManagementCtrl',
                 templateUrl: prefix.concat('adminWorkshopManagement.html'),
@@ -178,7 +177,7 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                     requiresLogin: true
                 }
             })
-            .state('admin_workshop_new',{
+            .state('admin_workshop_new', {
                 url: '/workshop/management/new',
                 controller: 'AdminNewWorkshopCtrl',
                 templateUrl: prefix.concat('adminNewWorkshop.html'),
@@ -186,7 +185,7 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                     requiresLogin: true
                 }
             })
-            .state('admin_workshop_edit',{
+            .state('admin_workshop_edit', {
                 url: '/workshop/management/edit/:id',
                 controller: 'AdminEditWorkshopCtrl',
                 templateUrl: prefix.concat('adminEditWorkshop.html'),
@@ -204,54 +203,52 @@ mainApp.config(['$urlRouterProvider','$stateProvider',
                 }
             })
 
-
-            .state('admininvite',{
+            .state('admininvite', {
                 url: '/admin/create/:token',
                 controller: 'AdminCreateCtrl',
                 templateUrl: prefix.concat('adminInvite.html')
 
             })
-            .state('legalnotice',{
+            .state('legalnotice', {
                 url: '/legalnotice',
                 controller: 'LegalNoticeCtrl',
                 templateUrl: prefix.concat('legalNotice.html')
             })
-            .state('contact',{
+            .state('contact', {
                 url: '/contact',
                 controller: 'ContactCtrl',
                 templateUrl: prefix.concat('contact.html')
             });
 
-
         $urlRouterProvider.otherwise('/workshops');
-
 
     }
 ]);
 
 //CALLED ON EVERY ROUTE CHANGE. USED TO CHECK IF TOKEN IS EXPIRED CONSTANTLY
-mainApp.config(['jwtInterceptorProvider','$httpProvider','$urlRouterProvider',function(jwtInterceptorProvider,$httpProvider,$urlRouterProvider){
-    jwtInterceptorProvider.tokenGetter = function(store) {
+mainApp.config(['jwtInterceptorProvider', '$httpProvider', '$urlRouterProvider', function (jwtInterceptorProvider, $httpProvider, $urlRouterProvider) {
+    jwtInterceptorProvider.tokenGetter = function (store) {
         return store.get('jwt');
     };
 
     $httpProvider.interceptors.push('jwtInterceptor');
 }])
-    .run(['$rootScope','$state','store','jwtHelper',function($rootScope, $state, store, jwtHelper) {
-        $rootScope.$on('$stateChangeStart', function(e, to) {
+    .run(['$rootScope', '$state', 'store', 'jwtHelper', function ($rootScope, $state, store, jwtHelper) {
+        $rootScope.$on('$stateChangeStart', function (e, to) {
             if (to.data && to.data.requiresLogin) {
                 if (!store.get('jwt') || jwtHelper.isTokenExpired(store.get('jwt'))) {
-                    if(store.get('jwt'))
+                    if (store.get('jwt'))
                         store.remove('jwt');
                     e.preventDefault();
                     $state.go('login');
                 }
-            };
+            }
+            ;
         });
     }]);
 
 //CONFIGURES TRANSLATION
-mainApp.config(['$translateProvider', function($translateProvider) {
+mainApp.config(['$translateProvider', function ($translateProvider) {
     $translateProvider.useSanitizeValueStrategy('escape');
     $translateProvider.useStaticFilesLoader({
         prefix: 'resources/local/lang-',
@@ -265,32 +262,32 @@ mainApp.config(['$translateProvider', function($translateProvider) {
  * @name mainApp.controller:GlobalCtrl
  * @description Controller applied to the body HTML-Tag to avoid pollution of the rootScope. Provides Information wether login or logout button are to be shown
  */
-mainApp.controller('GlobalCtrl',['$scope','store','jwtHelper','$state','$http','$translate',function($scope,store,jwtHelper,$state,$http,$translate,$translateProvider) {
-    $scope.back=function () {
+mainApp.controller('GlobalCtrl', ['$scope', 'store', 'jwtHelper', '$state', '$http', '$translate', function ($scope, store, jwtHelper, $state, $http, $translate, $translateProvider) {
+    $scope.back = function () {
         if ($scope.show_login)
             $state.go('workshops');
         if ($scope.show_logout)
             $state.go('dashboard');
-        if ($scope.show_logout && $state.current.name == "dashboard" )
+        if ($scope.show_logout && $state.current.name == "dashboard")
             $state.go('workshops');
-        if($state.current.name == "login")
+        if ($state.current.name == "login")
             $state.go('workshops');
     }
     //Check if token is already saved and is expired
     var jwt = store.get('jwt');
-    if(jwt != null && jwtHelper.isTokenExpired(jwt))
+    if (jwt != null && jwtHelper.isTokenExpired(jwt))
         store.remove('jwt');
     //Get language config
-    $http.get("resources/local/config.json").then(function(response){
+    $http.get("resources/local/config.json").then(function (response) {
         //save available languages
         $scope.langs = response.data.lang;
         //set default language
         $translate.use(response.data.default);
-        for(var i=0;i<$scope.langs.length;i++) {
-            if(response.data.default === $scope.langs[i].code)
+        for (var i = 0; i < $scope.langs.length; i++) {
+            if (response.data.default === $scope.langs[i].code)
                 $scope.selectedLang = $scope.langs[i];
         }
-    },function(response){
+    }, function (response) {
 
     });
     $scope.show_login = true;
@@ -315,7 +312,7 @@ mainApp.controller('GlobalCtrl',['$scope','store','jwtHelper','$state','$http','
             }
         }
         //delete token if available and expired
-        if(jwt != null && jwtHelper.isTokenExpired(jwt))
+        if (jwt != null && jwtHelper.isTokenExpired(jwt))
             store.remove(jwt);
     });
     /**
@@ -338,9 +335,9 @@ mainApp.controller('GlobalCtrl',['$scope','store','jwtHelper','$state','$http','
             $scope.show_logout = false;
         }
     };
-    
+
     //change language
-    $scope.changeLang = function() {
+    $scope.changeLang = function () {
         $translate.use($scope.selectedLang.code);
     };
 }
@@ -351,19 +348,19 @@ mainApp.controller('GlobalCtrl',['$scope','store','jwtHelper','$state','$http','
  * @restrict 'A'
  * @description Compares the content of two elements. Sets them as valid, if they both are identical.
  */
-mainApp.directive('compareTo',[function(){
+mainApp.directive('compareTo', [function () {
     return {
         require: "ngModel",
         scope: {
             otherModelValue: "=compareTo"
         },
-        link: function(scope, element, attributes, ngModel) {
+        link: function (scope, element, attributes, ngModel) {
 
-            ngModel.$validators.compareTo = function(modelValue) {
+            ngModel.$validators.compareTo = function (modelValue) {
                 return modelValue == scope.otherModelValue;
             };
 
-            scope.$watch("otherModelValue", function() {
+            scope.$watch("otherModelValue", function () {
                 ngModel.$validate();
             });
         }
@@ -375,21 +372,21 @@ mainApp.directive('compareTo',[function(){
  * @name mainApp.$confirm
  * @description Service providing a custom confirm dialog. Extends functionalty from angular-strap's {@link http://mgcrea.github.io/angular-strap/#/modals $modal service}
  */
-mainApp.service('$confirm', function($modal, $rootScope, $q) {
-        var scope = $rootScope.$new();
-        var deferred;
-        scope.title = 'to be changed';
-        scope.content = 'to be changed';
-        scope.answer = function(res) {
-            deferred.resolve(res);
-            confirm.hide();
-        }
-        var confirm = $modal({templateUrl: 'resources/views/confirm.tpl.html', scope: scope, show: false,dismissable: false});
-        var parentShow = confirm.show;
-        confirm.show = function() {
-            deferred = $q.defer();
-            parentShow();
-            return deferred.promise;
-        }
-        return confirm;
+mainApp.service('$confirm', function ($modal, $rootScope, $q) {
+    var scope = $rootScope.$new();
+    var deferred;
+    scope.title = 'to be changed';
+    scope.content = 'to be changed';
+    scope.answer = function (res) {
+        deferred.resolve(res);
+        confirm.hide();
+    }
+    var confirm = $modal({templateUrl: 'resources/views/confirm.tpl.html', scope: scope, show: false, dismissable: false});
+    var parentShow = confirm.show;
+    confirm.show = function () {
+        deferred = $q.defer();
+        parentShow();
+        return deferred.promise;
+    }
+    return confirm;
 })

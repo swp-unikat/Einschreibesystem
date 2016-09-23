@@ -27,6 +27,7 @@ class WorkshopParticipants
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+
     /**
      * id of a participant
      * @var \Core\EntityBundle\Entity\Participants
@@ -37,6 +38,7 @@ class WorkshopParticipants
      * @Serializer\Groups({"names"})
      */
     protected $participant;
+
     /**
      * id of the workshop
      * @var \Core\EntityBundle\Entity\Workshop
@@ -46,6 +48,7 @@ class WorkshopParticipants
      * @Serializer\SerializedName("workshop")
      */
     protected $workshop;
+
     /**
      * date of enrollment
      * @var \DateTime
@@ -54,6 +57,7 @@ class WorkshopParticipants
      * @Serializer\SerializedName("enrollment")
      */
     protected $enrollment;
+
     /**
      * state of participant if he is an the waitinglist
      * @var boolean
@@ -62,6 +66,7 @@ class WorkshopParticipants
      * @Serializer\SerializedName("waiting")
      */
     protected $waiting;
+
     /**
      * state of participant if he is succesfull enroll
      * @var boolean
@@ -72,7 +77,7 @@ class WorkshopParticipants
     protected $participated;
 
     /**
-     * function for construct enrollment 
+     * function for construct enrollment
      */
     public function __construct()
     {
@@ -80,7 +85,7 @@ class WorkshopParticipants
     }
 
     /**
-     * function to get the id 
+     * function to get the id
      * @return int
      */
     public function getId()
@@ -90,6 +95,7 @@ class WorkshopParticipants
 
     /**
      *function to set the id
+     *
      * @param int $id
      */
     public function setId($id)
@@ -108,6 +114,7 @@ class WorkshopParticipants
 
     /**
      * fuction to set a participant
+     *
      * @param Participants $participant
      */
     public function setParticipant($participant)
@@ -126,6 +133,7 @@ class WorkshopParticipants
 
     /**
      * function to set a workshop
+     *
      * @param Workshop $workshop
      */
     public function setWorkshop($workshop)
@@ -144,6 +152,7 @@ class WorkshopParticipants
 
     /**
      * function to set an enrollment
+     *
      * @param \DateTime $enrollment
      */
     public function setEnrollment($enrollment)
@@ -162,6 +171,7 @@ class WorkshopParticipants
 
     /**
      * function to set a state from a participant to "waiting"
+     *
      * @param boolean $waiting
      */
     public function setWaiting($waiting)
@@ -180,12 +190,11 @@ class WorkshopParticipants
 
     /**
      * function to set the state from a participant to "participated"
+     *
      * @param boolean $participated
      */
     public function setParticipated($participated)
     {
         $this->participated = $participated;
     }
-
-
 }

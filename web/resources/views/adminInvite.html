@@ -1,18 +1,20 @@
-
 <style>
     .btn {
         margin-bottom: 5px;
     }
+
     .form-control {
         margin-bottom: 5px;
     }
 </style>
 <div class="row">
     <div class="col-md-2 col-md-offset-5 text-center">
-        <input type="email" class="form-control"    ng-model="form.email" placeholder="{{placeholder.email}}"/>
-        <input type="text" class="form-control"     ng-model="form.username" placeholder="{{placeholder.username}}"/>
+        <input type="email" class="form-control" ng-model="form.email" placeholder="{{placeholder.email}}"/>
+        <input type="text" class="form-control" ng-model="form.username" placeholder="{{placeholder.username}}"/>
         <input type="password" class="form-control" ng-model="form.password" placeholder="{{placeholder.password}}"/>
-        <input type="password" class="form-control" ng-model="form.password_confirm" placeholder="{{placeholder.confirm_password}}"/>
+        <input type="password" class="form-control" ng-model="form.password_confirm"
+               placeholder="{{placeholder.confirm_password}}"/>
+
         <div bs-alert id="alert"></div>
         <button translate type="button" class="btn btn-primary" ng-click="sendInfo()">BUTTON_CREATE_ACCOUNT</button>
     </div>

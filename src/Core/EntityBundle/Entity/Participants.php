@@ -25,6 +25,7 @@ class Participants
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+
     /**
      * name of the participant
      * @var string
@@ -33,6 +34,7 @@ class Participants
      * @Serializer\SerializedName("name")
      */
     protected $name;
+
     /**
      * surname of a participant
      * @var string
@@ -41,6 +43,7 @@ class Participants
      * @Serializer\SerializedName("surname")
      */
     protected $surname;
+
     /**
      * e-mail of a participant
      * @var string
@@ -49,6 +52,7 @@ class Participants
      * @Serializer\SerializedName("email")
      */
     protected $email;
+
     /**
      * state of a participant, if he is blacklisted
      * @var bool
@@ -57,6 +61,7 @@ class Participants
      * @Serializer\SerializedName("blacklisted")
      */
     protected $blacklisted;
+
     /**
      * time and date since a participant is blacklisted
      * @var \DateTime
@@ -65,6 +70,7 @@ class Participants
      * @Serializer\SerializedName("blacklisted_at")
      */
     protected $blacklisted_at;
+
     /**
      * administrator which blacklisted a participant
      * @var \Core\EntityBundle\Entity\User
@@ -86,6 +92,7 @@ class Participants
 
     /**
      * function to set the id of a participant
+     *
      * @param int $id
      */
     public function setId($id)
@@ -104,6 +111,7 @@ class Participants
 
     /**
      * function to set name of a participant
+     *
      * @param string $name
      */
     public function setName($name)
@@ -122,6 +130,7 @@ class Participants
 
     /**
      * function to set surname of participant
+     *
      * @param string $surname
      */
     public function setSurname($surname)
@@ -140,6 +149,7 @@ class Participants
 
     /**
      * function to set e-mail of participant
+     *
      * @param string $email
      */
     public function setEmail($email)
@@ -148,7 +158,7 @@ class Participants
     }
 
     /**
-     * function to get blacklistedstate 
+     * function to get blacklistedstate
      * @return boolean
      */
     public function isBlacklisted()
@@ -158,6 +168,7 @@ class Participants
 
     /**
      * function to set participant to state blacklisted
+     *
      * @param boolean $blacklisted
      */
     public function setBlacklisted($blacklisted)
@@ -176,6 +187,7 @@ class Participants
 
     /**
      * function to set time and date since participant is blacklisted
+     *
      * @param \DateTime $blacklisted_at
      */
     public function setBlacklistedAt($blacklisted_at)
@@ -194,6 +206,7 @@ class Participants
 
     /**
      * function to set administrator which blacklisted participant
+     *
      * @param User $blacklisted_from
      */
     public function setBlacklistedFrom($blacklisted_from)

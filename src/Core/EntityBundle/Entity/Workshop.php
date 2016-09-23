@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by IntelliJ IDEA.
- * Authors: Leon Bergmann, Marco Hanisch 
+ * Authors: Leon Bergmann, Marco Hanisch
  * Date: 29.04.2016
  * Time: 15:56
  */
@@ -26,6 +26,7 @@ class Workshop
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+
     /**
      * title of a workshop
      * @var string
@@ -34,6 +35,7 @@ class Workshop
      * @Serializer\SerializedName("title")
      */
     protected $title;
+
     /**
      * cost of a workshop
      * @var int
@@ -42,6 +44,7 @@ class Workshop
      * @Serializer\SerializedName("cost")
      */
     protected $cost;
+
     /**
      * requirements of a workshop
      * @var string
@@ -50,6 +53,7 @@ class Workshop
      * @Serializer\SerializedName("requirement")
      */
     protected $requirements;
+
     /**
      * description of a workshop
      * @var string
@@ -58,6 +62,7 @@ class Workshop
      * @Serializer\SerializedName("description")
      */
     protected $description;
+
     /**
      * location of a workshop
      * @var string
@@ -66,6 +71,7 @@ class Workshop
      * @Serializer\SerializedName("location")
      */
     protected $location;
+
     /**
      * starttime and date of a workshop
      * @var \DateTime
@@ -74,6 +80,7 @@ class Workshop
      * @Serializer\SerializedName("start_at")
      */
     protected $start_at;
+
     /**
      * endtime and date of a workshop
      * @var \DateTime
@@ -82,6 +89,7 @@ class Workshop
      * @Serializer\SerializedName("end_at")
      */
     protected $end_at;
+
     /**
      * maximum participants of a workshop
      * @var int
@@ -90,6 +98,7 @@ class Workshop
      * @Serializer\SerializedName("max_participants")
      */
     protected $max_participants;
+
     /**
      * date and time when workshop created
      * @var \DateTime
@@ -98,15 +107,16 @@ class Workshop
      * @Serializer\SerializedName("created")
      */
     protected $created;
+
     /**
      * state of workshop
      * @var boolean
      * @ORM\Column(name="notified", type="boolean", nullable=false)
      */
     protected $notified;
-    
+
     /**
-     * function to create 
+     * function to create
      */
     public function __construct()
     {
@@ -124,6 +134,7 @@ class Workshop
 
     /**
      * function to set an id to a workshop
+     *
      * @param int $id
      */
     public function setId($id)
@@ -142,6 +153,7 @@ class Workshop
 
     /**
      * function to est a title to a workshop
+     *
      * @param string $title
      */
     public function setTitle($title)
@@ -160,6 +172,7 @@ class Workshop
 
     /**
      * function to set the cost of a workshop
+     *
      * @param int $cost
      */
     public function setCost($cost)
@@ -178,6 +191,7 @@ class Workshop
 
     /**
      * function to set the requirements of a workshop
+     *
      * @param string $requirements
      */
     public function setRequirements($requirements)
@@ -196,6 +210,7 @@ class Workshop
 
     /**
      * function to set the location of a workshop
+     *
      * @param string $location
      */
     public function setLocation($location)
@@ -214,6 +229,7 @@ class Workshop
 
     /**
      * function to set the starttime and date of a workshop
+     *
      * @param \DateTime $start_at
      */
     public function setStartAt($start_at)
@@ -232,6 +248,7 @@ class Workshop
 
     /**
      * function to set the endtime and date of a workshop
+     *
      * @param \DateTime $end_at
      */
     public function setEndAt($end_at)
@@ -250,6 +267,7 @@ class Workshop
 
     /**
      * function to set the maximum participants of a workshop
+     *
      * @param int $max_participants
      */
     public function setMaxParticipants($max_participants)
@@ -268,6 +286,7 @@ class Workshop
 
     /**
      * function to set the createdtime of a workshop
+     *
      * @param \DateTime $created
      */
     public function setCreated($created)
@@ -286,6 +305,7 @@ class Workshop
 
     /**
      * function to set the description of a workshop
+     *
      * @param string $description
      */
     public function setDescription($description)
@@ -304,12 +324,11 @@ class Workshop
 
     /**
      * function to set notifiedstate of a workshop
+     *
      * @param boolean $notified
      */
     public function setNotified($notified)
     {
         $this->notified = $notified;
     }
-
-
 }

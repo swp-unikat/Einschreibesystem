@@ -9,12 +9,14 @@ namespace Core\EntityBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
+
 /**
  * this class provides entitys of a e-mailtemplate and functions of a e-mailtemplate
  * @ORM\Entity()
  * @ORM\Table(name="email_template")
  */
-class EmailTemplate{
+class EmailTemplate
+{
     /**
      * id of e-mailtemplate
      * @var int
@@ -23,6 +25,7 @@ class EmailTemplate{
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     public $id;
+
     /**
      * name of e-mailtemplate
      * @var string
@@ -31,6 +34,7 @@ class EmailTemplate{
      * @Serializer\SerializedName("template_name")
      */
     public $template_name;
+
     /**
      * subject of e-mailtemplate
      * @var string
@@ -83,7 +87,7 @@ class EmailTemplate{
 
     /**
      * function to get id of e-mailtemplate
-     * @return mixed
+     * @return int
      */
     public function getId()
     {
@@ -92,7 +96,8 @@ class EmailTemplate{
 
     /**
      * function to set id of e-mailtemplate
-     * @param mixed $id
+     *
+     * @param int $id
      */
     public function setId($id)
     {
@@ -101,7 +106,7 @@ class EmailTemplate{
 
     /**
      * function to get name of e-mailtemplate
-     * @return mixed
+     * @return string
      */
     public function getTemplateName()
     {
@@ -110,7 +115,8 @@ class EmailTemplate{
 
     /**
      * function to set name of e-mailtemplate
-     * @param mixed $template_name
+     *
+     * @param string $template_name
      */
     public function setTemplateName($template_name)
     {
@@ -119,7 +125,7 @@ class EmailTemplate{
 
     /**
      * function to get subject of e-mailtemplate
-     * @return mixed
+     * @return string
      */
     public function getEmailSubject()
     {
@@ -128,7 +134,8 @@ class EmailTemplate{
 
     /**
      * function to set e-mailtemplate
-     * @param mixed $email_subject
+     *
+     * @param string $email_subject
      */
     public function setEmailSubject($email_subject)
     {
@@ -137,7 +144,7 @@ class EmailTemplate{
 
     /**
      * function to get body of e-mailtemplate
-     * @return mixed
+     * @return string
      */
     public function getEmailBody()
     {
@@ -146,7 +153,8 @@ class EmailTemplate{
 
     /**
      * function to set body of e-mailtemplate
-     * @param mixed $email_body
+     *
+     * @param string $email_body
      */
     public function setEmailBody($email_body)
     {
@@ -184,7 +192,5 @@ class EmailTemplate{
     {
         $this->placeholder = $placeholder;
     }
-    
-    
 
 }

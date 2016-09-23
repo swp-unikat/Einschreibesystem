@@ -9,47 +9,47 @@ var mainAppCtrls = angular.module("mainAppCtrls");
  * @description Displays the workshop-template list in the associated view
  * @requires restSvcs.WorkshopTemplate
  */
-mainAppCtrls.controller('WorkshopTemplateCtrl', ['$scope', "WorkshopTemplate",'$translate','$alert',
+mainAppCtrls.controller('WorkshopTemplateCtrl', ['$scope', "WorkshopTemplate", '$translate', '$alert',
 
-    function ($scope, WorkshopTemplate,$translate,$alert) {
+    function ($scope, WorkshopTemplate, $translate, $alert) {
 
 
         //Get translations for errors and store in array
         var _translations = {};
         //Pass all required translation IDs to translate service
         $translate(['ALERT_WORKSHOPTEMPLATE_LIST_EMPTY',
-            'ALERT_WORKSHOPTEMPLATE_DELETED_SUCCESS','ALERT_WORKSHOPTEMPLATE_DELETED_FAIL','TITLE_SUCCESS','TITLE_ERROR','TITLE_WARNING']).
-        then(function(translations){
-            _translations = translations;
-        });
-        
+            'ALERT_WORKSHOPTEMPLATE_DELETED_SUCCESS', 'ALERT_WORKSHOPTEMPLATE_DELETED_FAIL', 'TITLE_SUCCESS', 'TITLE_ERROR', 'TITLE_WARNING']).
+            then(function (translations) {
+                _translations = translations;
+            });
+
         /**
          * @ngdoc function
          * @name mainAppCtrls.controller:WorkshopTemplateCtrl#loadTemplates
          * @methodOf mainAppCtrls.controller:WorkshopTemplateCtrl
          * @description Loads the list of available Templates from the server
          */
-        var loadTemplates = function() {
+        var loadTemplates = function () {
             $scope.loading = true;
             WorkshopTemplate.getAll()
                 .$promise.then(function (value) {
-                $scope.data = value;
-                $scope.loading = false;
+                    $scope.data = value;
+                    $scope.loading = false;
 
-            }, function (httpResponse) {
-                if(httpResponse.status == 404){
-                    $scope.data = {}
-                    $alert({
-                        title: _translations.TITLE_WARNING,
-                        type: 'warning',
-                        container:'#alert',
-                        show: true,
-                        dismissable: false,
-                        content: _translations.ALERT_WORKSHOPTEMPLATE_LIST_EMPTY + ' (' + httpResponse.status +')',
-                    })
-                }
-                $scope.loading = false;
-            });
+                }, function (httpResponse) {
+                    if (httpResponse.status == 404) {
+                        $scope.data = {}
+                        $alert({
+                            title: _translations.TITLE_WARNING,
+                            type: 'warning',
+                            container: '#alert',
+                            show: true,
+                            dismissable: false,
+                            content: _translations.ALERT_WORKSHOPTEMPLATE_LIST_EMPTY + ' (' + httpResponse.status + ')',
+                        })
+                    }
+                    $scope.loading = false;
+                });
         };
         loadTemplates();
         /**
@@ -60,11 +60,11 @@ mainAppCtrls.controller('WorkshopTemplateCtrl', ['$scope', "WorkshopTemplate",'$
          * @description Deletes the template with the passed id
          */
         $scope.delete = function (_id) {
-            WorkshopTemplate.delete({id:_id}).$promise.then(function(httpresponse){
+            WorkshopTemplate.delete({id: _id}).$promise.then(function (httpresponse) {
                     $alert({
-                        title:_translations.TITLE_SUCCESS,
+                        title: _translations.TITLE_SUCCESS,
                         type: 'success',
-                        container:'#alert',
+                        container: '#alert',
                         show: true,
                         dismissable: false,
                         content: _translations.ALERT_WORKSHOPTEMPLATE_DELETED_SUCCESS,
@@ -76,7 +76,7 @@ mainAppCtrls.controller('WorkshopTemplateCtrl', ['$scope', "WorkshopTemplate",'$
                     $alert({
                         title: _translations.TITLE_ERROR,
                         type: 'danger',
-                        content: _translations.ALERT_WORKSHOPTEMPLATE_DELETED_FAIL + ' (' + httpResponse.status +')',
+                        content: _translations.ALERT_WORKSHOPTEMPLATE_DELETED_FAIL + ' (' + httpResponse.status + ')',
                         container: '#alert',
                         dismissable: false,
                         show: true
@@ -85,7 +85,6 @@ mainAppCtrls.controller('WorkshopTemplateCtrl', ['$scope', "WorkshopTemplate",'$
             )
 
         }
-
 
     }
 

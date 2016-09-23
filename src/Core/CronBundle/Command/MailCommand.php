@@ -27,9 +27,10 @@ class MailCommand extends ContainerAwareCommand
         $this->setName("cron:email")->setDescription("sending a notification to all participants");
 
     }
+
     /**
      * function which check if e-mails notifications are already sended or are needed
-     *
+
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
