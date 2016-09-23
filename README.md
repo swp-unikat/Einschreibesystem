@@ -54,7 +54,7 @@ php app/console doctrine:fixtures:load
 
 6) Create first admin
 ```bash
-php app/console fos:user:create
+sudo -u www-data php app/console fos:user:create
 ```
 
 6) Create Cron
