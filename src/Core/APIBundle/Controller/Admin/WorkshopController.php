@@ -190,11 +190,7 @@ class WorkshopController extends FOSRestController implements ClassResourceInter
         /* Creating Twig template from Database */
         $renderTemplate = $this->get('twig')->createTemplate($template->getEmailBody());
 
-        $url = $this->generateUrl(
-                'core_frontend_default_index',
-                [],
-                true
-            ) . "http://swp.sky-lab.de/#/workshops/details/" . $workshop->getId();
+        $url = $this->generateUrl('core_frontend_default_index', [], true) . "#/workshops/details/" . $workshop->getId();
 
         $workshopParticipants = $this->getDoctrine()->getManager()->getRepository(
             'CoreEntityBundle:WorkshopParticipants'
