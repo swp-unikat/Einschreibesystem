@@ -164,7 +164,7 @@ class ParticipantsController extends FOSRestController implements ClassResourceI
                 ->setSubject($template->getEmailSubject())
                 ->setFrom($this->getParameter('email_sender'))
                 ->setTo($participant->getEmail())
-                ->setBody($renderTemplate->render(["participant" => $participant]), 'text/html');
+                ->setBody($renderTemplate->render(["participant" => $participant,"mail" => $this->getParameter('email_sender')]), 'text/html');
             $this->get('mailer')->send($message);
             /* persist to database*/
             $this->getDoctrine()->getManager()->persist($participant);
