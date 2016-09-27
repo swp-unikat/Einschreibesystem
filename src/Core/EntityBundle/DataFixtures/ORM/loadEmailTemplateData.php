@@ -35,7 +35,7 @@ class loadEmailTemplate implements FixtureInterface
         $emailTemplate->setTemplateName("Reminder");
         $emailTemplate->setEmailSubject("Erinnerungsmail für {{workshop.title}}");
         $emailTemplate->setEmailBody(
-            "<p><span style=\"color: rgb(85, 85, 85);float: none;background-color: rgb(255, 255, 255);\">Hello {{participant.name}} {{participant.surname}},</span></p><p><span style=\"color: rgb(85, 85, 85);float: none;background-color: rgb(255, 255, 255);\">Tomorrow at {{workshop.startAt|date('Y-m-d h:i')}} the Workshop {{workshop.title}}, you have enrolled for </span>will start!</p><p><br/><br/></p><p>Hallo <span style=\"color: rgb(85, 85, 85);float: none;background-color: rgb(255, 255, 255);\"> {{participant.name}}</span><!--EndFragment--> {{participant.surname}},</p><p>morgen um {{workshop.startAt|date('Y-m-d h:i')}} beginnt der Workshop {{workshop.title}}, für den Sie sich eingeschrieben haben!</p>"
+            "<p><span style=\"color: rgb(85, 85, 85);float: none;background-color: rgb(255, 255, 255);\">Hello {{participant.name}} {{participant.surname}},</span></p><p><span style=\"color: rgb(85, 85, 85);float: none;background-color: rgb(255, 255, 255);\">Tomorrow at {{workshop.startAt|date('Y-m-d h:i a')}} the Workshop {{workshop.title}}, you have enrolled for </span>will start!</p><p><br/><br/></p><p>Hallo <span style=\"color: rgb(85, 85, 85);float: none;background-color: rgb(255, 255, 255);\"> {{participant.name}}</span><!--EndFragment--> {{participant.surname}},</p><p>morgen um {{workshop.startAt|date('Y-m-d H:i')}} beginnt der Workshop {{workshop.title}}, für den Sie sich eingeschrieben haben!</p>"
         );
         $emailTemplate->setProtected(true);
         $manager->persist($emailTemplate);
@@ -107,7 +107,7 @@ class loadEmailTemplate implements FixtureInterface
         $emailTemplate9->setTemplateName("Participant");
         $emailTemplate9->setEmailSubject("Welcome to the workshop {{workshop.title}}");
         $emailTemplate9->setEmailBody(
-            "<p>Hello {{participant.name}} {{participant.surname}},</p><p>you are now a participant of the workshop {{workshop.title}}, which start as {{workshop.startAt|date('Y-m-d h:i')}}</p><p><br/></p><p><br/><br/><!--StartFragment--></p><p style=\"color: rgb(85, 85, 85);background-color: rgb(255, 255, 255);\">Hallo {{participant.name}} {{participant.surname}},</p><p style=\"color: rgb(85, 85, 85);background-color: rgb(255, 255, 255);\"><!--StartFragment--><span style=\"color: rgb(51, 51, 51);text-align: left;float: none;background-color: rgb(255, 255, 255);\">Sie sind jetzt ein Teilnehmer des Workshops {{workshop.title}}, er startet um {{workshop.startAt|date('Y-m-d h:i')}}</span></p><p></p>"
+            "<p>Hello {{participant.name}} {{participant.surname}},</p><p>you are now a participant of the workshop {{workshop.title}}, which start as {{workshop.startAt|date('Y-m-d h:i a')}}</p><p><br/></p><p><br/><br/><!--StartFragment--></p><p style=\"color: rgb(85, 85, 85);background-color: rgb(255, 255, 255);\">Hallo {{participant.name}} {{participant.surname}},</p><p style=\"color: rgb(85, 85, 85);background-color: rgb(255, 255, 255);\"><!--StartFragment--><span style=\"color: rgb(51, 51, 51);text-align: left;float: none;background-color: rgb(255, 255, 255);\">Sie sind jetzt ein Teilnehmer des Workshops {{workshop.title}}, er startet um {{workshop.startAt|date('Y-m-d H:i')}}</span></p><p></p>"
         );
         $emailTemplate9->setProtected(true);
         $manager->persist($emailTemplate9);
