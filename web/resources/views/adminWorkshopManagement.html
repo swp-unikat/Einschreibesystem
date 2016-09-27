@@ -18,16 +18,15 @@
     <div id="alert" bs-alert></div>
     <div class="box-group" ng-repeat="workshop in currentList">
         <div class="box box-default">
-            <div class="box-header with-border" class="box-title" ng-click="toggle= !toggle">
+            <div class="box-header with-border box-title" ng-click="toggle= !toggle">
                 <h4>
                     {{workshop.title}} <label class="small participants">({{workshop.numParticipants}}/{{workshop.max_participants}})</label>
-                    <label class="small pull-right" style="margin-right:5%;">{{workshop.start_at|date: "dd/MM/yyyy
-                        HH:mm"}}</label>
+                    <label class="small pull-right" style="margin-right:5%;">{{workshop.start_at|date: "dd/MM/yyyy HH:mm"}}</label>
                 </h4>
 
                 <div class="box-tools pull-right">
                     <button type="button" class="btn btn-box-tool"
-                            ng-click="toggle = !toggle; §event.stopPropagation()">
+                            ng-click="toggle = !toggle; event.stopPropagation()">
                         <span ng-class="{'glyphicon glyphicon-menu-down': !toggle, 'glyphicon glyphicon-menu-up': toggle }"></span>
                     </button>
                 </div>
@@ -53,13 +52,9 @@
 
 
                     <a ui-sref="admin_workshop_edit({id: workshop.id})">
-                        <button type="button" translate class="btn btn-secondary span4">{{ "BUTTON_EDIT_WORKSHOP" |
-                            translate}}
-                        </button>
+                        <button type="button" translate class="btn btn-secondary span4">BUTTON_EDIT_WORKSHOP</button>
                     </a>
-                    <button ng-click="delete(workshop.id)" type="button" translate class="btn btn-danger span4">{{
-                        "BUTTON_DELETE_WORKSHOP" | translate}}
-                    </button>
+                    <button ng-click="delete(workshop.id)" type="button" translate class="btn btn-danger span4">BUTTON_DELETE_WORKSHOP</button>
 
 
                 </div>
@@ -76,14 +71,14 @@
 
     <div class="box-group" ng-repeat="workshop in elapsedList">
         <div class="box box-default">
-            <div class="box-header with-border" class="box-title" ng-click="toggle= !toggle">
+            <div class="box-header with-border box-title" ng-click="toggle= !toggle">
                 <h4 class="box-title">{{workshop.title}} <label class="small participants">({{workshop.numParticipants}}/{{workshop.max_participants}})</label>
                 </h4>
 
 
                 <div class="box-tools pull-right">
                     <button type="button" class="btn btn-box-tool"
-                            ng-click="toggle = !toggle; §event.stopPropagation()">
+                            ng-click="toggle = !toggle; event.stopPropagation()">
                         <span ng-class="{'glyphicon glyphicon-menu-down': !toggle, 'glyphicon glyphicon-menu-up': toggle }"></span>
                     </button>
                 </div>
@@ -106,9 +101,7 @@
                     <a ui-sref="administrator_workshop_details({id: workshop.id})">
                         <button type="button" translate class="btn btn-secondary span4">BUTTON_DETAILS</button>
                     </a>
-                    <button ng-click="delete(workshop.id)" type="button" translate class="btn btn-danger span4">{{
-                        "BUTTON_DELETE_WORKSHOP" | translate}}
-                    </button>
+                    <button ng-click="delete(workshop.id)" type="button" translate class="btn btn-danger span4">BUTTON_DELETE_WORKSHOP</button>
                 </div>
             </div>
             <!-- /.box-body -->
